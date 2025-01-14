@@ -69,7 +69,7 @@
                         </div>
                     </div>
                     <div class="my-6">
-                        <button type="submit" class="bg-gradient-to-b from-blue-400 to-cyan-400  hover:from-blue-500 hover:to-cyan-500 focus:outline-none justify-center rounded-md py-3 px-10 text-sm font-semibold text-white focus:ring-2" >Login</button>
+                        <button type="submit" class="bg-gradient-to-b from-blue-400 to-cyan-400  hover:from-blue-500 hover:to-cyan-500 focus:outline-none justify-center rounded-md py-3 px-10 text-sm font-semibold text-white focus:ring-2" >Register</button>
                     </div>
                 </form>
 
