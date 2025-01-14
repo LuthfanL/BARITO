@@ -34,8 +34,8 @@
     </style>
 </head>
 
-<body class="text-gray-800 bg-white">
-    <div class="flex min-h-screen" class="background-color: #eeeeee;">
+<body class="bg-white">
+    <div class="flex min-h-screen">
         <!-- Sidebar -->
         @include('components.sidebaradmin')
 
@@ -45,24 +45,90 @@
             <!-- Navbar -->
             @include('components.navbaradmin')
 
-            <!-- Main Content -->
             <!-- Welcome Back -->
-            <div class="pl-8 pt-5 flex justify-left items-center">
+            <div class="pl-8 pt-8 pb-3 flex justify-left items-center">
                 <p class="welcome-message-static">Welcome Back, </p>
                 <span class="welcome-message" id="typewriter"></span>
                 <span class="text-2xl" aria-label="Waving Hand" role="img">👋</span>
             </div>
 
+            <!-- Main Content -->
             <div class="px-8 pt-5 flex justify-center items-center">
                 <div class="grid grid-cols-12 w-full gap-14">
 
+                    <!-- Total Customer -->
+                    <div class="col-span-3 bg-white-300 shadow-[0_0_20px_10px_rgba(0,0,0,0.1)] rounded-xl flex flex-col">
+                        <div class="m-3 rounded-lg outline outline-2 outline-[#00C6BF] flex items-center justify-between">
+                            <div>
+                                <h2 class="text-left ml-3 mt-6 text-3xl font-bold">67</h2>
+                                <p class="text-left text-gray-500 ml-3 mt-1 mb-6 text-lg font-semibold ">Total Customer</p>
+                            </div>
+                            <div class="mr-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-fill text-[#00C6BF]" viewBox="0 0 16 16">
+                                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                                </svg>
+                            </div>                            
+                        </div>
+                    </div>
+
+                    <!-- Total Booking -->
+                    <div class="col-span-3 bg-white-300 shadow-[0_0_20px_10px_rgba(0,0,0,0.1)] rounded-xl flex flex-col">
+                        <div class="m-3 rounded-lg outline outline-2 outline-[#00C6BF] flex items-center justify-between">
+                            <div>
+                                <h2 class="text-left ml-3 mt-6 text-3xl font-bold">34</h2>
+                                <p class="text-left text-gray-500 ml-3 mt-1 mb-6 text-lg font-semibold ">Total Booking</p>
+                            </div>
+                            <div class="mr-3">
+                                <img width="50" height="50" src="https://img.icons8.com/deco-glyph/48/00c6bf/booking.png" alt="booking"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Belum Diverifikasi -->
+                    <div class="col-span-3 bg-white-300 shadow-[0_0_20px_10px_rgba(0,0,0,0.1)] rounded-xl flex flex-col">
+                        <div class="m-3 rounded-lg outline outline-2 outline-[#00C6BF] flex items-center justify-between">
+                            <div>
+                                <h2 class="text-left ml-3 mt-6 text-3xl font-bold">8</h2>
+                                <p class="text-left text-gray-500 ml-3 mt-1 mb-6 text-lg font-semibold ">Belum Diverifikasi</p>
+                            </div>
+                            <div class="mr-3">
+                                <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/00c6bf/visa-stamp.png" alt="visa-stamp"/>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Total Ruangan -->
+                    <div class="col-span-3 bg-white-300 shadow-[0_0_20px_10px_rgba(0,0,0,0.1)] rounded-xl flex flex-col">
+                        <div class="m-3 rounded-lg outline outline-2 outline-[#00C6BF] flex items-center justify-between">
+                            <div>
+                                <h2 class="text-left ml-3 mt-6 text-3xl font-bold">50</h2>
+                                <p class="text-left text-gray-500 ml-3 mt-1 mb-6 text-lg font-semibold ">Total Ruangan</p>
+                            </div>
+                            <div class="mr-3">
+                                <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/00c6bf/room.png" alt="room"/>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div>
-                
+            <div class="px-8 pt-12 flex justify-center items-center">
+                <div class="grid grid-cols-12 w-full gap-14">
+                    <!-- Statistik Pengunjung -->
+                    <div class="col-span-6 pt-24 pb-24 bg-white-300 shadow-[0_0_20px_10px_rgba(0,0,0,0.1)] rounded-xl flex flex-col">
+                        <div>
+                            <h2 class="text-left ml-3 mt-6 text-3xl font-bold">Statistik Pengunjung</h2>
+                            <p class="text-left text-gray-500 ml-3 mt-1 mb-6 text-lg font-semibold ">Diagran Garis/Batang</p>
+                        </div>
+                    </div>
+                    <!-- Statistik Ruangan Terbooking -->
+                    <div class="col-span-6 pt-24 pb-24 bg-white-300 shadow-[0_0_20px_10px_rgba(0,0,0,0.1)] rounded-xl flex flex-col">
+                        <div>
+                            <h2 class="text-left ml-3 mt-6 text-3xl font-bold">Statistik Ruangan Terbooking</h2>
+                            <p class="text-left text-gray-500 ml-3 mt-1 mb-6 text-lg font-semibold ">Diagran Lingkaran</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            
         </div>
     </div>
 </body>
