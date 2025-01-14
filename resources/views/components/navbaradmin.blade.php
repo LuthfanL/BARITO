@@ -10,7 +10,7 @@
 </style>
 
 <div class="flex-grow">
-    <nav class="pr-8 flex justify-between box-border bg-gray-200/30" >
+    <nav class="pr-8 flex justify-end box-border bg-gray-400/20" >
         <!-- Foto Profil -->
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
         <div class="pl-4">
