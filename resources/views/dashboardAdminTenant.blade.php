@@ -37,7 +37,7 @@
 <body class="bg-white">
     <div class="flex min-h-screen">
         <!-- Sidebar -->
-        @include('components.sidebaradmin')
+        @include('components.sidebarAdminTenant')
 
         <!-- Content -->
         <div class="flex-grow">
