@@ -73,12 +73,24 @@
         
             <!-- Riwayat Booking -->
             <li class="pl-1 py-7 transition-colors duration-200">
-                <a href="/Riwayat Booking" class="flex items-center block text-gray-500 hover:text-black font-semibold" aria-label="Riwayat Booking">
+                <a href="/riwayatBookingRuangan" class="flex items-center block text-gray-500 hover:text-black font-semibold" aria-label="Riwayat Booking">
                     <svg class="w-[32px] h-[32px] opacity-100 scale-100 ml-5 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100 group-hover:ml-5" 
                         aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                         <path fill-rule="evenodd" d="M6 2a2 2 0 0 0-2 2v15a3 3 0 0 0 3 3h12a1 1 0 1 0 0-2h-2v-2h2a1 1 0 0 0 1-1V4a2 2 0 0 0-2-2h-8v16h5v2H7a1 1 0 1 1 0-2h1V2H6Z" clip-rule="evenodd"/>
                     </svg>
                     <span class="transition-transform duration-100 transform translate-x-3 group-hover:translate-x-3">Riwayat Booking</span>
+                </a>
+            </li>
+
+            <!-- Logout -->
+            <li class="pl-1 py-7 transition-colors duration-200">
+                <a href="/logout" class="flex items-center block text-gray-500 hover:text-black font-semibold" aria-label="logout">
+                    <svg class="w-[38px] h-[38px] opacity-100 scale-100 ml-5 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100 group-hover:ml-5" 
+                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M14 19V5h4a1 1 0 0 1 1 1v11h1a1 1 0 0 1 0 2h-6Z"/>
+                        <path fill-rule="evenodd" d="M12 4.571a1 1 0 0 0-1.275-.961l-5 1.428A1 1 0 0 0 5 6v11H4a1 1 0 0 0 0 2h1.86l4.865 1.39A1 1 0 0 0 12 19.43V4.57ZM10 11a1 1 0 0 1 1 1v.5a1 1 0 0 1-2 0V12a1 1 0 0 1 1-1Z" clip-rule="evenodd"/>
+                    </svg>
+                    <span class="transition-transform duration-100 transform translate-x-3 group-hover:translate-x-3">Logout</span>
                 </a>
             </li>
         </ul>                        

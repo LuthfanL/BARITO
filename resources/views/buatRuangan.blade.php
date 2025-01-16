@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMJTVF1a1wMA2gO/YHbx+fyfJhN/0Q5ntv7zYY" crossorigin="anonymous">
     <style>
         .form-container {
-            width: 1400px; 
+            width: 100%;
+            max-width: 1400px; 
             margin: auto; 
             padding: 24px;
             border: 1px solid #ccc;
@@ -17,49 +18,52 @@
             box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.1);
             background-color: white; 
         }
-
+    
         .form-inner {
             margin: 8px auto; 
-            width: calc(100% - 32px); 
+            width: 100%; 
             padding: 24px;
             border-radius: 20px;
             outline: 2px solid #00C6BF;
             background-color: #fff;
         }
-
+    
         form {
             width: 100%; 
         }
+    
         label {
             font-size: 14px;
             font-weight: bold;
             display: block;
             margin-bottom: 5px;
         }
+    
         input[type="text"], textarea, input[type="file"] {
-            width: calc(100% - 12px);
+            width: 100%;
             padding: 8px;
             margin-bottom: 15px;
             border: 1px solid #ccc;
             border-radius: 10px;
             font-size: 14px;
         }
+    
         textarea {
             resize: vertical;
         }
+    
         .fasilitas-container {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 10px;
         }
+    
         .fasilitas-container label {
             display: inline-block;
             font-size: 13px;
             font-weight: normal;
         }
-        .fasilitas-container input[type="text"] {
-            width: calc(100% - 12px);
-        }
+    
         .info {
             font-size: 12px;
             color: red;

@@ -15,10 +15,10 @@
     <!-- Navbar -->
     @include('components.navbargeneral')
 
-    <div class="bg-gradient-to-b from-blue-400 to-cyan-400 min-h-screen h-full p-12 text-center flex flex-col items-center justify-center">
-        <div class="bg-white border border-white/10 rounded-2xl shadow-[0_0_20px_10px_rgba(0,0,0,0.1)] p-10 w-full max-w-sm backdrop-blur-lg">
+    <div class="bg-gradient-to-b from-blue-400 to-cyan-400 min-h-screen h-full p-6 md:p-12 text-center flex flex-col items-center justify-center">
+        <div class="bg-white mt-24 mb-4 border border-white/10 rounded-2xl shadow-[0_0_20px_10px_rgba(0,0,0,0.1)] p-5 w-full max-w-sm backdrop-blur-lg">
             <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-                <h2 class="mb-10 text-center text-2xl font-bold leading-9 tracking-tight text-black">Register</h2>
+                <h2 class="mb-2 mt-2 text-center text-2xl font-bold leading-9 tracking-tight text-black">Register</h2>
             </div>
 
             <div class="mt-8">
