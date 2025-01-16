@@ -13,13 +13,13 @@
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between p-4">
             <!-- Logo -->
             <div class="z-30">
-                <a href="" class="flex items-center space-x-3 rtl:space-x-reverse ml-5">
+                <a href="home" class="flex items-center space-x-3 rtl:space-x-reverse ml-5">
                     <img class="h-8" src="{{ asset('assets/logo-black.png') }}" alt="Logo">
                 </a>
             </div>
 
             <!-- Navigation menu (Right aligned) -->
-            <div class="flex absolute right-0 mr-5 md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse z-30">
+            <div class="flex absolute right-0 mr-5 md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse z-50">
                 <!-- Foto Profil -->
                 <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
                 <div>
@@ -61,9 +61,9 @@
 
                                     <hr class="border-gray-300">
                                     <li class="font-medium">
-                                        <a href="/"
+                                        <a href="/login"
                                             class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-blue-600">
-                                            <div class="mr-3 text-blue-600">
+                                            <div class="mr-3 text-blue-500">
                                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                                     xmlns="http://www.w3.org/2000/svg">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -86,13 +86,13 @@
             <div class="absolute inset-0 flex justify-center items-center hidden md:flex md:w-auto md:order-1" id="navbar-sticky">
                 <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white">
                     <li>
-                        <a href="#" class="block py-2 px-3 text-lg text-gray-500 font-semibold hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-500 md:p-0">Booking Ruangan</a>
+                        <a href="#" class="block py-2 px-3 text-lg text-gray-500 font-semibold hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-800 md:p-0">Booking Ruangan</a>
                     </li>
                     <li>
-                        <a href="#" class="block py-2 px-3 text-lg text-gray-500 font-semibold hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-500 md:p-0">Booking Kendaraan</a>
+                        <a href="#" class="block py-2 px-3 text-lg text-gray-500 font-semibold hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-800 md:p-0">Booking Kendaraan</a>
                     </li>
                     <li>
-                        <a href="#" class="block py-2 px-3 text-lg text-gray-500 font-semibold hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-500 md:p-0">Pengelolaan Tenant</a>
+                        <a href="#" class="block py-2 px-3 text-lg text-gray-500 font-semibold hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-800 md:p-0">Pengelolaan Tenant</a>
                     </li>
                 </ul>
             </div>
