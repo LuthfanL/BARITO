@@ -15,7 +15,7 @@
     <!-- Navbar -->
     @include('components.navbargeneral')
 
-    <div class="bg-gradient-to-b from-blue-400 to-cyan-400 h-full p-12 text-center flex flex-col items-center justify-center">
+    <div class="bg-gradient-to-b from-blue-400 to-cyan-400 min-h-screen h-full p-12 text-center flex flex-col items-center justify-center">
         <div class="bg-white border border-white/10 rounded-2xl shadow-[0_0_20px_10px_rgba(0,0,0,0.1)] p-10 w-full max-w-sm backdrop-blur-lg">
             <div class="sm:mx-auto sm:w-full sm:max-w-sm">
                 <h2 class="mb-10 text-center text-2xl font-bold leading-9 tracking-tight text-black">Register</h2>
@@ -35,17 +35,27 @@
                     @csrf
                     <div class="my-6">
                         <div>
-                            <input placeholder="Masukkan Nama" id="nama" name="nama" type="nama" autocomplete="new-nama" required class="block w-full rounded-md bg-white-700 border border-gray-600 py-2 px-3 text-gray-900 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                            <input placeholder="Masukkan NIK" id="nik" name="nik" type="text" autocomplete="new-nik" required class="block w-full rounded-md bg-white-700 border border-gray-600 py-2 px-3 text-gray-900 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
                         </div>
                     </div>
                     <div class="my-6">
                         <div>
-                            <input placeholder="Masukkan Email" id="email" name="email" type="email" autocomplete="new-email" required class="block w-full rounded-md bg-white-700 border border-gray-600 py-2 px-3 text-gray-900 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                            <input placeholder="Masukkan Nama" id="name" name="name" type="text" autocomplete="new-nama" required class="block w-full rounded-md bg-white-700 border border-gray-600 py-2 px-3 text-gray-900 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                        </div>
+                    </div>
+                    <div class="my-6">
+                        <div>
+                            <input placeholder="Masukkan Alamat" id="alamat" name="alamat" type="text" autocomplete="new-alamat" required class="block w-full rounded-md bg-white-700 border border-gray-600 py-2 px-3 text-gray-900 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                        </div>
+                    </div>
+                    <div class="my-6">
+                        <div>
+                            <input placeholder="Masukkan Email" id="email" name="email" type="text" autocomplete="new-email" required class="block w-full rounded-md bg-white-700 border border-gray-600 py-2 px-3 text-gray-900 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
                         </div>
                     </div>
                     <div class="my-6">
                         <div class="flex items-center relative">
-                            <input placeholder="Masukkan Password" id="passwordBaru" name="passwordBaru" type="password" autocomplete="new-password" required class="block w-full rounded-md bg-white-700 border border-gray-600 py-2 px-3 text-gray-900 focus:ring-2 focus:ring-indigo-500 focus:outline-none pr-10">
+                            <input placeholder="Masukkan Password" id="password" name="password" type="password" autocomplete="new-password" required class="block w-full rounded-md bg-white-700 border border-gray-600 py-2 px-3 text-gray-900 focus:ring-2 focus:ring-indigo-500 focus:outline-none pr-10">
                             <span id="togglePassword" class="absolute top-3 right-2 cursor-pointer" onclick="togglePasswordVisibility()" style="width: 25px; height: 20px">
                                 <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" width="25" height="20" fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16">
                                     <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7 7 0 0 0-2.79.588l.77.771A6 6 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755q-.247.248-.517.486z" fill="gray" />
