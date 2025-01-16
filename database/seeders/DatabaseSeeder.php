@@ -2,8 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\customer;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,11 +12,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
+        $customer = customer::create([
+            'NIK' => '3374123456780000',
             'name' => 'Test User',
+            'alamat' => 'Jl. abscsjdfn',
             'email' => 'test@example.com',
+            'password' => '5b9e4811',
         ]);
+
+        
     }
 }

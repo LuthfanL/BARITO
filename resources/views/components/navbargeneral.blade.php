@@ -8,7 +8,7 @@
     }
 </style>
 
-<div class="flex-grow pb-24">
+<div class="flex-grow pb-18">
     <nav class="bg-white fixed w-full z-20 top-0 start-0 border-b border-gray-200 shadow-lg">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between p-4">
             <!-- Logo -->
