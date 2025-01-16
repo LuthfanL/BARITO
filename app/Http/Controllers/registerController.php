@@ -6,8 +6,12 @@ use Illuminate\Http\Request;
 
 class registerController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         return view('register');
+    }
+
+    public function store(Request $request){
+        
     }
 }
