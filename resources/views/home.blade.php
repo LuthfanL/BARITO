@@ -23,7 +23,7 @@
     </div>
 
     <!-- Carousel -->
-    <div id="default-carousel" class="relative w-full m-0 p-0 shadow-xl" data-carousel="slide">
+    <div id="default-carousel" class="relative w-full pt-24 m-0 p-0 shadow-xl" data-carousel="slide">
         <!-- Carousel wrapper -->
         <div class="relative h-56 overflow-hidden md:h-96">
             <!-- Item 1 -->

@@ -7,9 +7,10 @@ use App\Http\Controllers\homeController;
 use App\Http\Controllers\dashboardAdminRuanganController;
 use App\Http\Controllers\dashboardAdminKendaraanController;
 use App\Http\Controllers\dashboardAdminTenantController;
+use App\Http\Controllers\buatRuanganController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Route::get('/login', [loginController::class, 'index'])->name('login');
@@ -23,3 +24,5 @@ Route::get('/dashboardAdminRuangan', [DashboardAdminRuanganController::class, 'i
 Route::get('/dashboardAdminKendaraan', [DashboardAdminKendaraanController::class, 'index'])->name('dashboardAdminKendaraan');
 
 Route::get('/dashboardAdminTenant', [DashboardAdminTenantController::class, 'index'])->name('dashboardAdminTenant');
+
+Route::get('/buatRuangan', [buatRuanganController::class, 'index'])->name('buatRuangan');
