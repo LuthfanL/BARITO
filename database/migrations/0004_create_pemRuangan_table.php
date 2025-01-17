@@ -14,14 +14,14 @@ return new class extends Migration
         Schema::create('pemRuangan', function (Blueprint $table) {
             $table->id();
             $table->char('idCustomer', 16);
-            $table->string('idRuangan', 3);
+            $table->unsignedBigInteger('idRuangan');
             $table->char('idAdmin', 8);
             $table->date('tglPeminjaman');
             $table->date('tglSelesai');
             $table->string('status', 8);
             $table->string('buktiBayar');
             $table->foreign('idCustomer')->references('NIK')->on('customer')->onDelete('cascade');
-            $table->foreign('idRuangan')->references('idRuangan')->on('ruangan')->onDelete('cascade');
+            $table->foreign('idRuangan')->references('id')->on('ruangan')->onDelete('cascade');
             $table->foreign('idAdmin')->references('idAdmin')->on('adminRuangan')->onDelete('cascade');
             $table->timestamps();
         });

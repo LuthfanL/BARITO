@@ -33,7 +33,7 @@ class pemRuangan extends Model
 
     public function ruangan()
     {
-        return $this->belongsTo(Ruangan::class, 'idRuangan');
+        return $this->belongsTo(Ruangan::class, 'id');
     }
 
     public function admin()
