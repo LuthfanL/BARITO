@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Session;
 use App\Models\customer;
 use App\Models\adminRuangan;
 use App\Models\adminKendaraan;
@@ -44,7 +43,6 @@ class loginController extends Controller
             }
 
             Auth::login($emailCus);
-            Session::put('active_user', $emailCus->nik);
             return redirect()->intended('/')->with('success', 'Berhasil Login!');
         }
 
@@ -55,7 +53,6 @@ class loginController extends Controller
             }
     
             Auth::login($emailAR);
-            Session::put('active_user', $emailAR->idAdmin);
             return redirect()->intended('/dashboardAdminRuangan')->with('success', 'Berhasil Login!');
         }
 
@@ -66,7 +63,6 @@ class loginController extends Controller
             }
      
             Auth::login($emailAK);
-            Session::put('active_user', $emailAK->idAdmin);
             return redirect()->intended('/dashboardAdminKendaraan')->with('success', 'Berhasil Login!');
         }
 
@@ -77,7 +73,6 @@ class loginController extends Controller
             }
            
             Auth::login($emailAT);
-            Session::put('active_user', $emailAT->idAdmin);
             return redirect()->intended('/dashboardAdminTenant')->with('success', 'Berhasil Login!');
         }
     }
@@ -157,5 +152,5 @@ class loginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('/');
-    }  
+    }
 }
