@@ -20,20 +20,20 @@ Route::post('/login', [loginController::class, 'login'])->name('masuk');
 Route::get('/lupaPassword', [loginController::class, 'lupaPW'])->name('lupaPW');
 Route::post('/lupaPassword', [loginController::class, 'updatePW'])->name('updatePW');
 
+Route::get('/logout', [loginController::class, 'logout'])->name('logout')->middleware('auth');
+
 Route::get('/register', [registerController::class, 'index'])->name('register');
 Route::post('/registrasi', [registerController::class, 'store'])->name('registrasi');
 
 Route::get('/profile', [profilController::class, 'index'])->name('profile')->middleware('auth');
 
-Route::get('/home', [homeController::class, 'index'])->name('home');
+Route::get('/dashboardAdminRuangan', [DashboardAdminRuanganController::class, 'index'])->name('dashboardAdminRuangan')->middleware('auth');
 
-Route::get('/dashboardAdminRuangan', [DashboardAdminRuanganController::class, 'index'])->name('dashboardAdminRuangan');
+Route::get('/dashboardAdminKendaraan', [DashboardAdminKendaraanController::class, 'index'])->name('dashboardAdminKendaraan')->middleware('auth');
 
-Route::get('/dashboardAdminKendaraan', [DashboardAdminKendaraanController::class, 'index'])->name('dashboardAdminKendaraan');
+Route::get('/dashboardAdminTenant', [DashboardAdminTenantController::class, 'index'])->name('dashboardAdminTenant')->middleware('auth');
 
-Route::get('/dashboardAdminTenant', [DashboardAdminTenantController::class, 'index'])->name('dashboardAdminTenant');
+Route::get('/buatRuangan', [buatRuanganController::class, 'index'])->name('buatRuangan')->middleware('auth');
 
-Route::get('/buatRuangan', [buatRuanganController::class, 'index'])->name('buatRuangan');
-
-Route::get('/daftarRuangan', [daftarRuanganController::class, 'index'])->name('daftarRuangan');
+Route::get('/daftarRuangan', [daftarRuanganController::class, 'index'])->name('daftarRuangan')->middleware('auth');
 

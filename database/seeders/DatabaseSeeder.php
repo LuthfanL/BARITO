@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Support\Facades\Hash;
 use App\Models\adminRuangan;
 use App\Models\adminKendaraan;
 use App\Models\adminTenant;
@@ -19,7 +20,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Muhammad Luthfan Lazuardi',
             'noHP' => '082195851700',
             'email' => 'upanpen@gmail.com',
-            'password' => bcrypt('Luthfan1!'),
+            'password' => hash::make('Luthfan1!'),
         ]);
         
         $adminK = adminKendaraan::create([
@@ -27,7 +28,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Muhammad Naufal Izzudin',
             'noHP' => '087737978567',
             'email' => 'udindin@gmail.com',
-            'password' => bcrypt('Udinz123!'),
+            'password' => hash::make('Udinz123!'),
         ]);
         
         $adminT = adminTenant::create([
@@ -35,7 +36,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'David Nugroho',
             'noHP' => '085870194309',
             'email' => 'piddapid@gmail.com',
-            'password' => bcrypt('Dapid123!'),
+            'password' => hash::make('Dapid123!'),
         ]);
     }
 }

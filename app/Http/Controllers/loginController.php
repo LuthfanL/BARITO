@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use App\Models\customer;
 use App\Models\adminRuangan;
 use App\Models\adminKendaraan;
@@ -43,6 +44,7 @@ class loginController extends Controller
             }
 
             Auth::login($emailCus);
+            Session::put('active_user', $emailCus->nik);
             return redirect()->intended('/')->with('success', 'Berhasil Login!');
         }
 
@@ -53,6 +55,7 @@ class loginController extends Controller
             }
     
             Auth::login($emailAR);
+            Session::put('active_user', $emailAR->idAdmin);
             return redirect()->intended('/dashboardAdminRuangan')->with('success', 'Berhasil Login!');
         }
 
@@ -63,6 +66,7 @@ class loginController extends Controller
             }
      
             Auth::login($emailAK);
+            Session::put('active_user', $emailAK->idAdmin);
             return redirect()->intended('/dashboardAdminKendaraan')->with('success', 'Berhasil Login!');
         }
 
@@ -73,6 +77,7 @@ class loginController extends Controller
             }
            
             Auth::login($emailAT);
+            Session::put('active_user', $emailAT->idAdmin);
             return redirect()->intended('/dashboardAdminTenant')->with('success', 'Berhasil Login!');
         }
     }
@@ -106,43 +111,51 @@ class loginController extends Controller
         }
         
         if ($emailCus){
-            if ($validate['password'] == $emailCus->password){
+            if (hash::check($emailCus->password, $validate['password'])){
                 return redirect()->route('login')->withErrors('Password sebelum dan sesudah update sama!')->withInput();
             }
             DB::table('customer')->update([
-                'password' => $validate['password'],
+                'password' => hash::make($validate['password']),
             ]);
             return redirect()->route('login')->with('success', 'Password berhasil diupdate!');
         }
 
         if ($emailAR){
-            if ($validate['password'] == $emailAR->password){
+            if (hash::check($emailAR->password, $validate['password'])){
                 return redirect()->route('login')->withErrors('Password sebelum dan sesudah update sama!')->withInput();
             }
             DB::table('adminRuangan')->update([
-                'password' => $validate['password'],
+                'password' => hash::make($validate['password']),
             ]);
             return redirect()->route('login')->with('success', 'Password berhasil diupdate!');
         }
 
         if ($emailAK){
-            if ($validate['password'] == $emailAK->password){
+            if (hash::check($emailAK->password, $validate['password'])){
                 return redirect()->route('login')->withErrors('Password sebelum dan sesudah update sama!')->withInput();
             }
             DB::table('adminKendaraan')->update([
-                'password' => $validate['password'],
+                'password' => hash::make($validate['password']),
             ]);
             return redirect()->route('login')->with('success', 'Password berhasil diupdate!');
         }
 
         if ($emailAT){
-            if ($validate['password'] == $emailAT->password){
+            if (hash::check($validate['password'], $emailAT->password)){
                 return redirect()->route('login')->withErrors('Password sebelum dan sesudah update sama!')->withInput();
             }
             DB::table('adminTenant')->update([
-                'password' => $validate['password'],
+                'password' =>hash::make($validate['password']),
             ]);
             return redirect()->route('login')->with('success', 'Password berhasil diupdate!');
         }
     }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/');
+    }  
 }
