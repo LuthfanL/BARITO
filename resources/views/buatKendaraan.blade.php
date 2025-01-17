@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buat Ruangan</title>
+    <title>Buat Kendaraan</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMJTVF1a1wMA2gO/YHbx+fyfJhN/0Q5ntv7zYY" crossorigin="anonymous">
     <style>
@@ -75,7 +75,7 @@
 <body class="bg-white">
     <div class="flex min-h-screen">
         <!-- Sidebar -->
-        @include('components.sidebarAdminRuangan')
+        @include('components.sidebarAdminKendaraan')
 
         <!-- Content -->
         <div class="flex-grow">
@@ -88,76 +88,67 @@
                 <div class="w-full">
                     <!-- Judul Form -->
                     <div class="flex justify-center text-center pb-6">
-                        <h1 class="font-bold text-2xl">Buat Ruangan</h1>
+                        <h1 class="font-bold text-2xl">Buat Kendaraan</h1>
                     </div>
             
-                    <!-- Form Pembuatan Ruangan -->
+                    <!-- Form Pembuatan Kendaraan -->
                     <div class="flex form-container bg-white-300 shadow-[0_0_20px_10px_rgba(0,0,0,0.1)]">
                         <div class="flex form-inner m-3 rounded-lg outline outline-2 outline-[#00C6BF]">
                             <form>
-                                <!-- Input Nama Ruangan -->
-                                <label for="nama-ruangan">Nama Ruangan</label>
-                                <input type="text" id="nama-ruangan" name="nama-ruangan" required>
+                                <!-- Input Nama Kendaraan -->
+                                <label for="nama-kendaraan">Nama Kendaraan</label>
+                                <input type="text" id="nama-kendaraan" name="nama-kendaraan" required>
                 
-                                <!-- Input Deskripsi Ruangan -->
-                                <label for="deskripsi-ruangan">Deskripsi Ruangan</label>
-                                <textarea id="deskripsi-ruangan" name="deskripsi-ruangan" rows="3" required></textarea>
+                                <!-- Input Deskripsi Kendaraan -->
+                                <label for="deskripsi-kendaraan">Deskripsi Kendaraan</label>
+                                <textarea id="deskripsi-kendaraan" name="deskripsi-kendaraan" rows="3" required></textarea>
                 
-                                <!-- Input Biaya Sewa, Lokasi, Lantai dan Luas Ruangan -->
+                                <!-- Input Biaya Sewa, Kapasitas, Plat Nomor, CC dan Tahun Kendaraan -->
                                 <label for="biayaSewa">Biaya Sewa (Per Hari)</label>
                                 <input type="text" id="biayaSewa" name="biayaSewa" required>
 
-                                <label for="lokasi">Lokasi (Nama Gedung)</label>
-                                <input type="text" id="lokasi" name="lokasi" required>
+                                <label for="kapasitas">Kapasitas</label>
+                                <input type="text" id="kapasitas" name="kapasitas" required>
                 
-                                <label for="lantai">Lantai</label>
-                                <input type="text" id="lantai" name="lantai" required>
+                                <label for="plat">Plat Nomor</label>
+                                <input type="text" id="plat" name="plat" required>
 
-                                <label for="luas">Luas Ruangan</label>
-                                <input type="text" id="luas" name="luas" required>
+                                <label for="cc">CC</label>
+                                <input type="text" id="cc" name="cc" required>
+
+                                <label for="tahun">Tahun</label>
+                                <input type="text" id="tahun" name="tahun" required>
                 
-                                <!-- Input Fasilitas Ruangan -->
-                                <label>Fasilitas Ruangan</label>
+                                <!-- Input Fasilitas Kendaraan -->
+                                <label>Fasilitas Kendaraan</label>
                                 <div class="fasilitas-container">
                                     <div>
-                                        <label for="podium">Podium</label>
-                                        <input type="text" id="podium" name="podium">
+                                        <label for="tv">TV</label>
+                                        <input type="text" id="tv" name="tv">
                                     </div>
                                     <div>
                                         <label for="sound">Sound</label>
                                         <input type="text" id="sound" name="sound">
                                     </div>
                                     <div>
-                                        <label for="meja">Meja</label>
-                                        <input type="text" id="meja" name="meja">
-                                    </div>
-                                    <div>
                                         <label for="ac">AC</label>
                                         <input type="text" id="ac" name="ac">
                                     </div>
-                                    <div>
-                                        <label for="kursi">Kursi</label>
-                                        <input type="text" id="kursi" name="kursi">
-                                    </div>
-                                    <div>
-                                        <label for="proyektor">Proyektor</label>
-                                        <input type="text" id="proyektor" name="proyektor">
-                                    </div>
                                 </div>
                 
-                                <!-- Input Foto Ruangan -->
-                                <label for="foto-ruangan">Upload Foto Ruangan</label>
-                                <input type="file" id="foto-ruangan" name="foto-ruangan" accept="image/jpeg, image/png" class="block w-full cursor-pointer" required>
+                                <!-- Input Foto Kendaraan -->
+                                <label for="foto-kendaraan">Upload Foto Kendaraan</label>
+                                <input type="file" id="foto-kendaraan" name="foto-kendaraan" accept="image/jpeg, image/png" class="block w-full cursor-pointer" required>
                 
                                 <!-- Informasi Tambahan -->
                                 <p class="info">
                                     * File maksimal 2 MB, format: JPEG atau PNG<br>
-                                    * Upload minimal 1 foto yang memperlihatkan keseluruhan ruangan
+                                    * Upload minimal 1 foto yang memperlihatkan keseluruhan kendaraan
                                 </p>
                 
                                 <!-- Tombol Submit -->
                                 <div class="flex justify-end">
-                                    <button type="button" class="justify-end text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300  font-bold rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Buat Ruangan</button>
+                                    <button type="button" class="justify-end text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300  font-bold rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Buat Kendaraan</button>
                                 </div>
                             </form>
                         </div>

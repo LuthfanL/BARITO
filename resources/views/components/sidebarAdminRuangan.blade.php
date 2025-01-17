@@ -84,7 +84,7 @@
 
             <!-- Logout -->
             <li class="pl-1 py-7 transition-colors duration-200">
-                <a href="/logout" class="flex items-center block text-gray-500 hover:text-black font-semibold" aria-label="logout">
+                <a data-modal-target="modal-logout" data-modal-toggle="modal-logout" class="flex cursor-pointer items-center block text-gray-500 hover:text-black font-semibold" aria-label="logout">
                     <svg class="w-[38px] h-[38px] opacity-100 scale-100 ml-5 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100 group-hover:ml-5" 
                         aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M14 19V5h4a1 1 0 0 1 1 1v11h1a1 1 0 0 1 0 2h-6Z"/>
@@ -97,19 +97,39 @@
     </nav>
 </aside>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const currentPage = window.location.pathname;
-            const links = document.querySelectorAll('li a');
+<!-- Modal Konfirmasi Logout -->
+<div id="modal-logout" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative p-4 w-full max-w-xl max-h-full">
+        <div class="relative bg-white rounded-lg shadow">
+            <div class="p-4 md:p-5 text-center">
+                <svg class="mx-auto mb-4 text-gray-400 w-16 h-16" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                </svg>
+                <h1 class="mb-5 text-lg font-bold text-gray-900">Konfirmasi Logout</h1>
+                <p class="mb-5 text-m font-normal text-gray-500">Apakah Anda yakin ingin keluar dari akun Anda?</p>
+                <button data-modal-hide="modal-logout" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                    Logout
+                </button>
+                <button data-modal-hide="modal-logout" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Kembali</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-            links.forEach(link => {
-                if (link.getAttribute('href') === currentPage) {
-                    link.parentElement.classList.add('active-state');
-                }
-            });
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const currentPage = window.location.pathname;
+        const links = document.querySelectorAll('li a');
+
+        links.forEach(link => {
+            if (link.getAttribute('href') === currentPage) {
+                link.parentElement.classList.add('active-state');
+            }
         });
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"></script>
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 
 </body>
 

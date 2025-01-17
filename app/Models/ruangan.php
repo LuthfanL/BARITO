@@ -28,6 +28,7 @@ class ruangan extends Model
         'deskripsi',
         'lantai',
         'foto',
+        'biayaSewa',
     ];
 
     public function pemRuangan()
