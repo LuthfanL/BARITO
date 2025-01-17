@@ -107,9 +107,9 @@
                 </svg>
                 <h1 class="mb-5 text-lg font-bold text-gray-900">Konfirmasi Logout</h1>
                 <p class="mb-5 text-m font-normal text-gray-500">Apakah Anda yakin ingin keluar dari akun Anda?</p>
-                <button data-modal-hide="modal-logout" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                <a href='/logout' data-modal-hide="modal-logout" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
                     Logout
-                </button>
+                </a>
                 <button data-modal-hide="modal-logout" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Kembali</button>
             </div>
         </div>

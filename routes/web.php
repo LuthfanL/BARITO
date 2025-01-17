@@ -27,7 +27,7 @@ Route::post('/login', [loginController::class, 'login'])->name('masuk');
 Route::get('/lupaPassword', [loginController::class, 'lupaPW'])->name('lupaPW');
 Route::post('/lupaPassword', [loginController::class, 'updatePW'])->name('updatePW');
 
-Route::get('/logout', [loginController::class, 'logout'])->name('logout')->middleware('auth');
+Route::get('/logout', [loginController::class, 'logout'])->name('logout');
 
 Route::get('/register', [registerController::class, 'index'])->name('register');
 Route::post('/registrasi', [registerController::class, 'store'])->name('registrasi');
