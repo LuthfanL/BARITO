@@ -11,25 +11,24 @@ class ruangan extends Model
 
     protected $table = 'ruangan';
 
-    protected $primaryKey = 'idRuangan';
-    public $incrementing =  false;
-    protected $keyType = 'string';
+    protected $primaryKey = 'id';
+    public $incrementing =  true;
+    protected $keyType = 'int';
     
     protected $fillable = [
-        'idRuangan',
-        'nama', 
-        'lokasi', 
-        'podium', 
-        'meja', 
-        'kursi', 
-        'sound', 
-        'ac', 
-        'proyektor', 
-        'luas', 
-        'deskripsi', 
-        'lantai', 
-        'foto', 
-        'biayaSewa', 
+        'nama',
+        'lokasi',
+        'podium',
+        'meja',
+        'kursi',
+        'sound',
+        'ac',
+        'proyektor',
+        'luas',
+        'deskripsi',
+        'lantai',
+        'foto',
+        'biayaSewa',
     ];
 
     public function pemRuangan()

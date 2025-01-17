@@ -20,9 +20,9 @@ class customer extends Authenticatable
         'nik',
         'name',
         'alamat',
+        'noHP',
         'email',
         'password',
-        'konrfirmasiPassword',
     ];
 
     protected $hidden = [

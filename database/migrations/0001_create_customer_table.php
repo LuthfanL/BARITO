@@ -15,9 +15,9 @@ return new class extends Migration
             $table->char('NIK',16)->primary();
             $table->string('name', 30);
             $table->string('alamat', 50);
+            $table->string('noHP', 13);
             $table->string('email', 50)->unique();
             $table->string('password', 255);
-            $table->string('konfirmasiPassword', 255);
             $table->rememberToken();
             $table->timestamps();
         });
