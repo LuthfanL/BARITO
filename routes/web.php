@@ -32,19 +32,16 @@ Route::get('/logout', [loginController::class, 'logout'])->name('logout')->middl
 Route::get('/register', [registerController::class, 'index'])->name('register');
 Route::post('/registrasi', [registerController::class, 'store'])->name('registrasi');
 
+#Customer
 Route::get('/profile', [profilController::class, 'index'])->name('profile')->middleware('auth');
 
+
+#Ruangan
 Route::get('/dashboardAdminRuangan', [DashboardAdminRuanganController::class, 'index'])->name('dashboardAdminRuangan');
-
-Route::get('/dashboardAdminKendaraan', [DashboardAdminKendaraanController::class, 'index'])->name('dashboardAdminKendaraan');
-
-Route::get('/dashboardAdminTenant', [DashboardAdminTenantController::class, 'index'])->name('dashboardAdminTenant');
 
 Route::get('/buatRuangan', [buatRuanganController::class, 'index'])->name('buatRuangan')->middleware('auth');
 
 Route::get('/buatRuangan', [buatRuanganController::class, 'index'])->name('buatRuangan');
-
-Route::get('/buatKendaraan', [buatKendaraanController::class, 'index'])->name('buatKendaraan');
 
 Route::get('/daftarRuangan', [daftarRuanganController::class, 'index'])->name('daftarRuangan')->middleware('auth');
 
@@ -54,3 +51,12 @@ Route::get('/verifikasiBookingRuangan', [verifikasiBookingRuanganController::cla
 
 Route::get('/riwayatBookingRuangan', [riwayatBookingRuanganController::class, 'index'])->name('riwayatBookingRuangan');
 
+
+#Kendaraan
+Route::get('/dashboardAdminKendaraan', [DashboardAdminKendaraanController::class, 'index'])->name('dashboardAdminKendaraan');
+
+Route::get('/buatKendaraan', [buatKendaraanController::class, 'index'])->name('buatKendaraan');
+
+
+#Tenant
+Route::get('/dashboardAdminTenant', [DashboardAdminTenantController::class, 'index'])->name('dashboardAdminTenant');
