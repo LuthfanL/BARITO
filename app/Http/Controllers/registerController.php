@@ -19,6 +19,7 @@ class registerController extends Controller
             'nik' => 'required|string|size:16',
             'name' => 'required|string|max:30',
             'alamat' => 'required|string|max:50',
+            'noHP' => 'required|string|max:13|regex:/^08[0-9]{8,11}$/',
             'email' => 'required|email|max:50',
             'password' => 'required|string|between:8,10|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/|regex:/[@$!%*?&]/',
             'konfirmasiPassword' => 'required|string|between:8,10',
@@ -26,6 +27,8 @@ class registerController extends Controller
             'nik.required' => 'NIK tidak boleh kosong!',
             'name.required' => 'Nama tidak boleh kosong!',
             'alamat.required' => 'Alamat tidak boleh kosong!',
+            'noHP.required' => 'Nomor Whatsapp tidak boleh kosong!',
+            'noHP.regex' => 'Format nomor Whatsapp harus dimulai dengan 08!',
             'email.required' => 'Email tidak boleh kosong!',
             'password.required' => 'Password tidak boleh kosong!',
             'password.regex' => 'Password harus mengandung huruf besar, huruf kecil, angka, dan simbol',
@@ -50,9 +53,9 @@ class registerController extends Controller
             'nik' => $validate['nik'],
             'name' => $validate['name'],
             'alamat' => $validate['alamat'],
+            'noHP' => $validate['noHP'],
             'email' => $validate['email'],
             'password' => hash::make($validate['password']),
-            'konfirmasiPassword' => hash::make($validate['konfirmasiPassword'])
         ]);
 
         return redirect()->route('login')->with('success', 'Berhasil Mendaftar! Silahkan login.');

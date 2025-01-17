@@ -18,11 +18,12 @@ class pemTenant extends Model
     
     protected $fillable = [
         'idCustomer',
-        'idRuangan',
+        'namaEvent',
         'idAdmin',
-        'tglPeminjaman',
+        'namaTenant',
+        'tipeTenant',
+        'tglMulai',
         'tglSelesai',
-        'status',
         'buktiBayar',
     ];
 

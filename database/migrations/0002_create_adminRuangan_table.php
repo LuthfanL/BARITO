@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('adminRuangan', function (Blueprint $table) {
             $table->char('idAdmin',8)->primary();
             $table->string('name', 30);
+            $table->string('noHP', 13);
             $table->string('email', 50)->unique();
             $table->string('password', 255);
             $table->timestamps();
