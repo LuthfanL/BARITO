@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer('cc');
             $table->integer('tahunKeluar');
             $table->string('foto');
+            $table->integer('biayaSewa');
             $table->timestamps();
         });
     }

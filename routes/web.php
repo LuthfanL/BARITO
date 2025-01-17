@@ -4,12 +4,17 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\loginController;
 use App\Http\Controllers\registerController;
 use App\Http\Controllers\homeController;
+use App\Http\Controllers\profilController;
 use App\Http\Controllers\dashboardAdminRuanganController;
 use App\Http\Controllers\dashboardAdminKendaraanController;
 use App\Http\Controllers\dashboardAdminTenantController;
 use App\Http\Controllers\buatRuanganController;
+use App\Http\Controllers\buatKendaraanController;
 use App\Http\Controllers\daftarRuanganController;
-use App\Http\Controllers\profilController;
+use App\Http\Controllers\daftarKendaraanController;
+use App\Http\Controllers\verifikasiBookingRuanganController;
+use App\Http\Controllers\riwayatBookingRuanganController;
+
 
 Route::get('/', function () {
     return view('home');
@@ -35,5 +40,13 @@ Route::get('/dashboardAdminTenant', [DashboardAdminTenantController::class, 'ind
 
 Route::get('/buatRuangan', [buatRuanganController::class, 'index'])->name('buatRuangan');
 
+Route::get('/buatKendaraan', [buatKendaraanController::class, 'index'])->name('buatKendaraan');
+
 Route::get('/daftarRuangan', [daftarRuanganController::class, 'index'])->name('daftarRuangan');
+
+Route::get('/daftarKendaraan', [daftarKendaraanController::class, 'index'])->name('daftarKendaraan');
+
+Route::get('/verifikasiBookingRuangan', [verifikasiBookingRuanganController::class, 'index'])->name('verifikasiBookingRuangan');
+
+Route::get('/riwayatBookingRuangan', [riwayatBookingRuanganController::class, 'index'])->name('riwayatBookingRuangan');
 

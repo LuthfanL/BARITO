@@ -17,18 +17,19 @@ class ruangan extends Model
     
     protected $fillable = [
         'idRuangan',
-        'nama',
-        'lokasi',
-        'podium',
-        'meja',
-        'kursi',
-        'sound',
-        'ac',
-        'proyektor',
-        'luas',
-        'deskripsi',
-        'lantai',
-        'foto',
+        'nama', 
+        'lokasi', 
+        'podium', 
+        'meja', 
+        'kursi', 
+        'sound', 
+        'ac', 
+        'proyektor', 
+        'luas', 
+        'deskripsi', 
+        'lantai', 
+        'foto', 
+        'biayaSewa', 
     ];
 
     public function pemRuangan()

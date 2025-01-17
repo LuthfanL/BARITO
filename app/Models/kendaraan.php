@@ -17,15 +17,16 @@ class kendaraan extends Model
     
     protected $fillable = [
         'platNomor',
-        'nama',
-        'jumlahKursi',
-        'tv',
+        'nama', 
+        'jumlahKursi', 
+        'tv', 
         'sound',
-        'ac',
-        'deskripsi',
-        'cc',
-        'tahunKeluaran',
-        'foto',
+        'ac', 
+        'deskripsi', 
+        'cc', 
+        'tahunKeluaran', 
+        'foto', 
+        'biayaSewa', 
     ];
 
     public function pemKendaraan()
