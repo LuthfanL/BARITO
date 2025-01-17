@@ -25,6 +25,7 @@ class kendaraan extends Model
         'deskripsi',
         'cc',
         'tahunKeluaran',
+        'foto',
     ];
 
     public function pemKendaraan()

@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('luas', 10);
             $table->string('deskripsi', 50);
             $table->integer('lantai');
+            $table->string('foto');
             $table->timestamps();
         });
     }

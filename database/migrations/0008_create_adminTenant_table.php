@@ -15,7 +15,7 @@ return new class extends Migration
             $table->char('idAdmin',8)->primary();
             $table->string('name', 30);
             $table->string('email', 50)->unique();
-            $table->string('password', 10);
+            $table->string('password', 255);
             $table->timestamps();
         });
     }

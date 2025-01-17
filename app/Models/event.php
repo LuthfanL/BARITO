@@ -23,6 +23,7 @@ class event extends Model
         'nBarang',
         'nJasa',
         'deskripsi',
+        'foto',
     ];
 
     public function pemTenant()

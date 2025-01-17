@@ -23,6 +23,7 @@ class pemRuangan extends Model
         'tglPeminjaman',
         'tglSelesai',
         'status',
+        'buktiBayar',
     ];
 
     public function customer()

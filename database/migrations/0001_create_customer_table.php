@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('name', 30);
             $table->string('alamat', 50);
             $table->string('email', 50)->unique();
-            $table->string('password', 10);
+            $table->string('password', 255);
+            $table->string('konfirmasiPassword', 255);
             $table->rememberToken();
             $table->timestamps();
         });

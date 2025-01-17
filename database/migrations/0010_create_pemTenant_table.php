@@ -21,6 +21,7 @@ return new class extends Migration
             $table->date('tglMulai');
             $table->date('tglSelesai');
             $table->integer('biayaSewa');
+            $table->string('buktiBayar');
             $table->foreign('idCustomer')->references('NIK')->on('customer')->onDelete('cascade');
             $table->foreign('namaEvent')->references('namaEvent')->on('event')->onDelete('cascade');
             $table->foreign('idAdmin')->references('idAdmin')->on('adminTenant')->onDelete('cascade');

@@ -23,6 +23,7 @@ class pemTenant extends Model
         'tglPeminjaman',
         'tglSelesai',
         'status',
+        'buktiBayar',
     ];
 
     public function customer()

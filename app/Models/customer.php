@@ -22,6 +22,7 @@ class customer extends Authenticatable
         'alamat',
         'email',
         'password',
+        'konrfirmasiPassword',
     ];
 
     protected $hidden = [

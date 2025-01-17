@@ -16,10 +16,14 @@ Route::get('/', function () {
 });
 
 Route::get('/login', [loginController::class, 'index'])->name('login');
+Route::post('/login', [loginController::class, 'login'])->name('masuk');
+Route::get('/lupaPassword', [loginController::class, 'lupaPW'])->name('lupaPW');
+Route::post('/lupaPassword', [loginController::class, 'updatePW'])->name('updatePW');
 
 Route::get('/register', [registerController::class, 'index'])->name('register');
+Route::post('/registrasi', [registerController::class, 'store'])->name('registrasi');
 
-Route::get('/profil', [profilController::class, 'index'])->name('profil');
+Route::get('/profile', [profilController::class, 'index'])->middleware('auth');
 
 Route::get('/home', [homeController::class, 'index'])->name('home');
 

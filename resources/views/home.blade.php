@@ -73,6 +73,11 @@
             </span>
         </button>
     </div>
+    @if(session('success'))
+        <div class="bg-cyan-400 text-black p-4 mb-4 rounded">
+            {{ session('success') }}
+        </div>
+    @endif
 
     <!-- Galeri Ruangan -->
     <div class="flex justify-center pt-10">
