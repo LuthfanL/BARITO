@@ -45,8 +45,6 @@ Route::get('/buatRuangan', [buatRuanganController::class, 'index'])->name('buatR
 
 Route::get('/daftarRuangan', [daftarRuanganController::class, 'index'])->name('daftarRuangan')->middleware('auth');
 
-Route::get('/daftarKendaraan', [daftarKendaraanController::class, 'index'])->name('daftarKendaraan');
-
 Route::get('/verifikasiBookingRuangan', [verifikasiBookingRuanganController::class, 'index'])->name('verifikasiBookingRuangan');
 
 Route::get('/riwayatBookingRuangan', [riwayatBookingRuanganController::class, 'index'])->name('riwayatBookingRuangan');
@@ -56,6 +54,8 @@ Route::get('/riwayatBookingRuangan', [riwayatBookingRuanganController::class, 'i
 Route::get('/dashboardAdminKendaraan', [DashboardAdminKendaraanController::class, 'index'])->name('dashboardAdminKendaraan');
 
 Route::get('/buatKendaraan', [buatKendaraanController::class, 'index'])->name('buatKendaraan');
+
+Route::get('/daftarKendaraan', [daftarKendaraanController::class, 'index'])->name('daftarKendaraan');
 
 
 #Tenant
