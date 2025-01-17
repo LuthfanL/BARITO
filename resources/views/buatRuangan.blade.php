@@ -81,7 +81,7 @@
         <div class="flex-grow">
 
             <!-- Navbar -->
-            @include('components.navbaradmin')
+            @include('components.navbarAdminRuangan')
 
             <!-- Main Content -->
             <div class="px-8 pt-8 pb-8 flex justify-center items-center">

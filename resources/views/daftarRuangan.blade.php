@@ -45,7 +45,7 @@
         <div class="flex-grow">
 
             <!-- Navbar -->
-            @include('components.navbaradmin')
+            @include('components.navbarAdminRuangan')
 
             <!-- Main Content -->
             <div class="px-8 pt-8 pb-8 flex justify-center items-center">
@@ -179,7 +179,7 @@
                                 <td class="text-center">
                                     <div class="flex flex-col gap-2">
                                         <button class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Edit</button>
-                                        <button class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Hapus</button>
+                                        <button data-modal-target="modal-hapus" data-modal-toggle="modal-hapus" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Hapus</button>
                                     </div>
                                 </td>
                             </tr>
@@ -365,6 +365,25 @@
                 <!-- Modal footer -->
                 <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b">
                     <button data-modal-hide="modal-foto" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center">Kembali</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Hapus -->
+    <div id="modal-hapus" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative p-4 w-full max-w-xl max-h-full">
+            <div class="relative bg-white rounded-lg shadow">
+                <div class="p-4 md:p-5 text-center">
+                    <svg class="mx-auto mb-4 text-gray-400 w-16 h-16" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                    </svg>
+                    <h1 class="mb-5 text-lg font-bold text-gray-900">Konfirmasi Hapus Ruangan</h1>
+                    <p class="mb-5 text-m font-normal text-gray-500">Apakah Anda yakin ingin menghapus ruangan ini?</p>
+                    <button data-modal-hide="modal-hapus" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                        Hapus
+                    </button>
+                    <button data-modal-hide="modal-hapus" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Kembali</button>
                 </div>
             </div>
         </div>

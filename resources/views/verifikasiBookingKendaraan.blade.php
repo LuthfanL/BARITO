@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verifikasi Booking Ruangan</title>
+    <title>Verifikasi Booking Kendaraan</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMJTVF1a1wMA2gO/YHbx+fyfJhN/0Q5ntv7zYY" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css"  rel="stylesheet" />
@@ -34,22 +34,22 @@
 <body class="bg-white">
     <div class="flex min-h-screen">
         <!-- Sidebar -->
-        @include('components.sidebarAdminRuangan')
+        @include('components.sidebarAdminKendaraan')
 
         <!-- Content -->
         <div class="flex-grow">
 
             <!-- Navbar -->
-            @include('components.navbarAdminRuangan')
+            @include('components.navbarAdminKendaraan')
 
             <!-- Main Content -->
             <div class="px-8 pt-8 pb-8 flex justify-center items-center">
                 <div class="max-w-full w-full">
                     <!-- Judul Page -->
                     <div class="flex justify-center text-center pb-6">
-                        <h1 class="font-bold text-2xl">Verifikasi Booking Ruangan</h1>
+                        <h1 class="font-bold text-2xl">Verifikasi Booking Kendaraan</h1>
                     </div>
-                    <!-- Cari Ruangan -->
+                    <!-- Cari Booking -->
                     <form class=" w-full mx-auto">   
                         <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Cari Booking</label>
                         <div class="relative">
@@ -101,7 +101,7 @@
                                 </th>
                                 <th>
                                     <span class="flex items-center">
-                                        Ruangan
+                                        Nama Kendaraan
                                         <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4"/>
                                         </svg>
@@ -145,13 +145,13 @@
                                 <!-- No -->
                                 <td>1</td>
                                 <!-- ID. Booking -->
-                                <td>R12</td>
+                                <td>K12</td>
                                 <!-- Nama Pemohon -->
                                 <td>Mulyono</td>
                                 <!-- No. Whatapps -->
                                 <td>082134554322</td>
                                 <!-- Ruangan -->
-                                <td>Ruang Lokakrida</td>
+                                <td>Toyota Innova</td>
                                 <!-- Tanggal Pinjam -->
                                 <td class="text-center"> 
                                     14/03/2025
@@ -178,10 +178,10 @@
                             </tr>
                             <tr>
                                 <td>2</td>
-                                <td>R11</td>
+                                <td>K11</td>
                                 <td>Pujiono</td>
                                 <td>082134554322</td>
-                                <td>Ruang Komisi A</td>
+                                <td>Pajero</td>
                                 <td class="text-center"> 
                                     12/02/2025
                                 </td>
@@ -203,10 +203,10 @@
                             </tr>
                             <tr>
                                 <td>3</td>
-                                <td>R10</td>
+                                <td>K10</td>
                                 <td>Bobby</td>
                                 <td>08213432233</td>
-                                <td>Ruang Komisi B</td>
+                                <td>Elf</td>
                                 <td class="text-center"> 
                                     10/02/2025
                                 </td>
@@ -251,8 +251,12 @@
                         <textarea id="keperluan-acara" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-500 p-3" readonly>Acara reuni akbar TK</textarea>
                     </div>
                     <div>
-                        <label for="keterangan-layout" class="block text-sm font-medium text-gray-900 mb-2">Keterangan (Setting Layout Tempat)</label>
-                        <textarea id="keterangan-layout" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-500 p-3" readonly>Layout layaknya acara pertemuan besar dengan banyak meja dan kursi untuk peserta reuni</textarea>
+                        <label for="keterangan-layout" class="block text-sm font-medium text-gray-900 mb-2">Lokasi Acara</label>
+                        <textarea id="keterangan-layout" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-500 p-3" readonly>Kebondalem Kendal</textarea>
+                    </div>
+                    <div>
+                        <label for="keterangan-layout" class="block text-sm font-medium text-gray-900 mb-2">Titik Jemput</label>
+                        <textarea id="keterangan-layout" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-500 p-3" readonly>Fakultas Sains Matematika, Undip</textarea>
                     </div>
                 </div>
                 <!-- Modal footer -->
@@ -272,7 +276,7 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                     </svg>
                     <h1 class="mb-5 text-lg font-bold text-gray-900">Konfirmasi Persetujuan Booking</h1>
-                    <p class="mb-5 text-m font-normal text-gray-500">Apakah Anda yakin ingin menyetujui booking ruangan ini? Pastikan semua detail booking telah sesuai sebelum melanjutkan.</p>
+                    <p class="mb-5 text-m font-normal text-gray-500">Apakah Anda yakin ingin menyetujui booking kendaraan ini? Pastikan semua detail booking telah sesuai sebelum melanjutkan.</p>
                     <button data-modal-hide="modal-setujui" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
                         Setujui
                     </button>
@@ -291,7 +295,7 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                     </svg>
                     <h1 class="mb-5 text-lg font-bold text-gray-900">Konfirmasi Penolakan Booking</h1>
-                    <p class="mb-5 text-m font-normal text-gray-500">Apakah Anda yakin ingin menolak booking ruangan ini? Tindakan ini akan memberi tahu customer bahwa booking tidak dapat diproses.</p>
+                    <p class="mb-5 text-m font-normal text-gray-500">Apakah Anda yakin ingin menolak booking kendaraan ini? Tindakan ini akan memberi tahu customer bahwa booking tidak dapat diproses.</p>
                     <button data-modal-hide="modal-tolak" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
                         Tolak
                     </button>

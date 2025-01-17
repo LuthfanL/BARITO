@@ -41,7 +41,7 @@
         <div class="flex-grow">
 
             <!-- Navbar -->
-            @include('components.navbaradmin')
+            @include('components.navbarAdminKendaraan')
 
             <!-- Welcome Back -->
             <div class="pl-8 pt-8 pb-3 flex justify-left items-center">

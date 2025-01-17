@@ -40,7 +40,7 @@
         <div class="flex-grow">
 
             <!-- Navbar -->
-            @include('components.navbaradmin')
+            @include('components.navbarAdminRuangan')
 
             <!-- Main Content -->
             <div class="px-8 pt-8 pb-8 flex justify-center items-center">
@@ -135,7 +135,10 @@
                                 </th>
                                 <th>
                                     <span class="flex items-center">
-                                        Tindakan
+                                        Status
+                                        <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4"/>
+                                        </svg>
                                     </span>
                                 </th>
                             </tr>
@@ -165,10 +168,10 @@
                                     BuktiPembayaran.jpg
                                 </td>
                                 <!-- Info Lain -->
-                                <td class="text-center"> 
+                                <td class="flex justify-center items-center text-center"> 
                                     <button data-modal-target="detail-booking" data-modal-toggle="detail-booking" type="button" class="block px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Detail</button>
                                 </td>
-                                <!-- Tindakan -->
+                                <!-- Status -->
                                 <td class="text-center">
                                     <div class="flex flex-col gap-2">
                                         <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 text-white">Disetujui
@@ -191,7 +194,7 @@
                                 <td class="text-center">
                                     BuktiPembayaran.jpg
                                 </td>
-                                <td class="text-center"> 
+                                <td class="flex justify-center items-center text-center"> 
                                     <button data-modal-target="detail-booking" data-modal-toggle="detail-booking" type="button" class="block px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Detail</button>
                                 </td>
                                 <td class="text-center">

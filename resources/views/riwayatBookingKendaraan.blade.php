@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verifikasi Booking Ruangan</title>
+    <title>Riwayat Booking Kendaraan</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMJTVF1a1wMA2gO/YHbx+fyfJhN/0Q5ntv7zYY" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css"  rel="stylesheet" />
@@ -34,22 +34,22 @@
 <body class="bg-white">
     <div class="flex min-h-screen">
         <!-- Sidebar -->
-        @include('components.sidebarAdminRuangan')
+        @include('components.sidebarAdminKendaraan')
 
         <!-- Content -->
         <div class="flex-grow">
 
             <!-- Navbar -->
-            @include('components.navbarAdminRuangan')
+            @include('components.navbarAdminKendaraan')
 
             <!-- Main Content -->
             <div class="px-8 pt-8 pb-8 flex justify-center items-center">
                 <div class="max-w-full w-full">
                     <!-- Judul Page -->
                     <div class="flex justify-center text-center pb-6">
-                        <h1 class="font-bold text-2xl">Verifikasi Booking Ruangan</h1>
+                        <h1 class="font-bold text-2xl">Riwayat Booking Kendaraan</h1>
                     </div>
-                    <!-- Cari Ruangan -->
+                    <!-- Cari Booking -->
                     <form class=" w-full mx-auto">   
                         <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Cari Booking</label>
                         <div class="relative">
@@ -101,7 +101,7 @@
                                 </th>
                                 <th>
                                     <span class="flex items-center">
-                                        Ruangan
+                                        Nama Kendaraan
                                         <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4"/>
                                         </svg>
@@ -135,7 +135,10 @@
                                 </th>
                                 <th>
                                     <span class="flex items-center">
-                                        Tindakan
+                                        Status
+                                        <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4"/>
+                                        </svg>
                                     </span>
                                 </th>
                             </tr>
@@ -145,84 +148,59 @@
                                 <!-- No -->
                                 <td>1</td>
                                 <!-- ID. Booking -->
-                                <td>R12</td>
+                                <td>K1</td>
                                 <!-- Nama Pemohon -->
-                                <td>Mulyono</td>
+                                <td>Rocky Gerung</td>
                                 <!-- No. Whatapps -->
-                                <td>082134554322</td>
+                                <td>08213255677</td>
                                 <!-- Ruangan -->
-                                <td>Ruang Lokakrida</td>
+                                <td>Bus</td>
                                 <!-- Tanggal Pinjam -->
                                 <td class="text-center"> 
-                                    14/03/2025
+                                    11/01/2025
                                 </td>
                                 <!-- Tanggal Selesai -->
                                 <td class="text-center">
-                                    15/03/2025
+                                    12/01/2025
                                 </td>
                                 <!-- Bukti Pembayaran -->
                                 <td class="text-center">
                                     BuktiPembayaran.jpg
                                 </td>
                                 <!-- Info Lain -->
-                                <td class="flex justify-center items-center text-center mt-5"> 
+                                <td class="flex justify-center items-center text-center"> 
                                     <button data-modal-target="detail-booking" data-modal-toggle="detail-booking" type="button" class="block px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Detail</button>
                                 </td>
-                                <!-- Tindakan -->
+                                <!-- Status -->
                                 <td class="text-center">
                                     <div class="flex flex-col gap-2">
-                                        <button data-modal-target="modal-setujui" data-modal-toggle="modal-setujui" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Setujui</button>
-                                        <button data-modal-target="modal-tolak" data-modal-toggle="modal-tolak" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Tolak</button>
+                                        <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 text-white">Disetujui
+                                        </div>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>2</td>
-                                <td>R11</td>
-                                <td>Pujiono</td>
-                                <td>082134554322</td>
-                                <td>Ruang Komisi A</td>
+                                <td>K2</td>
+                                <td>Yanto</td>
+                                <td>0857899457</td>
+                                <td>Toyota Kijang</td>
                                 <td class="text-center"> 
-                                    12/02/2025
+                                    05/01/2025
                                 </td>
                                 <td class="text-center">
-                                    12/02/2025
+                                    06/01/2025
                                 </td>
                                 <td class="text-center">
                                     BuktiPembayaran.jpg
                                 </td>
-                                <td class="flex justify-center items-center text-center mt-5"> 
-                                    <button data-modal-target="modal-fasilitas" data-modal-toggle="modal-fasilitas" type="button" class="block px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Detail</button>
-                                </td>
-                                <td class="text-center">
-                                    <div class="flex flex-col gap-2">
-                                        <button class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Setujui</button>
-                                        <button class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Tolak</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>R10</td>
-                                <td>Bobby</td>
-                                <td>08213432233</td>
-                                <td>Ruang Komisi B</td>
-                                <td class="text-center"> 
-                                    10/02/2025
-                                </td>
-                                <td class="text-center">
-                                    11/02/2025
-                                </td>
-                                <td class="text-center">
-                                    BuktiPembayaran.jpg
-                                </td>
-                                <td class="flex justify-center items-center text-center mt-5"> 
+                                <td class="flex justify-center items-center text-center"> 
                                     <button data-modal-target="detail-booking" data-modal-toggle="detail-booking" type="button" class="block px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Detail</button>
                                 </td>
                                 <td class="text-center">
                                     <div class="flex flex-col gap-2">
-                                        <button class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Setujui</button>
-                                        <button class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Tolak</button>
+                                        <div class="px-3 py-1 rounded-lg  font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700  text-white">Ditolak
+                                        </div>
                                     </div>
                                 </td>
                             </tr>
@@ -251,51 +229,17 @@
                         <textarea id="keperluan-acara" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-500 p-3" readonly>Acara reuni akbar TK</textarea>
                     </div>
                     <div>
-                        <label for="keterangan-layout" class="block text-sm font-medium text-gray-900 mb-2">Keterangan (Setting Layout Tempat)</label>
-                        <textarea id="keterangan-layout" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-500 p-3" readonly>Layout layaknya acara pertemuan besar dengan banyak meja dan kursi untuk peserta reuni</textarea>
+                        <label for="keterangan-layout" class="block text-sm font-medium text-gray-900 mb-2">Lokasi Acara</label>
+                        <textarea id="keterangan-layout" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-500 p-3" readonly>Kebondalem Kendal</textarea>
+                    </div>
+                    <div>
+                        <label for="keterangan-layout" class="block text-sm font-medium text-gray-900 mb-2">Titik Jemput</label>
+                        <textarea id="keterangan-layout" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-500 p-3" readonly>Fakultas Sains Matematika, Undip</textarea>
                     </div>
                 </div>
                 <!-- Modal footer -->
                 <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b">
                     <button data-modal-hide="detail-booking" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Kembali</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Setujui -->
-    <div id="modal-setujui" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-        <div class="relative p-4 w-full max-w-xl max-h-full">
-            <div class="relative bg-white rounded-lg shadow">
-                <div class="p-4 md:p-5 text-center">
-                    <svg class="mx-auto mb-4 text-gray-400 w-16 h-16" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                    </svg>
-                    <h1 class="mb-5 text-lg font-bold text-gray-900">Konfirmasi Persetujuan Booking</h1>
-                    <p class="mb-5 text-m font-normal text-gray-500">Apakah Anda yakin ingin menyetujui booking ruangan ini? Pastikan semua detail booking telah sesuai sebelum melanjutkan.</p>
-                    <button data-modal-hide="modal-setujui" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                        Setujui
-                    </button>
-                    <button data-modal-hide="modal-setujui" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Kembali</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Tolak -->
-    <div id="modal-tolak" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-        <div class="relative p-4 w-full max-w-xl max-h-full">
-            <div class="relative bg-white rounded-lg shadow">
-                <div class="p-4 md:p-5 text-center">
-                    <svg class="mx-auto mb-4 text-gray-400 w-16 h-16" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                    </svg>
-                    <h1 class="mb-5 text-lg font-bold text-gray-900">Konfirmasi Penolakan Booking</h1>
-                    <p class="mb-5 text-m font-normal text-gray-500">Apakah Anda yakin ingin menolak booking ruangan ini? Tindakan ini akan memberi tahu customer bahwa booking tidak dapat diproses.</p>
-                    <button data-modal-hide="modal-tolak" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                        Tolak
-                    </button>
-                    <button data-modal-hide="modal-tolak" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Kembali</button>
                 </div>
             </div>
         </div>
