@@ -19,6 +19,7 @@ class adminRuangan extends Authenticatable
     protected $fillable = [
         'idAdmin',
         'name',
+        'noHP',
         'email',
         'password',
     ];

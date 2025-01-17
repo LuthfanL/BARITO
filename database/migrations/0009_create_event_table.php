@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('nJasa');
             $table->string('deskripsi', 50);
             $table->string('foto');
+            $table->integer('hargaTenant');
             $table->timestamps();
         });
     }

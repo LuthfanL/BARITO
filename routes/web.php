@@ -23,7 +23,7 @@ Route::post('/lupaPassword', [loginController::class, 'updatePW'])->name('update
 Route::get('/register', [registerController::class, 'index'])->name('register');
 Route::post('/registrasi', [registerController::class, 'store'])->name('registrasi');
 
-Route::get('/profile', [profilController::class, 'index'])->middleware('auth');
+Route::get('/profile', [profilController::class, 'index'])->name('profile')->middleware('auth');
 
 Route::get('/home', [homeController::class, 'index'])->name('home');
 
