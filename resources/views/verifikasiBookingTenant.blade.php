@@ -16,7 +16,7 @@
             border-collapse: collapse; /* Mengurangi jarak antar border */
         }
         #default-table th, #default-table td {
-            padding: 8px 7px; /* Mengurangi padding antar sel */
+            padding: 8px 4px; /* Mengurangi padding antar sel */
             text-align: center;
             white-space: nowrap; /* Membatasi teks agar tidak wrap */
         }
@@ -152,6 +152,11 @@
                                 </th>
                                 <th>
                                     <span class="flex items-center">
+                                        Pembatalan
+                                    </span>
+                                </th>
+                                <th>
+                                    <span class="flex items-center">
                                         Tindakan
                                     </span>
                                 </th>
@@ -185,6 +190,12 @@
                                 <td class="text-center">
                                     BuktiPembayaran.jpg
                                 </td>
+                                <!-- Alasan Pembatalan -->
+                                <td class=" items-center text-center mt-5"> 
+                                    <div class="flex justify-center ">
+                                        <button data-modal-target="detail-batal" data-modal-toggle="detail-batal" type="button" class="block px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-700 via-red-800 to-red-900 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Alasan</button>
+                                    </div>
+                                </td>
                                 <!-- Tindakan -->
                                 <td class="text-center">
                                     <div class="flex flex-col gap-2">
@@ -210,6 +221,11 @@
                                 <td class="text-center">
                                     BuktiPembayaran.jpg
                                 </td>
+                                <td class="items-center text-center mt-5"> 
+                                    <div class="flex justify-center ">
+                                        <button data-modal-target="detail-batal" data-modal-toggle="detail-batal" type="button" class="px-3 py-1 rounded-lg cursor-not-allowed font-medium bg-gradient-to-l from-red-700 via-red-800 to-red-900 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white pointer-events-none opacity-50">Alasan</button>
+                                    </div>
+                                </td>
                                 <td class="text-center">
                                     <div class="flex flex-col gap-2">
                                         <button data-modal-target="modal-setujui" data-modal-toggle="modal-setujui" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Setujui</button>
@@ -233,6 +249,11 @@
                                 </td>
                                 <td class="text-center">
                                     BuktiPembayaran.jpg
+                                </td>
+                                <td class="items-center text-center mt-5"> 
+                                    <div class="flex justify-center ">
+                                        <button data-modal-target="detail-batal" data-modal-toggle="detail-batal" type="button" class="px-3 py-1 rounded-lg cursor-not-allowed font-medium bg-gradient-to-l from-red-700 via-red-800 to-red-900 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white pointer-events-none opacity-50">Alasan</button>
+                                    </div>
                                 </td>
                                 <td class="text-center">
                                     <div class="flex flex-col gap-2">
@@ -281,6 +302,32 @@
                         Tolak
                     </button>
                     <button data-modal-hide="modal-tolak" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Kembali</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Alasan Pembatalan -->
+    <div id="detail-batal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative p-4 w-full max-w-2xl max-h-full">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow">
+                <!-- Modal header -->
+                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
+                    <h3 class="text-xl font-semibold text-gray-900">
+                        Booking Dibatalkan Customer
+                    </h3>
+                </div>
+                <!-- Modal body -->
+                <div class="p-4 md:p-5 space-y-6">
+                    <div>
+                        <label for="keperluan-acara" class="block text-sm font-medium text-gray-900 mb-2">Alasan Pembatalan</label>
+                        <textarea id="keperluan-acara" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-500 p-3" readonly>Ada rencana lain</textarea>
+                    </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b">
+                    <button data-modal-hide="detail-batal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Kembali</button>
                 </div>
             </div>
         </div>

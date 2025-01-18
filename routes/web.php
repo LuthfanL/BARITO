@@ -7,6 +7,12 @@ use App\Http\Controllers\homeController;
 use App\Http\Controllers\homeBookingRuanganController;
 use App\Http\Controllers\homeBookingKendaraanController;
 use App\Http\Controllers\homePengelolaanTenantController;
+use App\Http\Controllers\custStatusBookingRuanganController;
+use App\Http\Controllers\custStatusBookingKendaraanController;
+use App\Http\Controllers\custStatusBookingTenantController;
+use App\Http\Controllers\kontakRuanganController;
+use App\Http\Controllers\kontakKendaraanController;
+use App\Http\Controllers\kontakTenantController;
 use App\Http\Controllers\profilController;
 use App\Http\Controllers\dashboardAdminRuanganController;
 use App\Http\Controllers\dashboardAdminKendaraanController;
@@ -48,11 +54,26 @@ Route::get('/profile', [profilController::class, 'index'])->name('profile')->mid
 # Customer Ruangan ----------------------------------------------------
 Route::get('/homeBookingRuangan', [homeBookingRuanganController::class, 'index'])->name('homeBookingRuangan');
 
+Route::get('/custStatusBookingRuangan', [custStatusBookingRuanganController::class, 'index'])->name('custStatusBookingRuangan');
+
+Route::get('/kontakRuangan', [kontakRuanganController::class, 'index'])->name('kontakRuangan');
+
+
 # Customer Kendaraan ----------------------------------------------------
 Route::get('/homeBookingKendaraan', [homeBookingKendaraanController::class, 'index'])->name('homeBookingKendaraan');
 
+Route::get('/custStatusBookingKendaraan', [custStatusBookingKendaraanController::class, 'index'])->name('custStatusBookingKendaraan');
+
+Route::get('/kontakKendaraan', [kontakKendaraanController::class, 'index'])->name('kontakKendaraan');
+
+
 # Customer tenant ----------------------------------------------------
 Route::get('/homePengelolaanTenant', [homePengelolaanTenantController::class, 'index'])->name('homePengelolaanTenant');
+
+Route::get('/custStatusBookingTenant', [custStatusBookingTenantController::class, 'index'])->name('custStatusBookingTenant');
+
+Route::get('/kontakTenant', [kontakTenantController::class, 'index'])->name('kontakTenant');
+
 
 # Admin Ruangan -----------------------------------------------------
 Route::get('/dashboardAdminRuangan', [DashboardAdminRuanganController::class, 'index'])->name('dashboardAdminRuangan');
