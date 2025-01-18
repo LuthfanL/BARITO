@@ -1,13 +1,24 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-<style>
-    body{
-        font-family: 'Poppins', sans-serif;
-    }
-</style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .active {
+        color: #1d4ed8; /* Biru */
+        font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
 <div class="flex-grow pb-18">
     <nav class="bg-white fixed w-full z-20 top-0 start-0 border-b border-gray-200 shadow-lg">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between p-4">
@@ -98,20 +109,38 @@
 
             <!-- Menu items in the center -->
             {{-- <div class="absolute inset-0 flex justify-center items-center hidden md:flex"> --}}
-            <div class="absolute inset-0 flex justify-center items-center hidden md:flex md:w-auto md:order-1" id="navbar-sticky">
-                <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white">
-                    <li>
-                        <a href="#" class="block py-2 px-3 text-lg text-gray-500 font-semibold hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-800 md:p-0">Booking Ruangan</a>
-                    </li>
-                    <li>
-                        <a href="#" class="block py-2 px-3 text-lg text-gray-500 font-semibold hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-800 md:p-0">Booking Kendaraan</a>
-                    </li>
-                    <li>
-                        <a href="#" class="block py-2 px-3 text-lg text-gray-500 font-semibold hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-800 md:p-0">Pengelolaan Tenant</a>
-                    </li>
-                </ul>
-            </div>
+                <div class="absolute inset-0 flex justify-center items-center hidden md:flex md:w-auto md:order-1" id="navbar-sticky">
+                    <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white">
+                        <li>
+                            <a href="homeBookingRuangan" class="block py-2 px-3 text-lg text-gray-500 font-semibold hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-800 md:p-0">Booking Ruangan</a>
+                        </li>
+                        <li>
+                            <a href="homeBookingKendaraan" class="block py-2 px-3 text-lg text-gray-500 font-semibold hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-800 md:p-0">Booking Kendaraan</a>
+                        </li>
+                        <li>
+                            <a href="homePengelolaanTenant" class="block py-2 px-3 text-lg text-gray-500 font-semibold hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-800 md:p-0">Pengelolaan Tenant</a>
+                        </li>
+                    </ul>
+                </div>
         </div>
     </nav>
 </div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const currentPage = window.location.pathname.split('/').pop(); // Ambil halaman saat ini
+        const links = document.querySelectorAll('ul li a');
+
+        links.forEach(link => {
+            if (link.getAttribute('href') === currentPage) {
+                link.classList.add('active'); // Tambahkan kelas 'active'
+            }
+        });
+    });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+
+</body>
+</html>

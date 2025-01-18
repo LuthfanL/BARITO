@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\loginController;
 use App\Http\Controllers\registerController;
 use App\Http\Controllers\homeController;
+use App\Http\Controllers\homeBookingRuanganController;
+use App\Http\Controllers\homeBookingKendaraanController;
+use App\Http\Controllers\homePengelolaanTenantController;
 use App\Http\Controllers\profilController;
 use App\Http\Controllers\dashboardAdminRuanganController;
 use App\Http\Controllers\dashboardAdminKendaraanController;
@@ -38,11 +41,20 @@ Route::get('/logout', [loginController::class, 'logout'])->name('logout');
 Route::get('/register', [registerController::class, 'index'])->name('register');
 Route::post('/registrasi', [registerController::class, 'store'])->name('registrasi');
 
-#Customer ----------------------------------------------------
+# Customer ----------------------------------------------------
 Route::get('/profile', [profilController::class, 'index'])->name('profile')->middleware('auth');
 
 
-#Ruangan -----------------------------------------------------
+# Customer Ruangan ----------------------------------------------------
+Route::get('/homeBookingRuangan', [homeBookingRuanganController::class, 'index'])->name('homeBookingRuangan');
+
+# Customer Kendaraan ----------------------------------------------------
+Route::get('/homeBookingKendaraan', [homeBookingKendaraanController::class, 'index'])->name('homeBookingKendaraan');
+
+# Customer tenant ----------------------------------------------------
+Route::get('/homePengelolaanTenant', [homePengelolaanTenantController::class, 'index'])->name('homePengelolaanTenant');
+
+# Admin Ruangan -----------------------------------------------------
 Route::get('/dashboardAdminRuangan', [DashboardAdminRuanganController::class, 'index'])->name('dashboardAdminRuangan');
 
 // Route::get('/buatRuangan', [buatRuanganController::class, 'index'])->name('buatRuangan')->middleware('auth');
@@ -56,7 +68,7 @@ Route::get('/verifikasiBookingRuangan', [verifikasiBookingRuanganController::cla
 Route::get('/riwayatBookingRuangan', [riwayatBookingRuanganController::class, 'index'])->name('riwayatBookingRuangan');
 
 
-#Kendaraan ----------------------------------------------------
+# Admin Kendaraan ----------------------------------------------------
 Route::get('/dashboardAdminKendaraan', [DashboardAdminKendaraanController::class, 'index'])->name('dashboardAdminKendaraan');
 
 Route::get('/buatKendaraan', [buatKendaraanController::class, 'index'])->name('buatKendaraan');
@@ -68,7 +80,7 @@ Route::get('/verifikasiBookingKendaraan', [verifikasiBookingKendaraanController:
 Route::get('/riwayatBookingKendaraan', [riwayatBookingKendaraanController::class, 'index'])->name('riwayatBookingKendaraan');
 
 
-#Tenant -------------------------------------------------------
+# Admin Tenant -------------------------------------------------------
 Route::get('/dashboardAdminTenant', [DashboardAdminTenantController::class, 'index'])->name('dashboardAdminTenant');
 
 Route::get('/buatEvent', [buatEventController::class, 'index'])->name('buatEvent');
