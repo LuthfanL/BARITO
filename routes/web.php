@@ -13,6 +13,9 @@ use App\Http\Controllers\custDaftarEventController;
 use App\Http\Controllers\custStatusBookingRuanganController;
 use App\Http\Controllers\custStatusBookingKendaraanController;
 use App\Http\Controllers\custStatusBookingTenantController;
+use App\Http\Controllers\custBookingRuanganController;
+use App\Http\Controllers\custBookingKendaraanController;
+use App\Http\Controllers\custBookingTenantController;
 use App\Http\Controllers\kontakRuanganController;
 use App\Http\Controllers\kontakKendaraanController;
 use App\Http\Controllers\kontakTenantController;
@@ -59,6 +62,8 @@ Route::get('/homeBookingRuangan', [homeBookingRuanganController::class, 'index']
 
 Route::get('/custDaftarRuangan', [custDaftarRuanganController::class, 'index'])->name('custDaftarRuangan');
 
+Route::get('/custBookingRuangan', [custBookingRuanganController::class, 'index'])->name('custBookingRuangan');
+
 Route::get('/custStatusBookingRuangan', [custStatusBookingRuanganController::class, 'index'])->name('custStatusBookingRuangan');
 
 Route::get('/kontakRuangan', [kontakRuanganController::class, 'index'])->name('kontakRuangan');
@@ -68,6 +73,8 @@ Route::get('/kontakRuangan', [kontakRuanganController::class, 'index'])->name('k
 Route::get('/homeBookingKendaraan', [homeBookingKendaraanController::class, 'index'])->name('homeBookingKendaraan');
 
 Route::get('/custDaftarKendaraan', [custDaftarKendaraanController::class, 'index'])->name('custDaftarKendaraan');
+
+Route::get('/custBookingKendaraan', [custBookingKendaraanController::class, 'index'])->name('custBookingKendaraan');
 
 Route::get('/custStatusBookingKendaraan', [custStatusBookingKendaraanController::class, 'index'])->name('custStatusBookingKendaraan');
 

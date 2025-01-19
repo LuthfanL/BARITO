@@ -132,9 +132,9 @@
         const currentPage = window.location.pathname;
 
         const mapping = {
-            'homeBookingRuangan': ['custDaftarRuangan', 'custStatusBookingRuangan', 'kontakRuangan'],
-            'homeBookingKendaraan': ['custDaftarKendaraan', 'custStatusBookingKendaraan', 'kontakKendaraan'],
-            'homePengelolaanTenant': ['custDaftarEvent', 'custStatusBookingTenant', 'kontakTenant']
+            'homeBookingRuangan': ['custDaftarRuangan', 'custStatusBookingRuangan', 'kontakRuangan', 'custBookingRuangan'],
+            'homeBookingKendaraan': ['custDaftarKendaraan', 'custStatusBookingKendaraan', 'kontakKendaraan', 'custBookingKendaraan'],
+            'homePengelolaanTenant': ['custDaftarEvent', 'custStatusBookingTenant', 'kontakTenant', 'custBookingKendaraan']
         };
 
         const links = document.querySelectorAll('ul li a');
