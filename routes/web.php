@@ -7,6 +7,9 @@ use App\Http\Controllers\homeController;
 use App\Http\Controllers\homeBookingRuanganController;
 use App\Http\Controllers\homeBookingKendaraanController;
 use App\Http\Controllers\homePengelolaanTenantController;
+use App\Http\Controllers\custDaftarRuanganController;
+use App\Http\Controllers\custDaftarKendaraanController;
+use App\Http\Controllers\custDaftarEventController;
 use App\Http\Controllers\custStatusBookingRuanganController;
 use App\Http\Controllers\custStatusBookingKendaraanController;
 use App\Http\Controllers\custStatusBookingTenantController;
@@ -54,6 +57,8 @@ Route::get('/profile', [profilController::class, 'index'])->name('profile')->mid
 # Customer Ruangan ----------------------------------------------------
 Route::get('/homeBookingRuangan', [homeBookingRuanganController::class, 'index'])->name('homeBookingRuangan');
 
+Route::get('/custDaftarRuangan', [custDaftarRuanganController::class, 'index'])->name('custDaftarRuangan');
+
 Route::get('/custStatusBookingRuangan', [custStatusBookingRuanganController::class, 'index'])->name('custStatusBookingRuangan');
 
 Route::get('/kontakRuangan', [kontakRuanganController::class, 'index'])->name('kontakRuangan');
@@ -62,6 +67,8 @@ Route::get('/kontakRuangan', [kontakRuanganController::class, 'index'])->name('k
 # Customer Kendaraan ----------------------------------------------------
 Route::get('/homeBookingKendaraan', [homeBookingKendaraanController::class, 'index'])->name('homeBookingKendaraan');
 
+Route::get('/custDaftarKendaraan', [custDaftarKendaraanController::class, 'index'])->name('custDaftarKendaraan');
+
 Route::get('/custStatusBookingKendaraan', [custStatusBookingKendaraanController::class, 'index'])->name('custStatusBookingKendaraan');
 
 Route::get('/kontakKendaraan', [kontakKendaraanController::class, 'index'])->name('kontakKendaraan');
@@ -69,6 +76,8 @@ Route::get('/kontakKendaraan', [kontakKendaraanController::class, 'index'])->nam
 
 # Customer tenant ----------------------------------------------------
 Route::get('/homePengelolaanTenant', [homePengelolaanTenantController::class, 'index'])->name('homePengelolaanTenant');
+
+Route::get('/custDaftarEvent', [custDaftarEventController::class, 'index'])->name('custDaftarEvent');
 
 Route::get('/custStatusBookingTenant', [custStatusBookingTenantController::class, 'index'])->name('custStatusBookingTenant');
 

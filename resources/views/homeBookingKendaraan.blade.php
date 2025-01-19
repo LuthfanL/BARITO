@@ -65,7 +65,7 @@
     <div class="w-full">
         <div class="flex justify-center mt-12 shadow-[0_0_13px_3px_rgba(0,0,0,0.1)] p-8 space-x-8 ">
             <!-- Daftar Kendaraan -->
-            <a href="" class="block transform transition-transform duration-300 hover:scale-105 group">
+            <a href="custDaftarKendaraan" class="block transform transition-transform duration-300 hover:scale-105 group">
                 <div class="bg-white-300 shadow-[0_0_12px_2px_rgba(0,0,0,0.1)] rounded-xl flex hover:shadow-xl">
                     <div class="m-3 rounded-lg outline outline-2 outline-[#00C6BF] flex items-center">
                         <div>
