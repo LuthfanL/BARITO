@@ -312,10 +312,16 @@
                         <!-- Input Keperluan Acara -->
                         <label for="keperluan-acara">Keperluan Acara</label>
                         <textarea id="keperluan-acara" name="keperluan-acara" rows="3" class="rounded-lg border border-gray-300" required></textarea>
+                        <p class="mb-4 text-xs text-gray-500">
+                            * Masukkan nama/judul acara yang akan dilaksanakan.
+                        </p>
 
                         <!-- Input Keterangan -->
                         <label for="keterangan">Keterangan (Setting Layout tempat)</label>
                         <textarea id="keterangan" name="keterangan" rows="3" class="rounded-lg border border-gray-300" required></textarea>
+                        <p class="mb-4 text-xs text-gray-500">
+                            * Masukkan keterangan setting layout tempat saat pelaksanaan acara.
+                        </p>
 
                         <!-- Input Bukti Pembayaran -->
                         <label for="bukti-bayar" class="block mb-2 text-sm font-medium text-gray-900">Upload Bukti Pembayaran</label>
