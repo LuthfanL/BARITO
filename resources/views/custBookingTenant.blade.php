@@ -276,29 +276,6 @@
                         <label for="no-whatsapp">No. Whatapps</label>
                         <input type="text" id="no-whatsapp" name="no-whatsapp" required>
 
-                        <!-- Input Tanggal -->
-                        <label for="tanggal-booking" class="block font-bold">Tanggal Booking</label>
-                        <div id="date-range-picker" date-rangepicker class="grid grid-cols-3 gap-2 items-center">
-                            <!-- Tanggal Mulai -->
-                            <div class="relative flex items-center">
-                                <svg class="w-5 h-5 absolute right-3 top-2 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 1 1 0-2Z"/>
-                                </svg>
-                                <input id="datepicker-range-start" name="start" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 p-2.5 w-full lg:w-96" placeholder="Tanggal Mulai">
-                            </div>
-
-                            <!-- Teks Separator -->
-                            <div class="text-center mb-4 text-gray-500">sampai</div>
-
-                            <!-- Tanggal Selesai -->
-                            <div class="relative flex items-center">
-                                <svg class="w-5 h-5 absolute right-3 top-2 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 1 1 0-2Z"/>
-                                </svg>
-                                <input id="datepicker-range-end" name="end" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 p-2.5 w-full lg:w-96" placeholder="Tanggal Selesai">
-                            </div>
-                        </div>
-
                         <!-- Input Nama Tenant -->
                         <label for="namaTenant">Nama Tenant</label>
                         <input type="text" id="namaTenant" name="namaTenant" required>
