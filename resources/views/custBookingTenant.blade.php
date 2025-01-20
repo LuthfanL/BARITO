@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail Booking Kendaraan</title>
+    <title>Detail Booking Tenant</title>
     <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('assets/favicon-96x96.png') }}">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script>
@@ -82,6 +82,12 @@
             color: red;
             margin-bottom: 10px;
         }
+
+        select option {
+        font-family: inherit; 
+        font-size: inherit; 
+        color: inherit;      
+        }
     </style>
 </head>
 
@@ -98,14 +104,14 @@
             <!-- Gambar dengan teks -->
             <div class="hidden" data-carousel-item>
                 <img 
-                    src="assets/bookingKendaraan.png" 
+                    src="assets/tenant.png" 
                     class="absolute w-full h-full object-cover" 
                     alt="Cover Image"
                 />
                 <!-- Teks di tengah gambar -->
                 <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
                     <h2 class="text-white text-4xl md:text-5xl font-bold drop-shadow-lg">
-                        Kendaraan Kami
+                        Event Kami
                     </h2>
                     <!-- Breadcrumb -->
                     <nav class="mt-4 flex justify-center" aria-label="Breadcrumb">
@@ -120,19 +126,19 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="homeBookingKendaraan" class="inline-flex items-center text-sm font-medium text-white hover:font-bold">
+                                <a href="homePengelolaanTenant" class="inline-flex items-center text-sm font-medium text-white hover:font-bold">
                                     <svg class="rtl:rotate-180 w-3 h-3 text-white mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
                                     </svg>
-                                    Booking Kendaraan
+                                    Pengelolaan Tenant
                                 </a>
-                            </li>
+                            </li>                            
                             <li>
-                                <a href="custDaftarKendaraan" class="inline-flex items-center text-sm font-medium text-white hover:font-bold">
+                                <a href="custDaftarEvent" class="inline-flex items-center text-sm font-medium text-white hover:font-bold">
                                     <svg class="rtl:rotate-180 w-3 h-3 text-white mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
                                     </svg>
-                                    Daftar Kendaraan
+                                    Daftar Event
                                 </a>
                             </li>
                             <li aria-current="page">
@@ -153,9 +159,9 @@
     <!-- Main Content -->
     <div class="px-24 pt-8 pb-8 flex justify-center items-center">
         <div class="relative w-full max-w-full max-h-full">
-            <!-- Nama Kendaraan -->
+            <!-- Nama Event -->
             <div class="flex justify-center mb-4">
-                <h2 class="font-bold text-3xl">Toyota Innova</h2>
+                <h2 class="font-bold text-3xl">Event A</h2>
             </div>
             <!-- Isi -->
             <div class="p-4 md:p-5">
@@ -164,7 +170,7 @@
                     <div class="space-y-4">
                         <!-- Foto Utama -->
                         <div>
-                            <h2 class="font-semibold mb-3 text-lg">Foto Kendaraan</h2>
+                            <h2 class="font-semibold mb-3 text-lg">Foto/Poster Event</h2>
                             <img id="main-image" class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/featured/image.jpg" alt="Foto Utama">
                         </div>
                         <!-- Foto di bawah -->
@@ -199,40 +205,32 @@
                         <!-- Informasi Detail -->
                         <div class="grid grid-cols-2 gap-4">
                             <div>
+                                <label for="tglMulai" class="block text-m font-semibold">Tanggal Mulai</label>
+                                <span id="tglMulai" class="mt-1 block w-full rounded-md bg-transparent text-gray-700 sm:text-sm">15/03/2025</span>
+                            </div>
+                            <div>
+                                <label for="tglSelesai" class="block text-m font-semibold">Tanggal Selesai</label>
+                                <span id="tglSelesai" class="mt-1 block w-full rounded-md bg-transparent text-gray-700 sm:text-sm">22/03/2025</span>
+                            </div>
+                            <div>
                                 <label for="biaya" class="block text-m font-semibold">Biaya Sewa (Per Hari)</label>
                                 <span id="biaya" class="mt-1 block w-full rounded-md bg-transparent text-gray-700 sm:text-sm">Rp. 500.000</span>
                             </div>
-                            <div>
-                                <label for="platNomor" class="block text-m font-semibold">Plat Nomor</label>
-                                <span id="platNomor" class="mt-1 block w-full rounded-md bg-transparent text-gray-700 sm:text-sm">H1234BAD</span>
-                            </div>
-                            <div>
-                                <label for="tahun" class="block text-m font-semibold">Tahun</label>
-                                <span id="tahun" class="mt-1 block w-full rounded-md bg-transparent text-gray-700 sm:text-sm">2009</span>
-                            </div>
-                            <div>
-                                <label for="cc" class="block text-m font-semibold">CC</label>
-                                <span id="cc" class="mt-1 block w-full rounded-md bg-transparent text-gray-700 sm:text-sm">4900</span>
-                            </div>
-                            <div>
-                                <label for="kapasitas" class="block text-m font-semibold">Kapasitas</label>
-                                <span id="kapasitas" class="mt-1 block w-full rounded-md bg-transparent text-gray-700 sm:text-sm">8</span>
-                            </div>
                         </div>
-                        <!-- Fasilitas -->
-                        <h2 class="font-semibold text-lg">Fasilitas</h2>
+                        <!-- Jenis Tenant -->
+                        <h2 class="font-semibold text-lg">Total Tenant yang Disediakan</h2>
                         <div class="grid grid-cols-2 gap-4">
                             <div>
-                                <label for="tv" class="block text-sm font-medium text-gray-700">TV</label>
-                                <input type="text" id="tv" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="Ada" readonly>
+                                <label for="makanan" class="block text-sm font-medium text-gray-700">Tenant Makanan</label>
+                                <input type="number" id="makanan" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="10" readonly>
                             </div>
                             <div>
-                                <label for="sound" class="block text-sm font-medium text-gray-700">Sound</label>
-                                <input type="text" id="sound" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="Ada" readonly>
+                                <label for="barang" class="block text-sm font-medium text-gray-700">Tenant Barang</label>
+                                <input type="number" id="barang" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="10" readonly>
                             </div>
                             <div>
-                                <label for="ac" class="block text-sm font-medium text-gray-700">AC</label>
-                                <input type="text" id="ac" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="Ada" readonly>
+                                <label for="jasa" class="block text-sm font-medium text-gray-700">Tenant Jasa</label>
+                                <input type="number" id="jasa" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="8" readonly>
                             </div>
                         </div>
                         <div>
@@ -256,7 +254,6 @@
         </div>
     </div>
 
-
     <!-- Modal Booking -->
     <div id="modal-booking" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative p-4 w-full max-w-4xl max-h-full">
@@ -265,7 +262,7 @@
                 <!-- Modal header -->
                 <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
                     <h3 class="text-lg md:text-xl font-semibold text-gray-900">
-                        Form Booking Kendaraan
+                        Form Booking Tenant
                     </h3>
                 </div>
                 <!-- Modal body -->
@@ -302,26 +299,17 @@
                             </div>
                         </div>
 
-                        <!-- Input Keperluan Acara -->
-                        <label for="keperluan-acara">Keperluan Acara</label>
-                        <textarea id="keperluan-acara" name="keperluan-acara" rows="3" class="rounded-lg border border-gray-300" required></textarea>
-                        <p class="mb-4 text-xs text-gray-500">
-                            * Masukkan nama/judul acara yang akan dilaksanakan.
-                        </p>
+                        <!-- Input Nama Tenant -->
+                        <label for="namaTenant">Nama Tenant</label>
+                        <input type="text" id="namaTenant" name="namaTenant" required>
 
-                        <!-- Input Lokasi Acara -->
-                        <label for="lokasiAcara">Lokasi Acara</label>
-                        <textarea id="lokasiAcara" name="lokasiAcara" rows="3" class="rounded-lg border border-gray-300" required></textarea>
-                        <p class="mb-4 text-xs text-gray-500">
-                            * Masukkan keterangan lokasi acara akan dilakukan.
-                        </p>
-
-                        <!-- Input Titik Jemput -->
-                        <label for="titikJemput">Titik Jemput</label>
-                        <textarea id="titikJemput" name="titikJemput" rows="3" class="rounded-lg border border-gray-300" required></textarea>
-                        <p class="mb-4 text-xs text-gray-500">
-                            * Masukkan keterangan lokasi titik penjemputan.
-                        </p>
+                        <!-- Input Jenis Tenant -->
+                        <label for="jenisTenant">Jenis Tenant</label>
+                        <select id="jenisTenant" class="bg-gray-50 mb-4 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                            <option>Tenant Makanan</option>
+                            <option>Tenant Barang</option>
+                            <option>Tenant Jasa</option>
+                        </select>
 
                         <!-- Input Bukti Pembayaran -->
                         <label for="bukti-bayar" class="block mb-2 text-sm font-medium text-gray-900">Upload Bukti Pembayaran</label>

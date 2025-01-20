@@ -86,6 +86,8 @@ Route::get('/homePengelolaanTenant', [homePengelolaanTenantController::class, 'i
 
 Route::get('/custDaftarEvent', [custDaftarEventController::class, 'index'])->name('custDaftarEvent');
 
+Route::get('/custBookingTenant', [custBookingTenantController::class, 'index'])->name('custBookingTenant');
+
 Route::get('/custStatusBookingTenant', [custStatusBookingTenantController::class, 'index'])->name('custStatusBookingTenant');
 
 Route::get('/kontakTenant', [kontakTenantController::class, 'index'])->name('kontakTenant');
