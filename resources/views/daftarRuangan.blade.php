@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMJTVF1a1wMA2gO/YHbx+fyfJhN/0Q5ntv7zYY" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css"  rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
         #default-table {
@@ -124,37 +125,37 @@
                     <div class="flex justify-center text-center pb-6">
                         <h1 class="font-bold text-2xl">Daftar Ruangan</h1>
                     </div>
-                    <!-- Cari Kendaraan -->
-                        <form action="{{ route('searchRuangan') }}" method="GET" class="w-full mx-auto">   
-                            <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Cari Ruangan</label>
-                            <div class="relative">
-                                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                                    <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                                    </svg>
-                                </div>
-                                <input 
-                                    type="search" 
-                                    name="keyword" 
-                                    id="default-search" 
-                                    class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500" 
-                                    placeholder="Cari Nama Ruangan" 
-                                    value="{{ old('keyword', '') }}" 
-                                />
-                                <button 
-                                    type="submit" 
-                                    class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-xl text-sm px-4 py-2">
-                                    Cari
-                                </button>
+                    <!-- Cari Ruangan -->
+                    <form action="{{ route('searchRuangan') }}" method="GET" class="w-full mx-auto">   
+                        <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Cari Ruangan</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                                </svg>
                             </div>
-                        </form>
+                            <input 
+                                type="search" 
+                                name="keyword" 
+                                id="default-search" 
+                                class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500" 
+                                placeholder="Cari Nama Ruangan" 
+                                value="{{ old('keyword', '') }}" 
+                            />
+                            <button 
+                                type="submit" 
+                                class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-xl text-sm px-4 py-2">
+                                Cari
+                            </button>
+                        </div>
+                    </form>
 
-                        <!-- Tampilkan Daftar Kendaraan -->
-                        @if(!empty($ruangan) && count($ruangan) > 0)
-                            <table>
-                                <!-- Tabel ruangan ditampilkan di sini -->
-                            </table>
-                        @endif
+                    <!-- Tampilkan Daftar Ruangan -->
+                    @if(!empty($ruangan) && count($ruangan) > 0)
+                        <table>
+                            <!-- Tabel ruangan ditampilkan di sini -->
+                        </table>
+                    @endif
 
 
                     <!-- Table Data -->
@@ -270,7 +271,8 @@
                                             <button 
                                                 data-modal-target="modal-foto" 
                                                 data-modal-toggle="modal-foto" 
-                                                data-foto="{{ $data['foto'] }}"  
+                                                data-foto-url="{{ $data->foto_url }}"
+                                                data-thumbnails="{{ json_encode($data->foto_urls) }}"   
                                                 type="button" 
                                                 class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
                                                 Detail
@@ -435,50 +437,6 @@
             </div>
         </div>
     </div>
-{{-- 
-    <!-- Modal Foto -->
-    <div id="modal-foto" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-        <div class="relative p-4 w-full max-w-xl max-h-full">
-            <!-- Modal content -->
-            <div class="relative bg-white rounded-lg shadow">
-                <!-- Modal header -->
-                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
-                    <h3 class="text-lg md:text-xl font-semibold text-gray-900">
-                        Foto Ruangan
-                    </h3>
-                </div>
-                <!-- Modal body -->
-                <div class="p-4 md:p-5 space-y-4">
-                    <div class="grid gap-4">
-                        <div>
-                            <img id="main-image" class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/featured/image.jpg" alt="">
-                        </div>
-                        <div class="grid grid-cols-3 md:grid-cols-5 gap-2 md:gap-4">
-                            <div>
-                                <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg" alt="">
-                            </div>
-                            <div>
-                                <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg" alt="">
-                            </div>
-                            <div>
-                                <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg" alt="">
-                            </div>
-                            <div>
-                                <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg" alt="">
-                            </div>
-                            <div>
-                                <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-5.jpg" alt="">
-                            </div>
-                        </div>
-                    </div>                    
-                </div>
-                <!-- Modal footer -->
-                <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b">
-                    <button data-modal-hide="modal-foto" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center">Kembali</button>
-                </div>
-            </div>
-        </div>
-    </div> --}}
 
     <!-- Modal Foto -->
     <div id="modal-foto" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -497,6 +455,9 @@
                         <div>
                             <img id="main-image" class="h-auto max-w-full rounded-lg" src="" alt="Foto Ruangan">
                         </div>
+                        <div class="grid grid-cols-3 md:grid-cols-5 gap-2 md:gap-4" id="image-thumbnails">
+                            <!-- Thumbnails akan diubah dengan gambar dinamis -->
+                        </div>
                     </div>                    
                 </div>
                 <!-- Modal footer -->
@@ -506,7 +467,6 @@
             </div>
         </div>
     </div>
-
 
     <!-- Modal Hapus -->
     <div id="modal-hapus" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -550,10 +510,41 @@
 
 <!-- Swap Image -->
 <script>
-    function swapImage(element) {
+// Menambahkan event listener untuk tombol yang membuka modal
+document.querySelectorAll('[data-modal-target="modal-foto"]').forEach(button => {
+    button.addEventListener('click', function () {
+        // Ambil URL foto utama dan thumbnails dari atribut data
+        const fotoUrl = this.getAttribute('data-foto-url');
+        const thumbnails = JSON.parse(this.getAttribute('data-thumbnails')); // Misal array URL thumbnails
+
         const mainImage = document.getElementById('main-image');
-        mainImage.src = element.src;
-    }
+        const imageThumbnails = document.getElementById('image-thumbnails');
+
+        // Update foto utama di modal dengan gambar pertama dari foto utama atau thumbnails
+        mainImage.src = thumbnails[0];  // Jika fotoUrl tidak ada, gunakan thumbnail pertama
+
+        // Kosongkan dulu thumbnail sebelumnya
+        imageThumbnails.innerHTML = '';
+
+        // Loop untuk menampilkan thumbnail gambar-gambar kecil
+        thumbnails.forEach(url => {
+            const thumbnailElement = document.createElement('div');
+            thumbnailElement.innerHTML = `
+                <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="${url}" alt="Thumbnail">
+            `;
+            imageThumbnails.appendChild(thumbnailElement);
+        });
+
+        // Menampilkan modal
+        document.getElementById('modal-foto').classList.remove('hidden');
+    });
+});
+
+// Fungsi untuk mengganti gambar utama saat thumbnail diklik
+function swapImage(element) {
+    const mainImage = document.getElementById('main-image');
+    mainImage.src = element.src;
+}
 </script>
 
 <!-- Scipt untuk mengambil data fasilitas -->
@@ -598,5 +589,37 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 </script>
+
+<!-- Script Alert Berhasil -->
+@if(session('success'))
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            title: 'Berhasil!',
+            text: "{{ session('success') }}",
+            icon: 'success',
+            timer: 3000, 
+            timerProgressBar: true,
+            showConfirmButton: false
+        });
+    });
+</script>
+@endif
+
+<!-- Script Alert Error -->
+@if(session('error'))
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            title: 'Gagal!',
+            text: "{{ session('error') }}",
+            icon: 'error',
+            timer: 3000, 
+            timerProgressBar: true,
+            showConfirmButton: false
+        });
+    });
+</script>
+@endif
 
 </html>

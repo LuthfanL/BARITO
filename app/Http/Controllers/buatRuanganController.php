@@ -36,8 +36,8 @@ class buatRuanganController extends Controller
         $fotoPaths = [];
         if ($request->hasFile('foto')) {
             foreach ($request->file('foto') as $foto) {
-                $path = $foto->store('foto_ruangan'); // Simpan di folder `foto_ruangan`
-                $fotoPaths[] = $path; // Simpan path ke array
+                $path = $foto->store('foto_ruangan', 'public'); // Simpan di folder `foto_ruangan`
+                $fotoPaths[] = Storage::url($path); // Simpan path ke array
             }
         }  
 

@@ -4,32 +4,23 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\kendaraan;
+use Illuminate\Support\Facades\Storage;
 
 class daftarKendaraanController extends Controller
 {
     public function index(Request $request)
     {
 
-        // Mengambil data kendaraan
-        $kendaraan = kendaraan::get()->toArray();
+        $kendaraan = kendaraan::all();
         
-        foreach ($kendaraan as &$data) { // Gunakan reference "&" agar array berubah
-            if (!empty($data['foto'])) {
-                // Deteksi tipe MIME dari data gambar
-                $mimeType = '';
-                try {
-                    $imageInfo = getimagesizefromstring($data['foto']);
-                    $mimeType = $imageInfo['mime']; // Ambil tipe MIME (e.g., image/jpeg, image/png)
-                } catch (\Exception $e) {
-                    // Jika terjadi kesalahan, gunakan default MIME
-                    $mimeType = 'image/jpeg';
-                }
-    
-                // Buat format base64 sesuai tipe MIME
-                $data['foto_base64'] = 'data:' . $mimeType . ';base64,' . base64_encode($data['foto']);
+        foreach ($kendaraan as &$data) {
+            if (!empty($data->foto)) {
+                // Ambil URL gambar utama dan URL thumbnail
+                $data->foto_url = Storage::url(json_decode($data->foto)[0]);
+                $data->foto_urls = json_decode($data->foto); // Array foto untuk thumbnails
             } else {
-                // Gunakan gambar default jika foto tidak tersedia
-                $data['foto_base64'] = asset('default-image.jpg');
+                $data->foto_url = asset('default-image.jpg');
+                $data->foto_urls = []; // Tidak ada thumbnail jika tidak ada foto
             }
         }
         

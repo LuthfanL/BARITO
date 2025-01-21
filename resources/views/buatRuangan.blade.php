@@ -194,6 +194,7 @@
                 title: 'Berhasil',
                 text: '{{ session('success') }}',
                 showConfirmButton: false,
+                timerProgressBar: true,
                 timer: 3000 // Durasi 3 detik
             });
         @endif

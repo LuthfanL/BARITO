@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMJTVF1a1wMA2gO/YHbx+fyfJhN/0Q5ntv7zYY" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css"  rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <style>
         #default-table {
@@ -270,7 +271,8 @@
                                             <button 
                                                 data-modal-target="modal-foto" 
                                                 data-modal-toggle="modal-foto" 
-                                                data-foto="{{ $data['foto'] }}"  
+                                                data-foto-url="{{ $data->foto_url }}"
+                                                data-thumbnails="{{ json_encode($data->foto_urls) }}"   
                                                 type="button" 
                                                 class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
                                                 Detail
@@ -425,7 +427,10 @@
                 <div class="p-4 md:p-5 space-y-4">
                     <div class="grid gap-4">
                         <div>
-                            <img id="main-image" class="h-auto max-w-full rounded-lg" src="" alt="Foto Kendaraan">
+                            <img id="main-image" class="h-auto max-w-full rounded-lg" src="" alt="Foto Ruangan">
+                        </div>
+                        <div class="grid grid-cols-3 md:grid-cols-5 gap-2 md:gap-4" id="image-thumbnails">
+                            <!-- Thumbnails akan diubah dengan gambar dinamis -->
                         </div>
                     </div>                    
                 </div>
@@ -436,33 +441,6 @@
             </div>
         </div>
     </div>
-
-    {{-- <!-- Modal Foto -->
-    <div id="modal-foto" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-        <div class="relative p-4 w-full max-w-4xl max-h-full">
-            <div class="relative bg-white rounded-lg shadow">
-                <!-- Modal header -->
-                <div class="flex items-center justify-between p-4 border-b rounded-t">
-                    <h3 class="text-xl font-semibold text-gray-900">Foto Kendaraan</h3>
-                    <button data-modal-hide="modal-foto" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                        </svg>
-                    </button>
-                </div>
-                <!-- Modal body -->
-                <div class="p-4 space-y-4">
-                    <div id="photoGallery" class="grid grid-cols-2 gap-4">
-                        <!-- Foto akan ditampilkan di sini -->
-                    </div>
-                </div>
-                <!-- Modal footer -->
-                <div class="flex justify-end p-4 border-t border-gray-200 rounded-b">
-                    <button data-modal-hide="modal-foto" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Kembali</button>
-                </div>
-            </div>
-        </div>
-    </div> --}}
 
     <!-- Modal Hapus -->
     <div id="modal-hapus" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -503,13 +481,44 @@
     }
 </script>
 
-<!-- Swap Image -->
-<script>
-    function swapImage(element) {
-        const mainImage = document.getElementById('main-image');
-        mainImage.src = element.src;
-    }
-</script>
+    <!-- Swap Image -->
+    <script>
+        // Menambahkan event listener untuk tombol yang membuka modal
+        document.querySelectorAll('[data-modal-target="modal-foto"]').forEach(button => {
+            button.addEventListener('click', function () {
+                // Ambil URL foto utama dan thumbnails dari atribut data
+                const fotoUrl = this.getAttribute('data-foto-url');
+                const thumbnails = JSON.parse(this.getAttribute('data-thumbnails')); // Misal array URL thumbnails
+        
+                const mainImage = document.getElementById('main-image');
+                const imageThumbnails = document.getElementById('image-thumbnails');
+        
+                // Update foto utama di modal dengan gambar pertama dari foto utama atau thumbnails
+                mainImage.src = thumbnails[0];  // Jika fotoUrl tidak ada, gunakan thumbnail pertama
+        
+                // Kosongkan dulu thumbnail sebelumnya
+                imageThumbnails.innerHTML = '';
+        
+                // Loop untuk menampilkan thumbnail gambar-gambar kecil
+                thumbnails.forEach(url => {
+                    const thumbnailElement = document.createElement('div');
+                    thumbnailElement.innerHTML = `
+                        <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="${url}" alt="Thumbnail">
+                    `;
+                    imageThumbnails.appendChild(thumbnailElement);
+                });
+        
+                // Menampilkan modal
+                document.getElementById('modal-foto').classList.remove('hidden');
+            });
+        });
+        
+        // Fungsi untuk mengganti gambar utama saat thumbnail diklik
+        function swapImage(element) {
+            const mainImage = document.getElementById('main-image');
+            mainImage.src = element.src;
+        }
+    </script>
 
 // Scipt untuk mengambil data fasilitas 
 <script>
@@ -547,5 +556,37 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 </script>
+
+<!-- Script Alert Berhasil -->
+@if(session('success'))
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            title: 'Berhasil!',
+            text: "{{ session('success') }}",
+            icon: 'success',
+            timer: 3000, 
+            timerProgressBar: true,
+            showConfirmButton: false
+        });
+    });
+</script>
+@endif
+
+<!-- Script Alert Error -->
+@if(session('error'))
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            title: 'Gagal!',
+            text: "{{ session('error') }}",
+            icon: 'error',
+            timer: 3000, 
+            timerProgressBar: true,
+            showConfirmButton: false
+        });
+    });
+</script>
+@endif
 
 </html>

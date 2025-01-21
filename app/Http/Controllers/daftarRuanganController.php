@@ -4,36 +4,26 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ruangan;
+use Illuminate\Support\Facades\Storage;
 
 class daftarRuanganController extends Controller
 {
     public function index(Request $request)
     {
+        $ruangan = ruangan::all(); // Mengambil data ruangan
 
-        // Mengambil data ruangan
-        $ruangan = ruangan::get()->toArray();
-        
-        foreach ($ruangan as &$data) { // Gunakan reference "&" agar array berubah
-            if (!empty($data['foto'])) {
-                // Deteksi tipe MIME dari data gambar
-                $mimeType = '';
-                try {
-                    $imageInfo = getimagesizefromstring($data['foto']);
-                    $mimeType = $imageInfo['mime']; // Ambil tipe MIME (e.g., image/jpeg, image/png)
-                } catch (\Exception $e) {
-                    // Jika terjadi kesalahan, gunakan default MIME
-                    $mimeType = 'image/jpeg';
-                }
-    
-                // Buat format base64 sesuai tipe MIME
-                $data['foto_base64'] = 'data:' . $mimeType . ';base64,' . base64_encode($data['foto']);
+        foreach ($ruangan as &$data) {
+            if (!empty($data->foto)) {
+                // Ambil URL gambar utama dan URL thumbnail
+                $data->foto_url = Storage::url(json_decode($data->foto)[0]);
+                $data->foto_urls = json_decode($data->foto); // Array foto untuk thumbnails
             } else {
-                // Gunakan gambar default jika foto tidak tersedia
-                $data['foto_base64'] = asset('default-image.jpg');
+                $data->foto_url = asset('default-image.jpg');
+                $data->foto_urls = []; // Tidak ada thumbnail jika tidak ada foto
             }
         }
-        
-        // Mengirim data ke view
+    
+        // Kirim data ke view
         return view('daftarRuangan', compact('ruangan'));
     }
 
