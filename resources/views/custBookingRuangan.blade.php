@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail Booking</title>
+    <title>Detail Booking Kendaraan</title>
     <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('assets/favicon-96x96.png') }}">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script>
@@ -150,119 +150,119 @@
         </div>
     </div>
 
-<!-- Main Content -->
-<div class="px-24 pt-8 pb-8 flex justify-center items-center">
-    <div class="relative w-full max-w-full max-h-full">
-        <div class="flex justify-center mb-4">
-            <h2 class="font-bold text-3xl">Ruangan Lokakrida</h2>
-        </div>
-        <!-- Isi -->
-        <div class="p-4 md:p-5">
-            <div class="rounded-3xl shadow-[0_0_13px_3px_rgba(0,0,0,0.2)] pl-12 pr-12 pt-6 pb-10 grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Kolom Kiri: Foto -->
-                <div class="space-y-4">
-                    <!-- Foto Utama -->
-                    <div>
-                        <h2 class="font-semibold mb-3 text-lg">Foto Ruangan</h2>
-                        <img id="main-image" class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/featured/image.jpg" alt="Foto Utama">
+    <!-- Main Content -->
+    <div class="px-24 pt-8 pb-8 flex justify-center items-center">
+        <div class="relative w-full max-w-full max-h-full">
+            <!-- Nama Ruangan -->
+            <div class="flex justify-center mb-4">
+                <h2 class="font-bold text-3xl">Ruangan Lokakrida</h2>
+            </div>
+            <!-- Isi -->
+            <div class="p-4 md:p-5">
+                <div class="rounded-3xl shadow-[0_0_13px_3px_rgba(0,0,0,0.2)] pl-12 pr-12 pt-6 pb-10 grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Kolom Kiri: Foto -->
+                    <div class="space-y-4">
+                        <!-- Foto Utama -->
+                        <div>
+                            <h2 class="font-semibold mb-3 text-lg">Foto Ruangan</h2>
+                            <img id="main-image" class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/featured/image.jpg" alt="Foto Utama">
+                        </div>
+                        <!-- Foto di bawah -->
+                        <div class="grid grid-cols-3 md:grid-cols-5 gap-2 md:gap-4">
+                            <div>
+                                <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="assets/test.jpeg" alt="Foto 1">
+                            </div>
+                            <div>
+                                <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg" alt="Foto 2">
+                            </div>
+                            <div>
+                                <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg" alt="Foto 3">
+                            </div>
+                            <div>
+                                <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg" alt="Foto 4">
+                            </div>
+                            <div>
+                                <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-5.jpg" alt="Foto 5">
+                            </div>
+                        </div>
                     </div>
-                    <!-- Foto di bawah -->
-                    <div class="grid grid-cols-3 md:grid-cols-5 gap-2 md:gap-4">
+
+                    <!-- Kolom Kanan -->
+                    <div class="space-y-4">
+                        <!-- Deskripsi -->
+                        <h2 class="font-semibold text-lg">Deskripsi</h2>
                         <div>
-                            <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="assets/test.jpeg" alt="Foto 1">
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut at nisl in lacus feugiat tincidunt.
+                            </p>
+                        </div>
+                        <!-- Informasi Detail -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label for="biaya" class="block text-m font-semibold">Biaya Sewa (Per Hari)</label>
+                                <span id="biaya" class="mt-1 block w-full rounded-md bg-transparent text-gray-700 sm:text-sm">Rp. 500.000</span>
+                            </div>
+                            <div>
+                                <label for="luas" class="block text-m font-semibold">Luas Ruangan</label>
+                                <span id="luas" class="mt-1 block w-full rounded-md bg-transparent text-gray-700 sm:text-sm">10x8</span>
+                            </div>
+                            <div>
+                                <label for="gedung" class="block text-m font-semibold">Gedung</label>
+                                <span id="gedung" class="mt-1 block w-full rounded-md bg-transparent text-gray-700 sm:text-sm">Gedung Moch. Ichsan</span>
+                            </div>
+                            <div>
+                                <label for="lantai" class="block text-m font-semibold">Lantai</label>
+                                <span id="lantai" class="mt-1 block w-full rounded-md bg-transparent text-gray-700 sm:text-sm">8</span>
+                            </div>
+                        </div>
+                        <!-- Fasilitas -->
+                        <h2 class="font-semibold text-lg">Fasilitas</h2>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label for="podium" class="block text-sm font-medium text-gray-700">Podium</label>
+                                <input type="number" id="podium" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="2" readonly>
+                            </div>
+                            <div>
+                                <label for="sound" class="block text-sm font-medium text-gray-700">Sound</label>
+                                <input type="number" id="sound" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="8" readonly>
+                            </div>
+                            <div>
+                                <label for="meja" class="block text-sm font-medium text-gray-700">Meja</label>
+                                <input type="number" id="meja" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="50" readonly>
+                            </div>
+                            <div>
+                                <label for="ac" class="block text-sm font-medium text-gray-700">AC</label>
+                                <input type="number" id="ac" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="8" readonly>
+                            </div>
+                            <div>
+                                <label for="kursi" class="block text-sm font-medium text-gray-700">Kursi</label>
+                                <input type="number" id="kursi" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="100" readonly>
+                            </div>
+                            <div>
+                                <label for="proyektor" class="block text-sm font-medium text-gray-700">Proyektor</label>
+                                <input type="number" id="proyektor" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="6" readonly>
+                            </div>
                         </div>
                         <div>
-                            <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg" alt="Foto 2">
-                        </div>
-                        <div>
-                            <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg" alt="Foto 3">
-                        </div>
-                        <div>
-                            <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg" alt="Foto 4">
-                        </div>
-                        <div>
-                            <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-5.jpg" alt="Foto 5">
+                            <button data-modal-target="modal-booking" data-modal-toggle="modal-booking" class="inline-flex justify-center w-full items-center px-4 py-3 text-m font-bold rounded-lg bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                Booking
+                            </button>
                         </div>
                     </div>
                 </div>
-
-                <!-- Kolom Kanan -->
-                <div class="space-y-4">
-                    <!-- Deskripsi -->
-                    <h2 class="font-semibold text-lg">Deskripsi</h2>
-                    <div>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut at nisl in lacus feugiat tincidunt.
-                        </p>
-                    </div>
-                    <!-- Informasi Detail -->
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label for="biaya" class="block text-m font-semibold">Biaya Sewa (Per Hari)</label>
-                            <span id="biaya" class="mt-1 block w-full rounded-md bg-transparent text-gray-700 sm:text-sm">Rp. 500.000</span>
-                        </div>
-                        <div>
-                            <label for="luas" class="block text-m font-semibold">Luas Ruangan</label>
-                            <span id="luas" class="mt-1 block w-full rounded-md bg-transparent text-gray-700 sm:text-sm">10x8</span>
-                        </div>
-                        <div>
-                            <label for="gedung" class="block text-m font-semibold">Gedung</label>
-                            <span id="gedung" class="mt-1 block w-full rounded-md bg-transparent text-gray-700 sm:text-sm">Gedung Moch. Ichsan</span>
-                        </div>
-                        <div>
-                            <label for="lantai" class="block text-m font-semibold">Lantai</label>
-                            <span id="lantai" class="mt-1 block w-full rounded-md bg-transparent text-gray-700 sm:text-sm">8</span>
-                        </div>
-                    </div>
-                    <!-- Fasilitas -->
-                    <h2 class="font-semibold text-lg">Fasilitas</h2>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label for="podium" class="block text-sm font-medium text-gray-700">Podium</label>
-                            <input type="number" id="podium" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="2" readonly>
-                        </div>
-                        <div>
-                            <label for="sound" class="block text-sm font-medium text-gray-700">Sound</label>
-                            <input type="number" id="sound" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="8" readonly>
-                        </div>
-                        <div>
-                            <label for="meja" class="block text-sm font-medium text-gray-700">Meja</label>
-                            <input type="number" id="meja" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="50" readonly>
-                        </div>
-                        <div>
-                            <label for="ac" class="block text-sm font-medium text-gray-700">AC</label>
-                            <input type="number" id="ac" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="8" readonly>
-                        </div>
-                        <div>
-                            <label for="kursi" class="block text-sm font-medium text-gray-700">Kursi</label>
-                            <input type="number" id="kursi" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="100" readonly>
-                        </div>
-                        <div>
-                            <label for="proyektor" class="block text-sm font-medium text-gray-700">Proyektor</label>
-                            <input type="number" id="proyektor" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="6" readonly>
-                        </div>
-                    </div>
-                    <div>
-                        <button data-modal-target="modal-booking" data-modal-toggle="modal-booking" class="inline-flex justify-center w-full items-center px-4 py-3 text-m font-bold rounded-lg bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                            Booking
-                        </button>
-                    </div>
+            </div>
+            <!-- Calendar -->
+            <div class="relative w-full max-w-screen-4xl mx-auto mt-8">
+                <div class="calendar ml-4 mr-4 p-6 flex justify-center rounded-3xl shadow-[0_0_13px_3px_rgba(0,0,0,0.2)]">
+                    <div id="calendar"></div>
                 </div>
             </div>
-        </div>
-        <!-- Calendar -->
-        <div class="relative w-full max-w-screen-4xl mx-auto mt-8">
-            <div class="calendar ml-4 mr-4 p-6 flex justify-center rounded-3xl shadow-[0_0_13px_3px_rgba(0,0,0,0.2)]">
-                <div id="calendar"></div>
-            </div>
-        </div>
-        <!-- Pembatas Bawah -->
-        <div class="pb-12">
+            <!-- Pembatas Bawah -->
+            <div class="pb-12">
 
+            </div>
         </div>
     </div>
-</div>
-
 
     <!-- Modal Booking -->
     <div id="modal-booking" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -279,8 +279,8 @@
                 <div class="p-4 md:p-5">
                     <form id="booking-form">
                         <!-- Input Nama Pemohon -->
-                        <label for="nama-ruangan">Nama Pemohon</label>
-                        <input type="text" id="nama-ruangan" name="nama-ruangan" required>
+                        <label for="nama-pemohon">Nama Pemohon</label>
+                        <input type="text" id="nama-pemohon" name="nama-pemohon" required>
 
                         <!-- Input No. Whatapps -->
                         <label for="no-whatsapp">No. Whatapps</label>
@@ -344,24 +344,24 @@
         </div>
     </div>
 
-<!-- Modal Booking Konfirmasi -->
-<div id="modal-konfirmasi" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-    <div class="relative p-4 w-full max-w-6xl max-h-full"> <!-- Mengubah max-w-xl menjadi max-w-3xl -->
-        <div class="relative bg-white rounded-lg shadow">
-            <div class="p-4 md:p-5 text-center">
-                <svg class="mx-auto mb-4 text-gray-400 w-16 h-16" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                </svg>
-                <h1 class="mb-5 text-lg font-bold text-gray-900">Konfirmasi Booking Ruangan</h1>
-                <p class="mb-5 text-m font-normal text-gray-500">Apakah Anda yakin ingin konfirmasi booking ini? Harap diperhatikan kembali bahwa jika Anda membatalkan booking setelah mengonfirmasi, pengembalian biaya akan dilakukan sebesar 90% dari total biaya yang telah dibayar.</p>
-                <button data-modal-hide="modal-konfirmasi" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-bold font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                    Setuju, Konfirmasi Booking
-                </button>
-                <button data-modal-hide="modal-konfirmasi" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-bold font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Kembali</button>
+    <!-- Modal Booking Konfirmasi -->
+    <div id="modal-konfirmasi" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative p-4 w-full max-w-6xl max-h-full"> <!-- Mengubah max-w-xl menjadi max-w-3xl -->
+            <div class="relative bg-white rounded-lg shadow">
+                <div class="p-4 md:p-5 text-center">
+                    <svg class="mx-auto mb-4 text-gray-400 w-16 h-16" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                    </svg>
+                    <h1 class="mb-5 text-lg font-bold text-gray-900">Konfirmasi Booking Ruangan</h1>
+                    <p class="mb-5 text-m font-normal text-gray-500">Apakah Anda yakin ingin konfirmasi booking ini? Harap diperhatikan kembali bahwa jika Anda membatalkan booking setelah mengonfirmasi, pengembalian biaya akan dilakukan sebesar 90% dari total biaya yang telah dibayar.</p>
+                    <button data-modal-hide="modal-konfirmasi" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-bold font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                        Setuju, Konfirmasi Booking
+                    </button>
+                    <button data-modal-hide="modal-konfirmasi" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-bold font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Kembali</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
     <!-- Swap Image -->
     <script>
@@ -371,30 +371,31 @@
         }
     </script>
 
-<script>
-    // Cek apakah semua field terisi
-    document.getElementById('booking-form').addEventListener('input', function () {
-        var allFilled = true;
+    <!-- Script Agar Button tidak dapat ditekan sebelum mengisi semua form booking -->
+    <script>
+        // Cek apakah semua field terisi
+        document.getElementById('booking-form').addEventListener('input', function () {
+            var allFilled = true;
 
-        // Loop untuk mengecek apakah ada input kosong
-        var inputs = this.querySelectorAll('input, textarea');
-        inputs.forEach(function(input) {
-            if (!input.value) {
-                allFilled = false;
+            // Loop untuk mengecek apakah ada input kosong
+            var inputs = this.querySelectorAll('input, textarea');
+            inputs.forEach(function(input) {
+                if (!input.value) {
+                    allFilled = false;
+                }
+            });
+
+            // Mengaktifkan atau menonaktifkan tombol Konfirmasi Booking
+            var button = document.getElementById('konfirmasi-button');
+            if (allFilled) {
+                button.disabled = false;  // Mengaktifkan tombol jika semua field terisi
+                button.classList.remove('opacity-50', 'cursor-not-allowed');  
+            } else {
+                button.disabled = true;  // Menonaktifkan tombol jika ada field yang kosong
+                button.classList.add('opacity-50', 'cursor-not-allowed');  
             }
         });
-
-        // Mengaktifkan atau menonaktifkan tombol Konfirmasi Booking
-        var button = document.getElementById('konfirmasi-button');
-        if (allFilled) {
-            button.disabled = false;  // Mengaktifkan tombol jika semua field terisi
-            button.classList.remove('opacity-50', 'cursor-not-allowed');  
-        } else {
-            button.disabled = true;  // Menonaktifkan tombol jika ada field yang kosong
-            button.classList.add('opacity-50', 'cursor-not-allowed');  
-        }
-    });
-</script>
+    </script>
 
     <!-- FullCalendar JS -->
     <script>

@@ -32,7 +32,77 @@
         white-space: normal; /* Membolehkan teks membungkus */
         word-wrap: break-word; /* Memastikan kata-kata yang terlalu panjang terpecah */
         max-width: none; /* Membebaskan batas lebar maksimal untuk deskripsi */
-    }
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 1400px; 
+            margin: auto; 
+            padding: 24px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.1);
+            background-color: white; 
+        }
+    
+        .form-inner {
+            margin: 8px auto; 
+            width: 100%; 
+            padding: 24px;
+            border-radius: 20px;
+            outline: 2px solid #00C6BF;
+            background-color: #fff;
+        }
+    
+        form {
+            width: 100%; 
+        }
+    
+        label {
+            font-size: 14px;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+    
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+    
+        textarea {
+            resize: vertical;
+        }
+    
+        .fasilitas-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+    
+        .fasilitas-container label {
+            display: inline-block;
+            font-size: 13px;
+            font-weight: normal;
+        }
+
+        #date-range-picker {
+            margin-top: 10px;
+        }
+
+        #date-range-picker input[type="text"] {
+            transition: all 0.2s ease-in-out;
+        }
+    
+        .info {
+            font-size: 12px;
+            color: red;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 
@@ -183,7 +253,7 @@
                                 <!-- Tindakan -->
                                 <td class="text-center">
                                     <div class="flex flex-col gap-2">
-                                        <button class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Edit</button>
+                                        <button data-modal-target="modal-edit" data-modal-toggle="modal-edit" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Edit</button>
                                         <button data-modal-target="modal-hapus" data-modal-toggle="modal-hapus" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Hapus</button>
                                     </div>
                                 </td>
@@ -203,8 +273,8 @@
                                 </td>
                                 <td class="text-center">
                                     <div class="flex flex-col gap-2">
-                                        <button class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Edit</button>
-                                        <button class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Hapus</button>
+                                        <button data-modal-target="modal-edit" data-modal-toggle="modal-edit" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Edit</button>
+                                        <button data-modal-target="modal-hapus" data-modal-toggle="modal-hapus" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Hapus</button>
                                     </div>
                                 </td>
                             </tr>
@@ -223,8 +293,8 @@
                                 </td>
                                 <td class="text-center">
                                     <div class="flex flex-col gap-2">
-                                        <button class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Edit</button>
-                                        <button class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Hapus</button>
+                                        <button data-modal-target="modal-edit" data-modal-toggle="modal-edit" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Edit</button>
+                                        <button data-modal-target="modal-hapus" data-modal-toggle="modal-hapus" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Hapus</button>
                                     </div>
                                 </td>
                             </tr>
@@ -243,8 +313,8 @@
                                 </td>
                                 <td class="text-center">
                                     <div class="flex flex-col gap-2">
-                                        <button class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Edit</button>
-                                        <button class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Hapus</button>
+                                        <button data-modal-target="modal-edit" data-modal-toggle="modal-edit" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Edit</button>
+                                        <button data-modal-target="modal-hapus" data-modal-toggle="modal-hapus" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Hapus</button>
                                     </div>
                                 </td>
                             </tr>
@@ -263,13 +333,100 @@
                                 </td>
                                 <td class="text-center">
                                     <div class="flex flex-col gap-2">
-                                        <button class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Edit</button>
-                                        <button class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Hapus</button>
+                                        <button data-modal-target="modal-edit" data-modal-toggle="modal-edit" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Edit</button>
+                                        <button data-modal-target="modal-hapus" data-modal-toggle="modal-hapus" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Hapus</button>
                                     </div>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Edit -->
+    <div id="modal-edit" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative p-4 w-full max-w-4xl max-h-full">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow">
+                <!-- Modal header -->
+                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
+                    <h3 class="text-lg md:text-xl font-semibold text-gray-900">
+                        Edit Event
+                    </h3>
+                </div>
+                <!-- Modal body -->
+                <div class="p-4 md:p-5">
+                    <form>
+                        <!-- Input Nama Event -->
+                        <label for="nama-event">Nama Event</label>
+                        <input type="text" id="nama-event" name="nama-event" required>
+        
+                        <!-- Input Deskripsi Event -->
+                        <label for="deskripsi-event">Deskripsi Event</label>
+                        <textarea id="deskripsi-event" name="deskripsi-event" rows="3" required></textarea>
+        
+                        <!-- Input Biaya Sewa -->
+                        <label for="biayaSewa">Biaya Sewa (Per Hari)</label>
+                        <input type="text" id="biayaSewa" name="biayaSewa" required>
+
+                        <!-- Input Jenis Tenant -->
+                        <label>Jenis Tenant</label>
+                        <div class="tenant-container">
+                            <div>
+                                <label for="barang">Tenant Barang</label>
+                                <input type="text" id="barang" name="barang">
+                            </div>
+                            <div>
+                                <label for="jasa">Tenant Jasa</label>
+                                <input type="text" id="jasa" name="jasa">
+                            </div>
+                            <div>
+                                <label for="makanan">Tenant Makanan</label>
+                                <input type="text" id="makanan" name="makanan">
+                            </div>
+                        </div>
+        
+                        <!-- Input Tanggal -->
+                        <label for="tanggal-event" class="block font-bold">Tanggal Event</label>
+                        <div id="date-range-picker" date-rangepicker class="grid grid-cols-3 gap-2 items-center">
+                            <!-- Tanggal Mulai -->
+                            <div class="relative flex items-center">
+                                <svg class="w-5 h-5 absolute right-3 top-2 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 1 1 0-2Z"/>
+                                </svg>
+                                <input id="datepicker-range-start" name="start" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 p-2.5 w-full" placeholder="Tanggal Mulai">
+                            </div>
+                        
+                            <!-- Teks Separator -->
+                            <div class="text-center text-gray-500 mb-4">sampai</div>
+                        
+                            <!-- Tanggal Selesai -->
+                            <div class="relative flex items-center">
+                                <svg class="w-5 h-5 absolute right-3 top-2 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 1 1 0-2Z"/>
+                                </svg>
+                                <input id="datepicker-range-end" name="end" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 p-2.5 w-full" placeholder="Tanggal Selesai">
+                            </div>
+                        </div> 
+                        
+                        <!-- Input Foto Event -->
+                        <label for="foto-event">Upload Foto/Poster Event</label>
+                        <input type="file" id="foto-event" name="foto-event" accept="image/jpeg, image/png" class="block mb-2 w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50" required>
+        
+                        <!-- Informasi Tambahan -->
+                        <p class="info">
+                            * File maksimal 2 MB, format: JPEG atau PNG<br>
+                            * Upload minimal 1 foto yang memperlihatkan informasi event
+                        </p>
+                    </form>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b space-x-2">
+                    <button data-modal-hide="modal-edit" id="konfirmasi-button" type="button" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 font-bold font-medium rounded-lg text-sm px-4 py-2 text-center">Konfirmasi Edit</button>
+                    <button data-modal-hide="modal-edit" type="button" class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-bold font-medium rounded-lg text-sm px-4 py-2 text-center">Kembali</button>
                 </div>
             </div>
         </div>

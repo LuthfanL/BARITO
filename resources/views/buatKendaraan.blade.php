@@ -155,7 +155,7 @@
                 
                                 <!-- Input Foto Kendaraan -->
                                 <label for="foto">Upload Foto Kendaraan</label>
-                                <input type="file" id="foto" name="foto" accept="image/jpeg, image/png" class="block w-full cursor-pointer" required> 
+                                <input type="file" id="foto" name="foto[]" accept="image/jpeg, image/png" class="block w-full cursor-pointer" multiple required> 
                 
                                 <!-- Informasi Tambahan -->
                                 <p class="info">

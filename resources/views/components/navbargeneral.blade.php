@@ -134,7 +134,7 @@
         const mapping = {
             'homeBookingRuangan': ['custDaftarRuangan', 'custStatusBookingRuangan', 'kontakRuangan', 'custBookingRuangan'],
             'homeBookingKendaraan': ['custDaftarKendaraan', 'custStatusBookingKendaraan', 'kontakKendaraan', 'custBookingKendaraan'],
-            'homePengelolaanTenant': ['custDaftarEvent', 'custStatusBookingTenant', 'kontakTenant', 'custBookingKendaraan']
+            'homePengelolaanTenant': ['custDaftarEvent', 'custStatusBookingTenant', 'kontakTenant', 'custBookingTenant']
         };
 
         const links = document.querySelectorAll('ul li a');

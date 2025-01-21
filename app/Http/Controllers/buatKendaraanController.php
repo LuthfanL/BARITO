@@ -26,15 +26,18 @@ class buatKendaraanController extends Controller
             'deskripsi' => 'required|string|max:50',
             'cc' => 'required|integer',
             'tahunKeluar' => 'required|integer',
-            'foto' => 'required|image|mimes:jpeg,png|max:2048', // Maksimal 2MB
+            'foto' => 'required|array',
+            'foto.*' => 'required|image|mimes:jpeg, png|max:2048', // Maksimal 2MB
             'biayaSewa' => 'required|integer'
         ]);
 
-        // Konversi gambar ke format BLOB
-        $fotoBlob = null;
+        $fotoPaths = [];
         if ($request->hasFile('foto')) {
-            $fotoBlob = file_get_contents($request->file('foto')->getRealPath());
-        }     
+            foreach ($request->file('foto') as $foto) {
+                $path = $foto->store('foto_ruangan'); // Simpan di folder foto_ruangan
+                $fotoPaths[] = $path; // Simpan path ke array
+            }
+        }  
 
         // Simpan data ke database
         kendaraan::create([
@@ -47,7 +50,7 @@ class buatKendaraanController extends Controller
             'deskripsi' => $request->input('deskripsi'),
             'cc' => $request->input('cc'),
             'tahunKeluar' => $request->input('tahunKeluar'),
-            'foto' => $fotoBlob,
+            'foto' => json_encode($fotoPaths), // Simpan path foto sebagai JSON
             'biayaSewa' => $request->input('biayaSewa')
         ]);
 
