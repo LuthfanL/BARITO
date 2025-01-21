@@ -99,6 +99,7 @@ Route::get('/dashboardAdminRuangan', [DashboardAdminRuanganController::class, 'i
 // Route::get('/buatRuangan', [buatRuanganController::class, 'index'])->name('buatRuangan')->middleware('auth');
 
 Route::get('/buatRuangan', [buatRuanganController::class, 'index'])->name('buatRuangan');
+Route::post('/buatRuangan', [buatRuanganController::class, 'store'])->name('ruangan.store');
 
 Route::get('/daftarRuangan', [daftarRuanganController::class, 'index'])->name('daftarRuangan');
 
