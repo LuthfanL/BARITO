@@ -132,7 +132,7 @@
 </body>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        const messages = ["Luthfan!"]; 
+        const messages = ["Muhammad Luthfan Lazuardi!"]; 
         let messageIndex = 0;
         let charIndex = 0;
         const typingSpeed = 100; 

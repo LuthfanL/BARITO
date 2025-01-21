@@ -278,7 +278,12 @@
                                         </td>
                                         <td class="text-center">
                                             <div class="flex flex-col gap-2">
-                                                <button class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Edit</button>
+                                                <button 
+                                                    data-modal-target="modal-edit" 
+                                                    data-modal-toggle="modal-edit" 
+                                                    class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                                    Edit
+                                                </button>
                                                 <button 
                                                     data-modal-target="modal-hapus" 
                                                     data-modal-toggle="modal-hapus"
@@ -298,7 +303,7 @@
         </div>
     </div>
 
-    {{-- <!-- Modal Edit -->
+    <!-- Modal Edit -->
     <div id="modal-edit" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative p-4 w-full max-w-4xl max-h-full">
             <!-- Modal content -->
@@ -381,7 +386,7 @@
                 </div>
             </div>
         </div>
-    </div> --}}
+    </div> 
 
     <!-- Modal Fasilitas -->
     <div id="modal-fasilitas" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -475,7 +480,7 @@
         </div>
     </div> --}}
 
-     <!-- Modal Foto -->
+    <!-- Modal Foto -->
     <div id="modal-foto" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative p-4 w-full max-w-xl max-h-full">
             <!-- Modal content -->
@@ -523,7 +528,7 @@
                         <button data-modal-hide="modal-hapus" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
                             Kembali
                         </button>
-                </form>
+                    </form>
                 </div>
             </div>
         </div>
@@ -551,7 +556,7 @@
     }
 </script>
 
-// Scipt untuk mengambil data fasilitas 
+<!-- Scipt untuk mengambil data fasilitas -->
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         // Ambil semua tombol yang membuka modal fasilitas
@@ -579,7 +584,7 @@
     });
 </script>
 
-// Script untuk menghapus data 
+<!-- Script untuk menghapus data -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const modalHapus = document.getElementById("modal-hapus");
