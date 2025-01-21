@@ -53,8 +53,12 @@ Route::get('/logout', [loginController::class, 'logout'])->name('logout');
 Route::get('/register', [registerController::class, 'index'])->name('register');
 Route::post('/registrasi', [registerController::class, 'store'])->name('registrasi');
 
+
 # Customer ----------------------------------------------------
 Route::get('/profile', [profilController::class, 'index'])->name('profile')->middleware('auth');
+Route::get('/editProfile', [profilController::class, 'edit'])->name('editProfile')->middleware('auth');
+Route::post('/saveEdit', [profilController::class, 'save'])->name('editSave')->middleware('auth');
+Route::get('/hapusAkun', [profilController::class, 'hapus'])->name('hapusAkun')->middleware('auth');
 
 
 # Customer Ruangan ----------------------------------------------------
