@@ -474,7 +474,7 @@
                     </svg>
                     <h1 class="mb-5 text-lg font-bold text-gray-900">Konfirmasi Hapus Kendaraan</h1>
                     <p class="mb-5 text-m font-normal text-gray-500">Apakah Anda yakin ingin menghapus kendaraan ini?</p>
-                   <!-- Form untuk hapus kendaraan -->
+                    <!-- Form untuk hapus kendaraan -->
                     <form id="delete-form" method="POST" action="">
                         @csrf
                         @method('DELETE')

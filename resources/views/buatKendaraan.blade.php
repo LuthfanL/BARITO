@@ -7,6 +7,7 @@
     <title>Buat Kendaraan</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMJTVF1a1wMA2gO/YHbx+fyfJhN/0Q5ntv7zYY" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         .form-container {
             width: 100%;
@@ -91,7 +92,7 @@
                         <h1 class="font-bold text-2xl">Buat Kendaraan</h1>
                     </div>
 
-                    <!-- Alert Pesan Sukses/Gagal -->
+                    {{-- <!-- Alert Pesan Sukses/Gagal -->
                     @if(session('success'))
                         <div class="bg-green-500 text-white p-3 rounded mb-4">
                             <i class="fas fa-check-circle"></i> {{ session('success') }}
@@ -104,7 +105,7 @@
                                 @endforeach
                             </ul>
                         </div>
-                    @endif
+                    @endif --}}
             
                     <!-- Form Pembuatan Kendaraan -->
                     <div class="flex form-container bg-white-300 shadow-[0_0_20px_10px_rgba(0,0,0,0.1)]">
@@ -118,7 +119,7 @@
                 
                                 <!-- Input Deskripsi Kendaraan -->
                                 <label for="deskripsi">Deskripsi Kendaraan</label>
-                                <textarea id="deskripsi" name="deskripsi" rows="3" required></textarea>
+                                <textarea id="deskripsi" name="deskripsi" rows="3" required class="pl-2"></textarea>
                 
                                 <!-- Input Biaya Sewa, jumlah Kursi, Plat Nomor, CC dan Tahun Keluar Kendaraan -->
                                 <label for="biayaSewa">Biaya Sewa (Per Hari)</label>
@@ -174,6 +175,36 @@
             </div>            
         </div>
     </div>
+
+    <!-- Script Alert -->
+    <script>
+        // Notifikasi jika berhasil
+        @if(session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: '{{ session('success') }}',
+                showConfirmButton: false,
+                timer: 3000 // Durasi 3 detik
+            });
+        @endif
+    
+        // Notifikasi jika ada error
+        @if($errors->any())
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                html: `
+                    <ul style="text-align: left;">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                `,
+            });
+        @endif
+    </script>
+
 </body>
 
 </html>

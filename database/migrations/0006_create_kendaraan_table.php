@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('deskripsi', 50);
             $table->integer('cc');
             $table->integer('tahunKeluar');
-            $table->binary('foto');
+            $table->text('foto');
             $table->integer('biayaSewa');
             $table->timestamps();
         });

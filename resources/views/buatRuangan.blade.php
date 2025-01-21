@@ -7,6 +7,7 @@
     <title>Buat Ruangan</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMJTVF1a1wMA2gO/YHbx+fyfJhN/0Q5ntv7zYY" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         .form-container {
             width: 100%;
@@ -90,18 +91,35 @@
                     <div class="flex justify-center text-center pb-6">
                         <h1 class="font-bold text-2xl">Buat Ruangan</h1>
                     </div>
+
+                    {{-- <!-- Alert Pesan Sukses/Gagal -->
+                    @if(session('success'))
+                    <div class="bg-green-500 text-white p-3 rounded mb-4">
+                        <i class="fas fa-check-circle"></i> {{ session('success') }}
+                    </div>
+                    @elseif($errors->any())
+                        <div class="bg-red-500 text-white p-3 rounded mb-4">
+                            <ul>
+                                @foreach($errors->all() as $error)
+                                    <li><i class="fas fa-exclamation-circle"></i> {{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif --}}
             
                     <!-- Form Pembuatan Ruangan -->
                     <div class="flex form-container bg-white-300 shadow-[0_0_20px_10px_rgba(0,0,0,0.1)]">
                         <div class="flex form-inner m-3 rounded-lg outline outline-2 outline-[#00C6BF]">
-                            <form>
+                            <form action="{{ route('ruangan.store') }}" method="POST" enctype="multipart/form-data">
+                                @csrf 
+
                                 <!-- Input Nama Ruangan -->
-                                <label for="nama-ruangan">Nama Ruangan</label>
-                                <input type="text" id="nama-ruangan" name="nama-ruangan" required>
+                                <label for="nama">Nama Ruangan</label>
+                                <input type="text" id="nama" name="nama" required>
                 
                                 <!-- Input Deskripsi Ruangan -->
-                                <label for="deskripsi-ruangan">Deskripsi Ruangan</label>
-                                <textarea id="deskripsi-ruangan" name="deskripsi-ruangan" rows="3" required></textarea>
+                                <label for="deskripsi">Deskripsi Ruangan</label>
+                                <textarea id="deskripsi" name="deskripsi" rows="3" required class="pl-2"></textarea>
                 
                                 <!-- Input Biaya Sewa, Lokasi, Lantai dan Luas Ruangan -->
                                 <label for="biayaSewa">Biaya Sewa (Per Hari)</label>
@@ -146,8 +164,8 @@
                                 </div>
                 
                                 <!-- Input Foto Ruangan -->
-                                <label for="foto-ruangan">Upload Foto Ruangan</label>
-                                <input type="file" id="foto-ruangan" name="foto-ruangan" accept="image/jpeg, image/png" class="block w-full cursor-pointer" required>
+                                <label for="foto">Upload Foto Ruangan</label>
+                                <input type="file" id="foto" name="foto[]" accept="image/jpeg, image/png" class="block w-full cursor-pointer" multiple required>
                 
                                 <!-- Informasi Tambahan -->
                                 <p class="info">
@@ -157,7 +175,7 @@
                 
                                 <!-- Tombol Submit -->
                                 <div class="flex justify-end">
-                                    <button type="button" class="justify-end text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300  font-bold rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Buat Ruangan</button>
+                                    <button type="submit" class="justify-end text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300  font-bold rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Buat Ruangan</button>
                                 </div>
                             </form>
                         </div>
@@ -166,6 +184,36 @@
             </div>            
         </div>
     </div>
+
+    <!-- Script Alert -->
+    <script>
+        // Notifikasi jika berhasil
+        @if(session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: '{{ session('success') }}',
+                showConfirmButton: false,
+                timer: 3000 // Durasi 3 detik
+            });
+        @endif
+    
+        // Notifikasi jika ada error
+        @if($errors->any())
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                html: `
+                    <ul style="text-align: left;">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                `,
+            });
+        @endif
+    </script>
+    
 </body>
 
 </html>

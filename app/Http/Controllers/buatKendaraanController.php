@@ -27,7 +27,7 @@ class buatKendaraanController extends Controller
             'cc' => 'required|integer',
             'tahunKeluar' => 'required|integer',
             'foto' => 'required|array',
-            'foto.*' => 'required|image|mimes:jpeg, png|max:2048', // Maksimal 2MB
+            'foto.*' => 'required|image|mimes:jpeg,png|max:2048', // Maksimal 2MB
             'biayaSewa' => 'required|integer'
         ]);
 
@@ -54,11 +54,7 @@ class buatKendaraanController extends Controller
             'biayaSewa' => $request->input('biayaSewa')
         ]);
 
-        // Redirect dengan pesan sukses
-        return redirect()->route('buatKendaraan')->with('success', 'Kendaraan berhasil ditambahkan!');
-
-        // Jika gagal
-        return redirect()->route('buatKendaraan')->withErrors(['error' => 'Kendaraan gagal ditambahkan.']);
+        return redirect()->back()->with('success', 'Kendaraan berhasil dibuat!');
     }
 }
 
