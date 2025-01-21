@@ -17,7 +17,7 @@
                 <div class="relative border-b-4 border-transparent py-3">
                     <div class="flex justify-center items-center">
                         <div class="text-right pr-4">
-                            <h2 class="text-xl font-semibold text-gray-800">david</h2>
+                            <h2 class="text-xl font-semibold text-gray-800">David</h2>
                             <h2 class="text-lg text-gray-800">Admin Kelola Tenant</h2>
                         </div>
                         <div class="relative border-b-4 border-transparent py-3" >

@@ -15,13 +15,13 @@ return new class extends Migration
             $table->string('platNomor', 11)->primary();
             $table->string('nama', 30);
             $table->integer('jumlahKursi');
-            $table->integer('tv');
-            $table->integer('sound');
-            $table->integer('ac');
+            $table->string('tv', 5);
+            $table->string('sound', 5);
+            $table->string('ac', 5);
             $table->string('deskripsi', 50);
             $table->integer('cc');
             $table->integer('tahunKeluar');
-            $table->string('foto');
+            $table->text('foto');
             $table->integer('biayaSewa');
             $table->timestamps();
         });
