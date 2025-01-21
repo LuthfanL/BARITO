@@ -66,6 +66,42 @@ class DatabaseSeeder extends Seeder
             'hargaTenant' => 150000,
         ]);
 
+        $event = event::create([
+            'namaEvent' => 'Festival Kuliner Nusantara',
+            'tglMulai' => '2025-03-15',
+            'tglSelesai' => '2025-03-17',
+            'nMakanan' => 50,
+            'nBarang' => 20,
+            'nJasa' => 10,
+            'deskripsi' => 'Event ini menghadirkan beragam kuliner dari seluruh Indonesia. Dilaksanakan di Lapangan Simpang Lima Semarang.',
+            'foto' => 'test.jpeg',
+            'hargaTenant' => 300000,
+        ]);
+        
+        $event = event::create([
+            'namaEvent' => 'Semarang Book Fair',
+            'tglMulai' => '2025-06-10',
+            'tglSelesai' => '2025-06-14',
+            'nMakanan' => 10,
+            'nBarang' => 25,
+            'nJasa' => 5,
+            'deskripsi' => 'Pameran buku terbesar di Semarang dengan berbagai penawaran menarik dari penerbit terkenal.',
+            'foto' => 'test.jpeg',
+            'hargaTenant' => 200000,
+        ]);
+        
+        $event = event::create([
+            'namaEvent' => 'Tech Expo 2025',
+            'tglMulai' => '2025-09-01',
+            'tglSelesai' => '2025-09-03',
+            'nMakanan' => 15,
+            'nBarang' => 30,
+            'nJasa' => 12,
+            'deskripsi' => 'Event teknologi terbesar di Semarang, menampilkan inovasi dan gadget terbaru.',
+            'foto' => 'test.jpeg',
+            'hargaTenant' => 400000,
+        ]);        
+
         $kendaraan = kendaraan::create([
             'platNomor' => 'B 1234 ABC',
             'nama' => 'Toyota Alphard',
@@ -97,6 +133,54 @@ class DatabaseSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+
+        $kendaraan = kendaraan::create([
+            'platNomor' => 'H1234ABC',
+            'nama' => 'Honda CR-V',
+            'jumlahKursi' => 5,
+            'tv' => 'Tidak',
+            'sound' => 'Ya',
+            'ac' => 'Ya',
+            'deskripsi' => 'Mobil SUV dengan kenyamanan untuk keluarga.',
+            'cc' => 1500,
+            'tahunKeluar' => 2021,
+            'foto' => 'test.jpeg',
+            'biayaSewa' => 700000,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        
+        $kendaraan = kendaraan::create([
+            'platNomor' => 'L9876XYZ',
+            'nama' => 'Mitsubishi Pajero',
+            'jumlahKursi' => 7,
+            'tv' => 'Ya',
+            'sound' => 'Ya',
+            'ac' => 'Ya',
+            'deskripsi' => 'SUV premium dengan performa tangguh.',
+            'cc' => 2400,
+            'tahunKeluar' => 2019,
+            'foto' => 'test.jpeg',
+            'biayaSewa' => 1200000,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        
+        $kendaraan = kendaraan::create([
+            'platNomor' => 'F4567GHI',
+            'nama' => 'Suzuki APV',
+            'jumlahKursi' => 8,
+            'tv' => 'Tidak',
+            'sound' => 'Ya',
+            'ac' => 'Ya',
+            'deskripsi' => 'Mobil MPV dengan kapasitas besar.',
+            'cc' => 1600,
+            'tahunKeluar' => 2017,
+            'foto' => 'test.jpeg',
+            'biayaSewa' => 500000,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);        
 
         $ruangan = ruangan::create([
             'nama' => 'Aula Utama',
@@ -133,5 +217,59 @@ class DatabaseSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+
+        $ruangan = ruangan::create([
+            'nama' => 'Ruang Pelatihan',
+            'lokasi' => 'Gedung C, Lantai 2',
+            'podium' => 1,
+            'meja' => 15,
+            'kursi' => 50,
+            'sound' => 2,
+            'ac' => 4,
+            'proyektor' => 2,
+            'luas' => '15m x 20m',
+            'deskripsi' => 'Ruang pelatihan dengan fasilitas lengkap.',
+            'lantai' => 2,
+            'foto' => 'test.jpeg',
+            'biayaSewa' => 400000,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        
+        $ruangan = ruangan::create([
+            'nama' => 'Aula Kecil',
+            'lokasi' => 'Gedung D, Lantai 1',
+            'podium' => 1,
+            'meja' => 5,
+            'kursi' => 30,
+            'sound' => 1,
+            'ac' => 2,
+            'proyektor' => 1,
+            'luas' => '10m x 15m',
+            'deskripsi' => 'Aula kecil untuk acara internal.',
+            'lantai' => 1,
+            'foto' => 'test.jpeg',
+            'biayaSewa' => 200000,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        
+        $ruangan = ruangan::create([
+            'nama' => 'Ruang Diskusi',
+            'lokasi' => 'Gedung E, Lantai 2',
+            'podium' => 0,
+            'meja' => 2,
+            'kursi' => 10,
+            'sound' => 1,
+            'ac' => 1,
+            'proyektor' => 1,
+            'luas' => '8m x 10m',
+            'deskripsi' => 'Ruang kecil untuk diskusi kelompok.',
+            'lantai' => 2,
+            'foto' => 'test.jpeg',
+            'biayaSewa' => 100000,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);        
     }
 }

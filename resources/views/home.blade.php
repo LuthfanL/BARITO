@@ -169,7 +169,7 @@
 
     <script>
         const swiper = new Swiper('.card-wrapper', {
-            loop: true,
+            loop: false,
             spaceBetween: 30,
 
             // If we need pagination
@@ -188,12 +188,6 @@
             breakpoints: {
                 0: {
                     slidesPerView: 1
-                },
-                768: {
-                    slidesPerView: 2
-                },
-                1024: {
-                    slidesPerView: 3
                 },
             }
         });
