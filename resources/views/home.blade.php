@@ -86,12 +86,12 @@
     <div class="container swiper flex justify-center items-center pb-6">
         <div class="card-wrapper">
             <ul class="card-list swiper-wrapper">
-                <!-- item 1 -->
+                @foreach ($ruangan as $ruang)
                 <li class="card-item swiper-slide">
                     <div href="" class="card-link">
-                        <img src="assets/test.jpeg" alt="Ruangan" class="card-image">
-                        <h2 class="font-bold pt-2 pb-2 ">Ruangan Lokakrida</h2>
-                        <p class="card-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+                        <img src="{{ asset('assets/' . $ruang->foto) }}" alt="Ruangan" class="card-image">
+                        <h2 class="font-bold pt-2 pb-2 ">{{ $ruang->nama }}</h2>
+                        <p class="card-title">{{ $ruang->deskripsi }}</p>
                         <button href="#" class="inline-flex items-center mt-2 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-xl hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
                             Lihat detail
                             <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
@@ -100,62 +100,7 @@
                         </button>
                     </div>
                 </li>
-                <!-- item 2 -->
-                <li class="card-item swiper-slide">
-                    <div href="" class="card-link">
-                        <img src="assets/test.jpeg" alt="Ruangan" class="card-image">
-                        <h2 class="font-bold pt-2 pb-2 ">Ruangan Lokakrida</h2>
-                        <p class="card-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
-                        <button href="#" class="inline-flex items-center mt-2 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-xl hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
-                            Lihat detail
-                            <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                            </svg>
-                        </button>
-                    </div>
-                </li>
-                <!-- item 3 -->
-                <li class="card-item swiper-slide">
-                    <div href="" class="card-link">
-                        <img src="assets/test.jpeg" alt="Ruangan" class="card-image">
-                        <h2 class="font-bold pt-2 pb-2 ">Ruangan Lokakrida</h2>
-                        <p class="card-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
-                        <button href="#" class="inline-flex items-center mt-2 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-xl hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
-                            Lihat detail
-                            <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                            </svg>
-                        </button>
-                    </div>
-                </li>
-                <!-- item 4 -->
-                <li class="card-item swiper-slide">
-                    <div href="" class="card-link">
-                        <img src="assets/test.jpeg" alt="Ruangan" class="card-image">
-                        <h2 class="font-bold pt-2 pb-2 ">Ruangan Lokakrida</h2>
-                        <p class="card-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
-                        <button href="#" class="inline-flex items-center mt-2 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-xl hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
-                            Lihat detail
-                            <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                            </svg>
-                        </button>
-                    </div>
-                </li>
-                <!-- item 5 -->
-                <li class="card-item swiper-slide">
-                    <div href="" class="card-link">
-                        <img src="assets/test.jpeg" alt="Ruangan" class="card-image">
-                        <h2 class="font-bold pt-2 pb-2 ">Ruangan Lokakrida</h2>
-                        <p class="card-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
-                        <button href="#" class="inline-flex items-center mt-2 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-xl hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
-                            Lihat detail
-                            <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                            </svg>
-                        </button>
-                    </div>
-                </li>
+                @endforeach
             </ul>
             <div class="swiper-pagination"></div>
             <div class="swiper-button-prev"></div>
@@ -169,12 +114,12 @@
     <div class="container swiper flex justify-center items-center pb-6">
         <div class="card-wrapper">
             <ul class="card-list swiper-wrapper">
-                <!-- item 1 -->
+                @foreach ($kendaraan as $kendaraan)
                 <li class="card-item swiper-slide">
                     <div href="" class="card-link">
-                        <img src="assets/test.jpeg" alt="Ruangan" class="card-image">
-                        <h2 class="font-bold pt-2 pb-2 ">Ruangan Lokakrida</h2>
-                        <p class="card-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+                        <img src="{{ asset('assets/' . $kendaraan->foto) }}" alt="Ruangan" class="card-image">
+                        <h2 class="font-bold pt-2 pb-2 ">{{ $kendaraan->nama }}</h2>
+                        <p class="card-title">{{ $kendaraan->deskripsi }}</p>
                         <button href="#" class="inline-flex items-center mt-2 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-xl hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
                             Lihat detail
                             <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
@@ -183,62 +128,7 @@
                         </button>
                     </div>
                 </li>
-                <!-- item 2 -->
-                <li class="card-item swiper-slide">
-                    <div href="" class="card-link">
-                        <img src="assets/test.jpeg" alt="Ruangan" class="card-image">
-                        <h2 class="font-bold pt-2 pb-2 ">Ruangan Lokakrida</h2>
-                        <p class="card-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
-                        <button href="#" class="inline-flex items-center mt-2 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-xl hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
-                            Lihat detail
-                            <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                            </svg>
-                        </button>
-                    </div>
-                </li>
-                <!-- item 3 -->
-                <li class="card-item swiper-slide">
-                    <div href="" class="card-link">
-                        <img src="assets/test.jpeg" alt="Ruangan" class="card-image">
-                        <h2 class="font-bold pt-2 pb-2 ">Ruangan Lokakrida</h2>
-                        <p class="card-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
-                        <button href="#" class="inline-flex items-center mt-2 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-xl hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
-                            Lihat detail
-                            <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                            </svg>
-                        </button>
-                    </div>
-                </li>
-                <!-- item 4 -->
-                <li class="card-item swiper-slide">
-                    <div href="" class="card-link">
-                        <img src="assets/test.jpeg" alt="Ruangan" class="card-image">
-                        <h2 class="font-bold pt-2 pb-2 ">Ruangan Lokakrida</h2>
-                        <p class="card-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
-                        <button href="#" class="inline-flex items-center mt-2 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-xl hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
-                            Lihat detail
-                            <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                            </svg>
-                        </button>
-                    </div>
-                </li>
-                <!-- item 5 -->
-                <li class="card-item swiper-slide">
-                    <div href="" class="card-link">
-                        <img src="assets/test.jpeg" alt="Ruangan" class="card-image">
-                        <h2 class="font-bold pt-2 pb-2 ">Ruangan Lokakrida</h2>
-                        <p class="card-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
-                        <button href="#" class="inline-flex items-center mt-2 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-xl hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
-                            Lihat detail
-                            <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                            </svg>
-                        </button>
-                    </div>
-                </li>
+                @endforeach
             </ul>
             <div class="swiper-pagination"></div>
             <div class="swiper-button-prev"></div>
@@ -252,12 +142,12 @@
     <div class="container swiper flex justify-center items-center pb-6">
         <div class="card-wrapper">
             <ul class="card-list swiper-wrapper">
-                <!-- item 1 -->
+                @foreach ($events as $event)
                 <li class="card-item swiper-slide">
                     <div href="" class="card-link">
-                        <img src="assets/test.jpeg" alt="Ruangan" class="card-image">
-                        <h2 class="font-bold pt-2 pb-2 ">Ruangan Lokakrida</h2>
-                        <p class="card-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+                        <img src="{{ asset('assets/' . $event->foto) }}" alt="Ruangan" class="card-image">
+                        <h2 class="font-bold pt-2 pb-2 ">{{ $event->namaEvent }}</h2>
+                        <p class="card-title">{{ $event->deskripsi }}</p>
                         <button href="#" class="inline-flex items-center mt-2 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-xl hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
                             Lihat detail
                             <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
@@ -266,62 +156,7 @@
                         </button>
                     </div>
                 </li>
-                <!-- item 2 -->
-                <li class="card-item swiper-slide">
-                    <div href="" class="card-link">
-                        <img src="assets/test.jpeg" alt="Ruangan" class="card-image">
-                        <h2 class="font-bold pt-2 pb-2 ">Ruangan Lokakrida</h2>
-                        <p class="card-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
-                        <button href="#" class="inline-flex items-center mt-2 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-xl hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
-                            Lihat detail
-                            <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                            </svg>
-                        </button>
-                    </div>
-                </li>
-                <!-- item 3 -->
-                <li class="card-item swiper-slide">
-                    <div href="" class="card-link">
-                        <img src="assets/test.jpeg" alt="Ruangan" class="card-image">
-                        <h2 class="font-bold pt-2 pb-2 ">Ruangan Lokakrida</h2>
-                        <p class="card-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
-                        <button href="#" class="inline-flex items-center mt-2 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-xl hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
-                            Lihat detail
-                            <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                            </svg>
-                        </button>
-                    </div>
-                </li>
-                <!-- item 4 -->
-                <li class="card-item swiper-slide">
-                    <div href="" class="card-link">
-                        <img src="assets/test.jpeg" alt="Ruangan" class="card-image">
-                        <h2 class="font-bold pt-2 pb-2 ">Ruangan Lokakrida</h2>
-                        <p class="card-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
-                        <button href="#" class="inline-flex items-center mt-2 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-xl hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
-                            Lihat detail
-                            <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                            </svg>
-                        </button>
-                    </div>
-                </li>
-                <!-- item 5 -->
-                <li class="card-item swiper-slide">
-                    <div href="" class="card-link">
-                        <img src="assets/test.jpeg" alt="Ruangan" class="card-image">
-                        <h2 class="font-bold pt-2 pb-2 ">Ruangan Lokakrida</h2>
-                        <p class="card-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
-                        <button href="#" class="inline-flex items-center mt-2 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-xl hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
-                            Lihat detail
-                            <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                            </svg>
-                        </button>
-                    </div>
-                </li>
+                @endforeach
             </ul>
             <div class="swiper-pagination"></div>
             <div class="swiper-button-prev"></div>
@@ -334,7 +169,7 @@
 
     <script>
         const swiper = new Swiper('.card-wrapper', {
-            loop: true,
+            loop: false,
             spaceBetween: 30,
 
             // If we need pagination
@@ -353,12 +188,6 @@
             breakpoints: {
                 0: {
                     slidesPerView: 1
-                },
-                768: {
-                    slidesPerView: 2
-                },
-                1024: {
-                    slidesPerView: 3
                 },
             }
         });
