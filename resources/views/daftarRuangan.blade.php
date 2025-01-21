@@ -124,19 +124,38 @@
                     <div class="flex justify-center text-center pb-6">
                         <h1 class="font-bold text-2xl">Daftar Ruangan</h1>
                     </div>
-                    <!-- Cari Ruangan -->
-                    <form class=" w-full mx-auto">   
-                        <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Cari Ruangan</label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                                <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                                </svg>
+                    <!-- Cari Kendaraan -->
+                        <form action="{{ route('searchRuangan') }}" method="GET" class="w-full mx-auto">   
+                            <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Cari Ruangan</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                    <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                                    </svg>
+                                </div>
+                                <input 
+                                    type="search" 
+                                    name="keyword" 
+                                    id="default-search" 
+                                    class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500" 
+                                    placeholder="Cari Nama Ruangan" 
+                                    value="{{ old('keyword', '') }}" 
+                                />
+                                <button 
+                                    type="submit" 
+                                    class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-xl text-sm px-4 py-2">
+                                    Cari
+                                </button>
                             </div>
-                            <input type="search" id="default-search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="Cari Ruangan" required />
-                            <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-xl text-sm px-4 py-2">Cari</button>
-                        </div>
-                    </form>
+                        </form>
+
+                        <!-- Tampilkan Daftar Kendaraan -->
+                        @if(!empty($ruangan) && count($ruangan) > 0)
+                            <table>
+                                <!-- Tabel ruangan ditampilkan di sini -->
+                            </table>
+                        @endif
+
 
                     <!-- Table Data -->
                     <table id="default-table">
@@ -184,7 +203,7 @@
                                 </th>
                                 <th>
                                     <span class="flex items-center">
-                                        Gedung
+                                        Lokasi
                                         <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4"/>
                                         </svg>
@@ -220,135 +239,66 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <!-- No -->
-                                <td>1</td>
-                                <!-- ID. Ruangan -->
-                                <td>R1</td>
-                                <!-- Nama Ruangan -->
-                                <td>Ruang 1</td>
-                                <!-- Deskripsi Ruangan -->
-                                <td>Lorem ipsum tahu tempe enak sekali aaaaaaa aaaaa aaaaaa aaaaaaaa aaaaaaa aaaaa aaaaa aaaaaa</td>
-                                <!-- Biaya Sewa -->
-                                <td>Rp. 500.000</td>
-                                <!-- Gedung -->
-                                <td>Gedung Moch. Ichsan</td>
-                                <!-- Lantai -->
-                                <td class="text-center">8</td>
-                                <td class="text-center">10x10</td>
-                                <!-- Fasilitas  -->
-                                <td class="text-center">
-                                    <button data-modal-target="modal-fasilitas" data-modal-toggle="modal-fasilitas" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Detail</button>
-                                </td>
-                                <!-- Foto -->
-                                <td class="text-center">
-                                    <button data-modal-target="modal-foto" data-modal-toggle="modal-foto" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Detail</button>
-                                </td>
-                                <!-- Tindakan -->
-                                <td class="text-center">
-                                    <div class="flex flex-col gap-2">
-                                        <button data-modal-target="modal-edit" data-modal-toggle="modal-edit" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Edit</button>
-                                        <button data-modal-target="modal-hapus" data-modal-toggle="modal-hapus" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Hapus</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>R2</td>
-                                <td>Ruang 2</td>
-                                <td>Lorem ipsum tahu tempe enak sekali</td>
-                                <td>Rp. 500.000</td>
-                                <td>Gedung Moch. Ichsan</td>
-                                <td class="text-center">8</td>
-                                <td class="text-center">10x10</td>
-                                <td class="text-center">
-                                    <button class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Detail</button>
-                                </td>
-                                <td class="text-center">
-                                    <button class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Detail</button>
-                                </td>
-                                <td class="text-center">
-                                    <div class="flex flex-col gap-2">
-                                        <button data-modal-target="modal-edit" data-modal-toggle="modal-edit" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Edit</button>
-                                        <button data-modal-target="modal-hapus" data-modal-toggle="modal-hapus" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Hapus</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>R3</td>
-                                <td>Ruang 3</td>
-                                <td>Lorem ipsum tahu tempe enak sekali</td>
-                                <td>Rp. 500.000</td>
-                                <td>Gedung Moch. Ichsan</td>
-                                <td class="text-center">8</td>
-                                <td class="text-center">10x10</td>
-                                <td class="text-center">
-                                    <button class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Detail</button>
-                                </td>
-                                <td class="text-center">
-                                    <button class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Detail</button>
-                                </td>
-                                <td class="text-center">
-                                    <div class="flex flex-col gap-2">
-                                        <button data-modal-target="modal-edit" data-modal-toggle="modal-edit" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Edit</button>
-                                        <button data-modal-target="modal-hapus" data-modal-toggle="modal-hapus" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Hapus</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>R4</td>
-                                <td>Ruang 4</td>
-                                <td>Lorem ipsum tahu tempe enak sekali</td>
-                                <td>Rp. 500.000</td>
-                                <td>Gedung Moch. Ichsan</td>
-                                <td class="text-center">8</td>
-                                <td class="text-center">10x10</td>
-                                <td class="text-center">
-                                    <button class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Detail</button>
-                                </td>
-                                <td class="text-center">
-                                    <button class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Detail</button>
-                                </td>
-                                <td class="text-center">
-                                    <div class="flex flex-col gap-2">
-                                        <button data-modal-target="modal-edit" data-modal-toggle="modal-edit" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Edit</button>
-                                        <button data-modal-target="modal-hapus" data-modal-toggle="modal-hapus" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Hapus</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>R5</td>
-                                <td>Ruang 5</td>
-                                <td>Lorem ipsum tahu tempe enak sekali</td>
-                                <td>Rp. 500.000</td>
-                                <td>Gedung Moch. Ichsan</td>
-                                <td class="text-center">8</td>
-                                <td class="text-center">10x10</td>
-                                <td class="text-center">
-                                    <button class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Detail</button>
-                                </td>
-                                <td class="text-center">
-                                    <button class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Detail</button>
-                                </td>
-                                <td class="text-center">
-                                    <div class="flex flex-col gap-2">
-                                        <button data-modal-target="modal-edit" data-modal-toggle="modal-edit" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Edit</button>
-                                        <button data-modal-target="modal-hapus" data-modal-toggle="modal-hapus" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Hapus</button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
+                        @if (!empty($ruangan))
+                            <tbody>
+                                @foreach ($ruangan as $data)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $data['id'] }}</td>
+                                        <td>{{ $data['nama'] }}</td>
+                                        <td>{{ $data['deskripsi'] }}</td>
+                                        <td>Rp. {{ number_format($data['biayaSewa'], 0, ',', '.') }}</td>
+                                        <td class="text-center">{{ $data['lokasi'] }}</td>
+                                        <td class="text-center">{{ $data['lantai'] }}</td>
+                                        <td class="text-center">{{ $data['luas'] }}</td>
+                                        <td class="text-center"> 
+                                            <button 
+                                                data-modal-target="modal-fasilitas" 
+                                                data-modal-toggle="modal-fasilitas" 
+                                                data-podium="{{ $data['podium'] }}" 
+                                                data-sound="{{ $data['sound'] }}" 
+                                                data-ac="{{ $data['ac'] }}" 
+                                                data-meja="{{ $data['meja'] }}" 
+                                                data-kursi="{{ $data['kursi'] }}" 
+                                                data-proyektor="{{ $data['proyektor'] }}" 
+                                                type="button" 
+                                                class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                                Detail
+                                            </button>
+                                        </td>
+                                        <td class="text-center">
+                                            <button 
+                                                data-modal-target="modal-foto" 
+                                                data-modal-toggle="modal-foto" 
+                                                data-foto="{{ $data['foto'] }}"  
+                                                type="button" 
+                                                class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                                Detail
+                                            </button>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="flex flex-col gap-2">
+                                                <button class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Edit</button>
+                                                <button 
+                                                    data-modal-target="modal-hapus" 
+                                                    data-modal-toggle="modal-hapus"
+                                                    data-plat="{{ $data['id'] }}"  
+                                                    class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                                    Hapus
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        @endif
                     </table>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal Edit -->
+    {{-- <!-- Modal Edit -->
     <div id="modal-edit" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative p-4 w-full max-w-4xl max-h-full">
             <!-- Modal content -->
@@ -363,12 +313,12 @@
                 <div class="p-4 md:p-5">
                     <form>
                         <!-- Input Nama Ruangan -->
-                        <label for="nama-ruangan">Nama Ruangan</label>
-                        <input type="text" id="nama-ruangan" name="nama-ruangan" required>
+                        <label for="nama</label>
+                        <input type="text" id="nama" name="nama" required>
         
                         <!-- Input Deskripsi Ruangan -->
-                        <label for="deskripsi-ruangan">Deskripsi Ruangan</label>
-                        <textarea id="deskripsi-ruangan" name="deskripsi-ruangan" rows="3" required></textarea>
+                        <label for="deskripsi">Deskripsi Ruangan</label>
+                        <textarea id="deskripsi" name="deskripsi" rows="3" required></textarea>
         
                         <!-- Input Biaya Sewa, Lokasi, Lantai dan Luas Ruangan -->
                         <label for="biayaSewa">Biaya Sewa (Per Hari)</label>
@@ -431,7 +381,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <!-- Modal Fasilitas -->
     <div id="modal-fasilitas" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -449,27 +399,27 @@
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label for="podium" class="block text-sm font-medium text-gray-700">Podium</label>
-                            <input type="number" id="podium" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" value="2" readonly>
+                            <input type="number" id="podium" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" value="{{ $data['podium'] ?? '' }}" readonly>
                         </div>
                         <div>
                             <label for="sound" class="block text-sm font-medium text-gray-700">Sound</label>
-                            <input type="number" id="sound" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" value="8" readonly>
+                            <input type="number" id="sound" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" value="{{ $data['sound'] ?? '' }}" readonly>
                         </div>
                         <div>
                             <label for="meja" class="block text-sm font-medium text-gray-700">Meja</label>
-                            <input type="number" id="meja" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" value="50" readonly>
+                            <input type="number" id="meja" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" value="{{ $data['meja'] ?? '' }}" readonly>
                         </div>
                         <div>
                             <label for="ac" class="block text-sm font-medium text-gray-700">AC</label>
-                            <input type="number" id="ac" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" value="8" readonly>
+                            <input type="number" id="ac" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" value="{{ $data['ac'] ?? '' }}" readonly>
                         </div>
                         <div>
                             <label for="kursi" class="block text-sm font-medium text-gray-700">Kursi</label>
-                            <input type="number" id="kursi" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" value="100" readonly>
+                            <input type="number" id="kursi" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"value="{{ $data['kursi'] ?? '' }}" readonly>
                         </div>
                         <div>
                             <label for="proyektor" class="block text-sm font-medium text-gray-700">Proyektor</label>
-                            <input type="number" id="proyektor" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" value="6" readonly>
+                            <input type="number" id="proyektor" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" value="{{ $data['proyektor'] ?? '' }}" readonly>
                         </div>
                     </div>
                 </div>
@@ -480,7 +430,7 @@
             </div>
         </div>
     </div>
-
+{{-- 
     <!-- Modal Foto -->
     <div id="modal-foto" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative p-4 w-full max-w-xl max-h-full">
@@ -523,7 +473,35 @@
                 </div>
             </div>
         </div>
+    </div> --}}
+
+     <!-- Modal Foto -->
+    <div id="modal-foto" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative p-4 w-full max-w-xl max-h-full">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow">
+                <!-- Modal header -->
+                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
+                    <h3 class="text-lg md:text-xl font-semibold text-gray-900">
+                        Foto Ruangan
+                    </h3>
+                </div>
+                <!-- Modal body -->
+                <div class="p-4 md:p-5 space-y-4">
+                    <div class="grid gap-4">
+                        <div>
+                            <img id="main-image" class="h-auto max-w-full rounded-lg" src="" alt="Foto Ruangan">
+                        </div>
+                    </div>                    
+                </div>
+                <!-- Modal footer -->
+                <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b">
+                    <button data-modal-hide="modal-foto" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center">Kembali</button>
+                </div>
+            </div>
+        </div>
     </div>
+
 
     <!-- Modal Hapus -->
     <div id="modal-hapus" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -535,14 +513,22 @@
                     </svg>
                     <h1 class="mb-5 text-lg font-bold text-gray-900">Konfirmasi Hapus Ruangan</h1>
                     <p class="mb-5 text-m font-normal text-gray-500">Apakah Anda yakin ingin menghapus ruangan ini?</p>
-                    <button data-modal-hide="modal-hapus" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                        Hapus
-                    </button>
-                    <button data-modal-hide="modal-hapus" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Kembali</button>
+                    <!-- Form untuk hapus ruangan -->
+                    <form id="delete-form" method="POST" action="">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                            Hapus
+                        </button>
+                        <button data-modal-hide="modal-hapus" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                            Kembali
+                        </button>
+                </form>
                 </div>
             </div>
         </div>
     </div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 </body>
@@ -563,6 +549,49 @@
         const mainImage = document.getElementById('main-image');
         mainImage.src = element.src;
     }
+</script>
+
+// Scipt untuk mengambil data fasilitas 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Ambil semua tombol yang membuka modal fasilitas
+        const detailButtons = document.querySelectorAll("[data-modal-target='modal-fasilitas']");
+
+        detailButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                // Ambil data dari tombol yang diklik
+                const podium = this.getAttribute("data-podium");
+                const sound = this.getAttribute("data-sound");
+                const meja = this.getAttribute("data-meja");
+                const ac = this.getAttribute("data-ac");
+                const kursi = this.getAttribute("data-kursi");
+                const proyektor = this.getAttribute("data-proyektor");
+
+                // Temukan elemen input dalam modal dan isi dengan data yang sesuai
+                document.querySelector("#modal-fasilitas #podium").value = podium || "Tidak tersedia";
+                document.querySelector("#modal-fasilitas #sound").value = sound || "Tidak tersedia";
+                document.querySelector("#modal-fasilitas #meja").value = meja || "Tidak tersedia";
+                document.querySelector("#modal-fasilitas #ac").value = ac || "Tidak tersedia";
+                document.querySelector("#modal-fasilitas #kursi").value = kursi || "Tidak tersedia";
+                document.querySelector("#modal-fasilitas #proyektor").value = proyektor || "Tidak tersedia";
+            });
+        });
+    });
+</script>
+
+// Script untuk menghapus data 
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const modalHapus = document.getElementById("modal-hapus");
+    const deleteForm = document.getElementById("delete-form");
+
+    document.querySelectorAll("[data-modal-toggle='modal-hapus']").forEach(button => {
+        button.addEventListener("click", function () {
+            let id = this.getAttribute("data-plat");
+            deleteForm.setAttribute("action", `/ruangan/${id}`);
+        });
+    });
+});
 </script>
 
 </html>

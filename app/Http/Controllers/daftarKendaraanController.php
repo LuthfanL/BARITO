@@ -37,33 +37,21 @@ class daftarKendaraanController extends Controller
         return view('daftarKendaraan', compact('kendaraan'));
     }
 
-    // public function search(Request $request)
-    // {
-    //     // Tangkap input pencarian
-    //     $keyword = $request->input('keyword');
-
-    //     // Query kendaraan berdasarkan keyword
-    //     $kendaraan = kendaraan::where('nama', 'like', "%{$keyword}%")
-    //                           ->orWhere('platNomor', 'like', "%{$keyword}%")
-    //                           ->get()
-    //                           ->toArray();
-
-    //     // Mengirim data ke view
-    //     return view('daftarKendaraan', compact('kendaraan'));
-    // }
-
     public function search(Request $request)
     {
         // Tangkap input pencarian
         $keyword = $request->input('keyword');
-
+        
         // Jika ada pencarian, cari berdasarkan nama atau platNomor
-        $kendaraan = kendaraan::when($keyword, function ($query, $keyword) {
-            return $query->where('nama', 'like', "%{$keyword}%")
-                        ->orWhere('platNomor', 'like', "%{$keyword}%");
-        })
-        ->get() // Ambil data
-        ->toArray();
+        if ($keyword) {
+            $kendaraan = kendaraan::where('nama', 'like', "%{$keyword}%")
+                ->orWhere('platNomor', 'like', "%{$keyword}%")
+                ->get()
+                ->toArray();
+        } else {
+            // Jika tidak ada pencarian, ambil semua data kendaraan
+            $kendaraan = kendaraan::get()->toArray();
+        }
 
         // Mengirim data ke view
         return view('daftarKendaraan', compact('kendaraan', 'keyword'));

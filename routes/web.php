@@ -96,12 +96,20 @@ Route::get('/kontakTenant', [kontakTenantController::class, 'index'])->name('kon
 # Admin Ruangan -----------------------------------------------------
 Route::get('/dashboardAdminRuangan', [DashboardAdminRuanganController::class, 'index'])->name('dashboardAdminRuangan');
 
+Route::get('/ruangan', [daftarRuanganController::class, 'index'])->name('daftarRuangan');
+
 // Route::get('/buatRuangan', [buatRuanganController::class, 'index'])->name('buatRuangan')->middleware('auth');
+
+//Route::get('/ruangan', [daftarRuanganController::class, 'index'])->name('daftarRuangan');
 
 Route::get('/buatRuangan', [buatRuanganController::class, 'index'])->name('buatRuangan');
 Route::post('/buatRuangan', [buatRuanganController::class, 'store'])->name('ruangan.store');
 
-Route::get('/daftarRuangan', [daftarRuanganController::class, 'index'])->name('daftarRuangan');
+Route::resource('/daftarRuangan', daftarRuanganController::class);
+
+Route::get('/cari-ruangan', [daftarRuanganController::class, 'search'])->name('searchRuangan');
+
+Route::delete('/ruangan/{id}', [daftarRuanganController::class, 'destroy'])->name('ruangan.destroy');
 
 Route::get('/verifikasiBookingRuangan', [verifikasiBookingRuanganController::class, 'index'])->name('verifikasiBookingRuangan');
 
