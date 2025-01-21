@@ -37,14 +37,13 @@ class daftarKendaraanController extends Controller
         if ($keyword) {
             $kendaraan = kendaraan::where('nama', 'like', "%{$keyword}%")
                 ->orWhere('platNomor', 'like', "%{$keyword}%")
-                ->get()
-                ->toArray();
+                ->get(); // Ambil data kendaraan yang sesuai dengan pencarian
         } else {
             // Jika tidak ada pencarian, ambil semua data kendaraan
-            $kendaraan = kendaraan::get()->toArray();
+            $kendaraan = kendaraan::all(); // Mengambil semua kendaraan
         }
-
-        // Mengirim data ke view
+    
+        // Kirim data ke view
         return view('daftarKendaraan', compact('kendaraan', 'keyword'));
     }
 

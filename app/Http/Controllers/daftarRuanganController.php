@@ -32,17 +32,17 @@ class daftarRuanganController extends Controller
         // Tangkap input pencarian
         $keyword = $request->input('keyword');
         
-        // Jika ada pencarian, cari berdasarkan nama
+        // Jika ada pencarian, cari berdasarkan nama atau id
         if ($keyword) {
             $ruangan = ruangan::where('nama', 'like', "%{$keyword}%")
-                ->get()
-                ->toArray();
+                ->orWhere('id', 'like', "%{$keyword}%")
+                ->get();
         } else {
             // Jika tidak ada pencarian, ambil semua data ruangan
-            $ruangan = ruangan::get()->toArray();
+            $ruangan = ruangan::all();
         }
-
-        // Mengirim data ke view
+    
+        // Kirim data ke view
         return view('daftarRuangan', compact('ruangan', 'keyword'));
     }
 
