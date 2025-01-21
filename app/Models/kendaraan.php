@@ -24,7 +24,7 @@ class kendaraan extends Model
         'ac', 
         'deskripsi', 
         'cc', 
-        'tahunKeluaran', 
+        'tahunKeluar', 
         'foto', 
         'biayaSewa', 
     ];

@@ -90,34 +90,51 @@
                     <div class="flex justify-center text-center pb-6">
                         <h1 class="font-bold text-2xl">Buat Kendaraan</h1>
                     </div>
+
+                    <!-- Alert Pesan Sukses/Gagal -->
+                    @if(session('success'))
+                        <div class="bg-green-500 text-white p-3 rounded mb-4">
+                            <i class="fas fa-check-circle"></i> {{ session('success') }}
+                        </div>
+                    @elseif($errors->any())
+                        <div class="bg-red-500 text-white p-3 rounded mb-4">
+                            <ul>
+                                @foreach($errors->all() as $error)
+                                    <li><i class="fas fa-exclamation-circle"></i> {{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
             
                     <!-- Form Pembuatan Kendaraan -->
                     <div class="flex form-container bg-white-300 shadow-[0_0_20px_10px_rgba(0,0,0,0.1)]">
                         <div class="flex form-inner m-3 rounded-lg outline outline-2 outline-[#00C6BF]">
-                            <form>
+                            <form action="{{ route('kendaraan.store') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+
                                 <!-- Input Nama Kendaraan -->
-                                <label for="nama-kendaraan">Nama Kendaraan</label>
-                                <input type="text" id="nama-kendaraan" name="nama-kendaraan" required>
+                                <label for="nama">Nama Kendaraan</label>
+                                <input type="text" id="nama" name="nama" required>
                 
                                 <!-- Input Deskripsi Kendaraan -->
-                                <label for="deskripsi-kendaraan">Deskripsi Kendaraan</label>
-                                <textarea id="deskripsi-kendaraan" name="deskripsi-kendaraan" rows="3" required></textarea>
+                                <label for="deskripsi">Deskripsi Kendaraan</label>
+                                <textarea id="deskripsi" name="deskripsi" rows="3" required></textarea>
                 
-                                <!-- Input Biaya Sewa, Kapasitas, Plat Nomor, CC dan Tahun Kendaraan -->
+                                <!-- Input Biaya Sewa, jumlah Kursi, Plat Nomor, CC dan Tahun Keluar Kendaraan -->
                                 <label for="biayaSewa">Biaya Sewa (Per Hari)</label>
                                 <input type="text" id="biayaSewa" name="biayaSewa" required>
 
-                                <label for="kapasitas">Kapasitas</label>
-                                <input type="text" id="kapasitas" name="kapasitas" required>
+                                <label for="jumlahKursi">Jumlah Kursi</label>
+                                <input type="text" id="jumlahKursi" name="jumlahKursi" required>
                 
-                                <label for="plat">Plat Nomor</label>
-                                <input type="text" id="plat" name="plat" required>
+                                <label for="platNomor">Plat Nomor</label>
+                                <input type="text" id="platNomor" name="platNomor" required>
 
                                 <label for="cc">CC</label>
                                 <input type="text" id="cc" name="cc" required>
 
-                                <label for="tahun">Tahun</label>
-                                <input type="text" id="tahun" name="tahun" required>
+                                <label for="tahunKeluar">Tahun</label>
+                                <input type="text" id="tahunKeluar" name="tahunKeluar" required>
                 
                                 <!-- Input Fasilitas Kendaraan -->
                                 <label>Fasilitas Kendaraan</label>
@@ -137,8 +154,8 @@
                                 </div>
                 
                                 <!-- Input Foto Kendaraan -->
-                                <label for="foto-kendaraan">Upload Foto Kendaraan</label>
-                                <input type="file" id="foto-kendaraan" name="foto-kendaraan" accept="image/jpeg, image/png" class="block w-full cursor-pointer" required>
+                                <label for="foto">Upload Foto Kendaraan</label>
+                                <input type="file" id="foto" name="foto" accept="image/jpeg, image/png" class="block w-full cursor-pointer" required> 
                 
                                 <!-- Informasi Tambahan -->
                                 <p class="info">
@@ -148,7 +165,7 @@
                 
                                 <!-- Tombol Submit -->
                                 <div class="flex justify-end">
-                                    <button type="button" class="justify-end text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300  font-bold rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Buat Kendaraan</button>
+                                    <button type="submit" class="justify-end text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300  font-bold rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Buat Kendaraan</button>
                                 </div>
                             </form>
                         </div>

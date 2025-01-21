@@ -3,11 +3,59 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\kendaraan;
+use Illuminate\Support\Facades\Storage;
 
 class buatKendaraanController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         return view('buatKendaraan');
     }
+
+    public function store(Request $request)
+    {
+        // Validasi input
+        $request->validate([
+            'platNomor' => 'required|string|max:11|unique:kendaraan,platNomor',
+            'nama' => 'required|string|max:30',
+            'jumlahKursi' => 'required|integer',
+            'tv' => 'required|string|max:5',
+            'sound' => 'required|string|max:5',
+            'ac' => 'required|string|max:5',
+            'deskripsi' => 'required|string|max:50',
+            'cc' => 'required|integer',
+            'tahunKeluar' => 'required|integer',
+            'foto' => 'required|image|mimes:jpeg,png|max:2048', // Maksimal 2MB
+            'biayaSewa' => 'required|integer'
+        ]);
+
+        // Konversi gambar ke format BLOB
+        $fotoBlob = null;
+        if ($request->hasFile('foto')) {
+            $fotoBlob = file_get_contents($request->file('foto')->getRealPath());
+        }     
+
+        // Simpan data ke database
+        kendaraan::create([
+            'platNomor' => $request->input('platNomor'),
+            'nama' => $request->input('nama'),
+            'jumlahKursi' => $request->input('jumlahKursi'),
+            'tv' => $request->input('tv'),
+            'sound' => $request->input('sound'),
+            'ac' => $request->input('ac'),
+            'deskripsi' => $request->input('deskripsi'),
+            'cc' => $request->input('cc'),
+            'tahunKeluar' => $request->input('tahunKeluar'),
+            'foto' => $fotoBlob,
+            'biayaSewa' => $request->input('biayaSewa')
+        ]);
+
+        // Redirect dengan pesan sukses
+        return redirect()->route('buatKendaraan')->with('success', 'Kendaraan berhasil ditambahkan!');
+
+        // Jika gagal
+        return redirect()->route('buatKendaraan')->withErrors(['error' => 'Kendaraan gagal ditambahkan.']);
+    }
 }
+
