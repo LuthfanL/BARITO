@@ -117,15 +117,16 @@
             <!-- Navbar -->
             @include('components.navbarAdminKendaraan')
 
-            <!-- Main Content -->
-            <div class="px-8 pt-8 pb-8 flex justify-center items-center">
-                <div class="max-w-full w-full">
-                    <!-- Judul Page -->
-                    <div class="flex justify-center text-center pb-6">
-                        <h1 class="font-bold text-2xl">Daftar Kendaraan</h1>
-                    </div>
+                <!-- Main Content -->
+                <div class="px-8 pt-8 pb-8 flex justify-center items-center">
+                    <div class="max-w-full w-full">
+                        <!-- Judul Page -->
+                        <div class="flex justify-center text-center pb-6">
+                            <h1 class="font-bold text-2xl">Daftar Kendaraan</h1>
+                        </div>
+
                     <!-- Cari Kendaraan -->
-                    <form class=" w-full mx-auto">   
+                    <form action="{{ route('searchKendaraan') }}" method="GET" class="w-full mx-auto">   
                         <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Cari Kendaraan</label>
                         <div class="relative">
                             <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -133,10 +134,28 @@
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                                 </svg>
                             </div>
-                            <input type="search" id="default-search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="Cari Kendaraan" required />
-                            <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-xl text-sm px-4 py-2">Cari</button>
+                            <input 
+                                type="search" 
+                                name="keyword" 
+                                id="default-search" 
+                                class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500" 
+                                placeholder="Cari Kendaraan Berdasarkan Nama atau Plat Nomor" 
+                                value="{{ isset($keyword) ? $keyword : '' }}" 
+                            />
+                            <button 
+                                type="submit" 
+                                class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-xl text-sm px-4 py-2">
+                                Cari
+                            </button>
                         </div>
                     </form>
+
+                    <!-- Tampilkan Daftar Kendaraan -->
+                    @if(!empty($kendaraan) && count($kendaraan) > 0)
+                        <table>
+                            <!-- Tabel kendaraan ditampilkan di sini -->
+                        </table>
+                    @endif
 
                     <!-- Table Data -->
                     <table id="default-table">
@@ -251,7 +270,7 @@
                                             <button 
                                                 data-modal-target="modal-foto" 
                                                 data-modal-toggle="modal-foto" 
-                                                data-foto="{{ $data['foto_base64'] }}" 
+                                                data-foto="{{ $data['foto'] }}"  
                                                 type="button" 
                                                 class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
                                                 Detail
@@ -391,7 +410,6 @@
         </div>
     </div>
 
-
     <!-- Modal Foto -->
     <div id="modal-foto" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative p-4 w-full max-w-xl max-h-full">
@@ -407,10 +425,9 @@
                 <div class="p-4 md:p-5 space-y-4">
                     <div class="grid gap-4">
                         <div>
-                            <!-- Gambar utama -->
                             <img id="main-image" class="h-auto max-w-full rounded-lg" src="" alt="Foto Kendaraan">
                         </div>
-                    </div>
+                    </div>                    
                 </div>
                 <!-- Modal footer -->
                 <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b">
@@ -420,34 +437,28 @@
         </div>
     </div>
 
-
     {{-- <!-- Modal Foto -->
     <div id="modal-foto" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-        <div class="relative p-4 w-full max-w-xl max-h-full">
-            <!-- Modal content -->
+        <div class="relative p-4 w-full max-w-4xl max-h-full">
             <div class="relative bg-white rounded-lg shadow">
                 <!-- Modal header -->
-                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
-                    <h3 class="text-lg md:text-xl font-semibold text-gray-900">
-                        Foto Kendaraan
-                    </h3>
+                <div class="flex items-center justify-between p-4 border-b rounded-t">
+                    <h3 class="text-xl font-semibold text-gray-900">Foto Kendaraan</h3>
+                    <button data-modal-hide="modal-foto" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
                 </div>
                 <!-- Modal body -->
-                <div class="p-4 md:p-5 space-y-4">
-                    <div class="grid gap-4">
-                        <div>
-                            <img id="main-image" class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/featured/image.jpg" alt="">
-                        </div>
-                        <div class="grid grid-cols-3 md:grid-cols-5 gap-2 md:gap-4">
-                            <div>
-                                <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg" alt="">
-                            </div>
-                        </div>
-                    </div>                    
+                <div class="p-4 space-y-4">
+                    <div id="photoGallery" class="grid grid-cols-2 gap-4">
+                        <!-- Foto akan ditampilkan di sini -->
+                    </div>
                 </div>
                 <!-- Modal footer -->
-                <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b">
-                    <button data-modal-hide="modal-foto" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center">Kembali</button>
+                <div class="flex justify-end p-4 border-t border-gray-200 rounded-b">
+                    <button data-modal-hide="modal-foto" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Kembali</button>
                 </div>
             </div>
         </div>
@@ -500,6 +511,7 @@
     }
 </script>
 
+// Scipt untuk mengambil data fasilitas 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         // Ambil semua tombol yang membuka modal fasilitas
@@ -521,24 +533,7 @@
     });
 </script>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // Ambil semua tombol yang membuka modal foto
-        const fotoButtons = document.querySelectorAll("[data-modal-target='modal-foto']");
-
-        fotoButtons.forEach(button => {
-            button.addEventListener("click", function () {
-                // Ambil data foto dari tombol
-                const foto = this.getAttribute("data-foto");
-
-                // Temukan elemen <img> dalam modal dan perbarui sumbernya
-                const mainImage = document.querySelector("#modal-foto #main-image");
-                mainImage.src = foto ? `data:image/jpeg;base64,${foto}` : "https://via.placeholder.com/400?text=Foto+tidak+tersedia";
-            });
-        });
-    });
-</script>
-
+// Script untuk menghapus data 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const modalHapus = document.getElementById("modal-hapus");

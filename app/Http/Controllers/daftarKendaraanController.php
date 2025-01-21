@@ -12,17 +12,61 @@ class daftarKendaraanController extends Controller
 
         // Mengambil data kendaraan
         $kendaraan = kendaraan::get()->toArray();
-
+        
         foreach ($kendaraan as &$data) { // Gunakan reference "&" agar array berubah
             if (!empty($data['foto'])) {
-                $data['foto_base64'] = 'data:image/jpeg;base64,' . base64_encode($data['foto']);
+                // Deteksi tipe MIME dari data gambar
+                $mimeType = '';
+                try {
+                    $imageInfo = getimagesizefromstring($data['foto']);
+                    $mimeType = $imageInfo['mime']; // Ambil tipe MIME (e.g., image/jpeg, image/png)
+                } catch (\Exception $e) {
+                    // Jika terjadi kesalahan, gunakan default MIME
+                    $mimeType = 'image/jpeg';
+                }
+    
+                // Buat format base64 sesuai tipe MIME
+                $data['foto_base64'] = 'data:' . $mimeType . ';base64,' . base64_encode($data['foto']);
             } else {
+                // Gunakan gambar default jika foto tidak tersedia
                 $data['foto_base64'] = asset('default-image.jpg');
             }
         }
         
         // Mengirim data ke view
         return view('daftarKendaraan', compact('kendaraan'));
+    }
+
+    // public function search(Request $request)
+    // {
+    //     // Tangkap input pencarian
+    //     $keyword = $request->input('keyword');
+
+    //     // Query kendaraan berdasarkan keyword
+    //     $kendaraan = kendaraan::where('nama', 'like', "%{$keyword}%")
+    //                           ->orWhere('platNomor', 'like', "%{$keyword}%")
+    //                           ->get()
+    //                           ->toArray();
+
+    //     // Mengirim data ke view
+    //     return view('daftarKendaraan', compact('kendaraan'));
+    // }
+
+    public function search(Request $request)
+    {
+        // Tangkap input pencarian
+        $keyword = $request->input('keyword');
+
+        // Jika ada pencarian, cari berdasarkan nama atau platNomor
+        $kendaraan = kendaraan::when($keyword, function ($query, $keyword) {
+            return $query->where('nama', 'like', "%{$keyword}%")
+                        ->orWhere('platNomor', 'like', "%{$keyword}%");
+        })
+        ->get() // Ambil data
+        ->toArray();
+
+        // Mengirim data ke view
+        return view('daftarKendaraan', compact('kendaraan', 'keyword'));
     }
 
     public function destroy($platNomor)
