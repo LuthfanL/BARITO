@@ -118,7 +118,7 @@
                         <a href="homeBookingKendaraan" class="block py-2 px-3 text-lg text-gray-500 font-semibold hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-800 md:p-0">Booking Kendaraan</a>
                     </li>
                     <li>
-                        <a href="homePengelolaanTenant" class="block py-2 px-3 text-lg text-gray-500 font-semibold hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-800 md:p-0">Pengelolaan Tenant</a>
+                        <a href="homePengelolaanTenant" class="block py-2 px-3 text-lg text-gray-500 font-semibold hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-800 md:p-0">Pemesanan Tenant</a>
                     </li>
                 </ul>
             </div>

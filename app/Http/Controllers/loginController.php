@@ -43,7 +43,7 @@ class loginController extends Controller
             }
 
             Auth::login($emailCus);
-            return redirect()->intended('/')->with('success', 'Berhasil Login!');
+            return redirect()->intended('/home')->with('success', 'Berhasil Login!');
         }
 
         if ($emailAR){
@@ -109,7 +109,7 @@ class loginController extends Controller
             if (hash::check($emailCus->password, $validate['password'])){
                 return redirect()->route('login')->withErrors('Password sebelum dan sesudah update sama!')->withInput();
             }
-            DB::table('customer')->update([
+            DB::table('customer')->where('email', $validate['email'])->update([
                 'password' => hash::make($validate['password']),
             ]);
             return redirect()->route('login')->with('success', 'Password berhasil diupdate!');
@@ -119,7 +119,7 @@ class loginController extends Controller
             if (hash::check($emailAR->password, $validate['password'])){
                 return redirect()->route('login')->withErrors('Password sebelum dan sesudah update sama!')->withInput();
             }
-            DB::table('adminRuangan')->update([
+            DB::table('adminRuangan')->where('email', $validate['email'])->update([
                 'password' => hash::make($validate['password']),
             ]);
             return redirect()->route('login')->with('success', 'Password berhasil diupdate!');
@@ -129,7 +129,7 @@ class loginController extends Controller
             if (hash::check($emailAK->password, $validate['password'])){
                 return redirect()->route('login')->withErrors('Password sebelum dan sesudah update sama!')->withInput();
             }
-            DB::table('adminKendaraan')->update([
+            DB::table('adminKendaraan')->where('email', $validate['email'])->update([
                 'password' => hash::make($validate['password']),
             ]);
             return redirect()->route('login')->with('success', 'Password berhasil diupdate!');
@@ -139,7 +139,7 @@ class loginController extends Controller
             if (hash::check($validate['password'], $emailAT->password)){
                 return redirect()->route('login')->withErrors('Password sebelum dan sesudah update sama!')->withInput();
             }
-            DB::table('adminTenant')->update([
+            DB::table('adminTenant')->where('email', $validate['email'])->update([
                 'password' =>hash::make($validate['password']),
             ]);
             return redirect()->route('login')->with('success', 'Password berhasil diupdate!');
