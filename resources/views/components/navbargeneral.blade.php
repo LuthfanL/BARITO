@@ -24,7 +24,7 @@
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between p-4">
             <!-- Logo -->
             <div class="z-30">
-                <a href="home" class="flex items-center space-x-3 rtl:space-x-reverse ml-5">
+                <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse ml-5">
                     <img class="h-8" src="{{ asset('assets/logo-black.png') }}" alt="Logo">
                 </a>
             </div>

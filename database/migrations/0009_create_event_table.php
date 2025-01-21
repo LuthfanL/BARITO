@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('nMakanan');
             $table->integer('nBarang');
             $table->integer('nJasa');
-            $table->string('deskripsi', 50);
+            $table->string('deskripsi', 255);
             $table->string('foto');
             $table->integer('hargaTenant');
             $table->timestamps();

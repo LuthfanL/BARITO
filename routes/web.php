@@ -37,11 +37,7 @@ use App\Http\Controllers\riwayatBookingKendaraanController;
 use App\Http\Controllers\riwayatBookingTenantController;
 
 
-Route::get('/', function () {
-    return view('home');
-});
-
-Route::get('/home', [homeController::class, 'index'])->name('home');
+Route::get('/', [homeController::class, 'index'])->name('home');
 
 Route::get('/login', [loginController::class, 'index'])->name('login');
 Route::post('/login', [loginController::class, 'login'])->name('masuk');

@@ -43,7 +43,7 @@ class loginController extends Controller
             }
 
             Auth::login($emailCus);
-            return redirect()->intended('/home')->with('success', 'Berhasil Login!');
+            return redirect()->intended('/')->with('success', 'Berhasil Login!');
         }
 
         if ($emailAR){
