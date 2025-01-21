@@ -34,10 +34,10 @@ class buatKendaraanController extends Controller
         $fotoPaths = [];
         if ($request->hasFile('foto')) {
             foreach ($request->file('foto') as $foto) {
-                $path = $foto->store('foto_ruangan'); // Simpan di folder `foto_ruangan`
+                $path = $foto->store('foto_ruangan'); // Simpan di folder foto_ruangan
                 $fotoPaths[] = $path; // Simpan path ke array
             }
-        }     
+        }  
 
         // Simpan data ke database
         kendaraan::create([

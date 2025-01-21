@@ -223,41 +223,56 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody>
-                            @foreach ($kendaraan as $kendaraan)
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $kendaraan->nama }}</td>
-                                    <td>{{ $kendaraan->deskripsi }}</td>
-                                    <td>Rp. {{ number_format($kendaraan->biayaSewa, 0, ',', '.') }}</td>
-                                    <td class="text-center">{{ $kendaraan->jumlahKursi }}</td>
-                                    <td class="text-center">{{ $kendaraan->platNomor }}</td>
-                                    <td class="text-center">{{ $kendaraan->cc }}</td>
-                                    <td class="text-center">{{ $kendaraan->tahunKeluar }}</td>
-                                    <td class="text-center"> 
-                                        <button 
-                                            data-modal-target="modal-fasilitas" 
-                                            data-modal-toggle="modal-fasilitas" 
-                                            data-tv="{{ $kendaraan->tv }}" 
-                                            data-sound="{{ $kendaraan->sound }}" 
-                                            data-ac="{{ $kendaraan->ac }}" 
-                                            type="button" 
-                                            class="block px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                                            Detail
-                                        </button>
-                                    </td>
-                                    <td class="text-center">
-                                        <button data-modal-target="modal-foto" data-modal-toggle="modal-foto" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Detail</button>
-                                    </td>
-                                    <td class="text-center">
-                                        <div class="flex flex-col gap-2">
-                                            <button class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Edit</button>
-                                            <button data-modal-target="modal-hapus" data-modal-toggle="modal-hapus" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Hapus</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
+                        @if (!empty($kendaraan))
+                            <tbody>
+                                @foreach ($kendaraan as $data)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $data['nama'] }}</td>
+                                        <td>{{ $data['deskripsi'] }}</td>
+                                        <td>Rp. {{ number_format($data['biayaSewa'], 0, ',', '.') }}</td>
+                                        <td class="text-center">{{ $data['jumlahKursi'] }}</td>
+                                        <td class="text-center">{{ $data['platNomor'] }}</td>
+                                        <td class="text-center">{{ $data['cc'] }}</td>
+                                        <td class="text-center">{{ $data['tahunKeluar'] }}</td>
+                                        <td class="text-center"> 
+                                            <button 
+                                                data-modal-target="modal-fasilitas" 
+                                                data-modal-toggle="modal-fasilitas" 
+                                                data-tv="{{ $data['tv'] }}" 
+                                                data-sound="{{ $data['sound'] }}" 
+                                                data-ac="{{ $data['ac'] }}" 
+                                                type="button" 
+                                                class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                                Detail
+                                            </button>
+                                        </td>
+                                        <td class="text-center">
+                                            <button 
+                                                data-modal-target="modal-foto" 
+                                                data-modal-toggle="modal-foto" 
+                                                data-foto="{{ $data['foto_base64'] }}" 
+                                                type="button" 
+                                                class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                                Detail
+                                            </button>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="flex flex-col gap-2">
+                                                <button class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Edit</button>
+                                                <button 
+                                                    data-modal-target="modal-hapus" 
+                                                    data-modal-toggle="modal-hapus"
+                                                    data-plat="{{ $data['platNomor'] }}"  
+                                                    class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                                    Hapus
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        @endif
                     </table>
                 </div>
             </div>
@@ -356,15 +371,15 @@
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label for="tv" class="block text-sm font-medium text-gray-700">TV</label>
-                            <input type="text" id="tv" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 sm:text-sm" value={{ $kendaraan->tv }} readonly>
+                            <input type="text" id="tv" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 sm:text-sm" value="{{ $data['tv'] ?? '' }}" readonly>
                         </div>
                         <div>
                             <label for="sound" class="block text-sm font-medium text-gray-700">Sound</label>
-                            <input type="text" id="sound" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 sm:text-sm" value={{ $kendaraan->sound }} readonly>
+                            <input type="text" id="sound" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 sm:text-sm" value="{{ $data['sound'] ?? '' }}" readonly>
                         </div>
                         <div>
                             <label for="ac" class="block text-sm font-medium text-gray-700">AC</label>
-                            <input type="text" id="ac" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 sm:text-sm" value={{ $kendaraan->ac }} readonly>
+                            <input type="text" id="ac" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 sm:text-sm" value="{{ $data['ac'] ?? '' }}" readonly>
                         </div>
                     </div>
                 </div>
@@ -376,7 +391,37 @@
         </div>
     </div>
 
+
     <!-- Modal Foto -->
+    <div id="modal-foto" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative p-4 w-full max-w-xl max-h-full">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow">
+                <!-- Modal header -->
+                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
+                    <h3 class="text-lg md:text-xl font-semibold text-gray-900">
+                        Foto Kendaraan
+                    </h3>
+                </div>
+                <!-- Modal body -->
+                <div class="p-4 md:p-5 space-y-4">
+                    <div class="grid gap-4">
+                        <div>
+                            <!-- Gambar utama -->
+                            <img id="main-image" class="h-auto max-w-full rounded-lg" src="" alt="Foto Kendaraan">
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b">
+                    <button data-modal-hide="modal-foto" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center">Kembali</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {{-- <!-- Modal Foto -->
     <div id="modal-foto" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative p-4 w-full max-w-xl max-h-full">
             <!-- Modal content -->
@@ -397,18 +442,6 @@
                             <div>
                                 <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg" alt="">
                             </div>
-                            <div>
-                                <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg" alt="">
-                            </div>
-                            <div>
-                                <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg" alt="">
-                            </div>
-                            <div>
-                                <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg" alt="">
-                            </div>
-                            <div>
-                                <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-5.jpg" alt="">
-                            </div>
                         </div>
                     </div>                    
                 </div>
@@ -418,7 +451,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <!-- Modal Hapus -->
     <div id="modal-hapus" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -430,10 +463,17 @@
                     </svg>
                     <h1 class="mb-5 text-lg font-bold text-gray-900">Konfirmasi Hapus Kendaraan</h1>
                     <p class="mb-5 text-m font-normal text-gray-500">Apakah Anda yakin ingin menghapus kendaraan ini?</p>
-                    <button data-modal-hide="modal-hapus" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                        Hapus
-                    </button>
-                    <button data-modal-hide="modal-hapus" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Kembali</button>
+                    <!-- Form untuk hapus kendaraan -->
+                    <form id="delete-form" method="POST" action="">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                            Hapus
+                        </button>
+                        <button data-modal-hide="modal-hapus" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                            Kembali
+                        </button>
+                </form>
                 </div>
             </div>
         </div>
@@ -472,13 +512,45 @@
                 const sound = this.getAttribute("data-sound");
                 const ac = this.getAttribute("data-ac");
 
-                // Temukan elemen input dalam modal
-                document.getElementById("tv").value = tv;
-                document.getElementById("sound").value = sound;
-                document.getElementById("ac").value = ac;
+                // Temukan elemen input dalam modal dan isi dengan data yang sesuai
+                document.querySelector("#modal-fasilitas #tv").value = tv || "Tidak tersedia";
+                document.querySelector("#modal-fasilitas #sound").value = sound || "Tidak tersedia";
+                document.querySelector("#modal-fasilitas #ac").value = ac || "Tidak tersedia";
             });
         });
     });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Ambil semua tombol yang membuka modal foto
+        const fotoButtons = document.querySelectorAll("[data-modal-target='modal-foto']");
+
+        fotoButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                // Ambil data foto dari tombol
+                const foto = this.getAttribute("data-foto");
+
+                // Temukan elemen <img> dalam modal dan perbarui sumbernya
+                const mainImage = document.querySelector("#modal-foto #main-image");
+                mainImage.src = foto ? `data:image/jpeg;base64,${foto}` : "https://via.placeholder.com/400?text=Foto+tidak+tersedia";
+            });
+        });
+    });
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const modalHapus = document.getElementById("modal-hapus");
+    const deleteForm = document.getElementById("delete-form");
+
+    document.querySelectorAll("[data-modal-toggle='modal-hapus']").forEach(button => {
+        button.addEventListener("click", function () {
+            let platNomor = this.getAttribute("data-plat");
+            deleteForm.setAttribute("action", `/kendaraan/${platNomor}`);
+        });
+    });
+});
 </script>
 
 </html>

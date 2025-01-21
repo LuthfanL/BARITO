@@ -111,11 +111,15 @@ Route::get('/riwayatBookingRuangan', [riwayatBookingRuanganController::class, 'i
 # Admin Kendaraan ----------------------------------------------------
 Route::get('/dashboardAdminKendaraan', [DashboardAdminKendaraanController::class, 'index'])->name('dashboardAdminKendaraan');
 
+Route::get('/kendaraan', [daftarKendaraanController::class, 'index'])->name('daftarKendaraan');
+
 Route::get('/buatKendaraan', [buatKendaraanController::class, 'index'])->name('buatKendaraan');
 Route::post('/buatKendaraan', [buatKendaraanController::class, 'store'])->name('kendaraan.store');
 
 Route::resource('/daftarKendaraan', daftarKendaraanController::class);
 //Route::get('/daftarKendaraan', [daftarKendaraanController::class, 'index'])->name('daftarKendaraan');
+
+Route::delete('/kendaraan/{platNomor}', [daftarKendaraanController::class, 'destroy'])->name('kendaraan.destroy');
 
 Route::get('/verifikasiBookingKendaraan', [verifikasiBookingKendaraanController::class, 'index'])->name('verifikasiBookingKendaraan');
 
