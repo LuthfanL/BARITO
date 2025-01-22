@@ -36,6 +36,9 @@ use App\Http\Controllers\riwayatBookingRuanganController;
 use App\Http\Controllers\riwayatBookingKendaraanController;
 use App\Http\Controllers\riwayatBookingTenantController;
 
+Route::get('/', function(){
+    return view('/home');
+});
 
 Route::get('/', [homeController::class, 'index'])->name('home');
 

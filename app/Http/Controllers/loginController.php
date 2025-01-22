@@ -10,6 +10,7 @@ use App\Models\customer;
 use App\Models\adminRuangan;
 use App\Models\adminKendaraan;
 use App\Models\adminTenant;
+use App\Models\User;
 
 class loginController extends Controller
 {
@@ -28,52 +29,38 @@ class loginController extends Controller
             'password.regex' => 'Password harus mengandung huruf besar, huruf kecil, angka, dan simbol',
         ]);
 
-        $emailCus = customer::where('email', $validate['email'])->first();
-        $emailAR = adminRuangan::where('email', $validate['email'])->first();
-        $emailAK = adminKendaraan::where('email', $validate['email'])->first();
-        $emailAT = adminTenant::where('email', $validate['email'])->first();
-        if (!$emailCus && !$emailAR && !$emailAK && !$emailAT){
-            return redirect()->back()->withErrors('Email belum terdaftar!')->withInput();
+        $users = User::where('email', $validate['email'])->first();
+
+        if (!$users){
+            return redirect()->back()->withErrors('Email tidak terdaftar!')->withInput();
         }
 
-        if ($emailCus){
-            $pwCus = $emailCus->password;
-            if (!hash::check($validate['password'], $pwCus)) {
-                return redirect()->back()->withErrors('Password Salah!')->withInput();
-            }
-
-            Auth::login($emailCus);
-            return redirect()->intended('/')->with('success', 'Berhasil Login!');
+        if (!Hash::check($validate['password'], $users->password)){
+            return redirect()->back()->withErrors('Password salah!')->withInput();
         }
 
-        if ($emailAR){
-            $pwAR = $emailAR->password;
-            if (!hash::check($validate['password'], $pwAR)) {
-                return redirect()->back()->withErrors('Password Salah!')->withInput();
-            }
-    
-            Auth::login($emailAR);
-            return redirect()->intended('/dashboardAdminRuangan')->with('success', 'Berhasil Login!');
-        }
+        $info = $request->only('email', 'password');
 
-        if ($emailAK){
-            $pwAK = $emailAK->password;
-            if (!hash::check($validate['password'], $pwAK)) {
-                return redirect()->back()->withErrors('Password Salah!')->withInput();
-            }
-     
-            Auth::login($emailAK);
-            return redirect()->intended('/dashboardAdminKendaraan')->with('success', 'Berhasil Login!');
-        }
+        if (Auth::attempt($info)){
+            $user = Auth::user();
+            $role = $user->role;
 
-        if ($emailAT){
-            $pwAT = $emailAT->password;
-            if (!hash::check($validate['password'], $pwAT)) {
-                return redirect()->back()->withErrors('Password Salah!')->withInput();
-            }
-           
-            Auth::login($emailAT);
-            return redirect()->intended('/dashboardAdminTenant')->with('success', 'Berhasil Login!');
+            return $this->redirectTo($role);
+        }
+    }
+
+    public function redirectTo($role){
+        switch ($role) {
+            case 'Customer' :
+                return redirect()->intended('/')->with('success', 'Berhasil login!');
+            case 'Admin Ruangan' :
+                return redirect()->intended('/dashboardAdminRuangan')->with('success', 'Berhasil login!');
+            case 'Admin Kendaraan' :
+                return redirect()->intended('/dashboardAdminKendaraan')->with('success', 'Berhasil login!');
+            case 'Admin Tenant' :
+                return redirect()->intended('/dashboardAdminTenant')->with('success', 'Berhasil login!');
+            default :
+                return redirect()->back()->withErrors('Role tidak ditemukan!');
         }
     }
 
@@ -106,41 +93,53 @@ class loginController extends Controller
         }
         
         if ($emailCus){
-            if (hash::check($emailCus->password, $validate['password'])){
+            if (hash::check($validate['password'], $emailCus->password)){
                 return redirect()->route('login')->withErrors('Password sebelum dan sesudah update sama!')->withInput();
             }
             DB::table('customer')->where('email', $validate['email'])->update([
+                'password' => hash::make($validate['password']),
+            ]);
+            DB::table('users')->where('email', $validate['email'])->update([
                 'password' => hash::make($validate['password']),
             ]);
             return redirect()->route('login')->with('success', 'Password berhasil diupdate!');
         }
 
         if ($emailAR){
-            if (hash::check($emailAR->password, $validate['password'])){
+            if (hash::check($validate['password'], $emailAR->password)){
                 return redirect()->route('login')->withErrors('Password sebelum dan sesudah update sama!')->withInput();
             }
             DB::table('adminRuangan')->where('email', $validate['email'])->update([
+                'password' => hash::make($validate['password']),
+            ]);
+            DB::table('users')->where('email', $validate['email'])->update([
                 'password' => hash::make($validate['password']),
             ]);
             return redirect()->route('login')->with('success', 'Password berhasil diupdate!');
         }
 
         if ($emailAK){
-            if (hash::check($emailAK->password, $validate['password'])){
+            if (hash::check($validate['password'], $emailAK->password)){
                 return redirect()->route('login')->withErrors('Password sebelum dan sesudah update sama!')->withInput();
             }
             DB::table('adminKendaraan')->where('email', $validate['email'])->update([
+                'password' => hash::make($validate['password']),
+            ]);
+            DB::table('users')->where('email', $validate['email'])->update([
                 'password' => hash::make($validate['password']),
             ]);
             return redirect()->route('login')->with('success', 'Password berhasil diupdate!');
         }
 
         if ($emailAT){
-            if (hash::check($validate['password'], $emailAT->password)){
+            if (hash::check($emailAT->password, $emailAT->password)){
                 return redirect()->route('login')->withErrors('Password sebelum dan sesudah update sama!')->withInput();
             }
             DB::table('adminTenant')->where('email', $validate['email'])->update([
                 'password' =>hash::make($validate['password']),
+            ]);
+            DB::table('users')->where('email', $validate['email'])->update([
+                'password' => hash::make($validate['password']),
             ]);
             return redirect()->route('login')->with('success', 'Password berhasil diupdate!');
         }

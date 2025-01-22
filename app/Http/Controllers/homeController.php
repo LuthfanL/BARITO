@@ -7,16 +7,16 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\event;
 use App\Models\kendaraan;
 use App\Models\ruangan;
+use App\Models\customer;
 
 class homeController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
         $events = event::all();
-        $kendaraan =  kendaraan::all();
+        $kendaraan = kendaraan::all();
         $ruangan = ruangan::all();
 
-        return view('home', compact('user', 'events', 'kendaraan', 'ruangan'));
+        return view('home', compact('events', 'kendaraan', 'ruangan'));
     }
 }

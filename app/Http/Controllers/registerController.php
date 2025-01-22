@@ -49,6 +49,12 @@ class registerController extends Controller
             return redirect()->back()->withErrors('Konfirmasi password berbeda dengan password!')->withInput();
         }
 
+        DB::table('users')->insert([
+            'email' => $validate['email'],
+            'password' => hash::make($validate['password']),
+            'role' => 'Customer',
+        ]);
+
         DB::table('customer')->insert([
             'nik' => $validate['nik'],
             'name' => $validate['name'],
