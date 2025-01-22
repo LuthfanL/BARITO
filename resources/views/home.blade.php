@@ -210,9 +210,9 @@
                         <div class="space-y-4">
                             <div>
                                 <h2 class="font-semibold mb-3 text-lg">Foto Ruangan</h2>
-                                <img id="main-image" class="h-auto max-w-full rounded-lg" src="" alt="Foto Ruangan">
+                                <img id="main-image-ruang" class="h-auto max-w-full rounded-lg" src="" alt="Foto Ruangan">
                             </div>
-                            <div class="grid grid-cols-3 md:grid-cols-5 gap-2 md:gap-4" id="image-thumbnails"></div>
+                            <div class="grid grid-cols-3 md:grid-cols-5 gap-2 md:gap-4" id="image-thumbnails-ruangan"></div>
                         </div>
 
                         <!-- Kolom Kanan: Fasilitas -->
@@ -385,8 +385,8 @@
                 const fotoUrl = this.getAttribute('data-foto-url');
                 const thumbnails = JSON.parse(this.getAttribute('data-thumbnails'));
         
-                const mainImage = document.getElementById('main-image');
-                const imageThumbnails = document.getElementById('image-thumbnails');
+                const mainImage = document.getElementById('main-image-ruang');
+                const imageThumbnails = document.getElementById('image-thumbnails-ruangan');
         
                 mainImage.src = fotoUrl || thumbnails[0];
         
@@ -394,7 +394,7 @@
                 thumbnails.forEach(url => {
                     const thumbnailElement = document.createElement('div');
                     thumbnailElement.innerHTML = `
-                        <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="${url}" alt="Thumbnail">
+                        <img onclick="swapImageRuangan(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="${url}" alt="Thumbnail">
                     `;
                     imageThumbnails.appendChild(thumbnailElement);
                 });
@@ -409,8 +409,8 @@
             });
         });
         
-        function swapImage(element) {
-            const mainImage = document.getElementById('main-image');
+        function swapImageRuangan(element) {
+            const mainImage = document.getElementById('main-image-ruang');
             mainImage.src = element.src;
         }
     </script>
@@ -461,41 +461,42 @@
         }
     </script>
 
-<script>
-    // Menambahkan event listener untuk tombol yang membuka modal
-    document.querySelectorAll('[data-modal-target="modal-detailEvent"]').forEach(button => {
-        button.addEventListener('click', function () {
-            const fotoUrl = this.getAttribute('data-foto-url');
-            const thumbnails = JSON.parse(this.getAttribute('data-thumbnails'));
-            const mainImage = document.getElementById('main-image-event');
-            const thumbnailContainer = document.getElementById('thumbnails-event');
+    <!-- Script Detail Event -->
+    <script>
+        // Menambahkan event listener untuk tombol yang membuka modal
+        document.querySelectorAll('[data-modal-target="modal-detailEvent"]').forEach(button => {
+            button.addEventListener('click', function () {
+                const fotoUrl = this.getAttribute('data-foto-url');
+                const thumbnails = JSON.parse(this.getAttribute('data-thumbnails'));
+                const mainImage = document.getElementById('main-image-event');
+                const thumbnailContainer = document.getElementById('thumbnails-event');
 
-            mainImage.src = fotoUrl || thumbnails[0];
+                mainImage.src = fotoUrl || thumbnails[0];
 
-            thumbnailContainer.innerHTML = '';
-            thumbnails.forEach(url => {
-                const thumbnailElement = document.createElement('div');
-                thumbnailElement.innerHTML = `
-                    <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="${url}" alt="Thumbnail">
-                `;
-                thumbnailContainer.appendChild(thumbnailElement);
+                thumbnailContainer.innerHTML = '';
+                thumbnails.forEach(url => {
+                    const thumbnailElement = document.createElement('div');
+                    thumbnailElement.innerHTML = `
+                        <img onclick="swapImageEvent(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="${url}" alt="Thumbnail">
+                    `;
+                    thumbnailContainer.appendChild(thumbnailElement);
+                });
+                const barang = this.getAttribute('data-barang');
+                const jasa = this.getAttribute('data-jasa');
+                const makanan = this.getAttribute('data-makanan');
+
+                document.getElementById('tenant-barang').value = barang || "Tidak Tersedia";
+                document.getElementById('tenant-jasa').value = jasa || "Tidak Tersedia";
+                document.getElementById('tenant-makanan').value = makanan || "Tidak Tersedia";
             });
-            const barang = this.getAttribute('data-barang');
-            const jasa = this.getAttribute('data-jasa');
-            const makanan = this.getAttribute('data-makanan');
-
-            document.getElementById('tenant-barang').value = barang || "Tidak Tersedia";
-            document.getElementById('tenant-jasa').value = jasa || "Tidak Tersedia";
-            document.getElementById('tenant-makanan').value = makanan || "Tidak Tersedia";
         });
-    });
 
-    // Fungsi untuk mengganti gambar utama saat thumbnail diklik
-    function swapImage(element) {
-        const mainImage = document.getElementById('main-image-event');
-        mainImage.src = element.src;
-    }
-</script>
+        // Fungsi untuk mengganti gambar utama saat thumbnail diklik
+        function swapImageEvent(element) {
+            const mainImage = document.getElementById('main-image-event');
+            mainImage.src = element.src;
+        }
+    </script>
 
 
 
