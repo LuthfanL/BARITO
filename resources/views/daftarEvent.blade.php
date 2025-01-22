@@ -124,8 +124,9 @@
                     <div class="flex justify-center text-center pb-6">
                         <h1 class="font-bold text-2xl">Daftar Event</h1>
                     </div>
-                    <!-- Cari Event -->
-                    <form class=" w-full mx-auto">   
+
+                    <!-- Cari event -->
+                    <form action="{{ route('searchEvent') }}" method="GET" class="w-full mx-auto">   
                         <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Cari Event</label>
                         <div class="relative">
                             <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -133,10 +134,28 @@
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                                 </svg>
                             </div>
-                            <input type="search" id="default-search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="Cari Event" required />
-                            <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-xl text-sm px-4 py-2">Cari</button>
+                            <input 
+                                type="search" 
+                                name="keyword" 
+                                id="default-search" 
+                                class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500" 
+                                placeholder="Cari Event Berdasarkan Nama Event" 
+                                value="{{ old('keyword', '') }}" 
+                            />
+                            <button 
+                                type="submit" 
+                                class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-xl text-sm px-4 py-2">
+                                Cari
+                            </button>
                         </div>
                     </form>
+
+                    <!-- Tampilkan Daftar event -->
+                    @if(!empty($event) && count($event) > 0)
+                        <table>
+                            <!-- Tabel event ditampilkan di sini -->
+                        </table>
+                    @endif
 
                     <!-- Table Data -->
                     <table id="default-table">
@@ -176,7 +195,7 @@
                                 </th>
                                 <th>
                                     <span class="flex items-center">
-                                        Barang
+                                        Tenant Barang
                                         <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4"/>
                                         </svg>
@@ -184,7 +203,7 @@
                                 </th>
                                 <th>
                                     <span class="flex items-center">
-                                        Jasa
+                                        Tenant Jasa
                                         <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4"/>
                                         </svg>
@@ -192,7 +211,7 @@
                                 </th>
                                 <th>
                                     <span class="flex items-center">
-                                        Makanan
+                                        Tenant Makanan
                                         <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4"/>
                                         </svg>
@@ -226,119 +245,46 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <!-- No -->
-                                <td>1</td>
-                                <!-- Nama Event -->
-                                <td>Event 1</td>
-                                <!-- Deskripsi Event -->
-                                <td>Lorem ipsum tahu tempe enak sekali aaaaaaa aaaaa aaaaaa aaaaaaaa aaaaaaa aaaaa aaaaa aaaaaa</td>
-                                <!-- Biaya Sewa -->
-                                <td>Rp. 500.000</td>
-                                <!-- Tenant Barang -->
-                                <td>10</td>
-                                <!-- Tenant Jasa -->
-                                <td>10</td>
-                                <!-- Tenant Makanan -->
-                                <td>10</td>
-                                <!-- Tanggal Mulai -->
-                                <td class="text-center">15/04/2025</td>
-                                <!-- Tanggal Selesai -->
-                                <td class="text-center">22/04/2025</td>
-                                <!-- Foto -->
-                                <td class="text-center">
-                                    <button data-modal-target="modal-foto" data-modal-toggle="modal-foto" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Detail</button>
-                                </td>
-                                <!-- Tindakan -->
-                                <td class="text-center">
-                                    <div class="flex flex-col gap-2">
-                                        <button data-modal-target="modal-edit" data-modal-toggle="modal-edit" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Edit</button>
-                                        <button data-modal-target="modal-hapus" data-modal-toggle="modal-hapus" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Hapus</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Event 2</td>
-                                <td>Lorem ipsum tahu tempe enak sekali aaaaaaa aaaaa aaaaaa aaaaaaaa aaaaaaa aaaaa aaaaa aaaaaa</td>
-                                <td>Rp. 2.500.000</td>
-                                <td>12</td>
-                                <td>12</td>
-                                <td>12</td>
-                                <td class="text-center">10/07/2025</td>
-                                <td class="text-center">17/07/2025</td>
-                                <td class="text-center">
-                                    <button data-modal-target="modal-foto" data-modal-toggle="modal-foto" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Detail</button>
-                                </td>
-                                <td class="text-center">
-                                    <div class="flex flex-col gap-2">
-                                        <button data-modal-target="modal-edit" data-modal-toggle="modal-edit" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Edit</button>
-                                        <button data-modal-target="modal-hapus" data-modal-toggle="modal-hapus" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Hapus</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Event 3</td>
-                                <td>Lorem ipsum tahu tempe enak sekali aaaaaaa aaaaa aaaaaa aaaaaaaa aaaaaaa aaaaa aaaaa aaaaaa</td>
-                                <td>Rp. 1.500.000</td>
-                                <td>12</td>
-                                <td>12</td>
-                                <td>12</td>
-                                <td class="text-center">01/07/2025</td>
-                                <td class="text-center">08/07/2025</td>
-                                <td class="text-center">
-                                    <button data-modal-target="modal-foto" data-modal-toggle="modal-foto" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Detail</button>
-                                </td>
-                                <td class="text-center">
-                                    <div class="flex flex-col gap-2">
-                                        <button data-modal-target="modal-edit" data-modal-toggle="modal-edit" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Edit</button>
-                                        <button data-modal-target="modal-hapus" data-modal-toggle="modal-hapus" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Hapus</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>Event 4</td>
-                                <td>Lorem ipsum tahu tempe enak sekali aaaaaaa aaaaa aaaaaa aaaaaaaa aaaaaaa aaaaa aaaaa aaaaaa</td>
-                                <td>Rp. 3.500.000</td>
-                                <td>11</td>
-                                <td>11</td>
-                                <td>11</td>
-                                <td class="text-center">10/08/2025</td>
-                                <td class="text-center">17/08/2025</td>
-                                <td class="text-center">
-                                    <button data-modal-target="modal-foto" data-modal-toggle="modal-foto" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Detail</button>
-                                </td>
-                                <td class="text-center">
-                                    <div class="flex flex-col gap-2">
-                                        <button data-modal-target="modal-edit" data-modal-toggle="modal-edit" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Edit</button>
-                                        <button data-modal-target="modal-hapus" data-modal-toggle="modal-hapus" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Hapus</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>Event 5</td>
-                                <td>Lorem ipsum tahu tempe enak sekali aaaaaaa aaaaa aaaaaa aaaaaaaa aaaaaaa aaaaa aaaaa aaaaaa</td>
-                                <td>Rp. 1.500.000</td>
-                                <td>15</td>
-                                <td>15</td>
-                                <td>15</td>
-                                <td class="text-center">3/08/2025</td>
-                                <td class="text-center">15/08/2025</td>
-                                <td class="text-center">
-                                    <button data-modal-target="modal-foto" data-modal-toggle="modal-foto" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Detail</button>
-                                </td>
-                                <td class="text-center">
-                                    <div class="flex flex-col gap-2">
-                                        <button data-modal-target="modal-edit" data-modal-toggle="modal-edit" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Edit</button>
-                                        <button data-modal-target="modal-hapus" data-modal-toggle="modal-hapus" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Hapus</button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
+                        @if (!empty($event))
+                            <tbody>
+                                @foreach ($event as $data)
+                                    <tr>
+                                        <td class="text-center">{{ $loop->iteration }}</td>
+                                        <td class="text-center">{{ $data['namaEvent'] }}</td>
+                                        <td class="text-center">{{ $data['deskripsi'] }}</td>
+                                        <td class="text-center">Rp. {{ number_format($data['hargaTenant'], 0, ',', '.') }}</td>
+                                        <td class="text-center">{{ $data['nBarang'] }}</td>
+                                        <td class="text-center">{{ $data['nJasa'] }}</td>
+                                        <td class="text-center">{{ $data['nMakanan'] }}</td>
+                                        <td>{{ $data['tglMulai'] }}</td>
+                                        <td>{{ $data['tglSelesai'] }}</td>
+                                        <td class="text-center">
+                                            <button 
+                                                data-modal-target="modal-foto" 
+                                                data-modal-toggle="modal-foto" 
+                                                data-foto-url="{{ $data->foto_url }}"
+                                                data-thumbnails="{{ json_encode($data->foto_urls) }}"   
+                                                type="button" 
+                                                class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                                Detail
+                                            </button>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="flex flex-col gap-2">
+                                                <button class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Edit</button>
+                                                <button 
+                                                    data-modal-target="modal-hapus" 
+                                                    data-modal-toggle="modal-hapus"
+                                                    data-namaEvent="{{ $data['namaEvent'] }}"  
+                                                    class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                                    Hapus
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        @endif
                     </table>
                 </div>
             </div>
@@ -440,31 +386,17 @@
                 <!-- Modal header -->
                 <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
                     <h3 class="text-lg md:text-xl font-semibold text-gray-900">
-                        Foto/Poster Event
+                        Foto Event
                     </h3>
                 </div>
                 <!-- Modal body -->
                 <div class="p-4 md:p-5 space-y-4">
                     <div class="grid gap-4">
                         <div>
-                            <img id="main-image" class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/featured/image.jpg" alt="">
+                            <img id="main-image" class="h-auto max-w-full rounded-lg" src="" alt="Foto Ruangan">
                         </div>
-                        <div class="grid grid-cols-3 md:grid-cols-5 gap-2 md:gap-4">
-                            <div>
-                                <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg" alt="">
-                            </div>
-                            <div>
-                                <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg" alt="">
-                            </div>
-                            <div>
-                                <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg" alt="">
-                            </div>
-                            <div>
-                                <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg" alt="">
-                            </div>
-                            <div>
-                                <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-5.jpg" alt="">
-                            </div>
+                        <div class="grid grid-cols-3 md:grid-cols-5 gap-2 md:gap-4" id="image-thumbnails">
+                            <!-- Thumbnails akan diubah dengan gambar dinamis -->
                         </div>
                     </div>                    
                 </div>
@@ -486,14 +418,22 @@
                     </svg>
                     <h1 class="mb-5 text-lg font-bold text-gray-900">Konfirmasi Hapus Event</h1>
                     <p class="mb-5 text-m font-normal text-gray-500">Apakah Anda yakin ingin menghapus event ini?</p>
-                    <button data-modal-hide="modal-hapus" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                        Hapus
-                    </button>
-                    <button data-modal-hide="modal-hapus" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Kembali</button>
+                    <!-- Form untuk hapus event -->
+                    <form id="delete-form" method="POST" action="">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                            Hapus
+                        </button>
+                        <button data-modal-hide="modal-hapus" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                            Kembali
+                        </button>
+                </form>
                 </div>
             </div>
         </div>
     </div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 </body>
@@ -509,11 +449,90 @@
 </script>
 
 <!-- Swap Image -->
+    <script>
+        // Menambahkan event listener untuk tombol yang membuka modal
+        document.querySelectorAll('[data-modal-target="modal-foto"]').forEach(button => {
+            button.addEventListener('click', function () {
+                // Ambil URL foto utama dan thumbnails dari atribut data
+                const fotoUrl = this.getAttribute('data-foto-url');
+                const thumbnails = JSON.parse(this.getAttribute('data-thumbnails')); // Misal array URL thumbnails
+        
+                const mainImage = document.getElementById('main-image');
+                const imageThumbnails = document.getElementById('image-thumbnails');
+        
+                // Update foto utama di modal dengan gambar pertama dari foto utama atau thumbnails
+                mainImage.src = thumbnails[0];  // Jika fotoUrl tidak ada, gunakan thumbnail pertama
+        
+                // Kosongkan dulu thumbnail sebelumnya
+                imageThumbnails.innerHTML = '';
+        
+                // Loop untuk menampilkan thumbnail gambar-gambar kecil
+                thumbnails.forEach(url => {
+                    const thumbnailElement = document.createElement('div');
+                    thumbnailElement.innerHTML = `
+                        <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="${url}" alt="Thumbnail">
+                    `;
+                    imageThumbnails.appendChild(thumbnailElement);
+                });
+        
+                // Menampilkan modal
+                document.getElementById('modal-foto').classList.remove('hidden');
+            });
+        });
+        
+        // Fungsi untuk mengganti gambar utama saat thumbnail diklik
+        function swapImage(element) {
+            const mainImage = document.getElementById('main-image');
+            mainImage.src = element.src;
+        }
+    </script>
+
+
+<!-- Script untuk menghapus data  -->
 <script>
-    function swapImage(element) {
-        const mainImage = document.getElementById('main-image');
-        mainImage.src = element.src;
-    }
+document.addEventListener("DOMContentLoaded", function () {
+    const modalHapus = document.getElementById("modal-hapus");
+    const deleteForm = document.getElementById("delete-form");
+
+    document.querySelectorAll("[data-modal-toggle='modal-hapus']").forEach(button => {
+        button.addEventListener("click", function () {
+            let namaEvent = this.getAttribute("data-namaEvent");
+            deleteForm.setAttribute("action", `/event/${namaEvent}`);
+        });
+    });
+});
 </script>
+
+<!-- Script Alert Berhasil -->
+@if(session('success'))
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            title: 'Berhasil!',
+            text: "{{ session('success') }}",
+            icon: 'success',
+            timer: 3000, 
+            timerProgressBar: true,
+            showConfirmButton: false
+        });
+    });
+</script>
+@endif
+
+<!-- Script Alert Error -->
+@if(session('error'))
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            title: 'Gagal!',
+            text: "{{ session('error') }}",
+            icon: 'error',
+            timer: 3000, 
+            timerProgressBar: true,
+            showConfirmButton: false
+        });
+    });
+</script>
+@endif
 
 </html>
