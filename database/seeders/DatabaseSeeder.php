@@ -9,6 +9,7 @@ use App\Models\adminTenant;
 use App\Models\event;
 use App\Models\ruangan;
 use App\Models\kendaraan;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,6 +19,25 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+
+        $users = User::create([
+            'email' => 'upanpen@gmail.com',
+            'password' => hash::make('Luthfan1!'),
+            'role' => 'Admin Ruangan',
+        ]);
+
+        $users = User::create([
+            'email' => 'udindin@gmail.com',
+            'password' => hash::make('Udinz123!'),
+            'role' => 'Admin Kendaraan',
+        ]);
+
+        $users = User::create([
+            'email' => 'piddapid@gmail.com',
+            'password' => hash::make('Dapid123!'),
+            'role' => 'Admin Tenant',
+        ]);
+
         $adminR = adminRuangan::create([
             'idAdmin' => 'AdminR01',
             'name' => 'Muhammad Luthfan Lazuardi',

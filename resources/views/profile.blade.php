@@ -29,19 +29,23 @@
                 <div class="text-left">
                     <div class="my-6">
                         <label for="nik" class="block text-lg font-medium text-gray-900">NIK</label>
-                        <p id="nik" class="mt-2 block w-full rounded-md bg-gray-100 border border-gray-300 py-3 px-4 text-gray-900">{{ $user->NIK }}</p>
+                        <p id="nik" class="mt-2 block w-full rounded-md bg-gray-100 border border-gray-300 py-3 px-4 text-gray-900">{{ $cus->NIK }}</p>
                     </div>
                     <div class="my-6">
                         <label for="name" class="block text-lg font-medium text-gray-900">Nama</label>
-                        <p id="name" class="mt-2 block w-full rounded-md bg-gray-100 border border-gray-300 py-3 px-4 text-gray-900">{{ $user->name }}</p>
+                        <p id="name" class="mt-2 block w-full rounded-md bg-gray-100 border border-gray-300 py-3 px-4 text-gray-900">{{ $cus->name }}</p>
+                    </div>
+                    <div class="my-6">
+                        <label for="name" class="block text-lg font-medium text-gray-900">Nomor Handphone</label>
+                        <p id="noHP" class="mt-2 block w-full rounded-md bg-gray-100 border border-gray-300 py-3 px-4 text-gray-900">{{ $cus->noHP }}</p>
                     </div>
                     <div class="my-6">
                         <label for="alamat" class="block text-lg font-medium text-gray-900">Alamat</label>
-                        <p id="alamat" class="mt-2 block w-full rounded-md bg-gray-100 border border-gray-300 py-3 px-4 text-gray-900">{{ $user->alamat }}</p>
+                        <p id="alamat" class="mt-2 block w-full rounded-md bg-gray-100 border border-gray-300 py-3 px-4 text-gray-900">{{ $cus->alamat }}</p>
                     </div>
                     <div class="my-6">
                         <label for="email" class="block text-lg font-medium text-gray-900">Email</label>
-                        <p id="email" class="mt-2 block w-full rounded-md bg-gray-100 border border-gray-300 py-3 px-4 text-gray-900">{{ $user->email }}</p>
+                        <p id="email" class="mt-2 block w-full rounded-md bg-gray-100 border border-gray-300 py-3 px-4 text-gray-900">{{ $cus->email }}</p>
                     </div>
                 </div>
             </div>
@@ -61,7 +65,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="home">
+                <a href="/">
                     <button class="bg-gradient-to-b from-blue-400 to-cyan-400 hover:from-blue-500 hover:to-cyan-500 focus:outline-none rounded-md py-2 px-4 text-sm font-semibold text-white focus:ring-2">Home</button>
                 </a>
             </div>

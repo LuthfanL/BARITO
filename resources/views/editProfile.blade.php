@@ -35,15 +35,18 @@
                     <div class="text-left">
                         <div class="my-6">
                             <label for="name" class="block text-lg font-medium text-gray-900">Nama</label>
-                            <input type="text" id="name" name="name" value="{{ old('name') }}" class="mt-2 block w-full rounded-md bg-gray-100 border border-gray-300 py-3 px-4 text-gray-900"></input>
+                            <input type="text" id="name" name="name" value="{{ $cus->name }}" class="mt-2 block w-full rounded-md bg-gray-100 border border-gray-300 py-3 px-4 text-gray-900"></input>
                         </div>
                         <div class="my-6">
                             <label for="alamat" class="block text-lg font-medium text-gray-900">Alamat</label>
-                            <input type="text" id="alamat" name="alamat" value="{{ old('alamat') }}" class="mt-2 block w-full rounded-md bg-gray-100 border border-gray-300 py-3 px-4 text-gray-900"></input>
+                            <input type="text" id="alamat" name="alamat" value="{{ $cus->alamat }}" class="mt-2 block w-full rounded-md bg-gray-100 border border-gray-300 py-3 px-4 text-gray-900"></input>
+                        </div>
+                        <div class="my-6">
+                            <label for="noHP" class="block text-lg font-medium text-gray-900">Nomor Handphone</label>
+                            <input type="text" id="noHP" name="noHP" value="{{ $cus->noHP }}" class="mt-2 block w-full rounded-md bg-gray-100 border border-gray-300 py-3 px-4 text-gray-900"></input>
                         </div>
                     </div>
                 </div>
-                <!-- Tombol -->
                 <div class="flex justify-end mt-8 space-x-4">
                     <button type="submit" class="bg-gradient-to-b from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 focus:outline-none rounded-md py-2 px-4 text-sm font-semibold text-white focus:ring-2">Simpan</button>
                     <a href="profile" class="bg-gradient-to-b from-red-500 to-red-500 hover:from-red-600 hover:to-red-600 focus:outline-none rounded-md py-2 px-4 text-sm font-semibold text-white focus:ring-2">
