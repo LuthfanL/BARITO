@@ -63,22 +63,22 @@
 
         <!-- Bagian Kanan (Formulir) -->
         <div class="w-full md:w-1/2 p-6 sm:p-8">
-            <form class="space-y-4">
+           <form id="whatsappForm" class="space-y-4" onsubmit="sendToWhatsApp(event)">
                 <div>
                     <label for="nama" class="block text-sm font-medium text-gray-700">Nama</label>
-                    <input type="text" id="nama" name="nama" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    <input type="text" id="nama" name="nama" required class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                 </div>
                 <div>
                     <label for="email" class="block text-sm font-medium text-gray-700">Alamat Email</label>
-                    <input type="email" id="email" name="email" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    <input type="email" id="email" name="email" required class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                 </div>
                 <div>
                     <label for="subjek" class="block text-sm font-medium text-gray-700">Subjek Pesan</label>
-                    <input type="text" id="subjek" name="subjek" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    <input type="text" id="subjek" name="subjek" required class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                 </div>
                 <div>
                     <label for="deskripsi" class="block text-sm font-medium text-gray-700">Deskripsi</label>
-                    <textarea id="deskripsi" name="deskripsi" rows="4" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"></textarea>
+                    <textarea id="deskripsi" name="deskripsi" rows="4" required class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"></textarea>
                 </div>
                 <div>
                     <button type="submit" class="w-full bg-gradient-to-b from-blue-400 to-cyan-400 hover:from-blue-500 hover:to-cyan-500 focus:outline-none text-white font-semibold py-2 px-4 rounded-lg">
@@ -90,7 +90,30 @@
     </div>
 </div>
 
-    
+<script>
+    function sendToWhatsApp(event) {
+        event.preventDefault(); // Mencegah form dikirim secara default
+        
+        let nama = document.getElementById("nama").value;
+        let email = document.getElementById("email").value;
+        let subjek = document.getElementById("subjek").value;
+        let deskripsi = document.getElementById("deskripsi").value;
+
+        // Nomor WhatsApp tujuan (ganti dengan nomor admin)
+        let nomorWhatsApp = "6285870195409"; // Format: 62 untuk Indonesia, tanpa tanda '+'
+
+        // Format pesan WhatsApp
+        let pesan = `Halo Admin Tenant,%0A%0A`;
+        pesan += `Nama: ${nama}%0A`;
+        pesan += `Email: ${email}%0A`;
+        pesan += `Subjek: ${subjek}%0A`;
+        pesan += `Deskripsi: ${deskripsi}%0A`;
+
+        // Redirect ke WhatsApp
+        let link = `https://wa.me/${nomorWhatsApp}?text=${pesan}`;
+        window.open(link, "_blank"); // Membuka di tab baru
+    }
+</script>
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 </body>
