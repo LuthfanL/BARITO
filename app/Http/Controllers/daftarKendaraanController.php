@@ -64,4 +64,36 @@ class daftarKendaraanController extends Controller
         return redirect()->route('daftarKendaraan')->with('success', 'Kendaraan berhasil dihapus.');
     }
 
+    public function update(Request $request)
+    {
+        // Validasi data
+        $request->validate([
+            'platNomor' => 'required|string',
+            'nama' => 'required|string|max:255',
+            'deskripsi' => 'required|string',
+            'biayaSewa' => 'required|numeric',
+            'jumlahKursi' => 'required|integer',
+            'cc' => 'required|integer',
+            'tahunKeluar' => 'required|integer',
+        ]);
+
+        // Cari kendaraan berdasarkan platNomor
+        $kendaraan = Kendaraan::where('platNomor', $request->platNomor)->firstOrFail();
+
+        // Update data kendaraan
+        $kendaraan->update([
+            'nama' => $request->nama,
+            'deskripsi' => $request->deskripsi,
+            'biayaSewa' => $request->biayaSewa,
+            'jumlahKursi' => $request->jumlahKursi,
+            'cc' => $request->cc,
+            'tahunKeluar' => $request->tahunKeluar,
+            'tv' => $request->tv,
+            'sound' => $request->sound,
+            'ac' => $request->ac,
+        ]);
+
+        // Redirect ke halaman sebelumnya dengan pesan sukses
+        return redirect()->back()->with('success', 'Data kendaraan berhasil diperbarui!');
+    }
 }

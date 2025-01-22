@@ -131,6 +131,8 @@ Route::get('/cari-kendaraan', [daftarKendaraanController::class, 'search'])->nam
 
 Route::delete('/kendaraan/{platNomor}', [daftarKendaraanController::class, 'destroy'])->name('kendaraan.destroy');
 
+Route::put('/update-kendaraan', [daftarKendaraanController::class, 'update'])->name('update.kendaraan');
+
 Route::get('/verifikasiBookingKendaraan', [verifikasiBookingKendaraanController::class, 'index'])->name('verifikasiBookingKendaraan');
 
 Route::get('/riwayatBookingKendaraan', [riwayatBookingKendaraanController::class, 'index'])->name('riwayatBookingKendaraan');
