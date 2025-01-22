@@ -139,9 +139,16 @@ Route::get('/riwayatBookingKendaraan', [riwayatBookingKendaraanController::class
 # Admin Tenant -------------------------------------------------------
 Route::get('/dashboardAdminTenant', [DashboardAdminTenantController::class, 'index'])->name('dashboardAdminTenant');
 
-Route::get('/buatEvent', [buatEventController::class, 'index'])->name('buatEvent');
+Route::get('/event', [daftarEventController::class, 'index'])->name('daftarEvent');
 
-Route::get('/daftarEvent', [daftarEventController::class, 'index'])->name('daftarEvent');
+Route::get('/buatEvent', [buatEventController::class, 'index'])->name('buatEvent');
+Route::post('/buatEvent', [buatEventController::class, 'store'])->name('event.store');
+
+Route::resource('/daftarEvent', daftarEventController::class);
+
+Route::get('/cari-event', [daftarEventController::class, 'search'])->name('searchEvent');
+
+Route::delete('/event/{namaEvent}', [daftarEventController::class, 'destroy'])->name('event.destroy');
 
 Route::get('/verifikasiBookingTenant', [verifikasiBookingTenantController::class, 'index'])->name('verifikasiBookingTenant');
 

@@ -7,6 +7,9 @@
     <title>Buat Event</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMJTVF1a1wMA2gO/YHbx+fyfJhN/0Q5ntv7zYY" crossorigin="anonymous">
+    <!-- Tambahkan Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
     <style>
         .form-container {
             width: 100%;
@@ -101,61 +104,63 @@
                     <!-- Form Pembuatan Event -->
                     <div class="flex form-container bg-white-300 shadow-[0_0_20px_10px_rgba(0,0,0,0.1)]">
                         <div class="flex form-inner m-3 rounded-lg outline outline-2 outline-[#00C6BF]">
-                            <form>
+                            <form action="{{ route('event.store') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                
                                 <!-- Input Nama Event -->
-                                <label for="nama-event">Nama Event</label>
-                                <input type="text" id="nama-event" name="nama-event" required>
+                                <label for="namaEvent">Nama Event</label>
+                                <input type="text" id="namaEvent" name="namaEvent" required>
                 
                                 <!-- Input Deskripsi Event -->
-                                <label for="deskripsi-event">Deskripsi Event</label>
-                                <textarea id="deskripsi-event" name="deskripsi-event" rows="3" required></textarea>
+                                <label for="deskripsi">Deskripsi Event</label>
+                                <textarea id="deskripsi" name="deskripsi" rows="3" required></textarea>
                 
                                 <!-- Input Biaya Sewa -->
-                                <label for="biayaSewa">Biaya Sewa (Per Hari)</label>
-                                <input type="text" id="biayaSewa" name="biayaSewa" required>
+                                <label for="hargaTenant">Biaya Sewa (Per Hari)</label>
+                                <input type="text" id="hargaTenant" name="hargaTenant" required>
 
                                 <!-- Input Jenis Tenant -->
                                 <label>Jenis Tenant</label>
                                 <div class="tenant-container">
                                     <div>
-                                        <label for="barang">Tenant Barang</label>
-                                        <input type="text" id="barang" name="barang">
+                                        <label for="nBarang">Tenant Barang</label>
+                                        <input type="text" id="nBarang" name="nBarang">
                                     </div>
                                     <div>
-                                        <label for="jasa">Tenant Jasa</label>
-                                        <input type="text" id="jasa" name="jasa">
+                                        <label for="nJasa">Tenant Jasa</label>
+                                        <input type="text" id="nJasa" name="nJasa">
                                     </div>
                                     <div>
-                                        <label for="makanan">Tenant Makanan</label>
-                                        <input type="text" id="makanan" name="makanan">
+                                        <label for="nMakanan">Tenant Makanan</label>
+                                        <input type="text" id="nMakanan" name="nMakanan">
                                     </div>
                                 </div>
                 
                                 <!-- Input Tanggal -->
                                 <label for="tanggal-event" class="block font-bold">Tanggal Event</label>
-                                <div id="date-range-picker" date-rangepicker class="grid grid-cols-3 gap-2 items-center">
+                                <div id="date-range-picker" class="flex items-center space-x-2">
                                     <!-- Tanggal Mulai -->
                                     <div class="relative flex items-center">
                                         <svg class="w-5 h-5 absolute right-3 top-2 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                             <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 1 1 0-2Z"/>
                                         </svg>
-                                        <input id="datepicker-range-start" name="start" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 p-2.5 w-full" placeholder="Tanggal Mulai">
+                                        <input id="tglMulai" name="tglMulai" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 p-2.5 w-full" placeholder="Tanggal Mulai">
                                     </div>
-                                
-                                    <!-- Teks Separator -->
-                                    <div class="text-center text-gray-500">sampai</div>
-                                
+
+
                                     <!-- Tanggal Selesai -->
                                     <div class="relative flex items-center">
                                         <svg class="w-5 h-5 absolute right-3 top-2 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                             <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 1 1 0-2Z"/>
                                         </svg>
-                                        <input id="datepicker-range-end" name="end" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 p-2.5 w-full" placeholder="Tanggal Selesai">
+                                        <input id="tglSelesai" name="tglSelesai" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 p-2.5 w-full" placeholder="Tanggal Selesai">
                                     </div>
-                                </div>                             
+                                </div>
+                                        
+
                                 <!-- Input Foto Event -->
-                                <label for="foto-event">Upload Foto/Poster Event</label>
-                                <input type="file" id="foto-event" name="foto-event" accept="image/jpeg, image/png" class="block w-full cursor-pointer" required>
+                                <label for="foto">Upload Foto/Poster Event</label>
+                                <input type="file" id="foto" name="foto[]" accept="image/jpeg, image/png" class="block w-full cursor-pointer" required>
                 
                                 <!-- Informasi Tambahan -->
                                 <p class="info">
@@ -165,7 +170,7 @@
                 
                                 <!-- Tombol Submit -->
                                 <div class="flex justify-end">
-                                    <button type="button" class="justify-end text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300  font-bold rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Buat Event</button>
+                                    <button type="submit" class="justify-end text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300  font-bold rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Buat Event</button>
                                 </div>
                             </form>
                         </div>
@@ -174,7 +179,58 @@
             </div>            
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+
+    <!-- Script Alert -->
+    <script>
+        // Notifikasi jika berhasil
+        @if(session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: '{{ session('success') }}',
+                showConfirmButton: false,
+                timerProgressBar: true,
+                timer: 3000 // Durasi 3 detik
+            });
+        @endif
+    
+        // Notifikasi jika ada error
+        @if($errors->any())
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                html: `
+                    <ul style="text-align: left;">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                `,
+            });
+        @endif
+    </script>
+
+    <!-- Tambahkan Flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        flatpickr("#tglMulai", {
+            dateFormat: "Y-m-d",  // Format sesuai MySQL (YYYY-MM-DD)
+            altInput: true,
+            altFormat: "d/m/Y",   // Tampilkan ke pengguna dalam format DD/MM/YYYY
+            allowInput: true
+        });
+
+        flatpickr("#tglSelesai", {
+            dateFormat: "Y-m-d",
+            altInput: true,
+            altFormat: "d/m/Y",
+            allowInput: true
+        });
+    });
+    </script>
+
 </body>
 
 </html>
