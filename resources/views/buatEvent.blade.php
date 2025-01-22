@@ -161,7 +161,7 @@
 
                                 <!-- Input Foto Event -->
                                 <label for="foto">Upload Foto/Poster Event</label>
-                                <input type="file" id="foto" name="foto[]" accept="image/jpeg, image/png" class="block w-full cursor-pointer" required>
+                                <input type="file" id="foto" name="foto[]" accept="image/jpeg, image/png" class="block w-full cursor-pointer" required multiple>
                 
                                 <!-- Informasi Tambahan -->
                                 <p class="info">

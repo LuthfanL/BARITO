@@ -12,6 +12,7 @@ class daftarEventController extends Controller
     {
 
         $event = event::all();
+        $event = event::orderBy('created_at', 'desc')->get();
         
         foreach ($event as &$data) {
             if (!empty($data->foto)) {

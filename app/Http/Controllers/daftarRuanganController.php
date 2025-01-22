@@ -11,7 +11,8 @@ class daftarRuanganController extends Controller
     public function index(Request $request)
     {
         $ruangan = ruangan::all(); // Mengambil data ruangan
-
+        $ruangan = Ruangan::orderBy('created_at', 'desc')->get();
+        
         foreach ($ruangan as &$data) {
             if (!empty($data->foto)) {
                 // Ambil URL gambar utama dan URL thumbnail
@@ -24,6 +25,7 @@ class daftarRuanganController extends Controller
         }
     
         // Kirim data ke view
+        //$ruangan = Ruangan::orderBy('created_at', 'desc')->get();
         return view('daftarRuangan', compact('ruangan'));
     }
 
