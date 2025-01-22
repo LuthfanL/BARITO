@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMJTVF1a1wMA2gO/YHbx+fyfJhN/0Q5ntv7zYY" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css"  rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
         #default-table {
@@ -16,7 +17,7 @@
             border-collapse: collapse; /* Mengurangi jarak antar border */
         }
         #default-table th, #default-table td {
-            padding: 8px 10px; /* Mengurangi padding antar sel */
+            padding: 8px 5px; /* Mengurangi padding antar sel */
             text-align: center;
         }
         #default-table th {
@@ -256,8 +257,8 @@
                                         <td class="text-center">{{ $data['nBarang'] }}</td>
                                         <td class="text-center">{{ $data['nJasa'] }}</td>
                                         <td class="text-center">{{ $data['nMakanan'] }}</td>
-                                        <td>{{ $data['tglMulai'] }}</td>
-                                        <td>{{ $data['tglSelesai'] }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($data['tglMulai'])->format('d/m/Y') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($data['tglSelesai'])->format('d/m/Y') }}</td>
                                         <td class="text-center">
                                             <button 
                                                 data-modal-target="modal-foto" 
