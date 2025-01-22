@@ -55,6 +55,7 @@
                                 @click.away="open = false"
                                 class="absolute right-0 w-60 z-50 px-5 py-3 bg-white text-black border border-gray-300 rounded-lg shadow mt-5">
                                 <ul class="space-y-3 text-gray-900">
+                                    @auth
                                     <li class="font-medium">
                                         <a href="profile"
                                             class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-blue-400">
@@ -69,8 +70,8 @@
                                             Profil
                                         </a>
                                     </li>
-
                                     <hr class="border-gray-300">
+                                    @endauth
                                     <li class="font-medium">
                                         @auth
                                         <a href="/logout"
