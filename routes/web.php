@@ -36,6 +36,9 @@ use App\Http\Controllers\riwayatBookingRuanganController;
 use App\Http\Controllers\riwayatBookingKendaraanController;
 use App\Http\Controllers\riwayatBookingTenantController;
 
+Route::get('/', function(){
+    return view('/home');
+});
 
 Route::get('/', [homeController::class, 'index'])->name('home');
 
@@ -62,9 +65,9 @@ Route::get('/homeBookingRuangan', [homeBookingRuanganController::class, 'index']
 
 Route::get('/custDaftarRuangan', [custDaftarRuanganController::class, 'index'])->name('custDaftarRuangan');
 
-Route::get('/custBookingRuangan', [custBookingRuanganController::class, 'index'])->name('custBookingRuangan');
+Route::get('/custBookingRuangan', [custBookingRuanganController::class, 'index'])->name('custBookingRuangan')->middleware('auth');
 
-Route::get('/custStatusBookingRuangan', [custStatusBookingRuanganController::class, 'index'])->name('custStatusBookingRuangan');
+Route::get('/custStatusBookingRuangan', [custStatusBookingRuanganController::class, 'index'])->name('custStatusBookingRuangan')->middleware('auth');
 
 Route::get('/kontakRuangan', [kontakRuanganController::class, 'index'])->name('kontakRuangan');
 
@@ -74,9 +77,9 @@ Route::get('/homeBookingKendaraan', [homeBookingKendaraanController::class, 'ind
 
 Route::get('/custDaftarKendaraan', [custDaftarKendaraanController::class, 'index'])->name('custDaftarKendaraan');
 
-Route::get('/custBookingKendaraan', [custBookingKendaraanController::class, 'index'])->name('custBookingKendaraan');
+Route::get('/custBookingKendaraan', [custBookingKendaraanController::class, 'index'])->name('custBookingKendaraan')->middleware('auth');
 
-Route::get('/custStatusBookingKendaraan', [custStatusBookingKendaraanController::class, 'index'])->name('custStatusBookingKendaraan');
+Route::get('/custStatusBookingKendaraan', [custStatusBookingKendaraanController::class, 'index'])->name('custStatusBookingKendaraan')->middleware('auth');
 
 Route::get('/kontakKendaraan', [kontakKendaraanController::class, 'index'])->name('kontakKendaraan');
 
@@ -86,76 +89,74 @@ Route::get('/homePengelolaanTenant', [homePengelolaanTenantController::class, 'i
 
 Route::get('/custDaftarEvent', [custDaftarEventController::class, 'index'])->name('custDaftarEvent');
 
-Route::get('/custBookingTenant', [custBookingTenantController::class, 'index'])->name('custBookingTenant');
+Route::get('/custBookingTenant', [custBookingTenantController::class, 'index'])->name('custBookingTenant')->middleware('auth');
 
-Route::get('/custStatusBookingTenant', [custStatusBookingTenantController::class, 'index'])->name('custStatusBookingTenant');
+Route::get('/custStatusBookingTenant', [custStatusBookingTenantController::class, 'index'])->name('custStatusBookingTenant')->middleware('auth');
 
 Route::get('/kontakTenant', [kontakTenantController::class, 'index'])->name('kontakTenant');
 
 
 # Admin Ruangan -----------------------------------------------------
-Route::get('/dashboardAdminRuangan', [DashboardAdminRuanganController::class, 'index'])->name('dashboardAdminRuangan');
+Route::get('/dashboardAdminRuangan', [DashboardAdminRuanganController::class, 'index'])->name('dashboardAdminRuangan')->middleware('auth');
 
-Route::get('/ruangan', [daftarRuanganController::class, 'index'])->name('daftarRuangan');
+Route::get('/ruangan', [daftarRuanganController::class, 'index'])->name('daftarRuangan')->middleware('auth');
 
 // Route::get('/buatRuangan', [buatRuanganController::class, 'index'])->name('buatRuangan')->middleware('auth');
 
 //Route::get('/ruangan', [daftarRuanganController::class, 'index'])->name('daftarRuangan');
 
-Route::get('/buatRuangan', [buatRuanganController::class, 'index'])->name('buatRuangan');
-Route::post('/buatRuangan', [buatRuanganController::class, 'store'])->name('ruangan.store');
+Route::get('/buatRuangan', [buatRuanganController::class, 'index'])->name('buatRuangan')->middleware('auth');
+Route::post('/buatRuangan', [buatRuanganController::class, 'store'])->name('ruangan.store')->middleware('auth');
 
-Route::resource('/daftarRuangan', daftarRuanganController::class);
+Route::resource('/daftarRuangan', daftarRuanganController::class)->middleware('auth');
 
-Route::get('/cari-ruangan', [daftarRuanganController::class, 'search'])->name('searchRuangan');
+Route::get('/cari-ruangan', [daftarRuanganController::class, 'search'])->name('searchRuangan')->middleware('auth');
 
 Route::delete('/ruangan/{id}', [daftarRuanganController::class, 'destroy'])->name('ruangan.destroy');
 
 Route::put('/update-ruangan', [daftarRuanganController::class, 'update'])->name('update.ruangan');
 
-Route::get('/verifikasiBookingRuangan', [verifikasiBookingRuanganController::class, 'index'])->name('verifikasiBookingRuangan');
+Route::get('/verifikasiBookingRuangan', [verifikasiBookingRuanganController::class, 'index'])->name('verifikasiBookingRuangan')->middleware('auth');
 
-Route::get('/riwayatBookingRuangan', [riwayatBookingRuanganController::class, 'index'])->name('riwayatBookingRuangan');
+Route::get('/riwayatBookingRuangan', [riwayatBookingRuanganController::class, 'index'])->name('riwayatBookingRuangan')->middleware('auth');
 
 
 # Admin Kendaraan ----------------------------------------------------
-Route::get('/dashboardAdminKendaraan', [DashboardAdminKendaraanController::class, 'index'])->name('dashboardAdminKendaraan');
+Route::get('/dashboardAdminKendaraan', [DashboardAdminKendaraanController::class, 'index'])->name('dashboardAdminKendaraan')->middleware('auth');
 
-Route::get('/kendaraan', [daftarKendaraanController::class, 'index'])->name('daftarKendaraan');
+Route::get('/kendaraan', [daftarKendaraanController::class, 'index'])->name('daftarKendaraan')->middleware('auth');
 
-Route::get('/buatKendaraan', [buatKendaraanController::class, 'index'])->name('buatKendaraan');
-Route::post('/buatKendaraan', [buatKendaraanController::class, 'store'])->name('kendaraan.store');
+Route::get('/buatKendaraan', [buatKendaraanController::class, 'index'])->name('buatKendaraan')->middleware('auth');
+Route::post('/buatKendaraan', [buatKendaraanController::class, 'store'])->name('kendaraan.store')->middleware('auth');
 
-Route::resource('/daftarKendaraan', daftarKendaraanController::class);
+Route::resource('/daftarKendaraan', daftarKendaraanController::class)->middleware('auth');
 //Route::get('/daftarKendaraan', [daftarKendaraanController::class, 'index'])->name('daftarKendaraan');
 
-Route::get('/cari-kendaraan', [daftarKendaraanController::class, 'search'])->name('searchKendaraan');
+Route::get('/cari-kendaraan', [daftarKendaraanController::class, 'search'])->name('searchKendaraan')->middleware('auth');
 
-Route::delete('/kendaraan/{platNomor}', [daftarKendaraanController::class, 'destroy'])->name('kendaraan.destroy');
+Route::delete('/kendaraan/{platNomor}', [daftarKendaraanController::class, 'destroy'])->name('kendaraan.destroy')->middleware('auth');
 
-Route::put('/update-kendaraan', [daftarKendaraanController::class, 'update'])->name('update.kendaraan');
+Route::put('/update-kendaraan', [daftarKendaraanController::class, 'update'])->name('update.kendaraan')->middleware('auth');
 
-Route::get('/verifikasiBookingKendaraan', [verifikasiBookingKendaraanController::class, 'index'])->name('verifikasiBookingKendaraan');
+Route::get('/verifikasiBookingKendaraan', [verifikasiBookingKendaraanController::class, 'index'])->name('verifikasiBookingKendaraan')->middleware('auth');
 
-Route::get('/riwayatBookingKendaraan', [riwayatBookingKendaraanController::class, 'index'])->name('riwayatBookingKendaraan');
+Route::get('/riwayatBookingKendaraan', [riwayatBookingKendaraanController::class, 'index'])->name('riwayatBookingKendaraan')->middleware('auth');
 
 
 # Admin Tenant -------------------------------------------------------
-Route::get('/dashboardAdminTenant', [DashboardAdminTenantController::class, 'index'])->name('dashboardAdminTenant');
+Route::get('/dashboardAdminTenant', [DashboardAdminTenantController::class, 'index'])->name('dashboardAdminTenant')->middleware('auth');
 
-Route::get('/event', [daftarEventController::class, 'index'])->name('daftarEvent');
+Route::get('/event', [daftarEventController::class, 'index'])->name('daftarEvent')->middleware('auth');
 
-Route::get('/buatEvent', [buatEventController::class, 'index'])->name('buatEvent');
-Route::post('/buatEvent', [buatEventController::class, 'store'])->name('event.store');
+Route::get('/buatEvent', [buatEventController::class, 'index'])->name('buatEvent')->middleware('auth');
+Route::post('/buatEvent', [buatEventController::class, 'store'])->name('event.store')->middleware('auth');
 
-Route::resource('/daftarEvent', daftarEventController::class);
+Route::resource('/daftarEvent', daftarEventController::class)->middleware('auth');
 
-Route::get('/cari-event', [daftarEventController::class, 'search'])->name('searchEvent');
+Route::get('/cari-event', [daftarEventController::class, 'search'])->name('searchEvent')->middleware('auth');
 
 Route::delete('/event/{namaEvent}', [daftarEventController::class, 'destroy'])->name('event.destroy');
 
-Route::put('/update-event', [daftarEventController::class, 'update'])->name('update.event');
+Route::get('/verifikasiBookingTenant', [verifikasiBookingTenantController::class, 'index'])->name('verifikasiBookingTenant')->middleware('auth');
 
-Route::get('/verifikasiBookingTenant', [verifikasiBookingTenantController::class, 'index'])->name('verifikasiBookingTenant');
-
-Route::get('/riwayatBookingTenant', [riwayatBookingTenantController::class, 'index'])->name('riwayatBookingTenant');
+Route::get('/riwayatBookingTenant', [riwayatBookingTenantController::class, 'index'])->name('riwayatBookingTenant')->middleware('auth');

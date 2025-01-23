@@ -112,14 +112,12 @@
             <div class="px-8 pt-12 flex justify-center items-center">
                 <div class="grid grid-cols-12 w-full gap-14">
                     <!-- Statistik Pengunjung -->
-                     @auth
                     <div class="col-span-6 pt-24 pb-24 bg-white-300 shadow-[0_0_20px_10px_rgba(0,0,0,0.1)] rounded-xl flex flex-col">
                         <div>
-                            <h2 class="text-left ml-3 mt-6 text-3xl font-bold">{{ $user->name }}</h2>
+                            <h2 class="text-left ml-3 mt-6 text-3xl font-bold">Statistik Pengunjung</h2>
                             <p class="text-left text-gray-500 ml-3 mt-1 mb-6 text-lg font-semibold ">Diagran Garis/Batang</p>
                         </div>
                     </div>
-                    @endauth
                     <!-- Statistik Tenant Terbooking -->
                     <div class="col-span-6 pt-24 pb-24 bg-white-300 shadow-[0_0_20px_10px_rgba(0,0,0,0.1)] rounded-xl flex flex-col">
                         <div>

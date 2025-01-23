@@ -36,4 +36,8 @@ class adminKendaraan extends Authenticatable
     {
         return $this->hasMany(pemKendaraan::class, 'idAdmin');
     }
+
+    public function User(){
+        return $this->hasOne(User::class, 'email');
+    }
 }

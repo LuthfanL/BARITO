@@ -36,4 +36,8 @@ class adminRuangan extends Authenticatable
     {
         return $this->hasMany(pemRuangan::class, 'idAdmin');
     }
+
+    public function User(){
+        return $this->hasOne(User::class, 'email');
+    }
 }

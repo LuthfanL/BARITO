@@ -36,4 +36,8 @@ class adminTenant extends Authenticatable
     {
         return $this->hasMany(pemTenant::class, 'idAdmin');
     }
+
+    public function User(){
+        return $this->hasOne(User::class, 'email');
+    }
 }
