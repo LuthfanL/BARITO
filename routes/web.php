@@ -120,7 +120,6 @@ Route::get('/verifikasiBookingRuangan', [verifikasiBookingRuanganController::cla
 
 Route::get('/riwayatBookingRuangan', [riwayatBookingRuanganController::class, 'index'])->name('riwayatBookingRuangan')->middleware('auth');
 
-
 # Admin Kendaraan ----------------------------------------------------
 Route::get('/dashboardAdminKendaraan', [DashboardAdminKendaraanController::class, 'index'])->name('dashboardAdminKendaraan')->middleware('auth');
 
