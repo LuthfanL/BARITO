@@ -63,4 +63,32 @@ class daftarEventController extends Controller
         return redirect()->route('daftarEvent')->with('success', 'Event berhasil dihapus.');
     }
 
+    public function update(Request $request)
+    {
+        // Validasi data
+        $request->validate([
+            'namaEvent' => 'required|string',
+            'deskripsi' => 'required|string',
+            'tglMulai' => 'required|date',
+            'tgSelesai' => 'required|date',
+        ]);
+
+        // Cari event berdasarkan namaEvent
+        $event = Event::where('namaEvent', $request->namaEvent)->firstOrFail();
+
+        // Update data event
+        $event->update([
+            'tglMulai' => $request->tglMulai,
+            'tglSelesai' => $request->tglSelesai,
+            'nMakanan' => $request->nMakanan,
+            'nBarang' => $request->nBarang,
+            'nJasa' => $request->nJasa,
+            'deskripsi' => $request->deskripsi,
+            'hargaTenant' => $request->hargaTenant,
+        ]);
+
+        // Redirect ke halaman sebelumnya dengan pesan sukses
+        return redirect()->back()->with('success', 'Data event berhasil diperbarui!');
+    }
+
 }

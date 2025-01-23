@@ -63,4 +63,39 @@ class daftarRuanganController extends Controller
         return redirect()->route('daftarRuangan')->with('success', 'Ruangan berhasil dihapus.');
     }
 
+    public function update(Request $request)
+    {
+        // Validasi data
+        $request->validate([
+            'id' => 'required',
+            'nama' => 'required|string',
+            'lokasi' => 'required|string',
+            'luas' => 'required|string',
+            'lantai' => 'required|integer',
+            'biayaSewa' => 'required|integer',
+        ]);
+
+        // Cari ruangan berdasarkan id
+        $ruangan = Ruangan::where('id', $request->id)->firstOrFail();
+
+        // Update data ruangan
+        $ruangan->update([
+            'id' => $request->id,
+            'nama' => $request->nama,
+            'lokasi' => $request->lokasi,
+            'podium' => $request->podium,
+            'meja' => $request->meja,
+            'kursi' => $request->kursi,
+            'sound' => $request->sound,
+            'ac' => $request->ac,
+            'proyektor' => $request->proyektor,
+            'luas' => $request->luas,
+            'deskripsi' => $request->deskripsi,
+            'lantai' => $request->lantai,
+            'biayaSewa' => $request->biayaSewa,
+        ]);
+
+        // Redirect ke halaman sebelumnya dengan pesan sukses
+        return redirect()->back()->with('success', 'Data ruangan berhasil diperbarui!');
+    }
 }

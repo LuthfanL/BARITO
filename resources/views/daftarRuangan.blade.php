@@ -281,15 +281,30 @@
                                         <td class="text-center">
                                             <div class="flex flex-col gap-2">
                                                 <button 
-                                                    data-modal-target="modal-edit" 
-                                                    data-modal-toggle="modal-edit" 
-                                                    class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                                    class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white btn-edit"
+                                                    data-modal-target="modal-edit"
+                                                    data-modal-toggle="modal-edit"
+                                                    data-id="{{ $data['id'] }}" 
+                                                    data-nama="{{ $data['nama'] }}" 
+                                                    data-lokasi="{{ $data['lokasi'] }}" 
+                                                    data-podium="{{ $data['podium'] }}" 
+                                                    data-meja="{{ $data['meja'] }}" 
+                                                    data-kursi="{{ $data['kursi'] }}" 
+                                                    data-sound="{{ $data['sound'] }}" 
+                                                    data-ac="{{ $data['ac'] }}" 
+                                                    data-proyektor="{{ $data['proyektor'] }}" 
+                                                    data-luas="{{ $data['luas'] }}"
+                                                    data-deskripsi="{{ $data['deskripsi'] }}"
+                                                    data-lantai="{{ $data['lantai'] }}"
+                                                    data-foto-url="{{ $data->foto_url }}"
+                                                    data-thumbnails="{{ json_encode($data->foto_urls) }}" 
+                                                    data-biaya="{{ $data['biayaSewa'] }}"> 
                                                     Edit
                                                 </button>
                                                 <button 
                                                     data-modal-target="modal-hapus" 
                                                     data-modal-toggle="modal-hapus"
-                                                    data-plat="{{ $data['id'] }}"  
+                                                    data-id="{{ $data['id'] }}"  
                                                     class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
                                                     Hapus
                                                 </button>
@@ -320,12 +335,12 @@
                 <div class="p-4 md:p-5">
                     <form>
                         <!-- Input Nama Ruangan -->
-                        <label for="nama</label>
+                        <label for="nama">Nama Ruangan</label>
                         <input type="text" id="nama" name="nama" required>
         
                         <!-- Input Deskripsi Ruangan -->
                         <label for="deskripsi">Deskripsi Ruangan</label>
-                        <textarea id="deskripsi" name="deskripsi" rows="3" required></textarea>
+                        <textarea id="deskripsi" name="deskripsi" rows="3" required class="pl-2"></textarea>
         
                         <!-- Input Biaya Sewa, Lokasi, Lantai dan Luas Ruangan -->
                         <label for="biayaSewa">Biaya Sewa (Per Hari)</label>
@@ -382,10 +397,33 @@
                 </div>
 
                 <!-- Modal footer -->
+                <form id="editForm" action="/update-ruangan" method="POST">
+                    @csrf
+                    @method('PUT') <!-- Gunakan metode PUT jika sesuai kebutuhan RESTful -->
+                    
+                    <!-- Input tersembunyi untuk id -->
+                    <input type="hidden" id="id" name="id">
+
+                    <!-- Tambahkan input lainnya sebagai bagian dari form -->
+                    <input type="hidden" id="nama" name="nama">
+                    <input type="hidden" id="lokasi" name="lokasi">
+                    <input type="hidden" id="podium" name="podium">
+                    <input type="hidden" id="meja" name="meja">
+                    <input type="hidden" id="kursi" name="kursi">
+                    <input type="hidden" id="sound" name="sound">
+                    <input type="hidden" id="ac" name="ac">
+                    <input type="hidden" id="proyektor" name="proyektor">
+                    <input type="hidden" id="luas" name="luas">
+                    <input type="hidden" id="deskripsi" name="deskripsi">
+                    <input type="hidden" id="lantai" name="lantai">
+                    <input type="hidden" id="biayaSewa" name="biayaSewa">
+                </form>
+
                 <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b space-x-2">
-                    <button data-modal-hide="modal-edit" id="konfirmasi-button" type="button" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 font-bold font-medium rounded-lg text-sm px-4 py-2 text-center">Konfirmasi Edit</button>
-                    <button data-modal-hide="modal-edit" type="button" class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-bold font-medium rounded-lg text-sm px-4 py-2 text-center">Kembali</button>
+                    <button id="konfirmasi-button" type="button" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 font-bold font-medium rounded-lg text-sm px-4 py-2 text-center">Simpan</button>
+                    <button data-modal-hide="modal-edit" type="button" class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-bold font-medium rounded-lg text-sm px-4 py-2 text-center">Batal</button>
                 </div>
+
             </div>
         </div>
     </div> 
@@ -583,7 +621,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.querySelectorAll("[data-modal-toggle='modal-hapus']").forEach(button => {
         button.addEventListener("click", function () {
-            let id = this.getAttribute("data-plat");
+            let id = this.getAttribute("data-id");
             deleteForm.setAttribute("action", `/ruangan/${id}`);
         });
     });
@@ -621,5 +659,108 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 </script>
 @endif
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Ambil semua tombol edit
+        const editButtons = document.querySelectorAll(".btn-edit");
+
+        // Loop setiap tombol edit
+        editButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                // Ambil data dari atribut tombol
+                const id = button.getAttribute("data-id");
+                const nama = button.getAttribute("data-nama");
+                const lokasi = button.getAttribute("data-lokasi");
+                const podium = button.getAttribute("data-podium");
+                const meja = button.getAttribute("data-meja");
+                const kursi = button.getAttribute("data-kursi");
+                const sound = button.getAttribute("data-sound");
+                const ac = button.getAttribute("data-ac");
+                const proyektor = button.getAttribute("data-proyektor");
+                const luas = button.getAttribute("data-luas");
+                const deskripsi = button.getAttribute("data-deskripsi");
+                const lantai = button.getAttribute("data-lantai");
+                const biaya = button.getAttribute("data-biaya");
+
+                // Tampilkan modal edit
+                const modalEdit = document.getElementById("modal-edit");
+                modalEdit.classList.remove("hidden");
+
+                // Isi data input di modal
+                document.getElementById("id").value = id;
+                document.getElementById("nama").value = nama;
+                document.getElementById("lokasi").value = lokasi;
+                document.getElementById("podium").value = podium;
+                document.getElementById("meja").value = meja;
+                document.getElementById("kursi").value = kursi;
+                document.getElementById("sound").value = sound;
+                document.getElementById("ac").value = ac;
+                document.getElementById("proyektor").value = proyektor;
+                document.getElementById("luas").value = luas;
+                document.getElementById("deskripsi").value = deskripsi;
+                document.getElementById("lantai").value = lantai;
+                document.getElementById("biayaSewa").value = biaya;
+            });
+        });
+
+        // Tambahkan event listener untuk tombol batal atau close modal
+        const closeModalButtons = document.querySelectorAll("[data-modal-hide]");
+        closeModalButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                const modalId = button.getAttribute("data-modal-hide");
+                const modal = document.getElementById(modalId);
+                modal.classList.add("hidden");
+            });
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Tombol Simpan di modal
+        const simpanButton = document.getElementById("konfirmasi-button");
+
+        simpanButton.addEventListener("click", function () {
+            // Ambil form dari modal
+            const editForm = document.getElementById("editForm");
+
+            // Update value form input dari modal
+            editForm.querySelector("#id").value = document.getElementById("id").value;
+            editForm.querySelector("#nama").value = document.getElementById("nama").value;
+            editForm.querySelector("#lokasi").value = document.getElementById("lokasi").value;
+            editForm.querySelector("#podium").value = document.getElementById("podium").value;
+            editForm.querySelector("#meja").value = document.getElementById("meja").value;
+            editForm.querySelector("#kursi").value = document.getElementById("kursi").value;
+            editForm.querySelector("#sound").value = document.getElementById("sound").value;
+            editForm.querySelector("#ac").value = document.getElementById("ac").value;
+            editForm.querySelector("#proyektor").value = document.getElementById("proyektor").value;
+            editForm.querySelector("#luas").value = document.getElementById("luas").value;
+            editForm.querySelector("#deskripsi").value = document.getElementById("deskripsi").value;
+            editForm.querySelector("#lantai").value = document.getElementById("lantai").value;
+            editForm.querySelector("#biayaSewa").value = document.getElementById("biayaSewa").value;
+
+            // Kirim form ke server
+            editForm.submit();
+        });
+
+        // Event listener untuk tombol batal atau close modal
+        const closeModalButtons = document.querySelectorAll("[data-modal-hide]");
+        closeModalButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                const modalId = button.getAttribute("data-modal-hide");
+                const modal = document.getElementById(modalId);
+                modal.classList.add("hidden");
+            });
+        });
+    });
+</script>
+
+<script>
+    document.getElementById("konfirmasi-button").addEventListener("click", function () {
+        const editForm = document.getElementById("editForm");
+        editForm.submit(); // Kirim form ke server
+    });
+</script>
 
 </html>

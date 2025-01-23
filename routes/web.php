@@ -111,6 +111,8 @@ Route::get('/cari-ruangan', [daftarRuanganController::class, 'search'])->name('s
 
 Route::delete('/ruangan/{id}', [daftarRuanganController::class, 'destroy'])->name('ruangan.destroy');
 
+Route::put('/update-ruangan', [daftarRuanganController::class, 'update'])->name('update.ruangan');
+
 Route::get('/verifikasiBookingRuangan', [verifikasiBookingRuanganController::class, 'index'])->name('verifikasiBookingRuangan');
 
 Route::get('/riwayatBookingRuangan', [riwayatBookingRuanganController::class, 'index'])->name('riwayatBookingRuangan');
@@ -151,6 +153,8 @@ Route::resource('/daftarEvent', daftarEventController::class);
 Route::get('/cari-event', [daftarEventController::class, 'search'])->name('searchEvent');
 
 Route::delete('/event/{namaEvent}', [daftarEventController::class, 'destroy'])->name('event.destroy');
+
+Route::put('/update-event', [daftarEventController::class, 'update'])->name('update.event');
 
 Route::get('/verifikasiBookingTenant', [verifikasiBookingTenantController::class, 'index'])->name('verifikasiBookingTenant');
 

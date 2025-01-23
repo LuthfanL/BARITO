@@ -113,7 +113,7 @@
                 
                                 <!-- Input Deskripsi Event -->
                                 <label for="deskripsi">Deskripsi Event</label>
-                                <textarea id="deskripsi" name="deskripsi" rows="3" required></textarea>
+                                <textarea id="deskripsi" name="deskripsi" rows="3" required class="pl-2"></textarea>
                 
                                 <!-- Input Biaya Sewa -->
                                 <label for="hargaTenant">Biaya Sewa (Per Hari)</label>
@@ -214,21 +214,21 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
     <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        flatpickr("#tglMulai", {
-            dateFormat: "Y-m-d",  // Format sesuai MySQL (YYYY-MM-DD)
-            altInput: true,
-            altFormat: "d/m/Y",   // Tampilkan ke pengguna dalam format DD/MM/YYYY
-            allowInput: true
-        });
+        document.addEventListener("DOMContentLoaded", function() {
+            flatpickr("#tglMulai", {
+                dateFormat: "Y-m-d",  // Format sesuai MySQL (YYYY-MM-DD)
+                altInput: true,
+                altFormat: "d/m/Y",   // Tampilkan ke pengguna dalam format DD/MM/YYYY
+                allowInput: true
+            });
 
-        flatpickr("#tglSelesai", {
-            dateFormat: "Y-m-d",
-            altInput: true,
-            altFormat: "d/m/Y",
-            allowInput: true
+            flatpickr("#tglSelesai", {
+                dateFormat: "Y-m-d",
+                altInput: true,
+                altFormat: "d/m/Y",
+                allowInput: true
+            });
         });
-    });
     </script>
 
 </body>

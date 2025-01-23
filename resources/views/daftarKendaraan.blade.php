@@ -293,7 +293,9 @@
                                                     data-tahun="{{ $data['tahunKeluar'] }}" 
                                                     data-tv="{{ $data['tv'] }}" 
                                                     data-sound="{{ $data['sound'] }}" 
-                                                    data-ac="{{ $data['ac'] }}">
+                                                    data-ac="{{ $data['ac'] }}"
+                                                    data-foto-url="{{ $data->foto_url }}"
+                                                    data-thumbnails="{{ json_encode($data->foto_urls) }}">   
                                                     Edit
                                                 </button>
 
@@ -347,8 +349,7 @@
                         <label for="jumlahKursi">Kapasitas</label>
                         <input type="text" id="jumlahKursi" name="jumlahKursi" required>
         
-                        <label for="platNomor">Plat Nomor</label>
-                        <input type="text" id="plat" name="platNomor" required>
+                        <input type="text" id="plat" name="platNomor" required style="display: none;>
 
                         <label for="cc">CC</label>
                         <input type="text" id="cc" name="cc" required>
@@ -372,6 +373,16 @@
                                 <input type="text" id="ac" name="ac">
                             </div>
                         </div>
+                                
+                        <!-- Input Foto Kendaraan -->
+                        <label for="foto">Upload Foto Kendaraan</label>
+                        <input type="file" id="foto" name="foto[]" accept="image/jpeg, image/png" class="block w-full cursor-pointer" multiple required> 
+                
+                        <!-- Informasi Tambahan -->
+                        <p class="info">
+                            * File maksimal 2 MB, format: JPEG atau PNG<br>
+                            * Upload minimal 1 foto yang memperlihatkan keseluruhan kendaraan
+                        </p>
                     </form>
                 </div>
 

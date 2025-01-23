@@ -271,7 +271,23 @@
                                         </td>
                                         <td class="text-center">
                                             <div class="flex flex-col gap-2">
-                                                <button class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Edit</button>
+                                                <button 
+                                                    class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white btn-edit"
+                                                    data-modal-target="modal-edit"
+                                                    data-modal-toggle="modal-edit"
+                                                    data-namaEvent="{{ $data['namaEvent'] }}" 
+                                                    data-deskripsi="{{ $data['deskripsi'] }}" 
+                                                    data-hargaTenant="{{ $data['hargaTenant'] }}" 
+                                                    data-tglMulai="{{ $data['tglMulai'] }}" 
+                                                    data-tglSelesai="{{ $data['tglSelesai'] }}" 
+                                                    data-nMakanan="{{ $data['nMakanan'] }}" 
+                                                    data-nBarang="{{ $data['nBarang'] }}" 
+                                                    data-nJasa="{{ $data['nJasa'] }}" 
+                                                    data-foto-url="{{ $data->foto_url }}"
+                                                    data-thumbnails="{{ json_encode($data->foto_urls) }}">   
+                                                    Edit
+                                                </button>
+
                                                 <button 
                                                     data-modal-target="modal-hapus" 
                                                     data-modal-toggle="modal-hapus"
@@ -306,56 +322,52 @@
                 <div class="p-4 md:p-5">
                     <form>
                         <!-- Input Nama Event -->
-                        <label for="nama-event">Nama Event</label>
-                        <input type="text" id="nama-event" name="nama-event" required>
+                        <input type="text" id="namaEvent" name="namaEvent" required style="display: none;>
         
                         <!-- Input Deskripsi Event -->
-                        <label for="deskripsi-event">Deskripsi Event</label>
-                        <textarea id="deskripsi-event" name="deskripsi-event" rows="3" required></textarea>
+                        <label for="deskripsi">Deskripsi Event</label>
+                        <textarea id="deskripsi" name="deskripsi" rows="3" required class="pl-2"></textarea>
         
                         <!-- Input Biaya Sewa -->
-                        <label for="biayaSewa">Biaya Sewa (Per Hari)</label>
-                        <input type="text" id="biayaSewa" name="biayaSewa" required>
+                        <label for="hargaTenant">Biaya Sewa (Per Hari)</label>
+                        <input type="text" id="hargaTenant" name="hargaTenant" required>
 
                         <!-- Input Jenis Tenant -->
                         <label>Jenis Tenant</label>
                         <div class="tenant-container">
                             <div>
-                                <label for="barang">Tenant Barang</label>
-                                <input type="text" id="barang" name="barang">
+                                <label for="nBarang">Tenant Barang</label>
+                                <input type="text" id="nBarang" name="nBarang">
                             </div>
                             <div>
-                                <label for="jasa">Tenant Jasa</label>
-                                <input type="text" id="jasa" name="jasa">
+                                <label for="nJasa">Tenant Jasa</label>
+                                <input type="text" id="nJasa" name="nJasa">
                             </div>
                             <div>
-                                <label for="makanan">Tenant Makanan</label>
-                                <input type="text" id="makanan" name="makanan">
+                                <label for="nMakanan">Tenant Makanan</label>
+                                <input type="text" id="nMakanan" name="nMakanan">
                             </div>
                         </div>
         
                         <!-- Input Tanggal -->
                         <label for="tanggal-event" class="block font-bold">Tanggal Event</label>
-                        <div id="date-range-picker" date-rangepicker class="grid grid-cols-3 gap-2 items-center">
+                        <div id="date-range-picker" class="flex items-center space-x-2">
                             <!-- Tanggal Mulai -->
                             <div class="relative flex items-center">
                                 <svg class="w-5 h-5 absolute right-3 top-2 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                     <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 1 1 0-2Z"/>
                                 </svg>
-                                <input id="datepicker-range-start" name="start" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 p-2.5 w-full" placeholder="Tanggal Mulai">
+                                <input id="tglMulai" name="tglMulai" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 p-2.5 w-full" placeholder="Tanggal Mulai">
                             </div>
-                        
-                            <!-- Teks Separator -->
-                            <div class="text-center text-gray-500 mb-4">sampai</div>
-                        
+
                             <!-- Tanggal Selesai -->
                             <div class="relative flex items-center">
                                 <svg class="w-5 h-5 absolute right-3 top-2 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                     <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 1 1 0-2Z"/>
                                 </svg>
-                                <input id="datepicker-range-end" name="end" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 p-2.5 w-full" placeholder="Tanggal Selesai">
+                                <input id="tglSelesai" name="tglSelesai" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 p-2.5 w-full" placeholder="Tanggal Selesai">
                             </div>
-                        </div> 
+                        </div>        
                         
                         <!-- Input Foto Event -->
                         <label for="foto-event">Upload Foto/Poster Event</label>
@@ -370,13 +382,31 @@
                 </div>
 
                 <!-- Modal footer -->
+                <form id="editForm" action="/update-event" method="POST">
+                    @csrf
+                    @method('PUT') <!-- Gunakan metode PUT jika sesuai kebutuhan RESTful -->
+                    
+                    <!-- Input tersembunyi untuk nama event -->
+                    <input type="hidden" id="namaEvent" name="namaEvent">
+
+                    <!-- Tambahkan input lainnya sebagai bagian dari form -->
+                    <input type="hidden" id="deskripsi" name="deskripsi">
+                    <input type="hidden" id="hargaTenant" name="hargaTenant">
+                    <input type="hidden" id="nBarang" name="nBarang">
+                    <input type="hidden" id="nJasa" name="nJasa">
+                    <input type="hidden" id="nMakanan" name="nMakanan">
+                    <input type="hidden" id="tglMulai" name="tglMulai">
+                    <input type="hidden" id="tglSelesai" name="tglSelesai">
+                </form>
+
                 <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b space-x-2">
-                    <button data-modal-hide="modal-edit" id="konfirmasi-button" type="button" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 font-bold font-medium rounded-lg text-sm px-4 py-2 text-center">Konfirmasi Edit</button>
-                    <button data-modal-hide="modal-edit" type="button" class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-bold font-medium rounded-lg text-sm px-4 py-2 text-center">Kembali</button>
+                    <button id="konfirmasi-button" type="button" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 font-bold font-medium rounded-lg text-sm px-4 py-2 text-center">Simpan</button>
+                    <button data-modal-hide="modal-edit" type="button" class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-bold font-medium rounded-lg text-sm px-4 py-2 text-center">Batal</button>
                 </div>
             </div>
         </div>
     </div>
+    
 
     <!-- Modal Foto -->
     <div id="modal-foto" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -534,5 +564,129 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 </script>
 @endif
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Ambil semua tombol edit
+        const editButtons = document.querySelectorAll(".btn-edit");
+
+        // Loop setiap tombol edit
+        editButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                // Ambil data dari atribut tombol
+                const namaEvent = button.getAttribute("data-namaEvent");
+                const deskripsi = button.getAttribute("data-deskripsi");
+                const hargaTenant = button.getAttribute("data-hargaTenant");
+                const tglMulai = button.getAttribute("data-tglMulai");
+                const tglSelesai = button.getAttribute("data-tglSelesai");
+                const nMakanan = button.getAttribute("data-nMakanan");
+                const nBarang = button.getAttribute("data-nBarang");
+                const nJasa = button.getAttribute("data-nJasa");
+
+                // Tampilkan modal edit
+                const modalEdit = document.getElementById("modal-edit");
+                modalEdit.classList.remove("hidden");
+
+                // Isi data input di modal
+                document.getElementById("namaEvent").value = namaEvent;
+                document.getElementById("deskripsi").value = deskripsi;
+                document.getElementById("hargaTenant").value = hargaTenant;
+                document.getElementById("tglMulai").value = tglMulai;
+                document.getElementById("tglSelesai").value = tglSelesai;
+                document.getElementById("nMakanan").value = nMakanan;
+                document.getElementById("nBarang").value = nBarang;
+                document.getElementById("nJasa").value = nJasa;
+            });
+        });
+        
+
+        // Tambahkan event listener untuk tombol batal atau close modal
+        const closeModalButtons = document.querySelectorAll("[data-modal-hide]");
+        closeModalButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                const modalId = button.getAttribute("data-modal-hide");
+                const modal = document.getElementById(modalId);
+                modal.classList.add("hidden");
+            });
+        });
+    });
+</script>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Tombol Simpan di modal
+        const simpanButton = document.getElementById("konfirmasi-button");
+
+        simpanButton.addEventListener("click", function () {
+            // Ambil form dari modal
+            const editForm = document.getElementById("editForm");
+
+            // Update value form input dari modal
+            editForm.querySelector("#namaEvent").value = document.getElementById("namaEvent").value;
+            editForm.querySelector("#deskripsi").value = document.getElementById("deskripsi").value;
+            editForm.querySelector("#hargaTenant").value = document.getElementById("hargaTenant").value;
+            editForm.querySelector("#tglMulai").value = document.getElementById("tglMulai").value;
+            editForm.querySelector("#tglSelesai").value = document.getElementById("tglSelesai").value;
+            editForm.querySelector("#nMakanan").value = document.getElementById("nMakanan").value;
+            editForm.querySelector("#nBarang").value = document.getElementById("nBarang").value;
+            editForm.querySelector("#nJasa").value = document.getElementById("nJasa").value;
+
+            // Kirim form ke server
+            editForm.submit();
+        });
+
+        // Event listener untuk tombol batal atau close modal
+        const closeModalButtons = document.querySelectorAll("[data-modal-hide]");
+        closeModalButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                const modalId = button.getAttribute("data-modal-hide");
+                const modal = document.getElementById(modalId);
+                modal.classList.add("hidden");
+            });
+        });
+    });
+</script>
+
+<script>
+    document.getElementById("konfirmasi-button").addEventListener("click", function () {
+        const editForm = document.getElementById("editForm");
+        editForm.submit(); // Kirim form ke server
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Inisialisasi Flatpickr
+        flatpickr("#tglMulai", {
+            dateFormat: "Y-m-d",
+            altInput: true,
+            altFormat: "d/m/Y",
+            allowInput: true
+        });
+
+        flatpickr("#tglSelesai", {
+            dateFormat: "Y-m-d",
+            altInput: true,
+            altFormat: "d/m/Y",
+            allowInput: true
+        });
+
+        // Event listener untuk tombol simpan
+        const simpanButton = document.getElementById("konfirmasi-button");
+        simpanButton.addEventListener("click", function () {
+            // Ambil nilai input tanggal
+            const tglMulai = document.getElementById("tglMulai").value;
+            const tglSelesai = document.getElementById("tglSelesai").value;
+
+            // Set nilai input tersembunyi di form
+            document.querySelector('input[name="tglMulai"]').value = tglMulai;
+            document.querySelector('input[name="tglSelesai"]').value = tglSelesai;
+
+            // Submit form
+            document.getElementById("editForm").submit();
+        });
+    });
+</script>
 
 </html>
