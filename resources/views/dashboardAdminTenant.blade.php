@@ -98,7 +98,7 @@
                     <div class="col-span-3 bg-white-300 shadow-[0_0_20px_10px_rgba(0,0,0,0.1)] rounded-xl flex flex-col">
                         <div class="m-3 rounded-lg outline outline-2 outline-[#00C6BF] flex items-center justify-between">
                             <div>
-                                <h2 class="text-left ml-3 mt-6 text-3xl font-bold">50</h2>
+                                <h2 class="text-left ml-3 mt-6 text-3xl font-bold">{{ $totalEvent }}</h2>
                                 <p class="text-left text-gray-500 ml-3 mt-1 mb-6 text-lg font-semibold ">Total Event</p>
                             </div>
                             <div class="mr-3">

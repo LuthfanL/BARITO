@@ -156,6 +156,8 @@ Route::get('/cari-event', [daftarEventController::class, 'search'])->name('searc
 
 Route::delete('/event/{namaEvent}', [daftarEventController::class, 'destroy'])->name('event.destroy');
 
+Route::put('/update-event', [daftarEventController::class, 'update'])->name('update.event')->middleware('auth');
+
 Route::get('/verifikasiBookingTenant', [verifikasiBookingTenantController::class, 'index'])->name('verifikasiBookingTenant')->middleware('auth');
 
 Route::get('/riwayatBookingTenant', [riwayatBookingTenantController::class, 'index'])->name('riwayatBookingTenant')->middleware('auth');
