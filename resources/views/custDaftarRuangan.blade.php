@@ -89,23 +89,33 @@
 
             <!-- Daftar Ruangan -->
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 w-full mt-8">
-                {{-- @foreach ($rooms as $room) --}}
+                @foreach ($ruangan as $ruang)
                     <!-- Card Item -->
                     <div class="col-span-1">
                         <div class="bg-white border border-gray-200 rounded-lg shadow-[0_0_13px_3px_rgba(0,0,0,0.2)]">
                             <!-- Gambar -->
                             <div>
-                                <img class="rounded-t-lg w-full h-48 object-cover" src="assets/test.jpeg" alt="ruangan" />
+                                <img class="rounded-t-lg w-full h-48 object-cover" src="{{ $ruang->foto_urls[0] }}" alt="ruangan" />
                             </div>
                             <!-- Nama Ruangan -->
                             <div class="p-5">
                                 <a href="">
-                                    <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900">Ruangan Lokakrida</h5>
+                                    <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900">{{ $ruang->nama }}</h5>
                                 </a>
                                 <!-- Deskripsi -->
-                                <p class="mb-3 text-sm text-gray-700">Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum</p>
+                                <p class="mb-3 text-sm text-gray-700">{{ $ruang->deskripsi }}</p>
                                 <!-- Button Detail -->
-                                <button data-modal-target="modal-detail" data-modal-toggle="modal-detail" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                <button 
+                                data-modal-target="modal-detailRuangan" data-modal-toggle="modal-detailRuangan"
+                                data-podium="{{ $ruang->podium }}" 
+                                data-sound="{{ $ruang->sound }}" 
+                                data-ac="{{ $ruang->ac }}" 
+                                data-meja="{{ $ruang->meja }}" 
+                                data-kursi="{{ $ruang->kursi }}" 
+                                data-proyektor="{{ $ruang->proyektor }}"
+                                data-foto-url="{{ $ruang->foto_urls[0] }}"
+                                data-thumbnails="{{ json_encode($ruang->foto_urls) }}"
+                                class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
                                     Lihat Detail
                                 </button>
                                 <!-- Button Booking -->
@@ -115,146 +125,29 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-span-1">
-                        <div class="bg-white border border-gray-200 rounded-lg shadow-[0_0_13px_3px_rgba(0,0,0,0.2)]">
-                            <!-- Gambar -->
-                            <div>
-                                <img class="rounded-t-lg w-full h-48 object-cover" src="assets/test.jpeg" alt="ruangan" />
-                            </div>
-                            <!-- Nama Ruangan -->
-                            <div class="p-5">
-                                <a href="">
-                                    <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900">Ruangan Lokakrida</h5>
-                                </a>
-                                <!-- Deskripsi -->
-                                <p class="mb-3 text-sm text-gray-700">Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum</p>
-                                <!-- Button Detail -->
-                                <button data-modal-target="modal-detail" data-modal-toggle="modal-detail"  class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                                    Lihat Detail
-                                </button>
-                                <!-- Button Booking -->
-                                <a href="custBookingRuangan" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                                    Booking
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-span-1">
-                        <div class="bg-white border border-gray-200 rounded-lg shadow-[0_0_13px_3px_rgba(0,0,0,0.2)]">
-                            <!-- Gambar -->
-                            <div>
-                                <img class="rounded-t-lg w-full h-48 object-cover" src="assets/test.jpeg" alt="ruangan" />
-                            </div>
-                            <!-- Nama Ruangan -->
-                            <div class="p-5">
-                                <a href="">
-                                    <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900">Ruangan Lokakrida</h5>
-                                </a>
-                                <!-- Deskripsi -->
-                                <p class="mb-3 text-sm text-gray-700">Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum</p>
-                                <!-- Button Detail -->
-                                <button data-modal-target="modal-detail" data-modal-toggle="modal-detail"  class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                                    Lihat Detail
-                                </button>
-                                <!-- Button Booking -->
-                                <a href="custBookingRuangan" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                                    Booking
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-span-1">
-                        <div class="bg-white border border-gray-200 rounded-lg shadow-[0_0_13px_3px_rgba(0,0,0,0.2)]">
-                            <!-- Gambar -->
-                            <div>
-                                <img class="rounded-t-lg w-full h-48 object-cover" src="assets/test.jpeg" alt="ruangan" />
-                            </div>
-                            <!-- Nama Ruangan -->
-                            <div class="p-5">
-                                <a href="">
-                                    <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900">Ruangan Lokakrida</h5>
-                                </a>
-                                <!-- Deskripsi -->
-                                <p class="mb-3 text-sm text-gray-700">Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum</p>
-                                <!-- Button Detail -->
-                                <button data-modal-target="modal-detail" data-modal-toggle="modal-detail"  class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                                    Lihat Detail
-                                </button>
-                                <!-- Button Booking -->
-                                <a href="custBookingRuangan" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                                    Booking
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-span-1">
-                        <div class="bg-white border border-gray-200 rounded-lg shadow-[0_0_13px_3px_rgba(0,0,0,0.2)]">
-                            <!-- Gambar -->
-                            <div>
-                                <img class="rounded-t-lg w-full h-48 object-cover" src="assets/test.jpeg" alt="ruangan" />
-                            </div>
-                            <!-- Nama Ruangan -->
-                            <div class="p-5">
-                                <a href="">
-                                    <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900">Ruangan Lokakrida</h5>
-                                </a>
-                                <!-- Deskripsi -->
-                                <p class="mb-3 text-sm text-gray-700">Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum</p>
-                                <!-- Button Detail -->
-                                <button data-modal-target="modal-detail" data-modal-toggle="modal-detail"  class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                                    Lihat Detail
-                                </button>
-                                <!-- Button Booking -->
-                                <a href="custBookingRuangan" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                                    Booking
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                {{-- @endforeach --}}
+                @endforeach
             </div>            
         </div>
     </div>
 
-    <!-- Modal Lihat Detail -->
-    <div id="modal-detail" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <!-- Modal Lihat Detail Ruangan -->
+    <div id="modal-detailRuangan" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative p-4 w-full max-w-4xl max-h-full">
-            <!-- Modal content -->
             <div class="relative bg-white rounded-lg shadow">
-                <!-- Modal header -->
                 <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
                     <h3 class="text-lg md:text-xl font-semibold text-gray-900">
                         Detail Ruangan
                     </h3>
                 </div>
-                <!-- Modal body -->
                 <div class="p-4 md:p-5">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <!-- Kolom Kiri: Foto -->
                         <div class="space-y-4">
-                            <!-- Foto Utama -->
                             <div>
                                 <h2 class="font-semibold mb-3 text-lg">Foto Ruangan</h2>
-                                <img id="main-image" class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/featured/image.jpg" alt="">
+                                <img id="main-image-ruang" class="h-auto max-w-full rounded-lg" src="" alt="Foto Ruangan">
                             </div>
-                            <!-- Foto di bawah -->
-                            <div class="grid grid-cols-3 md:grid-cols-5 gap-2 md:gap-4">
-                                <div>
-                                    <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg" alt="">
-                                </div>
-                                <div>
-                                    <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg" alt="">
-                                </div>
-                                <div>
-                                    <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg" alt="">
-                                </div>
-                                <div>
-                                    <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg" alt="">
-                                </div>
-                                <div>
-                                    <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-5.jpg" alt="">
-                                </div>
-                            </div>
+                            <div class="grid grid-cols-3 md:grid-cols-5 gap-2 md:gap-4" id="image-thumbnails-ruangan"></div>
                         </div>
 
                         <!-- Kolom Kanan: Fasilitas -->
@@ -263,44 +156,73 @@
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
                                     <label for="podium" class="block text-sm font-medium text-gray-700">Podium</label>
-                                    <input type="number" id="podium" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" value="2" readonly>
+                                    <input type="number" id="podium" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" readonly>
                                 </div>
                                 <div>
                                     <label for="sound" class="block text-sm font-medium text-gray-700">Sound</label>
-                                    <input type="number" id="sound" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" value="8" readonly>
+                                    <input type="number" id="sound" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" readonly>
                                 </div>
                                 <div>
                                     <label for="meja" class="block text-sm font-medium text-gray-700">Meja</label>
-                                    <input type="number" id="meja" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" value="50" readonly>
+                                    <input type="number" id="meja" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" readonly>
                                 </div>
                                 <div>
                                     <label for="ac" class="block text-sm font-medium text-gray-700">AC</label>
-                                    <input type="number" id="ac" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" value="8" readonly>
+                                    <input type="number" id="ac" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" readonly>
                                 </div>
                                 <div>
                                     <label for="kursi" class="block text-sm font-medium text-gray-700">Kursi</label>
-                                    <input type="number" id="kursi" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" value="100" readonly>
+                                    <input type="number" id="kursi" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" readonly>
                                 </div>
                                 <div>
                                     <label for="proyektor" class="block text-sm font-medium text-gray-700">Proyektor</label>
-                                    <input type="number" id="proyektor" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" value="6" readonly>
+                                    <input type="number" id="proyektor" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" readonly>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- Modal footer -->
                 <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b">
-                    <button data-modal-hide="modal-detail" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center">Kembali</button>
+                    <button data-modal-hide="modal-detailRuangan" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center">Kembali</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Swap Image -->
+    <!-- Script Detail Ruangan -->
     <script>
-        function swapImage(element) {
-            const mainImage = document.getElementById('main-image');
+        // Menambahkan event listener untuk tombol yang membuka modal
+        document.querySelectorAll('[data-modal-target="modal-detailRuangan"]').forEach(button => {
+            button.addEventListener('click', function () {
+                const fotoUrl = this.getAttribute('data-foto-url');
+                const thumbnails = JSON.parse(this.getAttribute('data-thumbnails'));
+        
+                const mainImage = document.getElementById('main-image-ruang');
+                const imageThumbnails = document.getElementById('image-thumbnails-ruangan');
+        
+                mainImage.src = fotoUrl || thumbnails[0];
+        
+                imageThumbnails.innerHTML = '';
+                thumbnails.forEach(url => {
+                    const thumbnailElement = document.createElement('div');
+                    thumbnailElement.innerHTML = `
+                        <img onclick="swapImageRuangan(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="${url}" alt="Thumbnail">
+                    `;
+                    imageThumbnails.appendChild(thumbnailElement);
+                });
+        
+                // Update fasilitas di modal
+                document.getElementById('podium').value = this.getAttribute('data-podium') || 'Tidak tersedia';
+                document.getElementById('sound').value = this.getAttribute('data-sound') || 'Tidak tersedia';
+                document.getElementById('meja').value = this.getAttribute('data-meja') || 'Tidak tersedia';
+                document.getElementById('ac').value = this.getAttribute('data-ac') || 'Tidak tersedia';
+                document.getElementById('kursi').value = this.getAttribute('data-kursi') || 'Tidak tersedia';
+                document.getElementById('proyektor').value = this.getAttribute('data-proyektor') || 'Tidak tersedia';
+            });
+        });
+        
+        function swapImageRuangan(element) {
+            const mainImage = document.getElementById('main-image-ruang');
             mainImage.src = element.src;
         }
     </script>

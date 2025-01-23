@@ -423,7 +423,6 @@
                     <button id="konfirmasi-button" type="button" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 font-bold font-medium rounded-lg text-sm px-4 py-2 text-center">Simpan</button>
                     <button data-modal-hide="modal-edit" type="button" class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-bold font-medium rounded-lg text-sm px-4 py-2 text-center">Batal</button>
                 </div>
-
             </div>
         </div>
     </div> 
@@ -548,41 +547,40 @@
 
 <!-- Swap Image -->
 <script>
-// Menambahkan event listener untuk tombol yang membuka modal
-document.querySelectorAll('[data-modal-target="modal-foto"]').forEach(button => {
-    button.addEventListener('click', function () {
-        // Ambil URL foto utama dan thumbnails dari atribut data
-        const fotoUrl = this.getAttribute('data-foto-url');
-        const thumbnails = JSON.parse(this.getAttribute('data-thumbnails')); // Misal array URL thumbnails
+    document.querySelectorAll('[data-modal-target="modal-foto"]').forEach(button => {
+        button.addEventListener('click', function () {
+            // Ambil URL foto utama dan thumbnails dari atribut data
+            const fotoUrl = this.getAttribute('data-foto-url');
+            const thumbnails = JSON.parse(this.getAttribute('data-thumbnails')); // Misal array URL thumbnails
 
-        const mainImage = document.getElementById('main-image');
-        const imageThumbnails = document.getElementById('image-thumbnails');
+            const mainImage = document.getElementById('main-image');
+            const imageThumbnails = document.getElementById('image-thumbnails');
 
-        // Update foto utama di modal dengan gambar pertama dari foto utama atau thumbnails
-        mainImage.src = thumbnails[0];  // Jika fotoUrl tidak ada, gunakan thumbnail pertama
+            // Update foto utama di modal dengan gambar pertama dari foto utama atau thumbnails
+            mainImage.src = thumbnails[0];  // Jika fotoUrl tidak ada, gunakan thumbnail pertama
 
-        // Kosongkan dulu thumbnail sebelumnya
-        imageThumbnails.innerHTML = '';
+            // Kosongkan dulu thumbnail sebelumnya
+            imageThumbnails.innerHTML = '';
 
-        // Loop untuk menampilkan thumbnail gambar-gambar kecil
-        thumbnails.forEach(url => {
-            const thumbnailElement = document.createElement('div');
-            thumbnailElement.innerHTML = `
-                <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="${url}" alt="Thumbnail">
-            `;
-            imageThumbnails.appendChild(thumbnailElement);
+            // Loop untuk menampilkan thumbnail gambar-gambar kecil
+            thumbnails.forEach(url => {
+                const thumbnailElement = document.createElement('div');
+                thumbnailElement.innerHTML = `
+                    <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="${url}" alt="Thumbnail">
+                `;
+                imageThumbnails.appendChild(thumbnailElement);
+            });
+
+            // Menampilkan modal
+            document.getElementById('modal-foto').classList.remove('hidden');
         });
-
-        // Menampilkan modal
-        document.getElementById('modal-foto').classList.remove('hidden');
     });
-});
 
-// Fungsi untuk mengganti gambar utama saat thumbnail diklik
-function swapImage(element) {
-    const mainImage = document.getElementById('main-image');
-    mainImage.src = element.src;
-}
+    // Fungsi untuk mengganti gambar utama saat thumbnail diklik
+    function swapImage(element) {
+        const mainImage = document.getElementById('main-image');
+        mainImage.src = element.src;
+    }
 </script>
 
 <!-- Scipt untuk mengambil data fasilitas -->
@@ -615,17 +613,17 @@ function swapImage(element) {
 
 <!-- Script untuk menghapus data -->
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-    const modalHapus = document.getElementById("modal-hapus");
-    const deleteForm = document.getElementById("delete-form");
+    document.addEventListener("DOMContentLoaded", function () {
+        const modalHapus = document.getElementById("modal-hapus");
+        const deleteForm = document.getElementById("delete-form");
 
-    document.querySelectorAll("[data-modal-toggle='modal-hapus']").forEach(button => {
-        button.addEventListener("click", function () {
-            let id = this.getAttribute("data-id");
-            deleteForm.setAttribute("action", `/ruangan/${id}`);
+        document.querySelectorAll("[data-modal-toggle='modal-hapus']").forEach(button => {
+            button.addEventListener("click", function () {
+                let id = this.getAttribute("data-id");
+                deleteForm.setAttribute("action", `/ruangan/${id}`);
+            });
         });
     });
-});
 </script>
 
 <!-- Script Alert Berhasil -->

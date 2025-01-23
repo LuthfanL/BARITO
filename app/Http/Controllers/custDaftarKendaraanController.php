@@ -13,14 +13,14 @@ class custDaftarKendaraanController extends Controller
 
         $kendaraan = kendaraan::all();
         
-        foreach ($kendaraan as &$data) {
-            if (!empty($data->foto)) {
+        foreach ($kendaraan as &$kendara) {
+            if (!empty($kendara->foto)) {
                 // Ambil URL gambar utama dan URL thumbnail
-                $data->foto_url = Storage::url(json_decode($data->foto)[0]);
-                $data->foto_urls = json_decode($data->foto); // Array foto untuk thumbnails
+                $kendara->foto_url = Storage::url(json_decode($kendara->foto)[0]);
+                $kendara->foto_urls = json_decode($kendara->foto); // Array foto untuk thumbnails
             } else {
-                $data->foto_url = asset('default-image.jpg');
-                $data->foto_urls = []; // Tidak ada thumbnail jika tidak ada foto
+                $kendara->foto_url = asset('default-image.jpg');
+                $kendara->foto_urls = []; // Tidak ada thumbnail jika tidak ada foto
             }
         }
         
@@ -36,7 +36,6 @@ class custDaftarKendaraanController extends Controller
         // Jika ada pencarian, cari berdasarkan nama atau platNomor
         if ($keyword) {
             $kendaraan = kendaraan::where('nama', 'like', "%{$keyword}%")
-                ->orWhere('platNomor', 'like', "%{$keyword}%")
                 ->get(); // Ambil data kendaraan yang sesuai dengan pencarian
         } else {
             // Jika tidak ada pencarian, ambil semua data kendaraan

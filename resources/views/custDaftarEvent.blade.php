@@ -89,23 +89,31 @@
 
             <!-- Daftar Ruangan -->
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 w-full mt-8">
-                {{-- @foreach ($rooms as $room) --}}
+                @foreach ($events as $evt)
                     <!-- Card Item -->
                     <div class="col-span-1">
                         <div class="bg-white border border-gray-200 rounded-lg shadow-[0_0_13px_3px_rgba(0,0,0,0.2)]">
                             <!-- Gambar -->
                             <div>
-                                <img class="rounded-t-lg w-full h-48 object-cover" src="assets/test.jpeg" alt="ruangan" />
+                                <img class="rounded-t-lg w-full h-48 object-cover" src="{{ $evt->foto_urls[0] }}" alt="ruangan" />
                             </div>
                             <!-- Nama Event -->
                             <div class="p-5">
                                 <a href="">
-                                    <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900">Event A</h5>
+                                    <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900">{{ $evt->namaEvent }}</h5>
                                 </a>
                                 <!-- Deskripsi -->
-                                <p class="mb-3 text-sm text-gray-700">Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum</p>
+                                <p class="mb-3 text-sm text-gray-700">{{ $evt->deskripsi }}</p>
                                 <!-- Button Detail -->
-                                <button data-modal-target="modal-detail" data-modal-toggle="modal-detail" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                <button 
+                                data-modal-target="modal-detailEvent" 
+                                data-modal-toggle="modal-detailEvent"
+                                data-barang="{{ $evt->nBarang }}"
+                                data-jasa="{{ $evt->nJasa }}"
+                                data-makanan="{{ $evt->nMakanan }}"
+                                data-foto-url="{{ $evt->foto_urls[0] }}"
+                                data-thumbnails="{{ json_encode($evt->foto_urls) }}" 
+                                class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
                                     Lihat Detail
                                 </button>
                                 <!-- Button Booking -->
@@ -115,180 +123,86 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-span-1">
-                        <div class="bg-white border border-gray-200 rounded-lg shadow-[0_0_13px_3px_rgba(0,0,0,0.2)]">
-                            <!-- Gambar -->
-                            <div>
-                                <img class="rounded-t-lg w-full h-48 object-cover" src="assets/test.jpeg" alt="ruangan" />
-                            </div>
-                            <!-- Nama Event -->
-                            <div class="p-5">
-                                <a href="">
-                                    <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900">Event A</h5>
-                                </a>
-                                <!-- Deskripsi -->
-                                <p class="mb-3 text-sm text-gray-700">Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum</p>
-                                <!-- Button Detail -->
-                                <button data-modal-target="modal-detail" data-modal-toggle="modal-detail" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                                    Lihat Detail
-                                </button>
-                                <!-- Button Booking -->
-                                <a href="custBookingTenant" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                                    Booking
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-span-1">
-                        <div class="bg-white border border-gray-200 rounded-lg shadow-[0_0_13px_3px_rgba(0,0,0,0.2)]">
-                            <!-- Gambar -->
-                            <div>
-                                <img class="rounded-t-lg w-full h-48 object-cover" src="assets/test.jpeg" alt="ruangan" />
-                            </div>
-                            <!-- Nama Event -->
-                            <div class="p-5">
-                                <a href="">
-                                    <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900">Event A</h5>
-                                </a>
-                                <!-- Deskripsi -->
-                                <p class="mb-3 text-sm text-gray-700">Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum</p>
-                                <!-- Button Detail -->
-                                <button data-modal-target="modal-detail" data-modal-toggle="modal-detail" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                                    Lihat Detail
-                                </button>
-                                <!-- Button Booking -->
-                                <a href="custBookingTenant" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                                    Booking
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-span-1">
-                        <div class="bg-white border border-gray-200 rounded-lg shadow-[0_0_13px_3px_rgba(0,0,0,0.2)]">
-                            <!-- Gambar -->
-                            <div>
-                                <img class="rounded-t-lg w-full h-48 object-cover" src="assets/test.jpeg" alt="ruangan" />
-                            </div>
-                            <!-- Nama Event -->
-                            <div class="p-5">
-                                <a href="">
-                                    <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900">Event A</h5>
-                                </a>
-                                <!-- Deskripsi -->
-                                <p class="mb-3 text-sm text-gray-700">Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum</p>
-                                <!-- Button Detail -->
-                                <button data-modal-target="modal-detail" data-modal-toggle="modal-detail" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                                    Lihat Detail
-                                </button>
-                                <!-- Button Booking -->
-                                <a href="custBookingTenant" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                                    Booking
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-span-1">
-                        <div class="bg-white border border-gray-200 rounded-lg shadow-[0_0_13px_3px_rgba(0,0,0,0.2)]">
-                            <!-- Gambar -->
-                            <div>
-                                <img class="rounded-t-lg w-full h-48 object-cover" src="assets/test.jpeg" alt="ruangan" />
-                            </div>
-                            <!-- Nama Event -->
-                            <div class="p-5">
-                                <a href="">
-                                    <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900">Event A</h5>
-                                </a>
-                                <!-- Deskripsi -->
-                                <p class="mb-3 text-sm text-gray-700">Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum</p>
-                                <!-- Button Detail -->
-                                <button data-modal-target="modal-detail" data-modal-toggle="modal-detail" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                                    Lihat Detail
-                                </button>
-                                <!-- Button Booking -->
-                                <a href="custBookingTenant" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                                    Booking
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                {{-- @endforeach --}}
+                @endforeach 
             </div>            
         </div>
     </div>
 
-    <!-- Modal Lihat Detail -->
-    <div id="modal-detail" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <!-- Modal Detail Event -->
+    <div id="modal-detailEvent" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative p-4 w-full max-w-4xl max-h-full">
-            <!-- Modal content -->
             <div class="relative bg-white rounded-lg shadow">
-                <!-- Modal header -->
                 <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
                     <h3 class="text-lg md:text-xl font-semibold text-gray-900">
                         Detail Event
                     </h3>
                 </div>
-                <!-- Modal body -->
                 <div class="p-4 md:p-5">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <!-- Kolom Kiri: Foto -->
                         <div class="space-y-4">
-                            <!-- Foto Utama -->
-                            <div>
-                                <h2 class="font-semibold mb-3 text-lg">Foto/Poster Event</h2>
-                                <img id="main-image" class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/featured/image.jpg" alt="">
-                            </div>
-                            <!-- Foto di bawah -->
-                            <div class="grid grid-cols-3 md:grid-cols-5 gap-2 md:gap-4">
-                                <div>
-                                    <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg" alt="">
-                                </div>
-                                <div>
-                                    <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg" alt="">
-                                </div>
-                                <div>
-                                    <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg" alt="">
-                                </div>
-                                <div>
-                                    <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg" alt="">
-                                </div>
-                                <div>
-                                    <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-5.jpg" alt="">
-                                </div>
-                            </div>
+                            <h2 class="font-semibold mb-3 text-lg">Foto/Poster Event</h2>
+                            <img id="main-image-event" class="h-auto max-w-full rounded-lg" src="" alt="Poster Event">
+                            <div class="grid grid-cols-3 md:grid-cols-5 gap-2 md:gap-4" id="thumbnails-event"></div>
                         </div>
-
-                        <!-- Kolom Kanan: Fasilitas -->
                         <div class="space-y-4">
                             <h2 class="font-semibold text-lg">Jenis Tenant</h2>
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label for="podium" class="block text-sm font-medium text-gray-700">Tenant Makanan</label>
-                                    <input type="number" id="podium" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" value="10" readonly>
+                                    <label class="block text-sm font-medium text-gray-700">Tenant Makanan</label>
+                                    <input id="tenant-makanan" type="number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" readonly>
                                 </div>
                                 <div>
-                                    <label for="sound" class="block text-sm font-medium text-gray-700">Tenant Barang</label>
-                                    <input type="number" id="sound" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" value="8" readonly>
+                                    <label class="block text-sm font-medium text-gray-700">Tenant Barang</label>
+                                    <input id="tenant-barang" type="number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" readonly>
                                 </div>
                                 <div>
-                                    <label for="meja" class="block text-sm font-medium text-gray-700">Tenant Jasa</label>
-                                    <input type="number" id="meja" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" value="5" readonly>
+                                    <label class="block text-sm font-medium text-gray-700">Tenant Jasa</label>
+                                    <input id="tenant-jasa" type="number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" readonly>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- Modal footer -->
                 <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b">
-                    <button data-modal-hide="modal-detail" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center">Kembali</button>
+                    <button data-modal-hide="modal-detailEvent" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center">Kembali</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Swap Image -->
+    <!-- Script Detail Event -->
     <script>
-        function swapImage(element) {
-            const mainImage = document.getElementById('main-image');
+        // Menambahkan event listener untuk tombol yang membuka modal
+        document.querySelectorAll('[data-modal-target="modal-detailEvent"]').forEach(button => {
+            button.addEventListener('click', function () {
+                const fotoUrl = this.getAttribute('data-foto-url');
+                const thumbnails = JSON.parse(this.getAttribute('data-thumbnails'));
+                const mainImage = document.getElementById('main-image-event');
+                const thumbnailContainer = document.getElementById('thumbnails-event');
+
+                mainImage.src = fotoUrl || thumbnails[0];
+
+                thumbnailContainer.innerHTML = '';
+                thumbnails.forEach(url => {
+                    const thumbnailElement = document.createElement('div');
+                    thumbnailElement.innerHTML = `
+                        <img onclick="swapImageEvent(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="${url}" alt="Thumbnail">
+                    `;
+                    thumbnailContainer.appendChild(thumbnailElement);
+                });
+                const barang = this.getAttribute('data-barang');
+                const jasa = this.getAttribute('data-jasa');
+                const makanan = this.getAttribute('data-makanan');
+
+                document.getElementById('tenant-barang').value = barang || "Tidak Tersedia";
+                document.getElementById('tenant-jasa').value = jasa || "Tidak Tersedia";
+                document.getElementById('tenant-makanan').value = makanan || "Tidak Tersedia";
+            });
+        });
+
+        // Fungsi untuk mengganti gambar utama saat thumbnail diklik
+        function swapImageEvent(element) {
+            const mainImage = document.getElementById('main-image-event');
             mainImage.src = element.src;
         }
     </script>
