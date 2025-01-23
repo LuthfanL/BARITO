@@ -155,7 +155,7 @@
         <div class="relative w-full max-w-full max-h-full">
             <!-- Nama Ruangan -->
             <div class="flex justify-center mb-4">
-                <h2 class="font-bold text-3xl">Ruangan Lokakrida</h2>
+                <h2 class="font-bold text-3xl">{{ $ruangan['nama'] }}</h2>
             </div>
             <!-- Isi -->
             <div class="p-4 md:p-5">
@@ -165,25 +165,19 @@
                         <!-- Foto Utama -->
                         <div>
                             <h2 class="font-semibold mb-3 text-lg">Foto Ruangan</h2>
-                            <img id="main-image" class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/featured/image.jpg" alt="Foto Utama">
+                            <img id="main-image-ruang" class="h-auto max-w-full rounded-lg" 
+                                src="{{ $ruangan->foto_urls[0] }}" 
+                                alt="Foto Ruangan">
                         </div>
-                        <!-- Foto di bawah -->
+                        
+                        <!-- Thumbnail -->
                         <div class="grid grid-cols-3 md:grid-cols-5 gap-2 md:gap-4">
-                            <div>
-                                <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="assets/test.jpeg" alt="Foto 1">
-                            </div>
-                            <div>
-                                <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg" alt="Foto 2">
-                            </div>
-                            <div>
-                                <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg" alt="Foto 3">
-                            </div>
-                            <div>
-                                <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg" alt="Foto 4">
-                            </div>
-                            <div>
-                                <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-5.jpg" alt="Foto 5">
-                            </div>
+                            @foreach ($ruangan->foto_urls as $thumbnail)
+                                <div>
+                                    <img onclick="swapImageRuangan(this)" class="h-auto max-w-full rounded-lg cursor-pointer" 
+                                        src="{{ $thumbnail }}" alt="Thumbnail">
+                                </div>
+                            @endforeach
                         </div>
                     </div>
 
@@ -193,26 +187,26 @@
                         <h2 class="font-semibold text-lg">Deskripsi</h2>
                         <div>
                             <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut at nisl in lacus feugiat tincidunt.
+                                {{ $ruangan['deskripsi'] }}
                             </p>
                         </div>
                         <!-- Informasi Detail -->
                         <div class="grid grid-cols-2 gap-4">
                             <div>
                                 <label for="biaya" class="block text-m font-semibold">Biaya Sewa (Per Hari)</label>
-                                <span id="biaya" class="mt-1 block w-full rounded-md bg-transparent text-gray-700 sm:text-sm">Rp. 500.000</span>
+                                <span id="biaya" class="mt-1 block w-full rounded-md bg-transparent text-gray-700 sm:text-sm">Rp. {{ number_format($ruangan['biayaSewa'], 0, ',', '.') }}</span>
                             </div>
                             <div>
                                 <label for="luas" class="block text-m font-semibold">Luas Ruangan</label>
-                                <span id="luas" class="mt-1 block w-full rounded-md bg-transparent text-gray-700 sm:text-sm">10x8</span>
+                                <span id="luas" class="mt-1 block w-full rounded-md bg-transparent text-gray-700 sm:text-sm">{{ $ruangan['luas'] }}</span>
                             </div>
                             <div>
                                 <label for="gedung" class="block text-m font-semibold">Gedung</label>
-                                <span id="gedung" class="mt-1 block w-full rounded-md bg-transparent text-gray-700 sm:text-sm">Gedung Moch. Ichsan</span>
+                                <span id="gedung" class="mt-1 block w-full rounded-md bg-transparent text-gray-700 sm:text-sm">{{ $ruangan['lokasi'] }}</span>
                             </div>
                             <div>
                                 <label for="lantai" class="block text-m font-semibold">Lantai</label>
-                                <span id="lantai" class="mt-1 block w-full rounded-md bg-transparent text-gray-700 sm:text-sm">8</span>
+                                <span id="lantai" class="mt-1 block w-full rounded-md bg-transparent text-gray-700 sm:text-sm">{{ $ruangan['lantai'] }}</span>
                             </div>
                         </div>
                         <!-- Fasilitas -->
@@ -220,27 +214,27 @@
                         <div class="grid grid-cols-2 gap-4">
                             <div>
                                 <label for="podium" class="block text-sm font-medium text-gray-700">Podium</label>
-                                <input type="number" id="podium" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="2" readonly>
+                                <input type="number" id="podium" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="{{ $ruangan['podium'] }}" readonly>
                             </div>
                             <div>
                                 <label for="sound" class="block text-sm font-medium text-gray-700">Sound</label>
-                                <input type="number" id="sound" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="8" readonly>
+                                <input type="number" id="sound" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="{{ $ruangan['sound'] }}" readonly>
                             </div>
                             <div>
                                 <label for="meja" class="block text-sm font-medium text-gray-700">Meja</label>
-                                <input type="number" id="meja" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="50" readonly>
+                                <input type="number" id="meja" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="{{ $ruangan['meja'] }}" readonly>
                             </div>
                             <div>
                                 <label for="ac" class="block text-sm font-medium text-gray-700">AC</label>
-                                <input type="number" id="ac" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="8" readonly>
+                                <input type="number" id="ac" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="{{ $ruangan['ac'] }}" readonly>
                             </div>
                             <div>
                                 <label for="kursi" class="block text-sm font-medium text-gray-700">Kursi</label>
-                                <input type="number" id="kursi" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="100" readonly>
+                                <input type="number" id="kursi" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="{{ $ruangan['kursi'] }}" readonly>
                             </div>
                             <div>
                                 <label for="proyektor" class="block text-sm font-medium text-gray-700">Proyektor</label>
-                                <input type="number" id="proyektor" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="6" readonly>
+                                <input type="number" id="proyektor" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="{{ $ruangan['proyektor'] }}" readonly>
                             </div>
                         </div>
                         <div>
@@ -363,10 +357,10 @@
         </div>
     </div>
 
-    <!-- Swap Image -->
+    <!-- Swap Image Script -->
     <script>
-        function swapImage(element) {
-            const mainImage = document.getElementById('main-image');
+        function swapImageRuangan(element) {
+            const mainImage = document.getElementById('main-image-ruang');
             mainImage.src = element.src;
         }
     </script>

@@ -161,7 +161,7 @@
         <div class="relative w-full max-w-full max-h-full">
             <!-- Nama Event -->
             <div class="flex justify-center mb-4">
-                <h2 class="font-bold text-3xl">Event A</h2>
+                <h2 class="font-bold text-3xl">{{ $event['namaEvent'] }}</h2>
             </div>
             <!-- Isi -->
             <div class="p-4 md:p-5">
@@ -171,25 +171,16 @@
                         <!-- Foto Utama -->
                         <div>
                             <h2 class="font-semibold mb-3 text-lg">Foto/Poster Event</h2>
-                            <img id="main-image" class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/featured/image.jpg" alt="Foto Utama">
+                            <img id="main-image-tenant" class="h-auto max-w-full rounded-lg" src="{{ $event->foto_urls[0] }}" alt="Foto Utama">
                         </div>
                         <!-- Foto di bawah -->
                         <div class="grid grid-cols-3 md:grid-cols-5 gap-2 md:gap-4">
-                            <div>
-                                <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="assets/test.jpeg" alt="Foto 1">
-                            </div>
-                            <div>
-                                <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg" alt="Foto 2">
-                            </div>
-                            <div>
-                                <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg" alt="Foto 3">
-                            </div>
-                            <div>
-                                <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg" alt="Foto 4">
-                            </div>
-                            <div>
-                                <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-5.jpg" alt="Foto 5">
-                            </div>
+                            @foreach ($event->foto_urls as $thumbnail)
+                                <div>
+                                    <img onclick="swapImageTenant(this)" class="h-auto max-w-full rounded-lg cursor-pointer" 
+                                        src="{{ $thumbnail }}" alt="Thumbnail">
+                                </div>
+                            @endforeach
                         </div>
                     </div>
 
@@ -199,22 +190,22 @@
                         <h2 class="font-semibold text-lg">Deskripsi</h2>
                         <div>
                             <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut at nisl in lacus feugiat tincidunt.
+                                {{ $event['deskripsi'] }}
                             </p>
                         </div>
                         <!-- Informasi Detail -->
                         <div class="grid grid-cols-2 gap-4">
                             <div>
                                 <label for="tglMulai" class="block text-m font-semibold">Tanggal Mulai</label>
-                                <span id="tglMulai" class="mt-1 block w-full rounded-md bg-transparent text-gray-700 sm:text-sm">15/03/2025</span>
+                                <span id="tglMulai" class="mt-1 block w-full rounded-md bg-transparent text-gray-700 sm:text-sm">{{ \Carbon\Carbon::parse($event['tglMulai'])->format('d/m/Y') }}</span>
                             </div>
                             <div>
                                 <label for="tglSelesai" class="block text-m font-semibold">Tanggal Selesai</label>
-                                <span id="tglSelesai" class="mt-1 block w-full rounded-md bg-transparent text-gray-700 sm:text-sm">22/03/2025</span>
+                                <span id="tglSelesai" class="mt-1 block w-full rounded-md bg-transparent text-gray-700 sm:text-sm">{{ \Carbon\Carbon::parse($event['tglSelesai'])->format('d/m/Y') }}</span>
                             </div>
                             <div>
                                 <label for="biaya" class="block text-m font-semibold">Biaya Sewa (Per Hari)</label>
-                                <span id="biaya" class="mt-1 block w-full rounded-md bg-transparent text-gray-700 sm:text-sm">Rp. 500.000</span>
+                                <span id="biaya" class="mt-1 block w-full rounded-md bg-transparent text-gray-700 sm:text-sm">Rp. {{ number_format($event['hargaTenant'], 0, ',', '.') }}</span>
                             </div>
                         </div>
                         <!-- Jenis Tenant -->
@@ -222,15 +213,15 @@
                         <div class="grid grid-cols-2 gap-4">
                             <div>
                                 <label for="makanan" class="block text-sm font-medium text-gray-700">Tenant Makanan</label>
-                                <input type="number" id="makanan" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="10" readonly>
+                                <input type="number" id="makanan" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="{{ $event['nMakanan'] }}" readonly>
                             </div>
                             <div>
                                 <label for="barang" class="block text-sm font-medium text-gray-700">Tenant Barang</label>
-                                <input type="number" id="barang" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="10" readonly>
+                                <input type="number" id="barang" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="{{ $event['nBarang'] }}" readonly>
                             </div>
                             <div>
                                 <label for="jasa" class="block text-sm font-medium text-gray-700">Tenant Jasa</label>
-                                <input type="number" id="jasa" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="8" readonly>
+                                <input type="number" id="jasa" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="{{ $event['nJasa'] }}" readonly>
                             </div>
                         </div>
                         <div>
@@ -328,10 +319,10 @@
         </div>
     </div>
 
-    <!-- Swap Image -->
+    <!-- Swap Image Script -->
     <script>
-        function swapImage(element) {
-            const mainImage = document.getElementById('main-image');
+        function swapImageTenant(element) {
+            const mainImage = document.getElementById('main-image-tenant');
             mainImage.src = element.src;
         }
     </script>

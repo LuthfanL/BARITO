@@ -117,7 +117,10 @@
                                     Lihat Detail
                                 </button>
                                 <!-- Button Booking -->
-                                <a href="custBookingTenant" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                <a href="{{ route('custBookingTenant', [
+                                    'namaEvent' => $evt->namaEvent,
+                                ]) }}" 
+                                class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
                                     Booking
                                 </a>
                             </div>

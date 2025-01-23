@@ -155,7 +155,7 @@
         <div class="relative w-full max-w-full max-h-full">
             <!-- Nama Kendaraan -->
             <div class="flex justify-center mb-4">
-                <h2 class="font-bold text-3xl">Toyota Innova</h2>
+                <h2 class="font-bold text-3xl">{{ $kendaraan['nama'] }}</h2>
             </div>
             <!-- Isi -->
             <div class="p-4 md:p-5">
@@ -165,25 +165,16 @@
                         <!-- Foto Utama -->
                         <div>
                             <h2 class="font-semibold mb-3 text-lg">Foto Kendaraan</h2>
-                            <img id="main-image" class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/featured/image.jpg" alt="Foto Utama">
+                            <img id="main-image-kendaraan" class="h-auto max-w-full rounded-lg" src="{{ $kendaraan->foto_urls[0] }}" alt="Foto Utama">
                         </div>
                         <!-- Foto di bawah -->
                         <div class="grid grid-cols-3 md:grid-cols-5 gap-2 md:gap-4">
-                            <div>
-                                <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="assets/test.jpeg" alt="Foto 1">
-                            </div>
-                            <div>
-                                <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg" alt="Foto 2">
-                            </div>
-                            <div>
-                                <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg" alt="Foto 3">
-                            </div>
-                            <div>
-                                <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg" alt="Foto 4">
-                            </div>
-                            <div>
-                                <img onclick="swapImage(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-5.jpg" alt="Foto 5">
-                            </div>
+                            @foreach ($kendaraan->foto_urls as $thumbnail)
+                                <div>
+                                    <img onclick="swapImageKendaraan(this)" class="h-auto max-w-full rounded-lg cursor-pointer" 
+                                        src="{{ $thumbnail }}" alt="Thumbnail">
+                                </div>
+                            @endforeach
                         </div>
                     </div>
 
@@ -193,30 +184,30 @@
                         <h2 class="font-semibold text-lg">Deskripsi</h2>
                         <div>
                             <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut at nisl in lacus feugiat tincidunt.
+                                {{ $kendaraan['deskripsi'] }}
                             </p>
                         </div>
                         <!-- Informasi Detail -->
                         <div class="grid grid-cols-2 gap-4">
                             <div>
                                 <label for="biaya" class="block text-m font-semibold">Biaya Sewa (Per Hari)</label>
-                                <span id="biaya" class="mt-1 block w-full rounded-md bg-transparent text-gray-700 sm:text-sm">Rp. 500.000</span>
+                                <span id="biaya" class="mt-1 block w-full rounded-md bg-transparent text-gray-700 sm:text-sm">Rp. {{ number_format($kendaraan['biayaSewa'], 0, ',', '.') }}</span>
                             </div>
                             <div>
                                 <label for="platNomor" class="block text-m font-semibold">Plat Nomor</label>
-                                <span id="platNomor" class="mt-1 block w-full rounded-md bg-transparent text-gray-700 sm:text-sm">H1234BAD</span>
+                                <span id="platNomor" class="mt-1 block w-full rounded-md bg-transparent text-gray-700 sm:text-sm">{{ $kendaraan['platNomor'] }}</span>
                             </div>
                             <div>
                                 <label for="tahun" class="block text-m font-semibold">Tahun</label>
-                                <span id="tahun" class="mt-1 block w-full rounded-md bg-transparent text-gray-700 sm:text-sm">2009</span>
+                                <span id="tahun" class="mt-1 block w-full rounded-md bg-transparent text-gray-700 sm:text-sm">{{ $kendaraan['tahunKeluar'] }}</span>
                             </div>
                             <div>
                                 <label for="cc" class="block text-m font-semibold">CC</label>
-                                <span id="cc" class="mt-1 block w-full rounded-md bg-transparent text-gray-700 sm:text-sm">4900</span>
+                                <span id="cc" class="mt-1 block w-full rounded-md bg-transparent text-gray-700 sm:text-sm">{{ $kendaraan['cc'] }}</span>
                             </div>
                             <div>
                                 <label for="kapasitas" class="block text-m font-semibold">Kapasitas</label>
-                                <span id="kapasitas" class="mt-1 block w-full rounded-md bg-transparent text-gray-700 sm:text-sm">8</span>
+                                <span id="kapasitas" class="mt-1 block w-full rounded-md bg-transparent text-gray-700 sm:text-sm">{{ $kendaraan['jumlahKursi'] }}</span>
                             </div>
                         </div>
                         <!-- Fasilitas -->
@@ -224,15 +215,15 @@
                         <div class="grid grid-cols-2 gap-4">
                             <div>
                                 <label for="tv" class="block text-sm font-medium text-gray-700">TV</label>
-                                <input type="text" id="tv" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="Ada" readonly>
+                                <input type="text" id="tv" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="{{ $kendaraan['tv'] }}" readonly>
                             </div>
                             <div>
                                 <label for="sound" class="block text-sm font-medium text-gray-700">Sound</label>
-                                <input type="text" id="sound" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="Ada" readonly>
+                                <input type="text" id="sound" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="{{ $kendaraan['sound'] }}" readonly>
                             </div>
                             <div>
                                 <label for="ac" class="block text-sm font-medium text-gray-700">AC</label>
-                                <input type="text" id="ac" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="Ada" readonly>
+                                <input type="text" id="ac" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="{{ $kendaraan['ac'] }}" readonly>
                             </div>
                         </div>
                         <div>
@@ -363,10 +354,10 @@
         </div>
     </div>
 
-    <!-- Swap Image -->
+    <!-- Swap Image Script -->
     <script>
-        function swapImage(element) {
-            const mainImage = document.getElementById('main-image');
+        function swapImageKendaraan(element) {
+            const mainImage = document.getElementById('main-image-kendaraan');
             mainImage.src = element.src;
         }
     </script>

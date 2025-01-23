@@ -119,7 +119,23 @@
                                     Lihat Detail
                                 </button>
                                 <!-- Button Booking -->
-                                <a href="custBookingRuangan" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                <a href="{{ route('custBookingRuangan', [
+                                    'nama' => $ruang->nama,
+                                    'deskripsi' => $ruang->deskripsi,
+                                    'lokasi' => $ruang->lokasi,
+                                    'lantai' => $ruang->lantai,
+                                    'luas' => $ruang->luas,
+                                    'biayaSewa' => $ruang->biayaSewa,
+                                    'podium' => $ruang->podium,
+                                    'sound' => $ruang->sound,
+                                    'ac' => $ruang->ac,
+                                    'meja' => $ruang->meja,
+                                    'kursi' => $ruang->kursi,
+                                    'proyektor' => $ruang->proyektor,
+                                    'foto-url' => $ruang->foto_urls[0],
+                                    'foto-thumbnails' => json_encode($ruang->foto_urls),
+                                ]) }}"
+                                class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
                                     Booking
                                 </a>
                             </div>

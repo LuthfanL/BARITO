@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\adminRuangan;
 use App\Models\adminKendaraan;
 use App\Models\adminTenant;
+use App\Models\customer;
 use App\Models\event;
 use App\Models\ruangan;
 use App\Models\kendaraan;
@@ -19,7 +20,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-
+        //ADMIN -----------------------------------------------------------------
         $users = User::create([
             'email' => 'upanpen@gmail.com',
             'password' => hash::make('Luthfan1!'),
@@ -60,6 +61,52 @@ class DatabaseSeeder extends Seeder
             'noHP' => '085870194309',
             'email' => 'piddapid@gmail.com',
             'password' => hash::make('Dapid123!'),
+        ]);
+
+        //CUSTOMER -----------------------------------------------------------------
+        $users = User::create([
+            'email' => 'bluebub@gmail.com',
+            'password' => hash::make('Bluebub1!'),
+            'role' => 'Customer',
+        ]);
+
+        $users = User::create([
+            'email' => 'garamdanmadu@gmail.com',
+            'password' => hash::make('Tenxy123!'),
+            'role' => 'Customer',
+        ]);
+
+        $users = User::create([
+            'email' => 'bigshow@gmail.com',
+            'password' => hash::make('BIGshow1!'),
+            'role' => 'Customer',
+        ]);
+
+        $cus = customer::create([
+            'NIK' => '0000000000000001',
+            'name' => 'Blue',
+            'noHP' => '083468221476',
+            'alamat' => 'Jl. Gubugubu I No. 2',
+            'email' => 'bluebub@gmail.com',
+            'password' => hash::make('Bluebub1!'),
+        ]);
+
+        $cus = customer::create([
+            'NIK' => '0000000000000002',
+            'name' => 'Garm',
+            'noHP' => '083468221226',
+            'alamat' => 'Jl. Madu manis I No. 1',
+            'email' => 'garamdanmadu@gmail.com',
+            'password' => hash::make('Tenxi123!'),
+        ]);
+
+        $cus = customer::create([
+            'NIK' => '0000000000000003',
+            'name' => 'Big Show',
+            'noHP' => '083468231277',
+            'alamat' => 'Jl. Smackdown No. 89',
+            'email' => 'bigshow@gmail.com',
+            'password' => hash::make('BIGshow1!'),
         ]);
 
         // $event = event::create([

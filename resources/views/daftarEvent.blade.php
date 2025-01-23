@@ -323,7 +323,7 @@
                 <div class="p-4 md:p-5">
                     <form>
                         <!-- Input Nama Event -->
-                        <input type="text" id="namaEvent" name="namaEvent" required style="display: none;>
+                        <input type="text" id="namaEvent" name="namaEvent" required style="display: none;">
         
                         <!-- Input Deskripsi Event -->
                         <label for="deskripsi">Deskripsi Event</label>
