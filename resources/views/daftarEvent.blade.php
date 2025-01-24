@@ -10,6 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css"  rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
     <style>
         #default-table {
@@ -79,13 +80,13 @@
             resize: vertical;
         }
     
-        .fasilitas-container {
+        .tenant-container {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 10px;
         }
     
-        .fasilitas-container label {
+        .tenant-container label {
             display: inline-block;
             font-size: 13px;
             font-weight: normal;
@@ -308,7 +309,13 @@
                 </div>
                 <!-- Modal body -->
                 <div class="p-4 md:p-5">
-                    <form>
+                    <form id="editForm" action="/update-event" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT') <!-- Gunakan metode PUT jika sesuai kebutuhan RESTful -->
+
+                        {{-- <!-- Input tersembunyi untuk nama event -->
+                        <input type="hidden" id="namaEvent" name="namaEvent"> --}}
+
                         <!-- Input Nama Event -->
                         <input type="text" id="namaEvent" name="namaEvent" required style="display: none;">
         
@@ -345,7 +352,7 @@
                                 <svg class="w-5 h-5 absolute right-3 top-2 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                     <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 1 1 0-2Z"/>
                                 </svg>
-                                <input id="tglMulai" name="tglMulai" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 p-2.5 w-full" placeholder="Tanggal Mulai">
+                                <input id="tglMulai" name="tglMulai" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 p-2.5 w-full" placeholder="">
                             </div>
 
                             <!-- Tanggal Selesai -->
@@ -353,13 +360,13 @@
                                 <svg class="w-5 h-5 absolute right-3 top-2 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                     <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 1 1 0-2Z"/>
                                 </svg>
-                                <input id="tglSelesai" name="tglSelesai" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 p-2.5 w-full" placeholder="Tanggal Selesai">
+                                <input id="tglSelesai" name="tglSelesai" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 p-2.5 w-full" placeholder="">
                             </div>
                         </div>        
                         
                         <!-- Input Foto Event -->
-                        <label for="foto-event">Upload Foto/Poster Event</label>
-                        <input type="file" id="foto-event" name="foto-event" accept="image/jpeg, image/png" class="block mb-2 w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50" required>
+                        <label for="foto">Upload Foto/Poster Event</label>
+                        <input type="file" id="foto" name="foto[]" accept="image/jpeg, image/png" class="block mb-2 w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50" multiple>
         
                         <!-- Informasi Tambahan -->
                         <p class="info">
@@ -370,23 +377,6 @@
                 </div>
 
                 <!-- Modal footer -->
-                <form id="editForm" action="/update-event" method="POST">
-                    @csrf
-                    @method('PUT') <!-- Gunakan metode PUT jika sesuai kebutuhan RESTful -->
-                    
-                    <!-- Input tersembunyi untuk nama event -->
-                    <input type="hidden" id="namaEvent" name="namaEvent">
-
-                    <!-- Tambahkan input lainnya sebagai bagian dari form -->
-                    <input type="hidden" id="deskripsi" name="deskripsi">
-                    <input type="hidden" id="hargaTenant" name="hargaTenant">
-                    <input type="hidden" id="nBarang" name="nBarang">
-                    <input type="hidden" id="nJasa" name="nJasa">
-                    <input type="hidden" id="nMakanan" name="nMakanan">
-                    <input type="hidden" id="tglMulai" name="tglMulai">
-                    <input type="hidden" id="tglSelesai" name="tglSelesai">
-                </form>
-
                 <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b space-x-2">
                     <button id="konfirmasi-button" type="button" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 font-bold font-medium rounded-lg text-sm px-4 py-2 text-center">Simpan</button>
                     <button data-modal-hide="modal-edit" type="button" class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-bold font-medium rounded-lg text-sm px-4 py-2 text-center">Batal</button>
@@ -452,21 +442,17 @@
         </div>
     </div>
 
+    <!-- Table -->
+    <script>
+        if (document.getElementById("default-table") && typeof simpleDatatables.DataTable !== 'undefined') {
+            const dataTable = new simpleDatatables.DataTable("#default-table", {
+                searchable: false,
+                perPageSelect: false
+            });
+        }
+    </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
-</body>
-
-<!-- Table -->
-<script>
-    if (document.getElementById("default-table") && typeof simpleDatatables.DataTable !== 'undefined') {
-        const dataTable = new simpleDatatables.DataTable("#default-table", {
-            searchable: false,
-            perPageSelect: false
-        });
-    }
-</script>
-
-<!-- Swap Image -->
+    <!-- Swap Image -->
     <script>
         // Menambahkan event listener untuk tombol yang membuka modal
         document.querySelectorAll('[data-modal-target="modal-foto"]').forEach(button => {
@@ -506,197 +492,194 @@
     </script>
 
 
-<!-- Script untuk menghapus data  -->
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    const modalHapus = document.getElementById("modal-hapus");
-    const deleteForm = document.getElementById("delete-form");
-
-    document.querySelectorAll("[data-modal-toggle='modal-hapus']").forEach(button => {
-        button.addEventListener("click", function () {
-            let namaEvent = this.getAttribute("data-namaEvent");
-            deleteForm.setAttribute("action", `/event/${namaEvent}`);
-        });
-    });
-});
-</script>
-
-<!-- Script Alert Berhasil -->
-@if(session('success'))
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        Swal.fire({
-            title: 'Berhasil!',
-            text: "{{ session('success') }}",
-            icon: 'success',
-            timer: 3000, 
-            timerProgressBar: true,
-            showConfirmButton: false
-        });
-    });
-</script>
-@endif
-
-<!-- Script Alert Error -->
-@if(session('error'))
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        Swal.fire({
-            title: 'Gagal!',
-            text: "{{ session('error') }}",
-            icon: 'error',
-            timer: 3000, 
-            timerProgressBar: true,
-            showConfirmButton: false
-        });
-    });
-</script>
-@endif
-
-<script>
+    <!-- Script untuk menghapus data  -->
+    <script>
     document.addEventListener("DOMContentLoaded", function () {
-        // Ambil semua tombol edit
-        const editButtons = document.querySelectorAll(".btn-edit");
+        const modalHapus = document.getElementById("modal-hapus");
+        const deleteForm = document.getElementById("delete-form");
 
-        // Loop setiap tombol edit
-        editButtons.forEach(button => {
+        document.querySelectorAll("[data-modal-toggle='modal-hapus']").forEach(button => {
             button.addEventListener("click", function () {
-                // Ambil data dari atribut tombol
-                const namaEvent = button.getAttribute("data-namaEvent");
-                const deskripsi = button.getAttribute("data-deskripsi");
-                const hargaTenant = button.getAttribute("data-hargaTenant");
-                const tglMulai = button.getAttribute("data-tglMulai");
-                const tglSelesai = button.getAttribute("data-tglSelesai");
-                const nMakanan = button.getAttribute("data-nMakanan");
-                const nBarang = button.getAttribute("data-nBarang");
-                const nJasa = button.getAttribute("data-nJasa");
-
-                // Tampilkan modal edit
-                const modalEdit = document.getElementById("modal-edit");
-                modalEdit.classList.remove("hidden");
-
-                // Isi data input di modal
-                document.getElementById("namaEvent").value = namaEvent;
-                document.getElementById("deskripsi").value = deskripsi;
-                document.getElementById("hargaTenant").value = hargaTenant;
-                document.getElementById("tglMulai").value = tglMulai;
-                document.getElementById("tglSelesai").value = tglSelesai;
-                document.getElementById("nMakanan").value = nMakanan;
-                document.getElementById("nBarang").value = nBarang;
-                document.getElementById("nJasa").value = nJasa;
-            });
-        });
-        
-
-        // Tambahkan event listener untuk tombol batal atau close modal
-        const closeModalButtons = document.querySelectorAll("[data-modal-hide]");
-        closeModalButtons.forEach(button => {
-            button.addEventListener("click", function () {
-                const modalId = button.getAttribute("data-modal-hide");
-                const modal = document.getElementById(modalId);
-                modal.classList.add("hidden");
+                let namaEvent = this.getAttribute("data-namaEvent");
+                deleteForm.setAttribute("action", `/event/${namaEvent}`);
             });
         });
     });
-</script>
+    </script>
 
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // Tombol Simpan di modal
-        const simpanButton = document.getElementById("konfirmasi-button");
-
-        simpanButton.addEventListener("click", function () {
-            // Ambil form dari modal
-            const editForm = document.getElementById("editForm");
-
-            // Update value form input dari modal
-            editForm.querySelector("#namaEvent").value = document.getElementById("namaEvent").value;
-            editForm.querySelector("#deskripsi").value = document.getElementById("deskripsi").value;
-            editForm.querySelector("#hargaTenant").value = document.getElementById("hargaTenant").value;
-            editForm.querySelector("#tglMulai").value = document.getElementById("tglMulai").value;
-            editForm.querySelector("#tglSelesai").value = document.getElementById("tglSelesai").value;
-            editForm.querySelector("#nMakanan").value = document.getElementById("nMakanan").value;
-            editForm.querySelector("#nBarang").value = document.getElementById("nBarang").value;
-            editForm.querySelector("#nJasa").value = document.getElementById("nJasa").value;
-
-            // Kirim form ke server
-            editForm.submit();
-        });
-
-        // Event listener untuk tombol batal atau close modal
-        const closeModalButtons = document.querySelectorAll("[data-modal-hide]");
-        closeModalButtons.forEach(button => {
-            button.addEventListener("click", function () {
-                const modalId = button.getAttribute("data-modal-hide");
-                const modal = document.getElementById(modalId);
-                modal.classList.add("hidden");
+    <!-- Script Alert Berhasil -->
+    @if(session('success'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                title: 'Berhasil!',
+                text: "{{ session('success') }}",
+                icon: 'success',
+                timer: 3000, 
+                timerProgressBar: true,
+                showConfirmButton: false
             });
         });
-    });
-</script>
+    </script>
+    @endif
 
-<script>
-    document.getElementById("konfirmasi-button").addEventListener("click", function () {
-        const editForm = document.getElementById("editForm");
-        editForm.submit(); // Kirim form ke server
-    });
-</script>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // Inisialisasi Flatpickr
-        flatpickr("#tglMulai", {
-            dateFormat: "Y-m-d",
-            altInput: true,
-            altFormat: "d/m/Y",
-            allowInput: true
+    <!-- Script Alert Error -->
+    @if(session('error'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                title: 'Gagal!',
+                text: "{{ session('error') }}",
+                icon: 'error',
+                timer: 3000, 
+                timerProgressBar: true,
+                showConfirmButton: false
+            });
         });
+    </script>
+    @endif
 
-        flatpickr("#tglSelesai", {
-            dateFormat: "Y-m-d",
-            altInput: true,
-            altFormat: "d/m/Y",
-            allowInput: true
-        });
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Ambil semua tombol edit
+            const editButtons = document.querySelectorAll(".btn-edit");
 
-        // Event listener untuk tombol simpan
-        const simpanButton = document.getElementById("konfirmasi-button");
-        simpanButton.addEventListener("click", function () {
-            // Ambil nilai input tanggal
-            const tglMulai = document.getElementById("tglMulai").value;
-            const tglSelesai = document.getElementById("tglSelesai").value;
+            // Loop setiap tombol edit
+            editButtons.forEach(button => {
+                button.addEventListener("click", function () {
+                    // Ambil data dari atribut tombol
+                    const namaEvent = button.getAttribute("data-namaEvent");
+                    const deskripsi = button.getAttribute("data-deskripsi");
+                    const hargaTenant = button.getAttribute("data-hargaTenant");
+                    const tglMulai = button.getAttribute("data-tglMulai");
+                    const tglSelesai = button.getAttribute("data-tglSelesai");
+                    const nMakanan = button.getAttribute("data-nMakanan");
+                    const nBarang = button.getAttribute("data-nBarang");
+                    const nJasa = button.getAttribute("data-nJasa");
+                    const fotoUrls = JSON.parse(button.getAttribute("data-thumbnails")); // Array foto lama
 
-            // Set nilai input tersembunyi di form
-            document.querySelector('input[name="tglMulai"]').value = tglMulai;
-            document.querySelector('input[name="tglSelesai"]').value = tglSelesai;
+                    // Tampilkan modal edit
+                    const modalEdit = document.getElementById("modal-edit");
+                    modalEdit.classList.remove("hidden");
 
-            // Submit form
-            document.getElementById("editForm").submit();
-        });
-    });
-</script>
+                    // Isi data input di modal
+                    document.getElementById("namaEvent").value = namaEvent;
+                    document.getElementById("deskripsi").value = deskripsi;
+                    document.getElementById("hargaTenant").value = hargaTenant;
+                    document.getElementById("tglMulai").value = tglMulai;
+                    document.getElementById("tglSelesai").value = tglSelesai;
+                    document.getElementById("nMakanan").value = nMakanan;
+                    document.getElementById("nBarang").value = nBarang;
+                    document.getElementById("nJasa").value = nJasa;
 
-<!-- Search -->
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const searchInput = document.getElementById("search-input"); 
-        const eventList = document.querySelectorAll(".event-list"); 
+                    // Ubah format tanggal dari yyyy-mm-dd ke d/m/Y
+                    const formattedTglMulai = new Date(tglMulai).toLocaleDateString('en-GB'); // Format dd/mm/yyyy
+                    const formattedTglSelesai = new Date(tglSelesai).toLocaleDateString('en-GB'); // Format dd/mm/yyyy
 
-        searchInput.addEventListener("input", function() {
-            const searchQuery = searchInput.value.toLowerCase(); 
+                    // Set placeholder pada input tanggal
+                    document.getElementById("tglMulai").setAttribute("placeholder", formattedTglMulai);
+                    document.getElementById("tglSelesai").setAttribute("placeholder", formattedTglSelesai);
+                        });
+            });
             
-            eventList.forEach(function(card) {
-                const nama = card.getAttribute("data-nama").toLowerCase();
 
-                if (nama.includes(searchQuery)) {
-                    card.style.display = 'table-row'; 
-                } else {
-                    card.style.display = 'none'; 
-                }
+            // Tambahkan event listener untuk tombol batal atau close modal
+            const closeModalButtons = document.querySelectorAll("[data-modal-hide]");
+            closeModalButtons.forEach(button => {
+                button.addEventListener("click", function () {
+                    const modalId = button.getAttribute("data-modal-hide");
+                    const modal = document.getElementById(modalId);
+                    modal.classList.add("hidden");
+                });
             });
         });
-    });
-</script>
+    </script>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Tombol Simpan di modal
+            const simpanButton = document.getElementById("konfirmasi-button");
+
+            simpanButton.addEventListener("click", function () {
+                // Ambil form dari modal
+                const editForm = document.getElementById("editForm");
+
+                // Update value form input dari modal
+                editForm.querySelector("#namaEvent").value = document.getElementById("namaEvent").value;
+                editForm.querySelector("#deskripsi").value = document.getElementById("deskripsi").value;
+                editForm.querySelector("#hargaTenant").value = document.getElementById("hargaTenant").value;
+                editForm.querySelector("#tglMulai").value = document.getElementById("tglMulai").value;
+                editForm.querySelector("#tglSelesai").value = document.getElementById("tglSelesai").value;
+                editForm.querySelector("#nMakanan").value = document.getElementById("nMakanan").value;
+                editForm.querySelector("#nBarang").value = document.getElementById("nBarang").value;
+                editForm.querySelector("#nJasa").value = document.getElementById("nJasa").value;
+
+                // Kirim form ke server
+                editForm.submit();
+            });
+
+            // Event listener untuk tombol batal atau close modal
+            const closeModalButtons = document.querySelectorAll("[data-modal-hide]");
+            closeModalButtons.forEach(button => {
+                button.addEventListener("click", function () {
+                    const modalId = button.getAttribute("data-modal-hide");
+                    const modal = document.getElementById(modalId);
+                    modal.classList.add("hidden");
+                });
+            });
+        });
+    </script>
+
+    <script>
+        document.getElementById("konfirmasi-button").addEventListener("click", function () {
+            const editForm = document.getElementById("editForm");
+            editForm.submit(); // Kirim form ke server
+        });
+    </script>
+
+    <!-- Search -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const searchInput = document.getElementById("search-input"); 
+            const eventList = document.querySelectorAll(".event-list"); 
+
+            searchInput.addEventListener("input", function() {
+                const searchQuery = searchInput.value.toLowerCase(); 
+                
+                eventList.forEach(function(card) {
+                    const nama = card.getAttribute("data-nama").toLowerCase();
+
+                    if (nama.includes(searchQuery)) {
+                        card.style.display = 'table-row'; 
+                    } else {
+                        card.style.display = 'none'; 
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            flatpickr("#tglMulai", {
+                dateFormat: "Y-m-d",  // Format sesuai MySQL (YYYY-MM-DD)
+                altInput: true,
+                altFormat: "d/m/Y",   // Tampilkan ke pengguna dalam format DD/MM/YYYY
+                allowInput: true
+            });
+
+            flatpickr("#tglSelesai", {
+                dateFormat: "Y-m-d",
+                altInput: true,
+                altFormat: "d/m/Y",
+                allowInput: true
+            });
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+</body>
 
 </html>

@@ -319,7 +319,13 @@
                 </div>
                 <!-- Modal body -->
                 <div class="p-4 md:p-5">
-                    <form>
+                    <form id="editForm" action="/update-ruangan" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT') <!-- Gunakan metode PUT jika sesuai kebutuhan RESTful -->
+                        
+                        <!-- Input tersembunyi untuk id -->
+                        <input type="hidden" id="id" name="id">
+
                         <!-- Input Nama Ruangan -->
                         <label for="nama">Nama Ruangan</label>
                         <input type="text" id="nama" name="nama" required>
@@ -371,8 +377,8 @@
                         </div>
         
                         <!-- Input Foto Ruangan -->
-                        <label for="foto-ruangan">Upload Foto Ruangan</label>
-                        <input type="file" id="foto-ruangan" name="foto-ruangan" accept="image/jpeg, image/png" class="block mb-2 w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50" required>
+                        <label for="foto">Upload Foto Ruangan</label>
+                        <input type="file" id="foto" name="foto[]" accept="image/jpeg, image/png" class="block mb-2 w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50" multiple>
         
                         <!-- Informasi Tambahan -->
                         <p class="info">
@@ -383,7 +389,7 @@
                 </div>
 
                 <!-- Modal footer -->
-                <form id="editForm" action="/update-ruangan" method="POST">
+                {{-- <form id="editForm" action="/update-ruangan" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT') <!-- Gunakan metode PUT jika sesuai kebutuhan RESTful -->
                     
@@ -403,7 +409,8 @@
                     <input type="hidden" id="deskripsi" name="deskripsi">
                     <input type="hidden" id="lantai" name="lantai">
                     <input type="hidden" id="biayaSewa" name="biayaSewa">
-                </form>
+                    <input type="file" id="foto" name="foto[]" multiple>
+                </form> --}}
 
                 <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b space-x-2">
                     <button id="konfirmasi-button" type="button" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 font-bold font-medium rounded-lg text-sm px-4 py-2 text-center">Simpan</button>
@@ -666,6 +673,7 @@
                 const deskripsi = button.getAttribute("data-deskripsi");
                 const lantai = button.getAttribute("data-lantai");
                 const biaya = button.getAttribute("data-biaya");
+                const fotoUrls = JSON.parse(button.getAttribute("data-thumbnails")); // Array foto lama
 
                 // Tampilkan modal edit
                 const modalEdit = document.getElementById("modal-edit");

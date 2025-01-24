@@ -320,7 +320,13 @@
 
                 <!-- Modal body -->
                 <div class="p-4 md:p-5">
-                    <form>
+                    <form id="editForm" action="/update-kendaraan" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT') <!-- Gunakan metode PUT jika sesuai kebutuhan RESTful -->
+                        
+                        <!-- Input tersembunyi untuk platNomor -->
+                        <input type="hidden" id="platNomor" name="platNomor">
+
                         <!-- Input Nama Kendaraan -->
                         <label for="nama">Nama Kendaraan</label>
                         <input type="text" id="nama" name="nama" required>
@@ -336,7 +342,7 @@
                         <label for="jumlahKursi">Kapasitas</label>
                         <input type="text" id="jumlahKursi" name="jumlahKursi" required>
         
-                        <input type="text" id="plat" name="platNomor" required style="display: none;>
+                        <input type="text" id="plat" name="platNomor" required style="display: none;">
 
                         <label for="cc">CC</label>
                         <input type="text" id="cc" name="cc" required>
@@ -363,7 +369,7 @@
                                 
                         <!-- Input Foto Kendaraan -->
                         <label for="foto">Upload Foto Kendaraan</label>
-                        <input type="file" id="foto" name="foto[]" accept="image/jpeg, image/png" class="block w-full cursor-pointer" multiple required> 
+                        <input type="file" id="foto" name="foto[]" accept="image/jpeg, image/png" class="block mb-2 w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50" multiple>
                 
                         <!-- Informasi Tambahan -->
                         <p class="info">
@@ -374,7 +380,7 @@
                 </div>
 
                 <!-- Modal footer -->
-                <form id="editForm" action="/update-kendaraan" method="POST">
+                {{-- <form id="editForm" action="/update-kendaraan" method="POST">
                     @csrf
                     @method('PUT') <!-- Gunakan metode PUT jika sesuai kebutuhan RESTful -->
                     
@@ -391,7 +397,7 @@
                     <input type="hidden" id="tv" name="tv">
                     <input type="hidden" id="sound" name="sound">
                     <input type="hidden" id="ac" name="ac">
-                </form>
+                </form> --}}
 
                 <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b space-x-2">
                     <button id="konfirmasi-button" type="button" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 font-bold font-medium rounded-lg text-sm px-4 py-2 text-center">Simpan</button>
@@ -633,6 +639,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 const tv = button.getAttribute("data-tv");
                 const sound = button.getAttribute("data-sound");
                 const ac = button.getAttribute("data-ac");
+                const fotoUrls = JSON.parse(button.getAttribute("data-thumbnails")); // Array foto lama
 
                 // Tampilkan modal edit
                 const modalEdit = document.getElementById("modal-edit");

@@ -75,10 +75,37 @@ class daftarKendaraanController extends Controller
             'jumlahKursi' => 'required|integer',
             'cc' => 'required|integer',
             'tahunKeluar' => 'required|integer',
+            'foto.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         // Cari kendaraan berdasarkan platNomor
         $kendaraan = Kendaraan::where('platNomor', $request->platNomor)->firstOrFail();
+
+        // Hapus foto lama jika ada foto baru
+        if ($request->hasFile('foto')) {
+            if (!empty($kendaraan->foto)) {
+                $oldPhotos = json_decode($kendaraan->foto, true);
+
+                if (is_array($oldPhotos)) {
+                    foreach ($oldPhotos as $oldPhoto) {
+                        $oldPhotoPath = str_replace('/storage', 'public', $oldPhoto);
+                        if (Storage::exists($oldPhotoPath)) {
+                            Storage::delete($oldPhotoPath);
+                        }
+                    }
+                }
+            }
+
+            // Simpan foto baru
+            $newPhotoPaths = [];
+            foreach ($request->file('foto') as $foto) {
+                $path = $foto->store('foto_kendaraan', 'public');
+                $newPhotoPaths[] = Storage::url($path);
+            }
+
+            // Update data foto di database
+            $kendaraan->foto = json_encode($newPhotoPaths);
+        }
 
         // Update data kendaraan
         $kendaraan->update([

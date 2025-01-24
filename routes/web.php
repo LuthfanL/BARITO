@@ -131,7 +131,7 @@ Route::resource('/daftarKendaraan', daftarKendaraanController::class)->middlewar
 
 Route::delete('/kendaraan/{platNomor}', [daftarKendaraanController::class, 'destroy'])->name('kendaraan.destroy')->middleware('auth');
 
-Route::put('/update-kendaraan', [daftarKendaraanController::class, 'update'])->name('update.kendaraan')->middleware('auth');
+Route::put('/update-kendaraan', [daftarKendaraanController::class, 'update'])->name('update.kendaraan');
 
 Route::get('/verifikasiBookingKendaraan', [verifikasiBookingKendaraanController::class, 'index'])->name('verifikasiBookingKendaraan')->middleware('auth');
 
@@ -152,7 +152,7 @@ Route::resource('/daftarEvent', daftarEventController::class)->middleware('auth'
 
 Route::delete('/event/{namaEvent}', [daftarEventController::class, 'destroy'])->name('event.destroy');
 
-Route::put('/update-event', [daftarEventController::class, 'update'])->name('update.event')->middleware('auth');
+Route::put('/update-event', [daftarEventController::class, 'update'])->name('update.event');
 
 Route::get('/verifikasiBookingTenant', [verifikasiBookingTenantController::class, 'index'])->name('verifikasiBookingTenant')->middleware('auth');
 
