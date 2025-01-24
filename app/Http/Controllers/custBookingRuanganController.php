@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\ruangan;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class custBookingRuanganController extends Controller
 {
@@ -21,6 +22,21 @@ class custBookingRuanganController extends Controller
                             ->where('deskripsi', $deskripsi)
                             ->first();
 
+        $calendarRuangan = DB::table('ruangan')
+        ->join('pemRuangan', 'ruangan.id', '=', 'pemRuangan.idRuangan')
+        ->select(
+            DB::raw('CONCAT(ruangan.nama, " - ", ruangan.lokasi) as title'), 
+            'pemRuangan.tglPeminjaman as start', 
+            'pemRuangan.tglSelesai as end'
+        )
+        ->get()
+        ->map(function ($event) {
+            $event->color = '#3788d8'; // Menambahkan warna untuk event
+            return $event;
+        });
+
+        $calendarRuanganJson = json_encode($calendarRuangan);
+
         // Mengambil URL gambar utama dan URL thumbnail
         if (!empty($ruangan->foto)) {
             $ruangan->foto_url = Storage::url(json_decode($ruangan->foto)[0]);  
@@ -31,6 +47,6 @@ class custBookingRuanganController extends Controller
         }
 
         // Kirim data ruangan ke view
-        return view('custBookingRuangan', compact('ruangan'));
+        return view('custBookingRuangan', compact('ruangan', 'calendarRuanganJson'));
     }
 }

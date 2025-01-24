@@ -114,90 +114,72 @@
 
     <!-- Kendaraan Terfavorit -->
     <div class="flex justify-center pt-10">
-        <h2 class="font-bold text-2xl">Kendaraan Terfavorit</h2>
+        <h2 class="font-bold text-2xl">Galeri Kendaraan</h2>
     </div>
     <div class="container swiper flex justify-center items-center pb-6">
         <div class="card-wrapper">
             <ul class="card-list swiper-wrapper">
-                <!-- item 1 -->
+            @foreach ($kendaraan as $kendara)
                 <li class="card-item swiper-slide">
                     <div href="" class="card-link">
-                        <img src="assets/test.jpeg" alt="Ruangan" class="card-image">
-                        <h2 class="font-bold pt-2 pb-2 ">Ruangan Lokakrida</h2>
-                        <p class="card-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>                        
-                        <p class="font-semibold text-sm pt-2">Banyak Terpinjam : 12</p>
-                        <button href="#" class="inline-flex items-center mt-2 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-xl hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
-                            Lihat detail
-                            <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                            </svg>
-                        </button>
+                        <img src="{{ $kendara->foto_urls[0] }}" alt="Kendaraan" class="card-image">
+                        <h2 class="font-bold pt-2 pb-2 ">{{ $kendara->nama }}</h2>
+                        <p class="card-title">{{ $kendara->deskripsi }}</p>
+                        <button
+                        data-modal-target="modal-detailKendaraan" data-modal-toggle="modal-detailKendaraan"
+                        data-tv="{{ $kendara->tv }}" 
+                        data-sound="{{ $kendara->sound }}" 
+                        data-ac="{{ $kendara->ac }}" 
+                        data-foto-url="{{ $kendara->foto_urls[0] }}"
+                        data-thumbnails="{{ json_encode($kendara->foto_urls) }}"
+                        href="#" class="inline-flex items-center mt-2 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-xl hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                        Lihat detail
+                        <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                        </svg>
+                    </button>
                     </div>
                 </li>
-                <!-- item 2 -->
-                <li class="card-item swiper-slide">
-                    <div href="" class="card-link">
-                        <img src="assets/test.jpeg" alt="Ruangan" class="card-image">
-                        <h2 class="font-bold pt-2 pb-2 ">Ruangan Lokakrida</h2>
-                        <p class="card-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
-                        <p class="font-semibold text-sm pt-2">Banyak Terpinjam : 12</p>
-                        <button href="#" class="inline-flex items-center mt-2 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-xl hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
-                            Lihat detail
-                            <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                            </svg>
-                        </button>
-                    </div>
-                </li>
-                <!-- item 3 -->
-                <li class="card-item swiper-slide">
-                    <div href="" class="card-link">
-                        <img src="assets/test.jpeg" alt="Ruangan" class="card-image">
-                        <h2 class="font-bold pt-2 pb-2 ">Ruangan Lokakrida</h2>
-                        <p class="card-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
-                        <p class="font-semibold text-sm pt-2">Banyak Terpinjam : 12</p>
-                        <button href="#" class="inline-flex items-center mt-2 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-xl hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
-                            Lihat detail
-                            <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                            </svg>
-                        </button>
-                    </div>
-                </li>
-                <!-- item 4 -->
-                <li class="card-item swiper-slide">
-                    <div href="" class="card-link">
-                        <img src="assets/test.jpeg" alt="Ruangan" class="card-image">
-                        <h2 class="font-bold pt-2 pb-2 ">Ruangan Lokakrida</h2>
-                        <p class="card-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
-                        <p class="font-semibold text-sm pt-2">Banyak Terpinjam : 12</p>
-                        <button href="#" class="inline-flex items-center mt-2 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-xl hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
-                            Lihat detail
-                            <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                            </svg>
-                        </button>
-                    </div>
-                </li>
-                <!-- item 5 -->
-                <li class="card-item swiper-slide">
-                    <div href="" class="card-link">
-                        <img src="assets/test.jpeg" alt="Ruangan" class="card-image">
-                        <h2 class="font-bold pt-2 pb-2 ">Ruangan Lokakrida</h2>
-                        <p class="card-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
-                        <p class="font-semibold text-sm pt-2">Banyak Terpinjam : 12</p>
-                        <button href="#" class="inline-flex items-center mt-2 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-xl hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
-                            Lihat detail
-                            <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                            </svg>
-                        </button>
-                    </div>
-                </li>
+            @endforeach
             </ul>
             <div class="swiper-pagination"></div>
             <div class="swiper-button-prev"></div>
             <div class="swiper-button-next"></div>
+        </div>
+    </div>
+
+    <div id="modal-detailKendaraan" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative p-4 w-full max-w-4xl max-h-full">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow">
+                <!-- Modal header -->
+                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
+                    <h3 class="text-lg md:text-xl font-semibold text-gray-900">
+                        Detail Kendaraan
+                    </h3>
+                </div>
+                <!-- Modal body -->
+                <div class="p-4 md:p-5">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- Kolom Kiri: Foto -->
+                        <div class="space-y-4">
+                            <!-- Foto Utama -->
+                            <div>
+                                <h2 class="font-semibold mb-3 text-lg">Foto Kendaraan</h2>
+                                <img id="main-image-kendaraan" class="h-auto max-w-full rounded-lg" src="" alt="Foto Kendaraan">
+                            </div>
+                            <!-- Foto di bawah -->
+                            <div class="grid grid-cols-3 md:grid-cols-5 gap-2 md:gap-4" id="image-thumbnails-kendaraan">
+                                <!-- Thumbnails akan diubah dengan gambar dinamis -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b">
+                    <button data-modal-hide="modal-detailKendaraan" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center">Kembali</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -211,7 +193,7 @@
     <!-- Script Swiper JS-->
     <script>
         const swiper = new Swiper('.card-wrapper', {
-            loop: true,
+            loop: false,
             spaceBetween: 30,
 
             // If we need pagination
@@ -229,16 +211,46 @@
 
             breakpoints: {
                 0: {
-                    slidesPerView: 1
-                },
-                768: {
                     slidesPerView: 2
-                },
-                1024: {
-                    slidesPerView: 3
                 },
             }
         });
+    </script>
+
+    <script>
+        // Menambahkan event listener untuk tombol yang membuka modal
+        document.querySelectorAll('[data-modal-target="modal-detailKendaraan"]').forEach(button => {
+            button.addEventListener('click', function () {
+                const fotoUrl = this.getAttribute('data-foto-url');
+                const thumbnails = JSON.parse(this.getAttribute('data-thumbnails'));
+
+                // Menampilkan foto utama di modal
+                const mainImage = document.getElementById('main-image-kendaraan');
+                mainImage.src = fotoUrl;
+
+                // Kosongkan dulu thumbnail sebelumnya
+                const imageThumbnails = document.getElementById('image-thumbnails-kendaraan');
+                imageThumbnails.innerHTML = '';
+
+                // Loop untuk menampilkan thumbnail gambar-gambar kecil
+                thumbnails.forEach(url => {
+                    const thumbnailElement = document.createElement('div');
+                    thumbnailElement.innerHTML = `
+                        <img onclick="swapImageKendaraan(this)" class="h-auto max-w-full rounded-lg cursor-pointer" src="${url}" alt="Thumbnail">
+                    `;
+                    imageThumbnails.appendChild(thumbnailElement);
+                });
+
+                // Menampilkan modal
+                document.getElementById('modal-detailKendaraan').classList.remove('hidden');
+            });
+        });
+
+        // Fungsi untuk mengganti gambar utama saat thumbnail diklik
+        function swapImageKendaraan(element) {
+            const mainImage = document.getElementById('main-image-kendaraan');
+            mainImage.src = element.src;
+        }
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>

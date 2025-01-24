@@ -357,23 +357,24 @@
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         const calendarEl = document.getElementById('calendar');
+        
+        // Data event dari controller
+        const calendarEvents = {!! $calendarEventsJson !!};
+
+        // Inisialisasi FullCalendar
         const calendar = new FullCalendar.Calendar(calendarEl, {
-            locale: 'id',
-            initialView: 'dayGridMonth',
+            locale: 'id', // Bahasa Indonesia
+            initialView: 'dayGridMonth', // Tampilan awal
             buttonText: {
-                today: 'Hari Ini'  
+                today: 'Hari Ini' // Ubah label tombol
             },
-            events: [
-                { title: 'Rapat PP', start: '2025-01-20T10:00:00', end: '2025-01-21T12:00:00', color: '#ff2345'  },
-                { title: 'Workshop', start: '2025-01-23T13:00:00', end: '2025-01-24T12:00:00', color: '#ff9f89' },
-                { title: 'Reuni TK', start: '2025-01-27T09:00:00', end: '2025-01-27T11:00:00', color: '#f3fd56' }
-            ],
+            events: calendarEvents, 
             height: 'auto', 
             contentHeight: 'auto', 
             windowResize: true 
         });
 
-        calendar.render();
+        calendar.render(); // Render kalender
     });
     </script>
 
