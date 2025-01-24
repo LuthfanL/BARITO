@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\event;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class custBookingTenantController extends Controller
 {
@@ -18,6 +19,7 @@ class custBookingTenantController extends Controller
 
         $calendarEvents = Event::select('namaEvent as title', 'tglMulai as start', 'tglSelesai as end')->get()->map(function ($event) {
             $event->color = '#3788d8';
+            $event->end = Carbon::parse($event->end)->addDay()->toDateString();
             return $event;
         });
 

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\kendaraan;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class custBookingKendaraanController extends Controller
 {
@@ -24,10 +25,11 @@ class custBookingKendaraanController extends Controller
             DB::raw('CONCAT(kendaraan.nama, " - ", kendaraan.platNomor) as title'), 
             'pemKendaraan.tglPeminjaman as start', 
             'pemKendaraan.tglSelesai as end'
-        )
+        )->where('kendaraan.platNomor', $platNomor)
         ->get()
         ->map(function ($event) {
             $event->color = '#3788d8'; // Menambahkan warna untuk event
+            $event->end = Carbon::parse($event->end)->addDay()->toDateString();
             return $event;
         });
 
