@@ -127,7 +127,7 @@
                     </div>
 
                     <!-- Cari event -->
-                    <form action="{{ route('searchEvent') }}" method="GET" class="w-full mx-auto">   
+                    <form  id="searchForm" class="w-full mx-auto">   
                         <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Cari Event</label>
                         <div class="relative">
                             <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -138,25 +138,12 @@
                             <input 
                                 type="search" 
                                 name="keyword" 
-                                id="default-search" 
+                                id="search-input"  
                                 class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500" 
-                                placeholder="Cari Event Berdasarkan Nama Event" 
-                                value="{{ old('keyword', '') }}" 
+                                placeholder="Cari Nama Event"  
                             />
-                            <button 
-                                type="submit" 
-                                class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-xl text-sm px-4 py-2">
-                                Cari
-                            </button>
                         </div>
                     </form>
-
-                    <!-- Tampilkan Daftar event -->
-                    @if(!empty($event) && count($event) > 0)
-                        <table>
-                            <!-- Tabel event ditampilkan di sini -->
-                        </table>
-                    @endif
 
                     <!-- Table Data -->
                     <table id="default-table">
@@ -249,7 +236,7 @@
                         @if (!empty($event))
                             <tbody>
                                 @foreach ($event as $data)
-                                    <tr>
+                                    <tr class="event-list" data-nama="{{ $data['namaEvent'] }}">
                                         <td class="text-center">{{ $loop->iteration }}</td>
                                         <td class="text-center">{{ $data['namaEvent'] }}</td>
                                         <td class="text-center">{{ $data['deskripsi'] }}</td>
@@ -686,6 +673,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Submit form
             document.getElementById("editForm").submit();
+        });
+    });
+</script>
+
+<!-- Search -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const searchInput = document.getElementById("search-input"); 
+        const eventList = document.querySelectorAll(".event-list"); 
+
+        searchInput.addEventListener("input", function() {
+            const searchQuery = searchInput.value.toLowerCase(); 
+            
+            eventList.forEach(function(card) {
+                const nama = card.getAttribute("data-nama").toLowerCase();
+
+                if (nama.includes(searchQuery)) {
+                    card.style.display = 'table-row'; 
+                } else {
+                    card.style.display = 'none'; 
+                }
+            });
         });
     });
 </script>

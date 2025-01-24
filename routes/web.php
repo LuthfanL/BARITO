@@ -101,16 +101,12 @@ Route::get('/dashboardAdminRuangan', [DashboardAdminRuanganController::class, 'i
 
 Route::get('/ruangan', [daftarRuanganController::class, 'index'])->name('daftarRuangan')->middleware('auth');
 
-// Route::get('/buatRuangan', [buatRuanganController::class, 'index'])->name('buatRuangan')->middleware('auth');
-
-//Route::get('/ruangan', [daftarRuanganController::class, 'index'])->name('daftarRuangan');
-
 Route::get('/buatRuangan', [buatRuanganController::class, 'index'])->name('buatRuangan')->middleware('auth');
 Route::post('/buatRuangan', [buatRuanganController::class, 'store'])->name('ruangan.store')->middleware('auth');
 
 Route::resource('/daftarRuangan', daftarRuanganController::class)->middleware('auth');
 
-Route::get('/cari-ruangan', [daftarRuanganController::class, 'search'])->name('searchRuangan')->middleware('auth');
+// Route::get('/cari-ruangan', [daftarRuanganController::class, 'search'])->name('searchRuangan')->middleware('auth');
 
 Route::delete('/ruangan/{id}', [daftarRuanganController::class, 'destroy'])->name('ruangan.destroy');
 
@@ -131,7 +127,7 @@ Route::post('/buatKendaraan', [buatKendaraanController::class, 'store'])->name('
 Route::resource('/daftarKendaraan', daftarKendaraanController::class)->middleware('auth');
 //Route::get('/daftarKendaraan', [daftarKendaraanController::class, 'index'])->name('daftarKendaraan');
 
-Route::get('/cari-kendaraan', [daftarKendaraanController::class, 'search'])->name('searchKendaraan')->middleware('auth');
+// Route::get('/cari-kendaraan', [daftarKendaraanController::class, 'search'])->name('searchKendaraan')->middleware('auth');
 
 Route::delete('/kendaraan/{platNomor}', [daftarKendaraanController::class, 'destroy'])->name('kendaraan.destroy')->middleware('auth');
 
@@ -152,7 +148,7 @@ Route::post('/buatEvent', [buatEventController::class, 'store'])->name('event.st
 
 Route::resource('/daftarEvent', daftarEventController::class)->middleware('auth');
 
-Route::get('/cari-event', [daftarEventController::class, 'search'])->name('searchEvent')->middleware('auth');
+// Route::get('/cari-event', [daftarEventController::class, 'search'])->name('searchEvent')->middleware('auth');
 
 Route::delete('/event/{namaEvent}', [daftarEventController::class, 'destroy'])->name('event.destroy');
 

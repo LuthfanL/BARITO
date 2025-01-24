@@ -126,7 +126,7 @@
                         <h1 class="font-bold text-2xl">Daftar Ruangan</h1>
                     </div>
                     <!-- Cari Ruangan -->
-                    <form action="{{ route('searchRuangan') }}" method="GET" class="w-full mx-auto">   
+                    <form id="searchForm" class="w-full mx-auto">   
                         <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Cari Ruangan</label>
                         <div class="relative">
                             <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -137,26 +137,12 @@
                             <input 
                                 type="search" 
                                 name="keyword" 
-                                id="default-search" 
+                                id="search-input" 
                                 class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500" 
-                                placeholder="Cari Nama Ruangan" 
-                                value="{{ old('keyword', '') }}" 
+                                placeholder="Cari Nama Ruangan, ID atau Lokasi Gedung" 
                             />
-                            <button 
-                                type="submit" 
-                                class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-xl text-sm px-4 py-2">
-                                Cari
-                            </button>
                         </div>
                     </form>
-
-                    <!-- Tampilkan Daftar Ruangan -->
-                    @if(!empty($ruangan) && count($ruangan) > 0)
-                        <table>
-                            <!-- Tabel ruangan ditampilkan di sini -->
-                        </table>
-                    @endif
-
 
                     <!-- Table Data -->
                     <table id="default-table">
@@ -243,7 +229,7 @@
                         @if (!empty($ruangan))
                             <tbody>
                                 @foreach ($ruangan as $data)
-                                    <tr>
+                                    <tr class="ruangan-list" data-nama="{{ $data['nama'] }}" data-id="{{ $data['id'] }}" data-lokasi="{{ $data['lokasi'] }}">
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $data['id'] }}</td>
                                         <td>{{ $data['nama'] }}</td>
@@ -758,6 +744,30 @@
     document.getElementById("konfirmasi-button").addEventListener("click", function () {
         const editForm = document.getElementById("editForm");
         editForm.submit(); // Kirim form ke server
+    });
+</script>
+
+<!-- Search -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const searchInput = document.getElementById("search-input"); 
+        const ruanganList = document.querySelectorAll(".ruangan-list"); 
+
+        searchInput.addEventListener("input", function() {
+            const searchQuery = searchInput.value.toLowerCase(); 
+            
+            ruanganList.forEach(function(card) {
+                const nama = card.getAttribute("data-nama").toLowerCase();
+                const id = card.getAttribute("data-id").toLowerCase();  
+                const lokasi = card.getAttribute("data-lokasi").toLowerCase();
+
+                if (nama.includes(searchQuery) || id.includes(searchQuery) || lokasi.includes(searchQuery)) {
+                    card.style.display = 'table-row'; 
+                } else {
+                    card.style.display = 'none'; 
+                }
+            });
+        });
     });
 </script>
 

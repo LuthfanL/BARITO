@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\kendaraan;
+use App\Models\customer;
 use Illuminate\Support\Facades\Storage;
 
 class dashboardAdminKendaraanController extends Controller
@@ -11,6 +12,7 @@ class dashboardAdminKendaraanController extends Controller
     public function index(Request $request)
     {
         $kendaraan = kendaraan::all();
+        $totalCustomer = customer::count();
         $totalKendaraan = $kendaraan->count(); // Hitung total kendaraan
         
         foreach ($kendaraan as &$data) {
@@ -25,6 +27,6 @@ class dashboardAdminKendaraanController extends Controller
         }
         
         // Kirim data kendaraan dan total kendaraan ke blade
-        return view('dashboardAdminKendaraan', compact('kendaraan', 'totalKendaraan'));
+        return view('dashboardAdminKendaraan', compact('kendaraan', 'totalKendaraan', 'totalCustomer'));
     }
 }

@@ -29,23 +29,23 @@ class daftarEventController extends Controller
         return view('daftarEvent', compact('event'));
     }
 
-    public function search(Request $request)
-    {
-        // Tangkap input pencarian
-        $keyword = $request->input('keyword');
+    // public function search(Request $request)
+    // {
+    //     // Tangkap input pencarian
+    //     $keyword = $request->input('keyword');
         
-        // Jika ada pencarian, cari berdasarkan nama event
-        if ($keyword) {
-            $event = event::where('namaEvent', 'like', "%{$keyword}%")
-                ->get(); // Ambil data event yang sesuai dengan pencarian
-        } else {
-            // Jika tidak ada pencarian, ambil semua data event
-            $event = event::all(); // Mengambil semua event
-        }
+    //     // Jika ada pencarian, cari berdasarkan nama event
+    //     if ($keyword) {
+    //         $event = event::where('namaEvent', 'like', "%{$keyword}%")
+    //             ->get(); // Ambil data event yang sesuai dengan pencarian
+    //     } else {
+    //         // Jika tidak ada pencarian, ambil semua data event
+    //         $event = event::all(); // Mengambil semua event
+    //     }
     
-        // Kirim data ke view
-        return view('daftarEvent', compact('event', 'keyword'));
-    }
+    //     // Kirim data ke view
+    //     return view('daftarEvent', compact('event', 'keyword'));
+    // }
 
     public function destroy($namaEvent)
     {

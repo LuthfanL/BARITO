@@ -24,29 +24,27 @@ class daftarRuanganController extends Controller
             }
         }
     
-        // Kirim data ke view
-        //$ruangan = Ruangan::orderBy('created_at', 'desc')->get();
         return view('daftarRuangan', compact('ruangan'));
     }
 
-    public function search(Request $request)
-    {
-        // Tangkap input pencarian
-        $keyword = $request->input('keyword');
+    // public function search(Request $request)
+    // {
+    //     // Tangkap input pencarian
+    //     $keyword = $request->input('keyword');
         
-        // Jika ada pencarian, cari berdasarkan nama atau id
-        if ($keyword) {
-            $ruangan = ruangan::where('nama', 'like', "%{$keyword}%")
-                ->orWhere('id', 'like', "%{$keyword}%")
-                ->get();
-        } else {
-            // Jika tidak ada pencarian, ambil semua data ruangan
-            $ruangan = ruangan::all();
-        }
+    //     // Jika ada pencarian, cari berdasarkan nama atau id
+    //     if ($keyword) {
+    //         $ruangan = ruangan::where('nama', 'like', "%{$keyword}%")
+    //             ->orWhere('id', 'like', "%{$keyword}%")
+    //             ->get();
+    //     } else {
+    //         // Jika tidak ada pencarian, ambil semua data ruangan
+    //         $ruangan = ruangan::all();
+    //     }
     
-        // Kirim data ke view
-        return view('daftarRuangan', compact('ruangan', 'keyword'));
-    }
+    //     // Kirim data ke view
+    //     return view('daftarRuangan', compact('ruangan', 'keyword'));
+    // }
 
     public function destroy($id)
     {

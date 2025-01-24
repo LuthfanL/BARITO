@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\adminTenant;
 use App\Models\event;
+use App\Models\customer;
 use Illuminate\Support\Facades\Storage;
 
 class dashboardAdminTenantController extends Controller
@@ -20,6 +21,7 @@ class dashboardAdminTenantController extends Controller
 
     {
         $event = event::all();
+        $totalCustomer = customer::count();
         $totalEvent = $event->count(); // Hitung total event
         
         foreach ($event as &$data) {
@@ -34,6 +36,6 @@ class dashboardAdminTenantController extends Controller
         }
         
         // Kirim data event dan total event ke blade
-        return view('dashboardAdminTenant', compact('event', 'totalEvent'));
+        return view('dashboardAdminTenant', compact('event', 'totalEvent', 'totalCustomer'));
     }
 }
