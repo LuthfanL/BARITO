@@ -37,7 +37,17 @@ class adminKendaraan extends Authenticatable
         return $this->hasMany(pemKendaraan::class, 'idAdmin');
     }
 
+    public function kendaraan()
+    {
+        return $this->hasMany(kendaraan::class, 'idAdmin');
+    }
+
     public function User(){
         return $this->hasOne(User::class, 'email');
+    }
+
+    public static function getIdAdminByEmail($email)
+    {
+        return self::where('email', $email)->value('idAdmin');
     }
 }

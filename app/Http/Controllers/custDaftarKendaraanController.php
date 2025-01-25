@@ -28,7 +28,7 @@ class custDaftarKendaraanController extends Controller
         return view('custDaftarKendaraan', compact('kendaraan'));
     }
 
-    public function search(Request $request)
+    public function cari(Request $request)
     {
         // Tangkap input pencarian
         $keyword = $request->input('keyword');

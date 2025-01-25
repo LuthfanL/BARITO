@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('pemKendaraan', function (Blueprint $table) {
             $table->id();
             $table->char('idCustomer', 16);
-            $table->string('idKendaraan', 3);
+            $table->string('idKendaraan', 30);
             $table->char('idAdmin', 8);
-            $table->date('tglPeminjaman');
+            $table->date('tglMulai');
             $table->date('tglSelesai');
-            $table->string('status', 8);
-            $table->string('buktiBayar');
+            $table->string('status', 20);
+            // $table->string('buktiBayar');
             $table->foreign('idCustomer')->references('NIK')->on('customer')->onDelete('cascade');
             $table->foreign('idKendaraan')->references('platNomor')->on('kendaraan')->onDelete('cascade');
             $table->foreign('idAdmin')->references('idAdmin')->on('adminKendaraan')->onDelete('cascade');

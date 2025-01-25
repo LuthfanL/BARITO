@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('kendaraan', function (Blueprint $table) {
             $table->string('platNomor', 11)->primary();
+            $table->char('idAdmin', 8);
+            $table->foreign('idAdmin')->references('idAdmin')->on('adminKendaraan')->onDelete('cascade');
             $table->string('nama', 30);
             $table->integer('jumlahKursi');
             $table->string('tv', 5);

@@ -73,8 +73,9 @@
     <!-- Main Content -->
     <div class="px-24 pt-8 pb-8 flex justify-center items-center">
         <div class="max-w-full w-full">
+
             <!-- Cari Ruangan -->
-            <form class=" w-full mx-auto">   
+            <form action="{{ route('cariRuangan') }}" method="GET" class="w-full mx-auto">   
                 <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Cari Ruangan</label>
                 <div class="relative">
                     <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -82,10 +83,30 @@
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                         </svg>
                     </div>
-                    <input type="search" id="default-search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="Cari Ruangan" required />
-                    <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-xl text-sm px-4 py-2">Cari</button>
-                </div>
+                        <input 
+                            type="search" 
+                            name="keyword" 
+                            id="default-search" 
+                            class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500" 
+                            placeholder="Cari Ruangan Berdasarkan Nama atau Plat Nomor" 
+                            value="{{ old('keyword', '') }}" 
+                        />
+                        <button 
+                            type="submit" 
+                            class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-xl text-sm px-4 py-2">
+                            Cari
+                        </button>
+                    </div>
             </form>
+
+            <!-- Tampilkan Daftar Ruangan -->
+            @if(!empty($ruangan) && count($ruangan) > 0)
+                <table>
+                    <!-- Tabel ruangan ditampilkan di sini -->
+                </table>
+            @else
+                <p class="text-gray-500 mt-4 text-center">Ruangan yang Anda cari tidak ditemukan.</p>
+            @endif
 
             <!-- Daftar Ruangan -->
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 w-full mt-8">
@@ -93,10 +114,10 @@
                     <!-- Card Item -->
                     <div class="col-span-1">
                         <div class="bg-white border border-gray-200 rounded-lg shadow-[0_0_13px_3px_rgba(0,0,0,0.2)]">
-                            <!-- Gambar -->
+                            {{-- <!-- Gambar -->
                             <div>
                                 <img class="rounded-t-lg w-full h-48 object-cover" src="{{ $ruang->foto_urls[0] }}" alt="ruangan" />
-                            </div>
+                            </div> --}}
                             <!-- Nama Ruangan -->
                             <div class="p-5">
                                 <a href="">
@@ -113,7 +134,7 @@
                                 data-meja="{{ $ruang->meja }}" 
                                 data-kursi="{{ $ruang->kursi }}" 
                                 data-proyektor="{{ $ruang->proyektor }}"
-                                data-foto-url="{{ $ruang->foto_urls[0] }}"
+                                {{-- data-foto-url="{{ $ruang->foto_urls[0] }}" --}}
                                 data-thumbnails="{{ json_encode($ruang->foto_urls) }}"
                                 class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
                                     Lihat Detail

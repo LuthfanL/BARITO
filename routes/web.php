@@ -71,6 +71,7 @@ Route::get('/custStatusBookingRuangan', [custStatusBookingRuanganController::cla
 
 Route::get('/kontakRuangan', [kontakRuanganController::class, 'index'])->name('kontakRuangan');
 
+Route::get('/cari-Ruangan', [custDaftarRuanganController::class, 'cari'])->name('cariRuangan')->middleware('auth');
 
 # Customer Kendaraan ----------------------------------------------------
 Route::get('/homeBookingKendaraan', [homeBookingKendaraanController::class, 'index'])->name('homeBookingKendaraan');
@@ -83,6 +84,9 @@ Route::get('/custStatusBookingKendaraan', [custStatusBookingKendaraanController:
 
 Route::get('/kontakKendaraan', [kontakKendaraanController::class, 'index'])->name('kontakKendaraan');
 
+Route::get('/cari-Kendaraan', [custDaftarKendaraanController::class, 'cari'])->name('cariKendaraan')->middleware('auth');
+
+Route::post('/booking-kendaraan', [CustBookingKendaraanController::class, 'store'])->name('bookingKendaraan.store')->middleware('auth');
 
 # Customer tenant ----------------------------------------------------
 Route::get('/homePengelolaanTenant', [homePengelolaanTenantController::class, 'index'])->name('homePengelolaanTenant');

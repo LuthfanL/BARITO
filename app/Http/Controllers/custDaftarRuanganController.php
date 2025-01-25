@@ -24,4 +24,22 @@ class custDaftarRuanganController extends Controller
         }
         return view('custDaftarRuangan', compact('ruangan'));
     }
+
+    public function cari(Request $request)
+    {
+        // Tangkap input pencarian
+        $keyword = $request->input('keyword');
+        
+        // Jika ada pencarian, cari berdasarkan nama atau platNomor
+        if ($keyword) {
+            $ruangan = ruangan::where('nama', 'like', "%{$keyword}%")
+                ->get(); // Ambil data ruangan yang sesuai dengan pencarian
+        } else {
+            // Jika tidak ada pencarian, ambil semua data ruangan
+            $ruangan = ruangan::all(); // Mengambil semua ruangan
+        }
+    
+        // Kirim data ke view
+        return view('custDaftarRuangan', compact('ruangan', 'keyword'));
+    }
 }

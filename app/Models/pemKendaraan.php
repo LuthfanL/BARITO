@@ -13,31 +13,32 @@ class pemKendaraan extends Model
     protected $table = 'pemKendaraan';
 
     protected $primaryKey = 'id';
-    public $incrementing =  true;
+    public $incrementing = true;
     protected $keyType = 'int';
     
     protected $fillable = [
         'idCustomer',
         'idKendaraan',
         'idAdmin',
-        'tglPeminjaman',
+        'tglMulai',
         'tglSelesai',
         'status',
-        'buktiBayar',
+        // 'buktiBayar',
     ];
 
     public function customer()
     {
-        return $this->belongsTo(Customer::class, 'nik');
+        return $this->belongsTo(customer::class, 'idCustomer', 'NIK');
     }
 
     public function kendaraan()
     {
-        return $this->belongsTo(kendaraan::class, 'platNomor');
+        return $this->belongsTo(kendaraan::class, 'idKendaraan', 'platNomor');
     }
 
-    public function admin()
+    public function adminKendaraan()
     {
-        return $this->belongsTo(adminKendaraan::class, 'idAdmin');
+        return $this->belongsTo(adminKendaraan::class, 'idAdmin', 'idAdmin');
     }
 }
+

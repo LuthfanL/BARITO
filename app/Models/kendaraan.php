@@ -17,6 +17,7 @@ class kendaraan extends Model
     
     protected $fillable = [
         'platNomor',
+        'idAdmin',
         'nama', 
         'jumlahKursi', 
         'tv', 
@@ -32,5 +33,11 @@ class kendaraan extends Model
     public function pemKendaraan()
     {
         return $this->hasMany(pemKendaraan::class, 'idKendaraan');
+    }
+
+    // Tambahkan relasi ke adminKendaraan jika diperlukan
+    public function adminKendaraan()
+    {
+        return $this->belongsTo(adminKendaraan::class, 'idAdmin', 'idAdmin');
     }
 }

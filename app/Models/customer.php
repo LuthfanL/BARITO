@@ -17,7 +17,7 @@ class customer extends Authenticatable
     protected $keyType = 'char';
     
     protected $fillable = [
-        'nik',
+        'NIK',
         'name',
         'alamat',
         'noHP',
@@ -48,5 +48,14 @@ class customer extends Authenticatable
     public function pemTenant()
     {
         return $this->hasMany(pemTenant::class, 'idCustomer');
+    }
+
+    public function User(){
+        return $this->hasOne(User::class, 'email');
+    }
+
+    public static function getNikByEmail($email)
+    {
+        return self::where('email', $email)->value('NIK');
     }
 }

@@ -38,10 +38,22 @@ class buatKendaraanController extends Controller
                 $fotoPaths[] = Storage::url($path); // Simpan path ke array
             }
         }  
+        
+        // Ambil pengguna yang sedang login
+        $user = auth()->user();
+
+        // Ambil idAdmin dari model adminKendaraan
+        $idAdmin = \App\Models\adminKendaraan::getIdAdminByEmail($user->email);
+
+        if (!$idAdmin) {
+            // Tangani error jika idAdmin tidak ditemukan
+            return back()->with('error', 'Admin tidak ditemukan');
+        }
 
         // Simpan data ke database
         kendaraan::create([
             'platNomor' => $request->input('platNomor'),
+            'idAdmin' => $idAdmin,
             'nama' => $request->input('nama'),
             'jumlahKursi' => $request->input('jumlahKursi'),
             'tv' => $request->input('tv'),
