@@ -71,7 +71,7 @@ Route::get('/custStatusBookingRuangan', [custStatusBookingRuanganController::cla
 
 Route::get('/kontakRuangan', [kontakRuanganController::class, 'index'])->name('kontakRuangan');
 
-Route::get('/cari-Ruangan', [custDaftarRuanganController::class, 'cari'])->name('cariRuangan')->middleware('auth');
+// Route::get('/cari-Ruangan', [custDaftarRuanganController::class, 'cari'])->name('cariRuangan')->middleware('auth');
 
 # Customer Kendaraan ----------------------------------------------------
 Route::get('/homeBookingKendaraan', [homeBookingKendaraanController::class, 'index'])->name('homeBookingKendaraan');
@@ -84,7 +84,7 @@ Route::get('/custStatusBookingKendaraan', [custStatusBookingKendaraanController:
 
 Route::get('/kontakKendaraan', [kontakKendaraanController::class, 'index'])->name('kontakKendaraan');
 
-Route::get('/cari-Kendaraan', [custDaftarKendaraanController::class, 'cari'])->name('cariKendaraan')->middleware('auth');
+// Route::get('/cari-Kendaraan', [custDaftarKendaraanController::class, 'cari'])->name('cariKendaraan')->middleware('auth');
 
 Route::post('/booking-kendaraan', [CustBookingKendaraanController::class, 'store'])->name('bookingKendaraan.store')->middleware('auth');
 
@@ -114,7 +114,7 @@ Route::post('/buatRuangan', [buatRuanganController::class, 'store'])->name('ruan
 
 Route::resource('/daftarRuangan', daftarRuanganController::class)->middleware('auth');
 
-Route::get('/cari-ruangan', [daftarRuanganController::class, 'search'])->name('searchRuangan')->middleware('auth');
+// Route::get('/cari-ruangan', [daftarRuanganController::class, 'search'])->name('searchRuangan')->middleware('auth');
 
 Route::delete('/ruangan/{id}', [daftarRuanganController::class, 'destroy'])->name('ruangan.destroy');
 
@@ -135,7 +135,7 @@ Route::post('/buatKendaraan', [buatKendaraanController::class, 'store'])->name('
 Route::resource('/daftarKendaraan', daftarKendaraanController::class)->middleware('auth');
 //Route::get('/daftarKendaraan', [daftarKendaraanController::class, 'index'])->name('daftarKendaraan');
 
-Route::get('/cari-kendaraan', [daftarKendaraanController::class, 'search'])->name('searchKendaraan')->middleware('auth');
+// Route::get('/cari-kendaraan', [daftarKendaraanController::class, 'search'])->name('searchKendaraan')->middleware('auth');
 
 Route::delete('/kendaraan/{platNomor}', [daftarKendaraanController::class, 'destroy'])->name('kendaraan.destroy')->middleware('auth');
 
@@ -156,7 +156,7 @@ Route::post('/buatEvent', [buatEventController::class, 'store'])->name('event.st
 
 Route::resource('/daftarEvent', daftarEventController::class)->middleware('auth');
 
-Route::get('/cari-event', [daftarEventController::class, 'search'])->name('searchEvent')->middleware('auth');
+// Route::get('/cari-event', [daftarEventController::class, 'search'])->name('searchEvent')->middleware('auth');
 
 Route::delete('/event/{namaEvent}', [daftarEventController::class, 'destroy'])->name('event.destroy');
 
