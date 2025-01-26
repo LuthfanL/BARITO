@@ -20,24 +20,28 @@ class pemRuangan extends Model
         'idCustomer',
         'idRuangan',
         'idAdmin',
-        'tglPeminjaman',
+        'namaPemohon',
+        'noWa',
+        'keperluan', 
+        'keterangan',
+        'tglMulai',
         'tglSelesai',
         'status',
-        'buktiBayar',
+        //'buktiBayar',
     ];
 
     public function customer()
     {
-        return $this->belongsTo(Customer::class, 'nik');
+        return $this->belongsTo(Customer::class, 'NIK');
     }
 
     public function ruangan()
     {
-        return $this->belongsTo(Ruangan::class, 'id');
+        return $this->belongsTo(ruangan::class, 'id');
     }
 
     public function admin()
     {
-        return $this->belongsTo(AdminRuangan::class, 'idAdmin');
+        return $this->belongsTo(adminRuangan::class, 'idAdmin');
     }
 }

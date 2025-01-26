@@ -16,6 +16,12 @@ return new class extends Migration
             $table->char('idCustomer', 16);
             $table->string('idKendaraan', 30);
             $table->char('idAdmin', 8);
+            $table->string('namaPemohon', 30);
+            $table->string('noWa', 15);
+            $table->string('namaKendaraan', 15);
+            $table->string('keperluan', 50);
+            $table->string('lokasi', 50);
+            $table->string('titikJemput', 50);
             $table->date('tglMulai');
             $table->date('tglSelesai');
             $table->string('status', 20);

@@ -20,16 +20,19 @@ class pemTenant extends Model
         'idCustomer',
         'namaEvent',
         'idAdmin',
+        'namaPemohon', 
+        'noWa',
         'namaTenant',
         'tipeTenant',
         'tglMulai',
         'tglSelesai',
-        'buktiBayar',
+        'status',
+        //'buktiBayar',
     ];
 
     public function customer()
     {
-        return $this->belongsTo(Customer::class, 'nik');
+        return $this->belongsTo(Customer::class, 'NIK');
     }
 
     public function event()

@@ -37,9 +37,21 @@ class buatEventController extends Controller
             }
         }  
 
+        // Ambil pengguna yang sedang login
+        $user = auth()->user();
+
+        // Ambil idAdmin dari model adminTenant
+        $idAdmin = \App\Models\adminTenant::getIdAdminByEmail($user->email);
+
+        if (!$idAdmin) {
+            // Tangani error jika idAdmin tidak ditemukan
+            return back()->with('error', 'Admin tidak ditemukan');
+        }
+
         // Simpan data ke database
         event::create([
             'namaEvent' => $request->input('namaEvent'),
+            'idAdmin' => $idAdmin,
             'tglMulai' => $request->input('tglMulai'),
             'tglSelesai' => $request->input('tglSelesai'),
             'nMakanan' => $request->input('nMakanan'),

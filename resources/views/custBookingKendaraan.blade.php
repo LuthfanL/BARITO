@@ -264,6 +264,8 @@
                 <!-- Modal body -->
                 <div class="p-4 md:p-5">
                     <form id="booking-form">
+
+                        <!-- Input ID Kendaraan -->
                         <label for="idKendaraan"></label>
                         <input 
                             type="hidden"  
@@ -272,19 +274,29 @@
                             value="{{ $kendaraan['platNomor'] }}" 
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 p-2.5 w-full">
 
+                        <!-- Input ID Admin -->
                         <label for="idAdmin"></label>
                         <input 
                             type="hidden" 
                             name="idAdmin" 
                             value="{{ $kendaraan->adminKendaraan->idAdmin }}">
+
+                        <!-- Input Nama Kendaraan -->
+                        <label for="namaKendaraan"></label>
+                        <input 
+                            type="hidden"  
+                            id="namaKendaraan" 
+                            name="namaKendaraan" 
+                            value="{{ $kendaraan['nama'] }}" 
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 p-2.5 w-full">
                         
                         <!-- Input Nama Pemohon -->
-                        <label for="nama-pemohon">Nama Pemohon</label>
-                        <input type="text" id="nama-pemohon" name="nama-pemohon" required>
+                        <label for="namaPemohon">Nama Pemohon</label>
+                        <input type="text" id="namaPemohon" name="namaPemohon" required>
 
                         <!-- Input No. Whatapps -->
-                        <label for="no-whatsapp">No. Whatapps</label>
-                        <input type="text" id="no-whatsapp" name="no-whatsapp" required>
+                        <label for="noWa">No. Whatapps</label>
+                        <input type="text" id="noWa" name="noWa" required>
 
                         <!-- Input Tanggal -->
                         <label for="tanggal-event" class="block font-bold">Tanggal</label>
@@ -298,15 +310,15 @@
                         </div>
 
                         <!-- Input Keperluan Acara -->
-                        <label for="keperluan-acara">Keperluan Acara</label>
-                        <textarea id="keperluan-acara" name="keperluan-acara" rows="3" class="rounded-lg border border-gray-300" required></textarea>
+                        <label for="keperluan">Keperluan Acara</label>
+                        <textarea id="keperluan" name="keperluan" rows="3" class="rounded-lg border border-gray-300" required></textarea>
                         <p class="mb-4 text-xs text-gray-500">
                             * Masukkan nama/judul acara yang akan dilaksanakan.
                         </p>
 
                         <!-- Input Lokasi Acara -->
-                        <label for="lokasiAcara">Lokasi Acara</label>
-                        <textarea id="lokasiAcara" name="lokasiAcara" rows="3" class="rounded-lg border border-gray-300" required></textarea>
+                        <label for="lokasi">Lokasi Acara</label>
+                        <textarea id="lokasi" name="lokasi" rows="3" class="rounded-lg border border-gray-300" required></textarea>
                         <p class="mb-4 text-xs text-gray-500">
                             * Masukkan keterangan lokasi acara akan dilakukan.
                         </p>
@@ -351,31 +363,40 @@
 
     <!-- Modal Booking Konfirmasi -->
     <div id="modal-konfirmasi" data-modal-backdrop="static" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-        <div class="relative p-4 w-full max-w-6xl max-h-full"> <!-- Mengubah max-w-xl menjadi max-w-3xl -->
+        <div class="relative p-4 w-full max-w-6xl max-h-full">
             <div class="relative bg-white rounded-lg shadow">
                 <div class="p-4 md:p-5 text-center">
                     <svg class="mx-auto mb-4 text-gray-400 w-16 h-16" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                     </svg>
                     <h1 class="mb-5 text-lg font-bold text-gray-900">Konfirmasi Booking Kendaraan</h1>
-                    <p class="mb-5 text-m font-normal text-gray-500">Apakah Anda yakin ingin konfirmasi booking ini? Harap diperhatikan kembali bahwa jika Anda membatalkan booking setelah mengonfirmasi, pengembalian biaya akan dilakukan sebesar 90% dari total biaya yang telah dibayar.</p>
+                    <p class="mb-5 text-m font-normal text-gray-500">
+                        Apakah Anda yakin ingin konfirmasi booking ini? Harap diperhatikan kembali bahwa jika Anda membatalkan booking setelah mengonfirmasi, pengembalian biaya akan dilakukan sebesar 90% dari total biaya yang telah dibayar.
+                    </p>
 
                     <form action="{{ route('bookingKendaraan.store') }}" method="POST">
-                    @csrf    
+                        @csrf    
                         <div class="p-4 md:p-5">
-                            <!-- Menambahkan input tersembunyi untuk menyimpan data -->
+                            <!-- Input tersembunyi untuk menyimpan data -->
                             <input type="hidden" name="idKendaraan" id="confirm-idKendaraan">
                             <input type="hidden" name="idAdmin" id="confirm-idAdmin">
+                            <input type="hidden" name="namaPemohon" id="confirm-namaPemohon">
+                            <input type="hidden" name="noWa" id="confirm-noWa">
+                            <input type="hidden" name="namaKendaraan" id="confirm-namaKendaraan">
+                            <input type="hidden" name="keperluan" id="confirm-keperluan">
+                            <input type="hidden" name="lokasi" id="confirm-lokasi">
+                            <input type="hidden" name="titikJemput" id="confirm-titikJemput">
                             <input type="hidden" name="tglMulai" id="confirm-tglMulai">
                             <input type="hidden" name="tglSelesai" id="confirm-tglSelesai">
                         </div>
 
-                        <button type="submit" 
-                            class="px-3 py-1 rounded-lg cursor-pointer font-bold font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                        <button type="submit" class="px-3 py-1 rounded-lg cursor-pointer font-bold font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
                             Setuju, Konfirmasi Booking
                         </button>
                     </form>
-                    <button data-modal-hide="modal-konfirmasi" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-bold font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white  mt-4">Kembali</button>
+                    <button data-modal-hide="modal-konfirmasi" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-bold font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white mt-4">
+                        Kembali
+                    </button>
                 </div>
             </div>
         </div>
@@ -415,7 +436,7 @@
         });
     </script>
 
-    <!-- FullCalendar JS -->
+    {{-- <!-- FullCalendar JS -->
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         const calendarEl = document.getElementById('calendar');
@@ -436,6 +457,35 @@
         });
 
         calendar.render();
+    });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+    <!-- FullCalendar JS -->
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@5.11.3/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@5.11.3/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@5.11.3/main.min.js"></script> --}}
+
+    <!-- FullCalendar JS -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const calendarEl = document.getElementById('calendar');
+        
+        // Inisialisasi FullCalendar
+        const calendar = new FullCalendar.Calendar(calendarEl, {
+            locale: 'id', // Bahasa Indonesia
+            initialView: 'dayGridMonth', // Tampilan awal
+            buttonText: {
+                today: 'Hari Ini' // Ubah label tombol
+            },
+            events: calendarKendaraan, 
+            height: 'auto', 
+            contentHeight: 'auto', 
+            windowResize: true 
+        });
+
+        calendar.render(); // Render kalender
     });
     </script>
 
@@ -492,14 +542,27 @@
                 // Ambil data dari form booking
                 const idKendaraan = bookingForm.querySelector('input[name="idKendaraan"]').value;
                 const idAdmin = bookingForm.querySelector('input[name="idAdmin"]').value;
+                const namaPemohon = bookingForm.querySelector('input[name="namaPemohon"]').value;
+                const noWa = bookingForm.querySelector('input[name="noWa"]').value;
+                const namaKendaraan = bookingForm.querySelector('input[name="namaKendaraan"]').value;
+                const keperluan = bookingForm.querySelector('input[name="keperluan"]').value;
+                const lokasi = bookingForm.querySelector('input[name="lokasi"]').value;
+                const titikJemput = bookingForm.querySelector('input[name="titikJemput"]').value;
                 const tglMulai = bookingForm.querySelector('input[name="tglMulai"]').value;
                 const tglSelesai = bookingForm.querySelector('input[name="tglSelesai"]').value;
 
                 // Masukkan data ke dalam modal konfirmasi
                 document.getElementById('confirm-idKendaraan').value = idKendaraan;
                 document.getElementById('confirm-idAdmin').value = idAdmin;
+                document.getElementById('confirm-namaPemohon').value = namaPemohon;
+                document.getElementById('confirm-noWa').value = noWa;
+                document.getElementById('confirm-namaKendaraan').value = namaKendaraan;
+                document.getElementById('confirm-keperluan').value = keperluan;
+                document.getElementById('confirm-lokasi').value = lokasi;
+                document.getElementById('confirm-titikJemput').value = titikJemput;
                 document.getElementById('confirm-tglMulai').value = tglMulai;
                 document.getElementById('confirm-tglSelesai').value = tglSelesai;
+
 
                 // Sembunyikan modal booking dan tampilkan modal konfirmasi
                 bookingModal.classList.add('hidden');
@@ -554,25 +617,73 @@
                 // Ambil data dari form booking
                 const idKendaraan = bookingForm.querySelector('input[name="idKendaraan"]').value;
                 const idAdmin = bookingForm.querySelector('input[name="idAdmin"]').value;
+                const namaPemohon = bookingForm.querySelector('input[name="namaPemohon"]').value;
+                const noWa = bookingForm.querySelector('input[name="noWa"]').value;
+                const namaKendaraan = bookingForm.querySelector('input[name="namaKendaraan"]').value;
+                const keperluan = bookingForm.querySelector('input[name="keperluan"]').value;
+                const lokasi = bookingForm.querySelector('input[name="lokasi"]').value;
+                const titikJemput = bookingForm.querySelector('input[name="titikJemput"]').value;
                 const tglMulai = bookingForm.querySelector('input[name="tglMulai"]').value;
                 const tglSelesai = bookingForm.querySelector('input[name="tglSelesai"]').value;
 
                 // Masukkan data ke dalam input tersembunyi di modal konfirmasi
                 document.getElementById('confirm-idKendaraan').value = idKendaraan;
                 document.getElementById('confirm-idAdmin').value = idAdmin;
+                document.getElementById('confirm-namaPemohon').value = namaPemohon;
+                document.getElementById('confirm-noWa').value = noWa;
+                document.getElementById('confirm-namaKendaraan').value = namaKendaraan;
+                document.getElementById('confirm-keperluan').value = keperluan;
+                document.getElementById('confirm-lokasi').value = lokasi;
+                document.getElementById('confirm-titikJemput').value = titikJemput;
                 document.getElementById('confirm-tglMulai').value = tglMulai;
                 document.getElementById('confirm-tglSelesai').value = tglSelesai;
 
-                // Menampilkan data di modal untuk konfirmasi (untuk tampilan saja)
-                document.getElementById('display-idKendaraan').textContent = idKendaraan;
-                document.getElementById('display-idAdmin').textContent = idAdmin;
-                document.getElementById('display-tglMulai').textContent = tglMulai;
-                document.getElementById('display-tglSelesai').textContent = tglSelesai;
+                // Tampilkan data ke dalam elemen display
+                document.getElementById("display-idKendaraan").textContent = idKendaraan;
+                document.getElementById("display-idAdmin").textContent = idAdmin;
+                document.getElementById("display-namaPemohon").textContent = namaPemohon;
+                document.getElementById("display-noWa").textContent = noWa;
+                document.getElementById("display-namaKendaraan").textContent = namaKendaraan;
+                document.getElementById("display-keperluan").textContent = keperluan;
+                document.getElementById("display-lokasi").textContent = lokasi;
+                document.getElementById("display-titikJemput").textContent = titikJemput;
+                document.getElementById("display-tglMulai").textContent = tglMulai;
+                document.getElementById("display-tglSelesai").textContent = tglSelesai;
 
                 // Tampilkan modal konfirmasi
                 const modalKonfirmasi = document.getElementById('modal-konfirmasi');
                 modalKonfirmasi.classList.remove('hidden'); // tampilkan modal
             });
+        });
+    </script>
+
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const konfirmasiButton = document.querySelector('[data-modal-target="modal-konfirmasi"]');
+            const bookingForm = document.getElementById('booking-form');
+            const modalKonfirmasi = document.getElementById('modal-konfirmasi');
+
+            if (konfirmasiButton && bookingForm && modalKonfirmasi) {
+                konfirmasiButton.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    // Ambil data dari form
+                    const formData = new FormData(bookingForm);
+                    const data = Object.fromEntries(formData.entries());
+
+                    // Isi input tersembunyi dan elemen display di modal
+                    for (const key in data) {
+                        const hiddenInput = document.getElementById(`confirm-${key}`);
+                        const displaySpan = document.getElementById(`display-${key}`);
+                        if (hiddenInput) hiddenInput.value = data[key];
+                        if (displaySpan) displaySpan.textContent = data[key] || '-';
+                    }
+
+                    // Tampilkan modal
+                    modalKonfirmasi.classList.remove('hidden');
+                });
+            }
         });
     </script>
 

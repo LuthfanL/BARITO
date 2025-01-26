@@ -41,8 +41,20 @@ class buatRuanganController extends Controller
             }
         }  
 
+        // Ambil pengguna yang sedang login
+        $user = auth()->user();
+
+        // Ambil idAdmin dari model adminRuangan
+        $idAdmin = \App\Models\adminRuangan::getIdAdminByEmail($user->email);
+
+        if (!$idAdmin) {
+            // Tangani error jika idAdmin tidak ditemukan
+            return back()->with('error', 'Admin tidak ditemukan');
+        }
+
         // Simpan data ke database
         ruangan::create([
+            'idAdmin' => $idAdmin,
             'nama' => $request->input('nama'),
             'lokasi' => $request->input('lokasi'),
             'podium' => $request->input('podium'),

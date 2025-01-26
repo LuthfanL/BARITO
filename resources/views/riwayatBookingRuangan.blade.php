@@ -49,8 +49,9 @@
                     <div class="flex justify-center text-center pb-6">
                         <h1 class="font-bold text-2xl">Riwayat Booking Ruangan</h1>
                     </div>
-                    <!-- Cari Ruangan -->
-                    <form class=" w-full mx-auto">   
+
+                     <!-- Cari Booking -->
+                    <form id="searchForm" class="w-full mx-auto">   
                         <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Cari Booking</label>
                         <div class="relative">
                             <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -58,8 +59,13 @@
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                                 </svg>
                             </div>
-                            <input type="search" id="default-search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="Cari Booking" required />
-                            <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-xl text-sm px-4 py-2">Cari</button>
+                            <input 
+                                type="search" 
+                                name="keyword" 
+                                id="search-input" 
+                                class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500" 
+                                placeholder="Cari ID Booking atau ID Cust atau Nama Pemohon" 
+                            />
                         </div>
                     </form>
 
@@ -149,83 +155,99 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <!-- No -->
-                                <td>1</td>
-                                <!-- ID. Booking -->
-                                <td>R1</td>
-                                <!-- Nama Pemohon -->
-                                <td>Rocky Gerung</td>
-                                <!-- No. Whatapps -->
-                                <td>08213255677</td>
-                                <!-- Ruangan -->
-                                <td>Ruang Lokakrida</td>
-                                <!-- Tanggal Pinjam -->
-                                <td class="text-center"> 
-                                    11/01/2025
-                                </td>
-                                <!-- Tanggal Selesai -->
-                                <td class="text-center">
-                                    12/01/2025
-                                </td>
-                                <!-- Bukti Pembayaran -->
-                                <td class="text-center">
-                                    BuktiPembayaran.jpg
-                                </td>
-                                <!-- Info Lain -->
-                                <td class="flex justify-center items-center text-center"> 
-                                    <button data-modal-target="detail-booking" data-modal-toggle="detail-booking" type="button" class="block px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Detail</button>
-                                </td>
-                                <!-- Alasan Pembatalan -->
-                                <td class=" items-center text-center mt-5"> 
-                                    <div class="flex justify-center ">
-                                        <button data-modal-target="detail-batal" data-modal-toggle="detail-batal" type="button" class="block px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-700 via-red-800 to-red-900 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Alasan</button>
-                                    </div>
-                                </td>
-                                <!-- Status -->
-                                <td class="text-center">
-                                    <div class="flex flex-col gap-2">
-                                        <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 text-white">Disetujui
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>R2</td>
-                                <td>Yanto</td>
-                                <td>0857899457</td>
-                                <td>Ruang Komisi A</td>
-                                <td class="text-center"> 
-                                    05/01/2025
-                                </td>
-                                <td class="text-center">
-                                    06/01/2025
-                                </td>
-                                <td class="text-center">
-                                    BuktiPembayaran.jpg
-                                </td>
-                                <td class="flex justify-center items-center text-center"> 
-                                    <button data-modal-target="detail-booking" data-modal-toggle="detail-booking" type="button" class="block px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Detail</button>
-                                </td>
-                                <td class="items-center text-center mt-5"> 
-                                    <div class="flex justify-center ">
-                                        <button data-modal-target="detail-batal" data-modal-toggle="detail-batal" type="button" class="px-3 py-1 rounded-lg cursor-not-allowed font-medium bg-gradient-to-l from-red-700 via-red-800 to-red-900 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white pointer-events-none opacity-50">Alasan</button>
-                                    </div>
-                                </td>
-                                <td class="text-center">
-                                    <div class="flex flex-col gap-2">
-                                        <div class="px-3 py-1 rounded-lg  font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700  text-white">Ditolak
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
+                            @if (!empty($bookings))
+                                <tbody>
+                                    @foreach ($bookings as $booking)
+                                        <tr class="booking-list" data-bookingid="{{ $booking->id }}" data-bookingidCustomer="{{ $booking->idCustomer }}" data-bookingnamaPemohon="{{ $booking->namaPemohon }}">
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $booking->id }}</td>
+                                            <td>{{ $booking->namaPemohon }}</td>
+                                            <td>{{ $booking->noWa }}</td>
+                                            <td>{{ $booking->ruangan->nama ?? 'Tidak Ada Ruangan' }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($booking->tglMulai)->format('d/m/Y') }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($booking->tglSelesai)->format('d/m/Y') }}</td>
+                                            <td class="text-center">
+                                                BuktiPembayaran.jpg
+                                            </td>              
+                                
+                                            <!-- Info Lain -->
+                                            <td class="flex justify-center items-center text-center mt-5"> 
+                                                <button 
+                                                    data-modal-target="detail-booking" 
+                                                    data-modal-toggle="detail-booking"
+                                                    data-bookingkeperluan="{{ $booking->keperluan }}" 
+                                                    data-bookingketerangan="{{ $booking->keterangan }}" 
+                                                    type="button" 
+                                                    class="block px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                                    Detail
+                                                </button>
+                                            </td>
+
+                                            <!-- Alasan Pembatalan -->
+                                            <td class=" items-center text-center mt-5"> 
+                                                <div class="flex justify-center ">
+                                                    <button 
+                                                        data-modal-target="detail-batal" 
+                                                        data-modal-toggle="detail-batal" 
+                                                        type="button" 
+                                                        class="block px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-700 via-red-800 to-red-900 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                                        Alasan
+                                                    </button>
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                @if ($booking->status == 'Disetujui')
+                                                    <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 text-white">
+                                                        Disetujui
+                                                    </div>
+                                                @else
+                                                    <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 text-white">
+                                                        Ditolak
+                                                    </div>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach    
+                                </tbody>
+                            @endif
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Modal Info Lain -->
+    <div id="detail-booking" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative p-4 w-full max-w-2xl max-h-full">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow">
+                <!-- Modal header -->
+                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
+                    <h3 class="text-xl font-semibold text-gray-900">
+                        Detail Booking
+                    </h3>
+                </div>
+                <!-- Modal body -->
+                <div class="p-4 md:p-5 space-y-6">
+                    <div>
+                        <label for="keperluan" class="block text-sm font-medium text-gray-900 mb-2">Keperluan Acara</label>
+                        <input type="text" id="keperluan" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 sm:text-sm" value="{{ $booking->keperluan ?? '' }}" readonly>
+                    </div>
+                    <div>
+                        <label for="keterangan" class="block text-sm font-medium text-gray-900 mb-2">Keterangan Acara</label>
+                        <input type="text" id="keterangan" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 sm:text-sm" value="{{ $booking->keterangan ?? '' }}" readonly>
+                    </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b">
+                    <button data-modal-hide="detail-booking" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Kembali</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Modal Alasan Pembatalan -->
     <div id="detail-batal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -253,36 +275,6 @@
         </div>
     </div>
 
-    <!-- Modal Info Lain -->
-    <div id="detail-booking" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-        <div class="relative p-4 w-full max-w-2xl max-h-full">
-            <!-- Modal content -->
-            <div class="relative bg-white rounded-lg shadow">
-                <!-- Modal header -->
-                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
-                    <h3 class="text-xl font-semibold text-gray-900">
-                        Detail Booking
-                    </h3>
-                </div>
-                <!-- Modal body -->
-                <div class="p-4 md:p-5 space-y-6">
-                    <div>
-                        <label for="keperluan-acara" class="block text-sm font-medium text-gray-900 mb-2">Keperluan Acara</label>
-                        <textarea id="keperluan-acara" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-500 p-3" readonly>Acara reuni akbar TK</textarea>
-                    </div>
-                    <div>
-                        <label for="keterangan-layout" class="block text-sm font-medium text-gray-900 mb-2">Keterangan (Setting Layout Tempat)</label>
-                        <textarea id="keterangan-layout" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-500 p-3" readonly>Layout layaknya acara pertemuan besar dengan banyak meja dan kursi untuk peserta reuni</textarea>
-                    </div>
-                </div>
-                <!-- Modal footer -->
-                <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b">
-                    <button data-modal-hide="detail-booking" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Kembali</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 </body>
 
@@ -291,9 +283,54 @@
     if (document.getElementById("default-table") && typeof simpleDatatables.DataTable !== 'undefined') {
         const dataTable = new simpleDatatables.DataTable("#default-table", {
             searchable: false,
-            perPageSelect: false
+            perPageSelect: true
         });
     }
+</script>
+
+
+<!-- Search -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const searchInput = document.getElementById("search-input"); 
+        const kendaraanList = document.querySelectorAll(".booking-list"); 
+
+        searchInput.addEventListener("input", function() {
+            const searchQuery = searchInput.value.toLowerCase(); 
+            
+            kendaraanList.forEach(function(card) {
+                const bookingId = card.getAttribute("data-bookingid");
+                const idCustomer = card.getAttribute("data-bookingidCustomer"); 
+                const namaPemohon = card.getAttribute("data-bookingnamaPemohon").toLowerCase();   
+
+                if (bookingId.includes(searchQuery) || idCustomer.includes(searchQuery)  || namaPemohon.includes(searchQuery)) {
+                    card.style.display = 'table-row'; 
+                } else {
+                    card.style.display = 'none'; 
+                }
+            });
+        });
+    });
+</script>
+
+{{-- Scipt untuk mengambil data fasilitas  --}}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Ambil semua tombol yang membuka modal fasilitas
+        const detailButtons = document.querySelectorAll("[data-modal-target='detail-booking']");
+
+        detailButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                // Ambil data dari tombol yang diklik
+                const keperluan = this.getAttribute("data-bookingkeperluan");
+                const keterangan = this.getAttribute("data-bookingketerangan");
+
+                // Temukan elemen input dalam modal dan isi dengan data yang sesuai
+                document.querySelector("#detail-booking #keperluan").value = keperluan || "Tidak tersedia";
+                document.querySelector("#detail-booking #keterangan").value = keterangan || "Tidak tersedia";
+            });
+        });
+    });
 </script>
 
 </html>

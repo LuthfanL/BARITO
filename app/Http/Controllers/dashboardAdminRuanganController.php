@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ruangan;
+use App\Models\customer;
 use Illuminate\Support\Facades\Storage;
 
 class dashboardAdminRuanganController extends Controller
@@ -11,6 +12,8 @@ class dashboardAdminRuanganController extends Controller
     public function index(Request $request)
     {
         $ruangan = ruangan::all();
+        $totalCustomer = customer::count();
+
         $totalRuangan = $ruangan->count(); // Hitung total ruangan
         
         foreach ($ruangan as &$data) {
@@ -25,6 +28,6 @@ class dashboardAdminRuanganController extends Controller
         }
         
         // Kirim data ruangan dan total ruangan ke blade
-        return view('dashboardAdminRuangan', compact('ruangan', 'totalRuangan'));
+        return view('dashboardAdminRuangan', compact('ruangan', 'totalRuangan', 'totalCustomer'));
     }
 }

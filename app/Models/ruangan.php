@@ -16,6 +16,7 @@ class ruangan extends Model
     protected $keyType = 'int';
     
     protected $fillable = [
+        'idAdmin',
         'nama',
         'lokasi',
         'podium',
@@ -34,5 +35,11 @@ class ruangan extends Model
     public function pemRuangan()
     {
         return $this->hasMany(pemRuangan::class, 'idRuangan');
+    }
+
+    // Tambahkan relasi ke adminRuangan jika diperlukan
+    public function adminRuangan()
+    {
+        return $this->belongsTo(adminRuangan::class, 'idAdmin', 'idAdmin');
     }
 }

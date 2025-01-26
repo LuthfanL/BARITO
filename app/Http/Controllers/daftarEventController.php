@@ -70,12 +70,39 @@ class daftarEventController extends Controller
         $request->validate([
             'namaEvent' => 'required|string',
             'deskripsi' => 'required|string',
-            'tglMulai' => 'required|date',
-            'tgSelesai' => 'required|date',
+            // 'tglMulai' => 'required|date',
+            // 'tgSelesai' => 'required|date',
+            // 'foto.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         // Cari event berdasarkan namaEvent
         $event = Event::where('namaEvent', $request->namaEvent)->firstOrFail();
+
+        // Hapus foto lama jika ada foto baru
+        if ($request->hasFile('foto')) {
+            if (!empty($event->foto)) {
+                $oldPhotos = json_decode($event->foto, true);
+
+                if (is_array($oldPhotos)) {
+                    foreach ($oldPhotos as $oldPhoto) {
+                        $oldPhotoPath = str_replace('/storage', 'public', $oldPhoto);
+                        if (Storage::exists($oldPhotoPath)) {
+                            Storage::delete($oldPhotoPath);
+                        }
+                    }
+                }
+            }
+
+            // Simpan foto baru
+            $newPhotoPaths = [];
+            foreach ($request->file('foto') as $foto) {
+                $path = $foto->store('foto_event', 'public');
+                $newPhotoPaths[] = Storage::url($path);
+            }
+
+            // Update data foto di database
+            $event->foto = json_encode($newPhotoPaths);
+        }
 
         // Update data event
         $event->update([

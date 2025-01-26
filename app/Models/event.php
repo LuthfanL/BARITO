@@ -17,6 +17,7 @@ class event extends Model
     
     protected $fillable = [
         'namaEvent',
+        'idAdmin',
         'tglMulai',
         'tglSelesai',
         'nMakanan',
@@ -30,5 +31,11 @@ class event extends Model
     public function pemTenant()
     {
         return $this->hasMany(pemTenant::class, 'namaEvent');
+    }
+
+    // Tambahkan relasi ke adminTenant jika diperlukan
+    public function adminTenant()
+    {
+        return $this->belongsTo(adminTenant::class, 'idAdmin', 'idAdmin');
     }
 }

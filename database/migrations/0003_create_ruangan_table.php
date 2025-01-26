@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('ruangan', function (Blueprint $table) {
             $table->id();
+            $table->char('idAdmin', 8);
+            $table->foreign('idAdmin')->references('idAdmin')->on('adminRuangan')->onDelete('cascade');
             $table->string('nama', 30);
             $table->string('lokasi', 50);
             $table->integer('podium');

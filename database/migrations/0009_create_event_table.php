@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('event', function (Blueprint $table) {
             $table->string('namaEvent', 50)->primary();
+            $table->char('idAdmin', 8);
+            $table->foreign('idAdmin')->references('idAdmin')->on('adminTenant')->onDelete('cascade');
             $table->date('tglMulai');
             $table->date('tglSelesai');
             $table->integer('nMakanan');

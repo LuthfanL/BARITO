@@ -16,10 +16,14 @@ return new class extends Migration
             $table->char('idCustomer', 16);
             $table->unsignedBigInteger('idRuangan');
             $table->char('idAdmin', 8);
-            $table->date('tglPeminjaman');
+            $table->string('namaPemohon', 30);
+            $table->string('noWa', 15);
+            $table->string('keperluan', 50);
+            $table->string('keterangan', 50);
+            $table->date('tglMulai');
             $table->date('tglSelesai');
-            $table->string('status', 8);
-            $table->string('buktiBayar');
+            $table->string('status', 20);
+            //$table->string('buktiBayar');
             $table->foreign('idCustomer')->references('NIK')->on('customer')->onDelete('cascade');
             $table->foreign('idRuangan')->references('id')->on('ruangan')->onDelete('cascade');
             $table->foreign('idAdmin')->references('idAdmin')->on('adminRuangan')->onDelete('cascade');

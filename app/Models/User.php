@@ -32,11 +32,16 @@ class User extends Authenticatable
         'remember_token' => 'hashed',
     ];
 
+    // public function customer()
+    // {
+    //     return $this->belongsTo(Customer::class, 'email', 'email');
+    // }
+
     public function customer()
     {
-        return $this->belongsTo(Customer::class, 'email', 'email');
+        return $this->hasOne(customer::class, 'email');
     }
-
+    
     public function adminRuangan()
     {
         return $this->hasOne(adminRuangan::class, 'email');

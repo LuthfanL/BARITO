@@ -75,28 +75,17 @@
         <div class="max-w-full w-full">
 
             <!-- Cari Kendaraan -->
-            <form action="{{ route('cariKendaraan') }}" method="GET" class="w-full mx-auto">   
+            <form id="searchForm" class=" w-full mx-auto">   
                 <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Cari Kendaraan</label>
                 <div class="relative">
                     <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                         <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                         </svg>
-                        </div>
-                        <input 
-                            type="search" 
-                            name="keyword" 
-                            id="default-search" 
-                            class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500" 
-                            placeholder="Cari Kendaraan Berdasarkan Nama atau Plat Nomor" 
-                            value="{{ old('keyword', '') }}" 
-                        />
-                        <button 
-                            type="submit" 
-                            class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-xl text-sm px-4 py-2">
-                            Cari
-                        </button>
                     </div>
+                    <input type="search" id="default-search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="Cari Kendaraan" required />
+                    <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-xl text-sm px-4 py-2">Cari</button>
+                </div>
             </form>
 
             <!-- Tampilkan Daftar Kendaraan -->
@@ -109,10 +98,10 @@
             @endif
 
             <!-- Daftar Kendaraan -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 w-full mt-8">
+            <div id="kendaraan-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 w-full mt-8">
                 @foreach ($kendaraan as $kendara)
                     <!-- Card Item -->
-                    <div class="col-span-1">
+                    <div class="col-span-1 kendaraan-card" data-nama="{{ $kendara->nama }}">
                         <div class="bg-white border border-gray-200 rounded-lg shadow-[0_0_13px_3px_rgba(0,0,0,0.2)]">
                             <!-- Gambar -->
                             {{-- <div>
@@ -251,6 +240,28 @@
             const mainImage = document.getElementById('main-image-kendaraan');
             mainImage.src = element.src;
         }
+    </script>
+
+    <!-- Script Search -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const searchInput = document.getElementById("search-input"); 
+            const kendaraanCards = document.querySelectorAll(".kendaraan-card"); 
+
+            searchInput.addEventListener("input", function() {
+                const searchQuery = searchInput.value.toLowerCase(); 
+                
+                kendaraanCards.forEach(function(card) {
+                    const nama = card.getAttribute("data-nama").toLowerCase(); 
+                    
+                    if (nama.includes(searchQuery)) {
+                        card.style.display = 'block'; 
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>

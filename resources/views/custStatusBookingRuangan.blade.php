@@ -94,8 +94,9 @@
 
     <div class="px-8 pt-8 pb-8 flex justify-center items-center">
         <div class="max-w-full w-full">
+
             <!-- Cari Booking -->
-            <form class=" w-full mx-auto">   
+            <form id="searchForm" class="w-full mx-auto">   
                 <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Cari Booking</label>
                 <div class="relative">
                     <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -103,8 +104,13 @@
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                         </svg>
                     </div>
-                    <input type="search" id="default-search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="Cari Booking" required />
-                    <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-xl text-sm px-4 py-2">Cari</button>
+                    <input 
+                        type="search" 
+                        name="keyword" 
+                        id="search-input" 
+                        class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500" 
+                        placeholder="Cari ID Booking" 
+                    />
                 </div>
             </form>
 
@@ -168,92 +174,62 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <!-- No -->
-                        <td>1</td>
-                        <!-- ID. Booking -->
-                        <td>R12</td>
-                        <!-- Ruangan -->
-                        <td>Ruang Lokakrida</td>
-                        <!-- Tanggal Pinjam -->
-                        <td class="text-center"> 
-                            14/03/2025
-                        </td>
-                        <!-- Tanggal Selesai -->
-                        <td class="text-center">
-                            15/03/2025
-                        </td>
-                        <!-- Status -->
-                        <td class="text-center">
-                            <div class="flex flex-col gap-2">
-                                <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-yellow-500 via-yellow-600 to-yellow-700 text-white">Menunggu
-                                </div>
-                            </div>
-                        </td>
-                        <!-- Tindakan -->
-                        <td class="text-center">
-                            <div class="flex justify-center gap-2">
-                                <button data-modal-target="modal-edit" data-modal-toggle="modal-edit" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Edit</button>
-                                <button data-modal-target="modal-batalkan" data-modal-toggle="modal-batalkan" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Batalkan</button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>R11</td>
-                        <td>Ruang Komisi A</td>
-                        <td class="text-center"> 
-                            12/02/2025
-                        </td>
-                        <td class="text-center">
-                            12/02/2025
-                        </td>
-                        <td class="text-center">
-                            <div class="flex flex-col gap-2">
-                                <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 text-white">Disetujui
-                                </div>
-                            </div>
-                        </td>
-                        <td class="text-center">
-                            <div class="flex justify-center gap-2">
-                                <!-- Tombol Selesai yang tidak bisa diklik -->
-                                <button class="px-3 py-1 rounded-lg cursor-not-allowed font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white pointer-events-none opacity-50">
-                                    Selesai
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>R10</td>
-                        <td>Ruang Komisi B</td>
-                        <td class="text-center"> 
-                            10/02/2025
-                        </td>
-                        <td class="text-center">
-                            11/02/2025
-                        </td>
-                        <td class="text-center">
-                            <div class="flex flex-col gap-2">
-                                <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 text-white">Ditolak
-                                </div>
-                            </div>
-                        </td>
-                        <td class="text-center">
-                            <div class="flex justify-center gap-2">
-                                <!-- Tombol Selesai yang tidak bisa diklik -->
-                                <button class="px-3 py-1 rounded-lg cursor-not-allowed font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white pointer-events-none opacity-50">
-                                    Selesai
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
+                    @if (!empty($bookings))
+                        <tbody>
+                            @foreach ($bookings as $booking)
+                                <tr class="booking-list" data-bookingid="{{ $booking->id }}">
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $booking->id }}</td>
+                                    <td>{{ $booking->ruangan->nama ?? 'Tidak Ada Ruangan' }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($booking->tglMulai)->format('d/m/Y') }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($booking->tglSelesai)->format('d/m/Y') }}</td>
+
+                                    <!-- Status -->                
+                                    <td>
+                                        @if ($booking->status == 'Disetujui')
+                                            <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 text-white">
+                                                Disetujui
+                                            </div>
+                                        @elseif ($booking->status == 'Ditolak')
+                                            <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 text-white">
+                                                Ditolak
+                                            </div>
+                                        @elseif ($booking->status == 'Belum disetujui')
+                                            <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-yellow-500 via-yellow-600 to-yellow-700 text-white">
+                                                Belum disetujui
+                                            </div>
+                                        @endif
+                                    </td>
+
+                                    <!-- Tindakan -->
+                                    <td class="text-center">
+                                        <div class="flex justify-center gap-2">
+                                            @if ($booking->status == 'Belum disetujui')
+                                                <!-- Tindakan Edit dan Batalkan -->
+                                                <button data-modal-target="modal-edit" data-modal-toggle="modal-edit" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                                    Edit
+                                                </button>
+                                                <button data-modal-target="modal-batalkan" data-modal-toggle="modal-batalkan" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                                    Batalkan
+                                                </button>
+                                            @else
+                                                <!-- Tindakan Selesai dengan background abu-abu -->
+                                                <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-gray-300 via-gray-400 to-gray-500 text-white">
+                                                    Selesai
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    @endif
                 </tbody>
             </table>
         </div>
     </div>
 
-    <!-- Modal Edit -->
+    {{-- <!-- Modal Edit -->
     <div id="modal-setujui" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative p-4 w-full max-w-xl max-h-full">
             <div class="relative bg-white rounded-lg shadow">
@@ -303,7 +279,7 @@
             </div>
         </div>
     </div>
-
+ --}}
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 </body>
@@ -313,7 +289,7 @@
     if (document.getElementById("default-table") && typeof simpleDatatables.DataTable !== 'undefined') {
         const dataTable = new simpleDatatables.DataTable("#default-table", {
             searchable: false,
-            perPageSelect: false
+            perPageSelect: true
         });
     }
 </script>
@@ -336,8 +312,26 @@
     alasanPembatalan.addEventListener('input', toggleButtonState);
 </script>
 
+<!-- Search -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const searchInput = document.getElementById("search-input"); 
+        const kendaraanList = document.querySelectorAll(".booking-list"); 
 
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
-</body>
+        searchInput.addEventListener("input", function() {
+            const searchQuery = searchInput.value.toLowerCase(); 
+            
+            kendaraanList.forEach(function(card) {
+                const bookingId = card.getAttribute("data-bookingid");
+
+                if (bookingId.includes(searchQuery)) {
+                    card.style.display = 'table-row'; 
+                } else {
+                    card.style.display = 'none'; 
+                }
+            });
+        });
+    });
+</script>
 
 </html>

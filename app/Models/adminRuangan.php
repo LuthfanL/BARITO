@@ -37,7 +37,17 @@ class adminRuangan extends Authenticatable
         return $this->hasMany(pemRuangan::class, 'idAdmin');
     }
 
+    public function ruangan()
+    {
+        return $this->hasMany(ruangan::class, 'idAdmin');
+    }
+
     public function User(){
         return $this->hasOne(User::class, 'email');
+    }
+
+    public static function getIdAdminByEmail($email)
+    {
+        return self::where('email', $email)->value('idAdmin');
     }
 }

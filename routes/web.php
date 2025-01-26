@@ -69,6 +69,8 @@ Route::get('/custBookingRuangan', [custBookingRuanganController::class, 'index']
 
 Route::get('/custStatusBookingRuangan', [custStatusBookingRuanganController::class, 'index'])->name('custStatusBookingRuangan')->middleware('auth');
 
+Route::post('/booking-ruangan', [CustBookingRuanganController::class, 'store'])->name('bookingRuangan.store')->middleware('auth');
+
 Route::get('/kontakRuangan', [kontakRuanganController::class, 'index'])->name('kontakRuangan');
 
 // Route::get('/cari-Ruangan', [custDaftarRuanganController::class, 'cari'])->name('cariRuangan')->middleware('auth');
@@ -97,6 +99,8 @@ Route::get('/custBookingTenant', [custBookingTenantController::class, 'index'])-
 
 Route::get('/custStatusBookingTenant', [custStatusBookingTenantController::class, 'index'])->name('custStatusBookingTenant')->middleware('auth');
 
+Route::post('/booking-tenant', [CustBookingTenantController::class, 'store'])->name('bookingTenant.store')->middleware('auth');
+
 Route::get('/kontakTenant', [kontakTenantController::class, 'index'])->name('kontakTenant');
 
 
@@ -104,10 +108,6 @@ Route::get('/kontakTenant', [kontakTenantController::class, 'index'])->name('kon
 Route::get('/dashboardAdminRuangan', [DashboardAdminRuanganController::class, 'index'])->name('dashboardAdminRuangan')->middleware('auth');
 
 Route::get('/ruangan', [daftarRuanganController::class, 'index'])->name('daftarRuangan')->middleware('auth');
-
-// Route::get('/buatRuangan', [buatRuanganController::class, 'index'])->name('buatRuangan')->middleware('auth');
-
-//Route::get('/ruangan', [daftarRuanganController::class, 'index'])->name('daftarRuangan');
 
 Route::get('/buatRuangan', [buatRuanganController::class, 'index'])->name('buatRuangan')->middleware('auth');
 Route::post('/buatRuangan', [buatRuanganController::class, 'store'])->name('ruangan.store')->middleware('auth');
@@ -121,6 +121,8 @@ Route::delete('/ruangan/{id}', [daftarRuanganController::class, 'destroy'])->nam
 Route::put('/update-ruangan', [daftarRuanganController::class, 'update'])->name('update.ruangan');
 
 Route::get('/verifikasiBookingRuangan', [verifikasiBookingRuanganController::class, 'index'])->name('verifikasiBookingRuangan')->middleware('auth');
+
+Route::post('/updateStatusRuangan', [VerifikasiBookingRuanganController::class, 'updateStat'])->name('upStatusRuangan');
 
 Route::get('/riwayatBookingRuangan', [riwayatBookingRuanganController::class, 'index'])->name('riwayatBookingRuangan')->middleware('auth');
 
@@ -139,9 +141,12 @@ Route::resource('/daftarKendaraan', daftarKendaraanController::class)->middlewar
 
 Route::delete('/kendaraan/{platNomor}', [daftarKendaraanController::class, 'destroy'])->name('kendaraan.destroy')->middleware('auth');
 
-Route::put('/update-kendaraan', [daftarKendaraanController::class, 'update'])->name('update.kendaraan')->middleware('auth');
+Route::put('/update-kendaraan', [daftarKendaraanController::class, 'update'])->name('update.kendaraan');
 
 Route::get('/verifikasiBookingKendaraan', [verifikasiBookingKendaraanController::class, 'index'])->name('verifikasiBookingKendaraan')->middleware('auth');
+
+Route::post('/updateStatusKendaraan', [verifikasiBookingKendaraanController::class, 'updateStatus'])->name('update.status');
+
 
 Route::get('/riwayatBookingKendaraan', [riwayatBookingKendaraanController::class, 'index'])->name('riwayatBookingKendaraan')->middleware('auth');
 
@@ -160,8 +165,10 @@ Route::resource('/daftarEvent', daftarEventController::class)->middleware('auth'
 
 Route::delete('/event/{namaEvent}', [daftarEventController::class, 'destroy'])->name('event.destroy');
 
-Route::put('/update-event', [daftarEventController::class, 'update'])->name('update.event')->middleware('auth');
+Route::put('/update-event', [daftarEventController::class, 'update'])->name('update.event');
 
 Route::get('/verifikasiBookingTenant', [verifikasiBookingTenantController::class, 'index'])->name('verifikasiBookingTenant')->middleware('auth');
+
+Route::post('/updateStatusTenant', [verifikasiBookingTenantController::class, 'updateStatus'])->name('update.statusTenant');
 
 Route::get('/riwayatBookingTenant', [riwayatBookingTenantController::class, 'index'])->name('riwayatBookingTenant')->middleware('auth');

@@ -7,9 +7,37 @@ use App\Models\kendaraan;
 use App\Models\adminKendaraan; 
 use App\Models\pemKendaraan; 
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class custBookingKendaraanController extends Controller
 {
+    // public function index(Request $request)
+    // {
+    //     // Ambil parameter 'nama', 'lokasi', dan 'deskripsi' dari URL
+    //     $nama = $request->input('nama');
+    //     $platNomor = $request->input('platNomor');
+
+    //     // Ambil data ruangan berdasarkan 'nama', 'lokasi', dan 'deskripsi'
+    //     $kendaraan = kendaraan::where('nama', $nama)
+    //                         ->where('platNomor', $platNomor)
+    //                         ->first();
+
+        
+
+    //     // Mengambil URL gambar utama dan URL thumbnail
+    //     if (!empty($kendaraan->foto)) {
+    //         $kendaraan->foto_url = Storage::url(json_decode($kendaraan->foto)[0]);  
+    //         $kendaraan->foto_urls = json_decode($kendaraan->foto); 
+    //     } else {
+    //         $kendaraan->foto_url = asset('default-image.jpg');
+    //         $kendaraan->foto_urls = []; // Tidak ada thumbnail jika tidak ada foto
+    //     }
+
+    //     // Kirim data ruangan ke view
+    //     return view('custBookingKendaraan', compact('kendaraan'));
+    // }
+
     public function index(Request $request)
     {
         // Ambil parameter 'nama', 'lokasi', dan 'deskripsi' dari URL
@@ -20,6 +48,14 @@ class custBookingKendaraanController extends Controller
         $kendaraan = kendaraan::where('nama', $nama)
                             ->where('platNomor', $platNomor)
                             ->first();
+
+        // $calendarKendaraan = kendaraan::select('nama as title', 'tglMulai as start', 'tglSelesai as end')->get()->map(function ($kendaraan) {
+        //     $kendaraan->color = '#3788d8';
+        //     $kendaraan->end = Carbon::parse($kendaraan->end)->addDay()->toDateString();
+        //     return $kendaraan;
+        // });
+
+        // $calendarKendaraamJson = json_encode($calendarKendaraan);
 
         // Mengambil URL gambar utama dan URL thumbnail
         if (!empty($kendaraan->foto)) {
@@ -33,6 +69,7 @@ class custBookingKendaraanController extends Controller
         // Kirim data ruangan ke view
         return view('custBookingKendaraan', compact('kendaraan'));
     }
+
     
     public function store(Request $request)
     {
@@ -69,6 +106,12 @@ class custBookingKendaraanController extends Controller
             'idCustomer'    => $nik,
             'idKendaraan'   => $request->input('idKendaraan'),
             'idAdmin'       => $request->input('idAdmin'),
+            'namaPemohon'   => $request->input('namaPemohon'),
+            'noWa'          => $request->input('noWa'),
+            'namaKendaraan' => $request->input('namaKendaraan'),
+            'keperluan'     => $request->input('keperluan'),
+            'lokasi'        => $request->input('lokasi'),
+            'titikJemput'   => $request->input('titikJemput'),
             'tglMulai'      => $request->input('tglMulai'),
             'tglSelesai'    => $request->input('tglSelesai'),
             'status'        => 'Belum disetujui',
