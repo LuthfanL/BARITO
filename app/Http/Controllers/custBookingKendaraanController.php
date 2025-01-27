@@ -49,6 +49,8 @@ class custBookingKendaraanController extends Controller
                             ->where('platNomor', $platNomor)
                             ->first();
 
+        $colors = ['#3788d8', '#f39c12', '#27ae60', '#8e44ad', '#e74c3c', '#16a085', '#d35400', '#2ecc71', '#3498db', '#9b59b6'];
+
         $calendarKendaraan = kendaraan::select('nama as title', 'tglMulai as start', 'tglSelesai as end')
             ->join('pemKendaraan', 'kendaraan.platNomor', '=', 'pemKendaraan.idKendaraan')
             ->join('customer', 'pemKendaraan.idCustomer', '=', 'customer.NIK')
@@ -58,8 +60,8 @@ class custBookingKendaraanController extends Controller
                 'pemKendaraan.tglSelesai as end'
             )->where('kendaraan.platNomor', $platNomor)
             ->get()
-            ->map(function ($event) {
-                $event->color = '#3788d8'; // Menambahkan warna untuk event
+            ->map(function ($event, $index) use ($colors) {
+                $event->color = $colors[$index % count($colors)];
                 $event->end = Carbon::parse($event->end)->addDay()->toDateString();
                 return $event;
             });

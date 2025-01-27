@@ -251,7 +251,7 @@
             <!-- Calendar -->
             <div class="relative w-full max-w-screen-4xl mx-auto mt-8">
                 <div class="calendar ml-4 mr-4 p-6 flex justify-center rounded-3xl shadow-[0_0_13px_3px_rgba(0,0,0,0.2)]">
-                    <div id="
+                    <div id="calendar"></div>
                 </div>
             </div>
             <!-- Pembatas Bawah -->
@@ -438,12 +438,11 @@
         const calendarEl = document.getElementById('calendar');
         const calendarRuangan = {!! $calendarRuanganJson !!};
     
-        // Inisialisasi FullCalendar
         const calendar = new FullCalendar.Calendar(calendarEl, {
-            locale: 'id', // Bahasa Indonesia
-            initialView: 'dayGridMonth', // Tampilan awal
+            locale: 'id', 
+            initialView: 'dayGridMonth', 
             buttonText: {
-                today: 'Hari Ini' // Ubah label tombol
+                today: 'Hari Ini' 
             },
             events: calendarRuangan, 
             height: 'auto', 
@@ -451,7 +450,7 @@
             windowResize: true 
         });
 
-        calendar.render(); // Render kalender
+        calendar.render(); 
     });
     </script>
 

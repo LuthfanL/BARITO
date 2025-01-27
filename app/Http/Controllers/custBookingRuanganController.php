@@ -25,6 +25,8 @@ class custBookingRuanganController extends Controller
                             ->where('deskripsi', $deskripsi)
                             ->first();
 
+        $colors = ['#3788d8', '#f39c12', '#27ae60', '#8e44ad', '#e74c3c', '#16a085', '#d35400', '#2ecc71', '#3498db', '#9b59b6'];
+
         $calendarRuangan = DB::table('ruangan')
         ->join('pemRuangan', 'ruangan.id', '=', 'pemRuangan.idRuangan')
         ->join('customer', 'pemRuangan.idCustomer', '=', 'customer.NIK')
@@ -34,8 +36,8 @@ class custBookingRuanganController extends Controller
             'pemRuangan.tglSelesai as end'
         )->where('ruangan.nama', $nama)->where('ruangan.lokasi', $lokasi)
         ->get()
-        ->map(function ($event) {
-            $event->color = '#3788d8'; // Menambahkan warna untuk event
+        ->map(function ($event, $index) use ($colors) {
+            $event->color = $colors[$index % count($colors)];
             $event->end = Carbon::parse($event->end)->addDay()->toDateString();
             return $event;
         });

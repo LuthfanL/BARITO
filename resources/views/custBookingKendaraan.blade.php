@@ -436,7 +436,7 @@
         });
     </script>
 
-    {{-- <!-- FullCalendar JS -->
+    <!-- FullCalendar JS -->
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         const calendarEl = document.getElementById('calendar');

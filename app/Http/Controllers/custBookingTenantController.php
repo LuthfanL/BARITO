@@ -20,8 +20,12 @@ class custBookingTenantController extends Controller
         // Ambil data ruangan berdasarkan 'nama', 'lokasi', dan 'deskripsi'
         $event = event::where('namaEvent', $namaEvent)->first();
 
-        $calendarEvents = Event::select('namaEvent as title', 'tglMulai as start', 'tglSelesai as end')->get()->map(function ($event) {
-            $event->color = '#3788d8';
+        $colors = ['#3788d8', '#f39c12', '#27ae60', '#8e44ad', '#e74c3c', '#16a085', '#d35400', '#2ecc71', '#3498db', '#9b59b6'];
+
+        $calendarEvents = Event::select('namaEvent as title', 'tglMulai as start', 'tglSelesai as end')
+        ->get()
+        ->map(function ($event, $index) use ($colors) {
+            $event->color = $colors[$index % count($colors)];
             $event->end = Carbon::parse($event->end)->addDay()->toDateString();
             return $event;
         });
