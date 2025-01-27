@@ -326,9 +326,9 @@
                         </p>
 
                         <!-- Input Bukti Pembayaran -->
-                        {{-- <label for="bukti-bayar" class="block mb-2 text-sm font-medium text-gray-900">Upload Bukti Pembayaran</label>
-                        <input type="file" id="bukti-bayar" name="bukti-bayar" accept="image/jpeg, image/png" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50" required>
-                     --}}
+                        <label for="bukti-bayar" class="block mb-2 text-sm font-medium text-gray-900">Upload Bukti Pembayaran</label>
+                        {{-- <input type="file" id="bukti-bayar" name="bukti-bayar" accept="image/jpeg, image/png" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50" required> --}}
+
                         <!-- Informasi Tambahan -->
                         <p class="info mt-1">
                             * File maksimal 2 MB, format: JPEG atau PNG<br>
@@ -364,14 +364,14 @@
                     <svg class="mx-auto mb-4 text-gray-400 w-16 h-16" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                     </svg>
-                    <h1 class="mb-5 text-lg font-bold text-gray-900">Konfirmasi Booking Ruangan</h1>
-                    <p class="mb-5 text-m font-normal text-gray-500">
+                    <h1 class="mb-3 text-lg font-bold text-gray-900">Konfirmasi Booking Ruangan</h1>
+                    <p class="mb-4 text-m font-normal text-gray-500">
                         Apakah Anda yakin ingin konfirmasi booking ini? Harap diperhatikan kembali bahwa jika Anda membatalkan booking setelah mengonfirmasi, pengembalian biaya akan dilakukan sebesar 90% dari total biaya yang telah dibayar.
                     </p>
 
                     <form action="{{ route('bookingRuangan.store') }}" method="POST">
                         @csrf    
-                        <div class="p-4 md:p-5">
+                        <div class="">
                             <!-- Input tersembunyi untuk menyimpan data -->
                             <input type="hidden" name="idRuangan" id="confirm-idRuangan">
                             <input type="hidden" name="idAdmin" id="confirm-idAdmin">
@@ -383,17 +383,21 @@
                             <input type="hidden" name="tglSelesai" id="confirm-tglSelesai">
                         </div>
 
-                        <button type="submit" class="px-3 py-1 rounded-lg cursor-pointer font-bold font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                            Setuju, Konfirmasi Booking
-                        </button>
+                        <!-- Tombol Konfirmasi dan Kembali -->
+                        <div class="space-y-2">
+                            <button type="submit" class="px-3 py-1 rounded-lg cursor-pointer font-bold font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                Setuju, Konfirmasi Booking
+                            </button>
+                            <button data-modal-hide="modal-konfirmasi" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-bold font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                Kembali
+                            </button>
+                        </div>
                     </form>
-                    <button data-modal-hide="modal-konfirmasi" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-bold font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white mt-4">
-                        Kembali
-                    </button>
                 </div>
             </div>
         </div>
     </div>
+
 
     <!-- Swap Image Script -->
     <script>
@@ -628,6 +632,35 @@
         });
     </script>
 
+    <!-- Script Alert -->
+    <script>
+        // Notifikasi jika berhasil
+        @if(session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: '{{ session('success') }}',
+                showConfirmButton: false,
+                timerProgressBar: true,
+                timer: 3000 // Durasi 3 detik
+            });
+        @endif
+    
+        // Notifikasi jika ada error
+        @if($errors->any())
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                html: `
+                    <ul style="text-align: left;">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                `,
+            });
+        @endif
+    </script>
 </body>
 
 </html>

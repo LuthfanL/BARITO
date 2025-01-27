@@ -83,19 +83,10 @@
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                         </svg>
                     </div>
-                    <input type="search" id="default-search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="Cari Kendaraan" required />
-                    <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-xl text-sm px-4 py-2">Cari</button>
+                    <input type="search" id="search-input" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="Cari Kendaraan" required />
+                    {{-- <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-xl text-sm px-4 py-2">Cari</button> --}}
                 </div>
             </form>
-
-            <!-- Tampilkan Daftar Kendaraan -->
-            @if(!empty($kendaraan) && count($kendaraan) > 0)
-                <table>
-                    <!-- Tabel kendaraan ditampilkan di sini -->
-                </table>
-            @else
-                <p class="text-gray-500 mt-4 text-center">Kendaraan yang Anda cari tidak ditemukan.</p>
-            @endif
 
             <!-- Daftar Kendaraan -->
             <div id="kendaraan-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 w-full mt-8">
@@ -104,9 +95,9 @@
                     <div class="col-span-1 kendaraan-card" data-nama="{{ $kendara->nama }}">
                         <div class="bg-white border border-gray-200 rounded-lg shadow-[0_0_13px_3px_rgba(0,0,0,0.2)]">
                             <!-- Gambar -->
-                            {{-- <div>
+                            <div>
                                 <img class="rounded-t-lg w-full h-48 object-cover" src="{{ $kendara->foto_urls[0] }}" alt="ruangan" />
-                            </div> --}}
+                            </div>
                             <!-- Nama Kendaraan -->
                             <div class="p-5">
                                 <a href="">

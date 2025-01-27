@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMJTVF1a1wMA2gO/YHbx+fyfJhN/0Q5ntv7zYY" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css"  rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <style>
@@ -65,7 +66,7 @@
                                 name="keyword" 
                                 id="search-input" 
                                 class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500" 
-                                placeholder="Cari ID Booking atau ID Cust atau Nama Pemohon" 
+                                placeholder="Cari ID Booking, Nama Kendaraan atau Nama Pemohon" 
                             />
                         </div>
                     </form>
@@ -156,7 +157,7 @@
                         @if (!empty($bookings))
                             <tbody>
                                 @foreach ($bookings as $booking)
-                                    <tr class="booking-list" data-bookingid="{{ $booking->id }}" data-bookingidCustomer="{{ $booking->idCustomer }}" data-bookingnamaPemohon="{{ $booking->namaPemohon }}">
+                                    <tr class="booking-list" data-bookingid="{{ $booking->id }}" data-bookingidCustomer="{{ $booking->idCustomer }}" data-bookingnamaPemohon="{{ $booking->namaPemohon }}" data-bookingnamaKendaraan="{{ $booking->namaKendaraan }}">
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $booking->id }}</td>
                                         <td>{{ $booking->namaPemohon }}</td>
@@ -167,7 +168,6 @@
                                         <td class="text-center">
                                             BuktiPembayaran.jpg
                                         </td>              
-                              
                                         <!-- Info Lain -->
                                         <td class="flex justify-center items-center text-center mt-5"> 
                                             <button 
@@ -204,6 +204,13 @@
                                     </tr>
                                 @endforeach    
                             </tbody>
+                        @else
+                        <!-- Tampilkan baris ini jika tidak ada data -->
+                            <tr>
+                                <td colspan="12" class="text-center py-3 text-gray-500">
+                                    Tidak ada data yang tersedia.
+                                </td>
+                            </tr>
                         @endif
                     </table>
                 </div>
@@ -256,25 +263,25 @@
                     <h1 class="mb-5 text-lg font-bold text-gray-900">Konfirmasi Persetujuan Booking</h1>
                     <p class="mb-5 text-m font-normal text-gray-500">Apakah Anda yakin ingin menyetujui booking kendaraan ini? Pastikan semua detail booking telah sesuai sebelum melanjutkan.</p>
 
-                   <form action="{{ route('update.status') }}" method="POST">
-                    @csrf
-                        <input type="hidden" name="id" value="{{ $booking->id }}"> <!-- Kirim ID booking -->
-                        <input type="hidden" name="status" value="Disetujui"> <!-- Kirim status -->
-                        <button 
-                            type="submit"
-                            class="btn-setujui px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                            Setujui
-                        </button>
-                    </form>
-
-                    <!-- Jeda Baris -->
-                    <div class="mt-4"></div>
-
-                    <button 
-                        data-modal-hide="modal-setujui" 
-                        type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                        Kembali
-                        </button>
+                    @if (isset($booking))
+                        <form action="{{ route('update.status') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="id" value="{{ $booking->id }}"> <!-- Kirim ID booking -->
+                            <input type="hidden" name="status" value="Disetujui"> <!-- Kirim status -->
+                            <button 
+                                type="submit"
+                                class="btn-setujui px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                Setujui
+                            </button>
+                            <button 
+                                data-modal-hide="modal-setujui" 
+                                type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                Kembali
+                            </button>
+                        </form>
+                    @else
+                        <p class="text-red-500">Data booking tidak ditemukan.</p>
+                    @endif
                 </div>
             </div>
         </div>
@@ -290,26 +297,26 @@
                     </svg>
                     <h1 class="mb-5 text-lg font-bold text-gray-900">Konfirmasi Penolakan Booking</h1>
                     <p class="mb-5 text-m font-normal text-gray-500">Apakah Anda yakin ingin menolak booking kendaraan ini? Tindakan ini akan memberi tahu customer bahwa booking tidak dapat diproses.</p>
-                    <form action="{{ route('update.status') }}" method="POST">
-                    @csrf
-                        <input type="hidden" name="id" value="{{ $booking->id }}"> <!-- Kirim ID booking -->
-                        <input type="hidden" name="status" value="Ditolak"> <!-- Kirim status -->
-                        <button 
-                            type="submit"
-                            class="btn-tolak px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                            Tolak
-                        </button>
-                    </form>
-
-                    <!-- Jeda Baris -->
-                    <div class="mt-4"></div>
-
-                    <button 
-                        data-modal-hide="modal-tolak" 
-                        type="button" 
-                        class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                        Kembali
-                    </button>
+                    @if (isset($booking))
+                        <form action="{{ route('update.status') }}" method="POST">
+                        @csrf
+                            <input type="hidden" name="id" value="{{ $booking->id }}"> <!-- Kirim ID booking -->
+                            <input type="hidden" name="status" value="Ditolak"> <!-- Kirim status -->
+                            <button 
+                                type="submit"
+                                class="btn-tolak px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                Tolak
+                            </button>
+                            <button 
+                                data-modal-hide="modal-tolak" 
+                                type="button" 
+                                class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                Kembali
+                            </button>
+                        </form>
+                    @else
+                        <p class="text-red-500">Data booking tidak ditemukan.</p>
+                    @endif
                 </div>
             </div>
         </div>
@@ -355,8 +362,6 @@
     }
 </script>
 
-   <tr class="booking-list" data-bookingid="{{ $booking->id }}" data-bookingidCustomer="{{ $booking->idCustomer }}" data-bookingnamaPemohon="{{ $booking->namaPemohon }}">
-
 <!-- Search -->
 <script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -368,10 +373,11 @@
             
             kendaraanList.forEach(function(card) {
                 const bookingId = card.getAttribute("data-bookingid");
-                const idCustomer = card.getAttribute("data-bookingidCustomer"); 
-                const namaPemohon = card.getAttribute("data-bookingnamaPemohon").toLowerCase();   
+                // const idCustomer = card.getAttribute("data-bookingidCustomer"); 
+                const namaPemohon = card.getAttribute("data-bookingnamaPemohon").toLowerCase();
+                const namaKendaraan = card.getAttribute("data-bookingnamaKendaraan").toLowerCase();  
 
-                if (bookingId.includes(searchQuery) || idCustomer.includes(searchQuery)  || namaPemohon.includes(searchQuery)) {
+                if (bookingId.includes(searchQuery)  || namaPemohon.includes(searchQuery) || namaKendaraan.includes(searchQuery)) {
                     card.style.display = 'table-row'; 
                 } else {
                     card.style.display = 'none'; 
@@ -425,6 +431,36 @@
             });
         });
     });
-</script>    
+</script>   
+
+    <!-- Script Alert -->
+    <script>
+        // Notifikasi jika berhasil
+        @if(session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: '{{ session('success') }}',
+                showConfirmButton: false,
+                timerProgressBar: true,
+                timer: 3000 // Durasi 3 detik
+            });
+        @endif
+    
+        // Notifikasi jika ada error
+        @if($errors->any())
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                html: `
+                    <ul style="text-align: left;">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                `,
+            });
+        @endif
+    </script>
 
 </html>

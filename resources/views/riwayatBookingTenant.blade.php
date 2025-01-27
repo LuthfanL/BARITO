@@ -70,7 +70,7 @@
                                 name="keyword" 
                                 id="search-input" 
                                 class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500" 
-                                placeholder="Cari ID Booking atau ID Cust atau Nama Pemohon" 
+                                placeholder="Cari ID, Nama Event atau Nama Pemohon" 
                             />
                         </div>
                     </form>
@@ -173,49 +173,46 @@
                         </thead>
                         <tbody>
                             @if (!empty($bookings))
-                                <tbody>
-                                    @foreach ($bookings as $booking)
-                                        <tr class="booking-list" data-bookingid="{{ $booking->id }}" data-bookingidCustomer="{{ $booking->idCustomer }}" data-bookingnamaPemohon="{{ $booking->namaPemohon }}">
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $booking->id }}</td>
-                                            <td>{{ $booking->namaPemohon }}</td>
-                                            <td>{{ $booking->noWa }}</td>
-                                            <td>{{ $booking->namaTenant }}</td>
-                                            <td>{{ $booking->namaEvent }}</td>
-                                            <td>{{ $booking->tipeTenant }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($booking->tglMulai)->format('d/m/Y') }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($booking->tglSelesai)->format('d/m/Y') }}</td>
-                                            <td class="text-center">
-                                                BuktiPembayaran.jpg
-                                            </td>              
-                     
-                                            <!-- Alasan Pembatalan -->
-                                            <td class=" items-center text-center mt-5"> 
-                                                <div class="flex justify-center ">
-                                                    <button 
-                                                        data-modal-target="detail-batal" 
-                                                        data-modal-toggle="detail-batal" 
-                                                        type="button" 
-                                                        class="block px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-700 via-red-800 to-red-900 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                                                        Alasan
-                                                    </button>
+                                @foreach ($bookings as $booking)
+                                    <tr class="booking-list" data-bookingid="{{ $booking->id }}" data-bookingidCustomer="{{ $booking->idCustomer }}" data-bookingnamaPemohon="{{ $booking->namaPemohon }}" data-bookingnamaEvent="{{ $booking->namaEvent }}">
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $booking->id }}</td>
+                                        <td>{{ $booking->namaPemohon }}</td>
+                                        <td>{{ $booking->noWa }}</td>
+                                        <td>{{ $booking->namaTenant }}</td>
+                                        <td>{{ $booking->tipeTenant }}</td>
+                                        <td>{{ $booking->namaEvent }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($booking->tglMulai)->format('d/m/Y') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($booking->tglSelesai)->format('d/m/Y') }}</td>
+                                        <td class="text-center">
+                                            BuktiPembayaran.jpg
+                                        </td>              
+                                        <!-- Alasan Pembatalan -->
+                                        <td class=" items-center text-center mt-5"> 
+                                            <div class="flex justify-center ">
+                                                <button 
+                                                    data-modal-target="detail-batal" 
+                                                    data-modal-toggle="detail-batal" 
+                                                    type="button" 
+                                                    class="block px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-700 via-red-800 to-red-900 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                                    Alasan
+                                                </button>
+                                            </div>
+                                        </td>
+                                        
+                                        <td>
+                                            @if ($booking->status == 'Disetujui')
+                                                <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 text-white">
+                                                    Disetujui
                                                 </div>
-                                            </td>
-                                            
-                                            <td>
-                                                @if ($booking->status == 'Disetujui')
-                                                    <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 text-white">
-                                                        Disetujui
-                                                    </div>
-                                                @else
-                                                    <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 text-white">
-                                                        Ditolak
-                                                    </div>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
+                                            @else
+                                                <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 text-white">
+                                                    Ditolak
+                                                </div>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
                             @endif
                         </tbody>
                     </table>
@@ -258,7 +255,7 @@
     if (document.getElementById("default-table") && typeof simpleDatatables.DataTable !== 'undefined') {
         const dataTable = new simpleDatatables.DataTable("#default-table", {
             searchable: false,
-            perPageSelect: true
+            perPageSelect: false
         });
     }
 </script>
@@ -274,10 +271,11 @@
             
             kendaraanList.forEach(function(card) {
                 const bookingId = card.getAttribute("data-bookingid");
-                const idCustomer = card.getAttribute("data-bookingidCustomer"); 
-                const namaPemohon = card.getAttribute("data-bookingnamaPemohon").toLowerCase();   
+                // const idCustomer = card.getAttribute("data-bookingidCustomer"); 
+                const namaPemohon = card.getAttribute("data-bookingnamaPemohon").toLowerCase(); 
+                const namaEvent = card.getAttribute("data-bookingnamaEvent").toLowerCase();  
 
-                if (bookingId.includes(searchQuery) || idCustomer.includes(searchQuery)  || namaPemohon.includes(searchQuery)) {
+                if (bookingId.includes(searchQuery) || namaPemohon.includes(searchQuery) || namaEvent.includes(searchQuery)) {
                     card.style.display = 'table-row'; 
                 } else {
                     card.style.display = 'none'; 

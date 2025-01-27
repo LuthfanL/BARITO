@@ -376,7 +376,7 @@
 
                     <form action="{{ route('bookingKendaraan.store') }}" method="POST">
                         @csrf    
-                        <div class="p-4 md:p-5">
+                        <div class="">
                             <!-- Input tersembunyi untuk menyimpan data -->
                             <input type="hidden" name="idKendaraan" id="confirm-idKendaraan">
                             <input type="hidden" name="idAdmin" id="confirm-idAdmin">
@@ -393,10 +393,10 @@
                         <button type="submit" class="px-3 py-1 rounded-lg cursor-pointer font-bold font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
                             Setuju, Konfirmasi Booking
                         </button>
+                        <button data-modal-hide="modal-konfirmasi" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-bold font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white mt-4">
+                            Kembali
+                        </button>
                     </form>
-                    <button data-modal-hide="modal-konfirmasi" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-bold font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white mt-4">
-                        Kembali
-                    </button>
                 </div>
             </div>
         </div>
@@ -685,6 +685,36 @@
                 });
             }
         });
+    </script>
+
+    <!-- Script Alert -->
+    <script>
+        // Notifikasi jika berhasil
+        @if(session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: '{{ session('success') }}',
+                showConfirmButton: false,
+                timerProgressBar: true,
+                timer: 3000 // Durasi 3 detik
+            });
+        @endif
+    
+        // Notifikasi jika ada error
+        @if($errors->any())
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                html: `
+                    <ul style="text-align: left;">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                `,
+            });
+        @endif
     </script>
 
 </body>

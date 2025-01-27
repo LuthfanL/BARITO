@@ -50,7 +50,7 @@
                         <h1 class="font-bold text-2xl">Riwayat Booking Ruangan</h1>
                     </div>
 
-                     <!-- Cari Booking -->
+                    <!-- Cari Booking -->
                     <form id="searchForm" class="w-full mx-auto">   
                         <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Cari Booking</label>
                         <div class="relative">
@@ -64,7 +64,7 @@
                                 name="keyword" 
                                 id="search-input" 
                                 class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500" 
-                                placeholder="Cari ID Booking atau ID Cust atau Nama Pemohon" 
+                                placeholder="Cari ID Booking, Nama Pemohon atau Nama Ruangan" 
                             />
                         </div>
                     </form>
@@ -156,60 +156,58 @@
                         </thead>
                         <tbody>
                             @if (!empty($bookings))
-                                <tbody>
-                                    @foreach ($bookings as $booking)
-                                        <tr class="booking-list" data-bookingid="{{ $booking->id }}" data-bookingidCustomer="{{ $booking->idCustomer }}" data-bookingnamaPemohon="{{ $booking->namaPemohon }}">
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $booking->id }}</td>
-                                            <td>{{ $booking->namaPemohon }}</td>
-                                            <td>{{ $booking->noWa }}</td>
-                                            <td>{{ $booking->ruangan->nama ?? 'Tidak Ada Ruangan' }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($booking->tglMulai)->format('d/m/Y') }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($booking->tglSelesai)->format('d/m/Y') }}</td>
-                                            <td class="text-center">
-                                                BuktiPembayaran.jpg
-                                            </td>              
-                                
-                                            <!-- Info Lain -->
-                                            <td class="flex justify-center items-center text-center mt-5"> 
+                                @foreach ($bookings as $booking)
+                                    <tr class="booking-list" data-bookingid="{{ $booking->id }}" data-bookingidCustomer="{{ $booking->idCustomer }}" data-bookingnamaPemohon="{{ $booking->namaPemohon }}" data-bookingnamaRuangan="{{ $booking->ruangan->nama }}">
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $booking->id }}</td>
+                                        <td>{{ $booking->namaPemohon }}</td>
+                                        <td>{{ $booking->noWa }}</td>
+                                        <td>{{ $booking->ruangan->nama ?? 'Tidak Ada Ruangan' }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($booking->tglMulai)->format('d/m/Y') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($booking->tglSelesai)->format('d/m/Y') }}</td>
+                                        <td class="text-center">
+                                            BuktiPembayaran.jpg
+                                        </td>              
+                            
+                                        <!-- Info Lain -->
+                                        <td class="items-center text-center mt-5"> 
+                                            <button 
+                                                data-modal-target="detail-booking" 
+                                                data-modal-toggle="detail-booking"
+                                                data-bookingkeperluan="{{ $booking->keperluan }}" 
+                                                data-bookingketerangan="{{ $booking->keterangan }}" 
+                                                type="button" 
+                                                class="block px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                                Detail
+                                            </button>
+                                        </td>
+
+                                        <!-- Alasan Pembatalan -->
+                                        <td class=" items-center text-center mt-5"> 
+                                            <div class="flex justify-center ">
                                                 <button 
-                                                    data-modal-target="detail-booking" 
-                                                    data-modal-toggle="detail-booking"
-                                                    data-bookingkeperluan="{{ $booking->keperluan }}" 
-                                                    data-bookingketerangan="{{ $booking->keterangan }}" 
+                                                    data-modal-target="detail-batal" 
+                                                    data-modal-toggle="detail-batal" 
                                                     type="button" 
-                                                    class="block px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                                                    Detail
+                                                    class="block px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-700 via-red-800 to-red-900 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                                    Alasan
                                                 </button>
-                                            </td>
+                                            </div>
+                                        </td>
 
-                                            <!-- Alasan Pembatalan -->
-                                            <td class=" items-center text-center mt-5"> 
-                                                <div class="flex justify-center ">
-                                                    <button 
-                                                        data-modal-target="detail-batal" 
-                                                        data-modal-toggle="detail-batal" 
-                                                        type="button" 
-                                                        class="block px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-700 via-red-800 to-red-900 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                                                        Alasan
-                                                    </button>
+                                        <td>
+                                            @if ($booking->status == 'Disetujui')
+                                                <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 text-white">
+                                                    Disetujui
                                                 </div>
-                                            </td>
-
-                                            <td>
-                                                @if ($booking->status == 'Disetujui')
-                                                    <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 text-white">
-                                                        Disetujui
-                                                    </div>
-                                                @else
-                                                    <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 text-white">
-                                                        Ditolak
-                                                    </div>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                    @endforeach    
-                                </tbody>
+                                            @else
+                                                <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 text-white">
+                                                    Ditolak
+                                                </div>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach    
                             @endif
                         </tbody>
                     </table>
@@ -283,7 +281,7 @@
     if (document.getElementById("default-table") && typeof simpleDatatables.DataTable !== 'undefined') {
         const dataTable = new simpleDatatables.DataTable("#default-table", {
             searchable: false,
-            perPageSelect: true
+            perPageSelect: false
         });
     }
 </script>
@@ -293,17 +291,18 @@
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const searchInput = document.getElementById("search-input"); 
-        const kendaraanList = document.querySelectorAll(".booking-list"); 
+        const ruanganList = document.querySelectorAll(".booking-list"); 
 
         searchInput.addEventListener("input", function() {
             const searchQuery = searchInput.value.toLowerCase(); 
             
-            kendaraanList.forEach(function(card) {
-                const bookingId = card.getAttribute("data-bookingid");
-                const idCustomer = card.getAttribute("data-bookingidCustomer"); 
-                const namaPemohon = card.getAttribute("data-bookingnamaPemohon").toLowerCase();   
+            ruanganList.forEach(function(card) {
+                const bookingId = card.getAttribute("data-bookingid").toLowerCase();
+                // const idCustomer = card.getAttribute("data-bookingidCustomer").toLowerCase(); 
+                const namaPemohon = card.getAttribute("data-bookingnamaPemohon").toLowerCase();
+                const namaRuangan = card.getAttribute("data-bookingnamaRuangan").toLowerCase();  
 
-                if (bookingId.includes(searchQuery) || idCustomer.includes(searchQuery)  || namaPemohon.includes(searchQuery)) {
+                if (bookingId.includes(searchQuery) || namaPemohon.includes(searchQuery) || namaRuangan.includes(searchQuery)) {
                     card.style.display = 'table-row'; 
                 } else {
                     card.style.display = 'none'; 

@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMJTVF1a1wMA2gO/YHbx+fyfJhN/0Q5ntv7zYY" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css"  rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     
     <style>
@@ -59,8 +60,13 @@
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                                 </svg>
                             </div>
-                            <input type="search" id="default-search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="Cari Booking" required />
-                            <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-xl text-sm px-4 py-2">Cari</button>
+                            <input 
+                                type="search" 
+                                name="keyword" 
+                                id="search-input" 
+                                class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500" 
+                                placeholder="Cari ID Booking, Nama Pemohon atau Nama Ruangan" 
+                            />
                         </div>
                     </form>
 
@@ -148,57 +154,62 @@
                         </thead>
                         <tbody>
                             @if (!empty($bookings))
-                                <tbody>
-                                    @foreach ($bookings as $booking)
-                                        <tr class="booking-list" data-bookingid="{{ $booking->id }}" data-bookingidCustomer="{{ $booking->idCustomer }}" data-bookingnamaPemohon="{{ $booking->namaPemohon }}">
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $booking->id }}</td>
-                                            <td>{{ $booking->namaPemohon }}</td>
-                                            <td>{{ $booking->noWa }}</td>
-                                            <td>{{ $booking->ruangan->nama ?? 'Tidak Ada Ruangan' }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($booking->tglMulai)->format('d/m/Y') }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($booking->tglSelesai)->format('d/m/Y') }}</td>
-                                            <td class="text-center">
-                                                BuktiPembayaran.jpg
-                                            </td>              
-                                
-                                            <!-- Info Lain -->
-                                            <td class="flex justify-center items-center text-center mt-5"> 
+                                @foreach ($bookings as $booking)
+                                    <tr class="booking-list" data-bookingid="{{ $booking->id }}" data-bookingidCustomer="{{ $booking->idCustomer }}" data-bookingnamaPemohon="{{ $booking->namaPemohon }}" data-bookingnamaRuangan="{{ $booking->ruangan->nama }}">
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $booking->id }}</td>
+                                        <td>{{ $booking->namaPemohon }}</td>
+                                        <td>{{ $booking->noWa }}</td>
+                                        <td>{{ $booking->ruangan->nama ?? 'Tidak Ada Ruangan' }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($booking->tglMulai)->format('d/m/Y') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($booking->tglSelesai)->format('d/m/Y') }}</td>
+                                        <td class="text-center">
+                                            BuktiPembayaran.jpg
+                                        </td>              
+                            
+                                        <!-- Info Lain -->
+                                        <td class="flex justify-center items-center text-center mt-5"> 
+                                            <button 
+                                                data-modal-target="detail-booking" 
+                                                data-modal-toggle="detail-booking"
+                                                data-bookingkeperluan="{{ $booking->keperluan }}" 
+                                                data-bookingketerangan="{{ $booking->keterangan }}" 
+                                                type="button" 
+                                                class="block px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                                Detail
+                                            </button>
+                                        </td>
+
+                                        <!-- Alasan Pembatalan -->
+                                        <td class=" items-center text-center mt-5"> 
+                                            <div class="flex justify-center ">
                                                 <button 
-                                                    data-modal-target="detail-booking" 
-                                                    data-modal-toggle="detail-booking"
-                                                    data-bookingkeperluan="{{ $booking->keperluan }}" 
-                                                    data-bookingketerangan="{{ $booking->keterangan }}" 
+                                                    data-modal-target="detail-batal" 
+                                                    data-modal-toggle="detail-batal" 
                                                     type="button" 
-                                                    class="block px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                                                    Detail
+                                                    class="block px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-700 via-red-800 to-red-900 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                                    Alasan
                                                 </button>
-                                            </td>
+                                            </div>
+                                        </td>
 
-                                            <!-- Alasan Pembatalan -->
-                                            <td class=" items-center text-center mt-5"> 
-                                                <div class="flex justify-center ">
-                                                    <button 
-                                                        data-modal-target="detail-batal" 
-                                                        data-modal-toggle="detail-batal" 
-                                                        type="button" 
-                                                        class="block px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-700 via-red-800 to-red-900 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                                                        Alasan
-                                                    </button>
-                                                </div>
-                                            </td>
-
-                                            <!-- Tindakan -->
-                                            <td class="text-center">
-                                                <div class="flex flex-col gap-2">
-                                                    <button data-modal-target="modal-setujui" data-modal-toggle="modal-setujui" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Setujui</button>
-                                                    <button data-modal-target="modal-tolak" data-modal-toggle="modal-tolak" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Tolak</button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach    
-                                </tbody>
-                            @endif
+                                        <!-- Tindakan -->
+                                        <td class="text-center">
+                                            <div class="flex flex-col gap-2">
+                                                <button data-modal-target="modal-setujui" data-modal-toggle="modal-setujui" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Setujui</button>
+                                                <button data-modal-target="modal-tolak" data-modal-toggle="modal-tolak" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Tolak</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach   
+                            @else
+                                <!-- Tampilkan baris ini jika tidak ada data -->
+                                <tr>
+                                    <td colspan="12" class="text-center py-3 text-gray-500">
+                                        Tidak ada data yang tersedia.
+                                    </td>
+                                </tr>
+                            @endif 
                         </tbody>
                     </table>
                 </div>
@@ -236,7 +247,7 @@
         </div>
     </div>
 
-     <!-- Modal Setujui -->
+    <!-- Modal Setujui -->
     <div id="modal-setujui" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative p-4 w-full max-w-xl max-h-full">
             <div class="relative bg-white rounded-lg shadow">
@@ -245,27 +256,27 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                     </svg>
                     <h1 class="mb-5 text-lg font-bold text-gray-900">Konfirmasi Persetujuan Booking</h1>
-                    <p class="mb-5 text-m font-normal text-gray-500">Apakah Anda yakin ingin menyetujui booking kendaraan ini? Pastikan semua detail booking telah sesuai sebelum melanjutkan.</p>
+                    <p class="mb-5 text-m font-normal text-gray-500">Apakah Anda yakin ingin menyetujui booking ruangan ini? Pastikan semua detail booking telah sesuai sebelum melanjutkan.</p>
 
-                    <form action="{{ route('upStatusRuangan') }}" method="POST">
-                    @csrf
-                        <input type="hidden" name="id" value="{{ $booking->id }}"> <!-- Kirim ID booking -->
-                        <input type="hidden" name="status" value="Disetujui"> <!-- Kirim status -->
-                        <button 
-                            type="submit"
-                            class="btn-setujui px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                            Setujui
-                        </button>
-                    </form>
-
-                    <!-- Jeda Baris -->
-                    <div class="mt-4"></div>
-
-                    <button 
-                        data-modal-hide="modal-setujui" 
-                        type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                        Kembali
-                        </button>
+                    @if (isset($booking))
+                        <form action="{{ route('upStatusRuangan') }}" method="POST">
+                        @csrf
+                            <input type="hidden" name="id" value="{{ $booking->id }}"> <!-- Kirim ID booking -->
+                            <input type="hidden" name="status" value="Disetujui"> <!-- Kirim status -->
+                            <button 
+                                type="submit"
+                                class="btn-setujui px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                Setujui
+                            </button> 
+                            <button 
+                                data-modal-hide="modal-setujui" 
+                                type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                Kembali
+                            </button>
+                        </form>
+                    @else
+                        <p class="text-red-500">Data booking tidak ditemukan.</p>
+                    @endif
                 </div>
             </div>
         </div>
@@ -280,27 +291,27 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                     </svg>
                     <h1 class="mb-5 text-lg font-bold text-gray-900">Konfirmasi Penolakan Booking</h1>
-                    <p class="mb-5 text-m font-normal text-gray-500">Apakah Anda yakin ingin menolak booking kendaraan ini? Tindakan ini akan memberi tahu customer bahwa booking tidak dapat diproses.</p>
-                    <form action="{{ route('upStatusRuangan') }}" method="POST">
-                    @csrf
-                        <input type="hidden" name="id" value="{{ $booking->id }}"> <!-- Kirim ID booking -->
-                        <input type="hidden" name="status" value="Ditolak"> <!-- Kirim status -->
-                        <button 
-                            type="submit"
-                            class="btn-tolak px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                            Tolak
-                        </button>
-                    </form>
-
-                    <!-- Jeda Baris -->
-                    <div class="mt-4"></div>
-
-                    <button 
-                        data-modal-hide="modal-tolak" 
-                        type="button" 
-                        class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                        Kembali
-                    </button>
+                    <p class="mb-5 text-m font-normal text-gray-500">Apakah Anda yakin ingin menolak booking ruangan ini? Tindakan ini akan memberi tahu customer bahwa booking tidak dapat diproses.</p>
+                    @if (isset($booking))
+                        <form action="{{ route('upStatusRuangan') }}" method="POST">
+                        @csrf
+                            <input type="hidden" name="id" value="{{ $booking->id }}"> <!-- Kirim ID booking -->
+                            <input type="hidden" name="status" value="Ditolak"> <!-- Kirim status -->
+                            <button 
+                                type="submit"
+                                class="btn-tolak px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                Tolak
+                            </button>
+                            <button 
+                                data-modal-hide="modal-tolak" 
+                                type="button" 
+                                class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                Kembali
+                            </button>
+                        </form>
+                    @else
+                        <p class="text-red-500">Data booking tidak ditemukan.</p>
+                    @endif
                 </div>
             </div>
         </div>
@@ -339,7 +350,7 @@
     if (document.getElementById("default-table") && typeof simpleDatatables.DataTable !== 'undefined') {
         const dataTable = new simpleDatatables.DataTable("#default-table", {
             searchable: false,
-            perPageSelect: true
+            perPageSelect: false
         });
     }
 </script>
@@ -348,17 +359,18 @@
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const searchInput = document.getElementById("search-input"); 
-        const kendaraanList = document.querySelectorAll(".booking-list"); 
+        const ruanganList = document.querySelectorAll(".booking-list"); 
 
         searchInput.addEventListener("input", function() {
             const searchQuery = searchInput.value.toLowerCase(); 
             
-            kendaraanList.forEach(function(card) {
-                const bookingId = card.getAttribute("data-bookingid");
-                const idCustomer = card.getAttribute("data-bookingidCustomer"); 
-                const namaPemohon = card.getAttribute("data-bookingnamaPemohon").toLowerCase();   
+            ruanganList.forEach(function(card) {
+                const bookingId = card.getAttribute("data-bookingid").toLowerCase();
+                // const idCustomer = card.getAttribute("data-bookingidCustomer").toLowerCase(); 
+                const namaPemohon = card.getAttribute("data-bookingnamaPemohon").toLowerCase();
+                const namaRuangan = card.getAttribute("data-bookingnamaRuangan").toLowerCase();  
 
-                if (bookingId.includes(searchQuery) || idCustomer.includes(searchQuery)  || namaPemohon.includes(searchQuery)) {
+                if (bookingId.includes(searchQuery) || namaPemohon.includes(searchQuery) || namaRuangan.includes(searchQuery)) {
                     card.style.display = 'table-row'; 
                 } else {
                     card.style.display = 'none'; 
@@ -411,5 +423,35 @@
         });
     });
 </script>    
+
+    <!-- Script Alert -->
+    <script>
+        // Notifikasi jika berhasil
+        @if(session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: '{{ session('success') }}',
+                showConfirmButton: false,
+                timerProgressBar: true,
+                timer: 3000 // Durasi 3 detik
+            });
+        @endif
+    
+        // Notifikasi jika ada error
+        @if($errors->any())
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                html: `
+                    <ul style="text-align: left;">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                `,
+            });
+        @endif
+    </script>
 
 </html>

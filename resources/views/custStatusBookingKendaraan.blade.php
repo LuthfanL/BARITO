@@ -173,8 +173,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                @if (!empty($bookings))
-                    <tbody>
+                    @if (!empty($bookings))
                         @foreach ($bookings as $booking)
                             <tr class="booking-list" data-bookingid="{{ $booking->id }}" data-bookingnamaKendaraan="{{ $booking->namaKendaraaan }}">
                                 <td>{{ $loop->iteration }}</td>
@@ -221,8 +220,7 @@
                                 </td>
                             </tr>
                         @endforeach
-                    </tbody>
-                @endif
+                    @endif
                 </tbody>
             </table>
         </div>
@@ -282,16 +280,15 @@
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 </body>
 
-<!-- Table -->
-<script>
-    if (document.getElementById("default-table") && typeof simpleDatatables.DataTable !== 'undefined') {
-        const dataTable = new simpleDatatables.DataTable("#default-table", {
-            searchable: false,
-            perPage: 10, // Misalnya, tentukan jumlah item per halaman
-            perPageSelect: true
-        });
-    }
-</script>
+    <!-- Table -->
+    <script>
+        if (document.getElementById("default-table") && typeof simpleDatatables.DataTable !== 'undefined') {
+            const dataTable = new simpleDatatables.DataTable("#default-table", {
+                searchable: false,
+                perPageSelect: false
+            });
+        }
+    </script>
 
 <!-- Checkbox Batalkan wajib diklik -->
 <script>

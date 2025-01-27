@@ -139,6 +139,6 @@ class custBookingRuanganController extends Controller
         // Simpan data ke database
         pemRuangan::create($dataToStore);
 
-        return redirect()->back()->with('success', 'Booking kendaraan berhasil!');
+        return redirect()->back()->with('success', 'Booking ruangan berhasil!');
     }
 }

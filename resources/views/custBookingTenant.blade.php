@@ -303,7 +303,7 @@
                             <option value="Tenant Jasa">Tenant Jasa</option>
                         </select> --}}
 
-                         <!-- Input Tanggal -->
+                        <!-- Input Tanggal -->
                         <label for="tanggal-event" class="block font-bold">Tanggal</label>
                         <div id="date-range-picker" class="flex items-center space-x-2">
                             <div class="relative flex items-center">
@@ -315,8 +315,8 @@
                         </div>
 
                         <!-- Input Bukti Pembayaran -->
-                        {{-- <label for="bukti-bayar" class="block mb-2 text-sm font-medium text-gray-900">Upload Bukti Pembayaran</label>
-                        <input type="file" id="bukti-bayar" name="bukti-bayar" accept="image/jpeg, image/png" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50" required> --}}
+                        <label for="bukti-bayar" class="block mb-2 text-sm font-medium text-gray-900">Upload Bukti Pembayaran</label>
+                        {{-- <input type="file" id="bukti-bayar" name="bukti-bayar" accept="image/jpeg, image/png" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50" required> --}}
                     
                         <!-- Informasi Tambahan -->
                         <p class="info mt-1">
@@ -326,7 +326,7 @@
                     </form>
                 </div>
 
-               <!-- Modal footer -->
+                <!-- Modal footer -->
                 <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b space-x-2">
                     <button    
                         data-modal-target="modal-konfirmasi" 
@@ -345,7 +345,7 @@
         </div>
     </div>
 
-     <!-- Modal Booking Konfirmasi -->
+    <!-- Modal Booking Konfirmasi -->
     <div id="modal-konfirmasi" data-modal-backdrop="static" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative p-4 w-full max-w-6xl max-h-full">
             <div class="relative bg-white rounded-lg shadow">
@@ -360,7 +360,7 @@
 
                     <form action="{{ route('bookingTenant.store') }}" method="POST">
                         @csrf    
-                        <div class="p-4 md:p-5">
+                        <div class="">
                             <!-- Input tersembunyi untuk menyimpan data -->
                             <input type="hidden" name="namaEvent" id="confirm-namaEvent">
                             <input type="hidden" name="idAdmin" id="confirm-idAdmin">
@@ -375,10 +375,10 @@
                         <button type="submit" class="px-3 py-1 rounded-lg cursor-pointer font-bold font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
                             Setuju, Konfirmasi Booking
                         </button>
+                        <button data-modal-hide="modal-konfirmasi" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-bold font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white mt-4">
+                            Kembali
+                        </button>
                     </form>
-                    <button data-modal-hide="modal-konfirmasi" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-bold font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white mt-4">
-                        Kembali
-                    </button>
                 </div>
             </div>
         </div>
@@ -628,6 +628,36 @@
                 });
             }
         });
+    </script>
+
+    <!-- Script Alert -->
+    <script>
+        // Notifikasi jika berhasil
+        @if(session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: '{{ session('success') }}',
+                showConfirmButton: false,
+                timerProgressBar: true,
+                timer: 3000 // Durasi 3 detik
+            });
+        @endif
+    
+        // Notifikasi jika ada error
+        @if($errors->any())
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                html: `
+                    <ul style="text-align: left;">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                `,
+            });
+        @endif
     </script>
 </body>
 

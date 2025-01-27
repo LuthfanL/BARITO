@@ -225,58 +225,55 @@
                         </td>
                     </tr> --}}
                     @if (!empty($bookings))
-                        <tbody>
-                            @foreach ($bookings as $booking)
-                                <tr class="booking-list" data-bookingid="{{ $booking->id }}">
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $booking->id }}</td>
-                                    <td>{{ $booking->namaEvent }}</td>
-                                    <td>{{ $booking->namaTenant }}</td>
-                                    <td>{{ $booking->tipeTenant }}</td>
-                                    <td>{{ \Carbon\Carbon::parse($booking->tglMulai)->format('d/m/Y') }}</td>
-                                    <td>{{ \Carbon\Carbon::parse($booking->tglSelesai)->format('d/m/Y') }}</td>
+                        @foreach ($bookings as $booking)
+                            <tr class="booking-list" data-bookingid="{{ $booking->id }}">
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $booking->id }}</td>
+                                <td>{{ $booking->namaEvent }}</td>
+                                <td>{{ $booking->namaTenant }}</td>
+                                <td>{{ $booking->tipeTenant }}</td>
+                                <td>{{ \Carbon\Carbon::parse($booking->tglMulai)->format('d/m/Y') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($booking->tglSelesai)->format('d/m/Y') }}</td>
 
-                                    <!-- Status -->                
-                                    <td>
-                                        @if ($booking->status == 'Disetujui')
-                                            <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 text-white">
-                                                Disetujui
-                                            </div>
-                                        @elseif ($booking->status == 'Ditolak')
-                                            <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 text-white">
-                                                Ditolak
-                                            </div>
-                                        @elseif ($booking->status == 'Belum disetujui')
-                                            <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-yellow-500 via-yellow-600 to-yellow-700 text-white">
-                                                Belum disetujui
+                                <!-- Status -->                
+                                <td>
+                                    @if ($booking->status == 'Disetujui')
+                                        <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 text-white">
+                                            Disetujui
+                                        </div>
+                                    @elseif ($booking->status == 'Ditolak')
+                                        <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 text-white">
+                                            Ditolak
+                                        </div>
+                                    @elseif ($booking->status == 'Belum disetujui')
+                                        <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-yellow-500 via-yellow-600 to-yellow-700 text-white">
+                                            Belum disetujui
+                                        </div>
+                                    @endif
+                                </td>
+
+                                <!-- Tindakan -->
+                                <td class="text-center">
+                                    <div class="flex justify-center gap-2">
+                                        @if ($booking->status == 'Belum disetujui')
+                                            <!-- Tindakan Edit dan Batalkan -->
+                                            <button data-modal-target="modal-edit" data-modal-toggle="modal-edit" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                                Edit
+                                            </button>
+                                            <button data-modal-target="modal-batalkan" data-modal-toggle="modal-batalkan" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                                Batalkan
+                                            </button>
+                                        @else
+                                            <!-- Tindakan Selesai dengan background abu-abu -->
+                                            <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-gray-300 via-gray-400 to-gray-500 text-white">
+                                                Selesai
                                             </div>
                                         @endif
-                                    </td>
-
-                                    <!-- Tindakan -->
-                                    <td class="text-center">
-                                        <div class="flex justify-center gap-2">
-                                            @if ($booking->status == 'Belum disetujui')
-                                                <!-- Tindakan Edit dan Batalkan -->
-                                                <button data-modal-target="modal-edit" data-modal-toggle="modal-edit" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                                                    Edit
-                                                </button>
-                                                <button data-modal-target="modal-batalkan" data-modal-toggle="modal-batalkan" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                                                    Batalkan
-                                                </button>
-                                            @else
-                                                <!-- Tindakan Selesai dengan background abu-abu -->
-                                                <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-gray-300 via-gray-400 to-gray-500 text-white">
-                                                    Selesai
-                                                </div>
-                                            @endif
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
                     @endif
-                  
                 </tbody>
             </table>
         </div>
@@ -337,15 +334,15 @@
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 </body>
 
-<!-- Table -->
-<script>
-    if (document.getElementById("default-table") && typeof simpleDatatables.DataTable !== 'undefined') {
-        const dataTable = new simpleDatatables.DataTable("#default-table", {
-            searchable: false,
-            perPageSelect: true
-        });
-    }
-</script>
+    <!-- Table -->
+    <script>
+        if (document.getElementById("default-table") && typeof simpleDatatables.DataTable !== 'undefined') {
+            const dataTable = new simpleDatatables.DataTable("#default-table", {
+                searchable: false,
+                perPageSelect: false
+            });
+        }
+    </script>
 
 <!-- Checkbox Batalkan wajib diklik -->
 <script>
