@@ -251,7 +251,7 @@
             <!-- Calendar -->
             <div class="relative w-full max-w-screen-4xl mx-auto mt-8">
                 <div class="calendar ml-4 mr-4 p-6 flex justify-center rounded-3xl shadow-[0_0_13px_3px_rgba(0,0,0,0.2)]">
-                    <div id="calendar"></div>
+                    <div id="
                 </div>
             </div>
             <!-- Pembatas Bawah -->
@@ -436,6 +436,7 @@
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         const calendarEl = document.getElementById('calendar');
+        const calendarRuangan = {!! $calendarRuanganJson !!};
     
         // Inisialisasi FullCalendar
         const calendar = new FullCalendar.Calendar(calendarEl, {
