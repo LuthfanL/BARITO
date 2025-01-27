@@ -5,6 +5,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
         body {
@@ -158,6 +159,36 @@
         });
     });
 </script>
+
+    <!-- Script Alert -->
+    <script>
+        // Notifikasi jika berhasil
+        @if(session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: '{{ session('success') }}',
+                showConfirmButton: false,
+                timerProgressBar: true,
+                timer: 3000 // Durasi 3 detik
+            });
+        @endif
+    
+        // Notifikasi jika ada error
+        @if($errors->any())
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                html: `
+                    <ul style="text-align: left;">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                `,
+            });
+        @endif
+    </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
