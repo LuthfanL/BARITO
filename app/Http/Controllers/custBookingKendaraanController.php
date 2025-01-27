@@ -49,13 +49,22 @@ class custBookingKendaraanController extends Controller
                             ->where('platNomor', $platNomor)
                             ->first();
 
-        // $calendarKendaraan = kendaraan::select('nama as title', 'tglMulai as start', 'tglSelesai as end')->get()->map(function ($kendaraan) {
-        //     $kendaraan->color = '#3788d8';
-        //     $kendaraan->end = Carbon::parse($kendaraan->end)->addDay()->toDateString();
-        //     return $kendaraan;
-        // });
+        $calendarKendaraan = kendaraan::select('nama as title', 'tglMulai as start', 'tglSelesai as end')
+            ->join('pemKendaraan', 'kendaraan.platNomor', '=', 'pemKendaraan.idKendaraan')
+            ->join('customer', 'pemKendaraan.idCustomer', '=', 'customer.NIK')
+            ->select(
+                DB::raw('CONCAT(pemKendaraan.namaPemohon, " - ", pemKendaraan.keperluan) as title'), 
+                'pemKendaraan.tglMulai as start', 
+                'pemKendaraan.tglSelesai as end'
+            )->where('kendaraan.platNomor', $platNomor)
+            ->get()
+            ->map(function ($event) {
+                $event->color = '#3788d8'; // Menambahkan warna untuk event
+                $event->end = Carbon::parse($event->end)->addDay()->toDateString();
+                return $event;
+            });
 
-        // $calendarKendaraamJson = json_encode($calendarKendaraan);
+        $calendarKendaraanJson = json_encode($calendarKendaraan);
 
         // Mengambil URL gambar utama dan URL thumbnail
         if (!empty($kendaraan->foto)) {
@@ -67,7 +76,7 @@ class custBookingKendaraanController extends Controller
         }
 
         // Kirim data ruangan ke view
-        return view('custBookingKendaraan', compact('kendaraan'));
+        return view('custBookingKendaraan', compact('kendaraan', 'calendarKendaraanJson'));
     }
 
     
