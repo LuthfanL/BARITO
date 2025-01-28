@@ -18,7 +18,7 @@ return new class extends Migration
             $table->char('idAdmin', 8);
             $table->string('namaPemohon', 30);
             $table->string('noWa', 15);
-            $table->string('namaRuangan', 15);
+            $table->string('namaRuangan', 30);
             $table->string('keperluan', 50);
             $table->string('keterangan', 50);
             $table->date('tglMulai');
