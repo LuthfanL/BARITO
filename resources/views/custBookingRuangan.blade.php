@@ -292,6 +292,15 @@
                             name="idAdmin" 
                             value="{{  $ruangan->adminRuangan->idAdmin  }}">
 
+                        <!-- Input Nama Ruangan -->
+                        <label for="namaRuangan"></label>
+                        <input 
+                            type="hidden"  
+                            id="namaRuangan" 
+                            name="namaRuangan" 
+                            value="{{ $ruangan['nama'] }}" 
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 p-2.5 w-full">
+
                         <!-- Input Nama Pemohon -->
                         <label for="namaPemohon">Nama Pemohon</label>
                         <input type="text" id="namaPemohon" name="namaPemohon" required>
@@ -377,6 +386,7 @@
                             <input type="hidden" name="idAdmin" id="confirm-idAdmin">
                             <input type="hidden" name="namaPemohon" id="confirm-namaPemohon">
                             <input type="hidden" name="noWa" id="confirm-noWa">
+                            <input type="hidden" name="namaRuangan" id="confirm-namaRuangan">
                             <input type="hidden" name="keperluan" id="confirm-keperluan">
                             <input type="hidden" name="keterangan" id="confirm-keterangan">
                             <input type="hidden" name="tglMulai" id="confirm-tglMulai">
@@ -508,6 +518,7 @@
                 const idAdmin = bookingForm.querySelector('input[name="idAdmin"]').value;
                 const namaPemohon = bookingForm.querySelector('input[name="namaPemohon"]').value;
                 const noWa = bookingForm.querySelector('input[name="noWa"]').value;
+                const namaRuangan = bookingForm.querySelector('input[name="namaRuangan"]').value;
                 const keperluan = bookingForm.querySelector('input[name="keperluan"]').value;
                 const keterangan = bookingForm.querySelector('input[name="keterangan"]').value;
                 const tglMulai = bookingForm.querySelector('input[name="tglMulai"]').value;
@@ -518,6 +529,7 @@
                 document.getElementById('confirm-idAdmin').value = idAdmin;
                 document.getElementById('confirm-namaPemohon').value = namaPemohon;
                 document.getElementById('confirm-noWa').value = noWa;
+                document.getElementById('confirm-namaRuangan').value = namaRuangan;
                 document.getElementById('confirm-keperluan').value = keperluan;
                 document.getElementById('confirm-keterangan').value = keterangan;
                 document.getElementById('confirm-titikJemput').value = titikJemput;
@@ -580,6 +592,7 @@
                 const idAdmin = bookingForm.querySelector('input[name="idAdmin"]').value;
                 const namaPemohon = bookingForm.querySelector('input[name="namaPemohon"]').value;
                 const noWa = bookingForm.querySelector('input[name="noWa"]').value;
+                const namaRuangan = bookingForm.querySelector('input[name="namaRuangan"]').value;
                 const keperluan = bookingForm.querySelector('input[name="keperluan"]').value;
                 const keterangan = bookingForm.querySelector('input[name="keterangan"]').value;
                 const tglMulai = bookingForm.querySelector('input[name="tglMulai"]').value;
@@ -590,6 +603,7 @@
                 document.getElementById('confirm-idAdmin').value = idAdmin;
                 document.getElementById('confirm-namaPemohon').value = namaPemohon;
                 document.getElementById('confirm-noWa').value = noWa;
+                document.getElementById('confirm-namaRuangan').value = namaRuangan;
                 document.getElementById('confirm-keperluan').value = keperluan;
                 document.getElementById('confirm-keterangan').value = keterangan;
                 document.getElementById('confirm-titikJemput').value = titikJemput;

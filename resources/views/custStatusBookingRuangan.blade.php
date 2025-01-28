@@ -179,7 +179,7 @@
                             <tr class="booking-list" data-bookingid="{{ $booking->id }}">
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $booking->id }}</td>
-                                <td>{{ $booking->ruangan->nama ?? 'Tidak Ada Ruangan' }}</td>
+                                <td>{{ $booking->namaRuangan }}</td>
                                 <td>{{ \Carbon\Carbon::parse($booking->tglMulai)->format('d/m/Y') }}</td>
                                 <td>{{ \Carbon\Carbon::parse($booking->tglSelesai)->format('d/m/Y') }}</td>
 

@@ -155,12 +155,12 @@
                         <tbody>
                             @if (!empty($bookings))
                                 @foreach ($bookings as $booking)
-                                    <tr class="booking-list" data-bookingid="{{ $booking->id }}" data-bookingidCustomer="{{ $booking->idCustomer }}" data-bookingnamaPemohon="{{ $booking->namaPemohon }}" data-bookingnamaRuangan="{{ $booking->ruangan->nama }}">
+                                    <tr class="booking-list" data-bookingid="{{ $booking->id }}" data-bookingidCustomer="{{ $booking->idCustomer }}" data-bookingnamaPemohon="{{ $booking->namaPemohon }}" data-bookingnamaRuangan="{{ $booking->namaRuangan }}">
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $booking->id }}</td>
                                         <td>{{ $booking->namaPemohon }}</td>
                                         <td>{{ $booking->noWa }}</td>
-                                        <td>{{ $booking->ruangan->nama ?? 'Tidak Ada Ruangan' }}</td>
+                                        <td>{{ $booking->namaRuangan }}</td>
                                         <td>{{ \Carbon\Carbon::parse($booking->tglMulai)->format('d/m/Y') }}</td>
                                         <td>{{ \Carbon\Carbon::parse($booking->tglSelesai)->format('d/m/Y') }}</td>
                                         <td class="text-center">
