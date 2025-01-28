@@ -433,34 +433,34 @@
     });
 </script>   
 
-    <!-- Script Alert -->
-    <script>
-        // Notifikasi jika berhasil
-        @if(session('success'))
-            Swal.fire({
-                icon: 'success',
-                title: 'Berhasil',
-                text: '{{ session('success') }}',
-                showConfirmButton: false,
-                timerProgressBar: true,
-                timer: 3000 // Durasi 3 detik
-            });
-        @endif
+<!-- Script Alert -->
+<script>
+    // Notifikasi jika berhasil
+    @if(session('success'))
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil',
+            text: '{{ session('success') }}',
+            showConfirmButton: false,
+            timerProgressBar: true,
+            timer: 3000 // Durasi 3 detik
+        });
+    @endif
     
-        // Notifikasi jika ada error
-        @if($errors->any())
-            Swal.fire({
-                icon: 'error',
-                title: 'Gagal',
-                html: `
-                    <ul style="text-align: left;">
-                        @foreach($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                `,
-            });
-        @endif
-    </script>
+    // Notifikasi jika ada error
+    @if($errors->any())
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal',
+            html: `
+                <ul style="text-align: left;">
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            `,
+        });
+    @endif
+</script>
 
 </html>
