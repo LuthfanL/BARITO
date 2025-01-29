@@ -91,6 +91,24 @@
         font-size: inherit; 
         color: inherit;      
         }
+
+        /* Mengubah warna teks dan latar belakang tombol */
+        .swal2-confirm.custom-confirm-button {
+            background-color: #808080 !important; /* Warna abu-abu */
+            color: white !important; 
+            border: none;
+        }
+
+        /* Efek hover untuk tombol konfirmasi */
+        .swal2-confirm.custom-confirm-button:hover {
+            background-color: #A9A9A9 !important; /* Warna abu-abu lebih gelap */
+        }
+
+        /* Efek fokus untuk tombol konfirmasi */
+        .swal2-confirm.custom-confirm-button:focus {
+            outline: none !important; 
+            box-shadow: none !important;
+        }
     </style>
 </head>
 
@@ -656,6 +674,10 @@
                         @endforeach
                     </ul>
                 `,
+                confirmButtonText: 'Tutup',
+                customClass: {
+                    confirmButton: 'custom-confirm-button'
+                }
             });
         @endif
     </script>
