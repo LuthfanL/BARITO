@@ -293,15 +293,15 @@
 
                         <!-- Input Jenis Tenant -->
                         <label for="tipeTenant">Jenis Tenant</label>
-                        <input type="text" id="tipeTenant" name="tipeTenant" required>
-                        {{-- <select
+                        {{-- <input type="text" id="tipeTenant" name="tipeTenant" required> --}}
+                        <select
                             id="tipeTenant"
                             class="bg-gray-50 mb-4 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                             onchange="simpanPilihan()">
                             <option value="Tenant Makanan">Tenant Makanan</option>
                             <option value="Tenant Barang">Tenant Barang</option>
                             <option value="Tenant Jasa">Tenant Jasa</option>
-                        </select> --}}
+                        </select>
 
                         <!-- Input Tanggal -->
                         <label for="tanggal-event" class="block font-bold">Tanggal</label>
