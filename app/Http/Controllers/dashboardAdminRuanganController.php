@@ -8,6 +8,7 @@ use App\Models\customer;
 use App\Models\adminRuangan;
 use App\Models\pemRuangan;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon; 
 
 class dashboardAdminRuanganController extends Controller
 {
@@ -48,8 +49,62 @@ class dashboardAdminRuanganController extends Controller
                 $data->foto_urls = []; // Tidak ada thumbnail jika tidak ada foto
             }
         }
+
+        // STATISTIK
+        $periode = $request->query('periode', '7 hari terakhir'); // Default: 7 hari terakhir
+        $startDate = now();
+        $endDate = now();
+
+        switch (strtolower($periode)) {
+            case 'kemarin':
+                $startDate = now()->subDay()->startOfDay();
+                $endDate = now()->subDay()->endOfDay();
+                break;
+            case 'hari ini':
+                $startDate = now()->startOfDay();
+                $endDate = now()->endOfDay();
+                break;
+            case '7 hari terakhir':
+                $startDate = now()->subDays(7)->startOfDay();
+                $endDate = now()->endOfDay();
+                break;
+            case '30 hari terakhir':
+                $startDate = now()->subDays(30)->startOfDay();
+                $endDate = now()->endOfDay();
+                break;
+        }
+
+        // Statistik Peminjaman Lingkaran
+        $peminjamanData = PemRuangan::where('idAdmin', $idAdmin)
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->selectRaw('namaRuangan, COUNT(*) as total')
+            ->groupBy('namaRuangan')
+            ->get();
+
+        $labels = $peminjamanData->pluck('namaRuangan');
+        $data = $peminjamanData->pluck('total');
+
+        // Jika request AJAX, kirim data dalam format JSON
+        if ($request->ajax()) {
+            return response()->json([
+                'labels' => $labels,
+                'data' => $data
+            ]);
+        }
+
+        // Statistik Booking Customer
+        $pengunjungData = pemRuangan::where('idAdmin', $idAdmin)
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->selectRaw('DATE(created_at) as date, COUNT(*) as total')
+            ->groupBy('date')
+            ->get();
+        
+        $pengunjungLabels = $pengunjungData->pluck('date')->map(function ($date) {
+            return Carbon::parse($date)->locale('id')->isoFormat('DD MMM'); // Format tanggal dalam format Indonesia
+        });
+        $pengunjungCounts = $pengunjungData->pluck('total');
         
         // Kirim data ruangan dan total ruangan ke blade
-        return view('dashboardAdminRuangan', compact('ruangan', 'totalRuangan', 'totalCustomer', 'totalBooking', 'verifikasi'));
+        return view('dashboardAdminRuangan', compact('ruangan', 'totalRuangan', 'totalCustomer', 'totalBooking', 'verifikasi', 'labels', 'data', 'pengunjungLabels', 'pengunjungCounts'));
     }
 }

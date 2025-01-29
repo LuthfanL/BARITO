@@ -24,8 +24,6 @@ class pemTenant extends Model
         'noWa',
         'namaTenant',
         'tipeTenant',
-        'tglMulai',
-        'tglSelesai',
         'status',
         //'buktiBayar',
     ];
