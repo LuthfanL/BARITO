@@ -24,6 +24,7 @@ class riwayatBookingTenantController extends Controller
         // Ambil data pemTenant berdasarkan idAdmin
         $bookings = pemTenant::where('idAdmin', $idAdmin)            
             ->whereIn('status', ['Disetujui', 'Ditolak']) // Filter status
+            ->orderBy('created_at', 'desc') // Urutkan berdasarkan tanggal dibuat (terbaru di atas)
             ->get();
     
         // Kirimkan data ke view

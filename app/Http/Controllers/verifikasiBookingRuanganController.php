@@ -25,6 +25,7 @@ class verifikasiBookingRuanganController extends Controller
         // Ambil data pemRuangan berdasarkan idAdmin
         $bookings = pemRuangan::where('idAdmin', $idAdmin)
                 ->with('ruangan')
+                ->orderBy('created_at', 'desc') // Urutkan berdasarkan tanggal dibuat (terbaru di atas)
                 ->get();
 
         // Kirimkan data ke view

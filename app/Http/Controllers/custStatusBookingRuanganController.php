@@ -22,7 +22,9 @@ class custStatusBookingRuanganController extends Controller
         }
 
         // Ambil data pemRuangan berdasarkan idAdmin
-        $bookings = pemRuangan::where('idCustomer', $nik)->get();
+        $bookings = pemRuangan::where('idCustomer', $nik)
+            ->orderBy('created_at', 'desc') // Urutkan berdasarkan tanggal dibuat (terbaru di atas)
+            ->get();
 
         // Kirimkan data ke view
         return view('custStatusBookingRuangan', [

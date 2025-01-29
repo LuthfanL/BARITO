@@ -24,6 +24,7 @@ class riwayatBookingKendaraanController extends Controller
         // Ambil data pemKendaraan berdasarkan idAdmin
         $bookings = pemKendaraan::where('idAdmin', $idAdmin) 
             ->whereIn('status', ['Disetujui', 'Ditolak']) // Filter status
+            ->orderBy('created_at', 'desc') // Urutkan berdasarkan tanggal dibuat (terbaru di atas)
             ->get();
 
         // Kirimkan data ke view
