@@ -119,13 +119,13 @@
                         <div class="w-full pl-8 pr-4">
                             <div class="flex flex-col items-center text-center">
                                 <!-- Judul -->
-                                <h5 class="leading-none text-xl font-bold text-gray-900 pb-2">Statistik Pengunjung</h5>
+                                <h5 class="leading-none text-xl font-bold text-gray-900 pb-2">Statistik Booking Customer</h5>
                                 <div class="flex items-center space-x-4">
                                     <!-- Dropdown -->
                                     <div class="relative">
                                         <button
                                         id="dropdownPengunjung"
-                                        class="text-sm font-medium text-gray-500 hover:text-gray-900 text-center inline-flex items-center"
+                                        class="dropdown text-sm font-medium text-gray-500 hover:text-gray-900 text-center inline-flex items-center"
                                         type="button">
                                         7 Hari Terakhir
                                         <svg class="w-2.5 m-2.5 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
@@ -135,10 +135,10 @@
                                         <!-- Dropdown menu -->
                                         <div id="dropdownPengunjungList" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 absolute top-full mt-2">
                                             <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
-                                                <li>
+                                                <li id="7HariTerakhir">
                                                     <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" onclick="updateDropdown('7 Hari Terakhir')">7 hari terakhir</a>
                                                 </li>
-                                                <li>
+                                                <li id="30HariTerakhir">
                                                     <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" onclick="updateDropdown('30 Hari Terakhir')">30 hari terakhir</a>
                                                 </li>
                                             </ul>
@@ -147,7 +147,7 @@
                                 </div>
                             </div>
 
-                            <div id="area-chart" class="w-full pt-10 h-64"></div>
+                            <div id="area-chart-pengunjung" class="w-full pt-10 h-64"></div>
                         </div>
                     </div>
 
@@ -173,10 +173,10 @@
                                 <!-- Dropdown Menu -->
                                 <div id="lastDaysdropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-md w-44 dark:bg-gray-700 absolute mt-2">
                                     <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
-                                        <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Kemarin</a></li>
-                                        <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Hari ini</a></li>
-                                        <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">7 hari terakhir</a></li>
-                                        <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">30 hari terakhir</a></li>
+                                        <li><a href="#" class="dropdown-item block px-4 py-2 hover:bg-gray-100" data-value="kemarin">Kemarin</a></li>
+                                        <li><a href="#" class="dropdown-item block px-4 py-2 hover:bg-gray-100" data-value="hari ini">Hari ini</a></li>
+                                        <li><a href="#" class="dropdown-item block px-4 py-2 hover:bg-gray-100" data-value="7 hari terakhir">7 hari terakhir</a></li>
+                                        <li><a href="#" class="dropdown-item block px-4 py-2 hover:bg-gray-100" data-value="30 hari terakhir">30 hari terakhir</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -232,19 +232,23 @@
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const chartElement = document.getElementById("pie-chart");
+        let chart;
+        let fetchUrl = @json(url('/dashboardAdminRuangan')); // Ambil URL dari Laravel
+
         if (chartElement) {
-            // Opsi awal diagram
+            let labels = @json($labels);
+            let data = @json($data);
+
             const options = {
-                series: [50, 25, 25], // Data awal Pie Chart
-                colors: ["#1C64F2", "#16BDCA", "#9061F9"], // Warna setiap bagian
+                series: data,
                 chart: {
                     type: "donut",
-                    height: 350 
+                    height: 350
                 },
-                labels: ["Ruang 1", "Ruang 2", "Ruang 3"], // Label bagian
+                labels: labels,
                 legend: {
-                    position: "bottom", // Legend di bawah diagram
-                    horizontalAlign: 'center', // Rata tengah legend
+                    position: "bottom",
+                    horizontalAlign: 'center',
                 },
                 dataLabels: {
                     enabled: true,
@@ -254,99 +258,60 @@
                 }
             };
 
-            // Buat chart
-            const chart = new ApexCharts(chartElement, options);
+            chart = new ApexCharts(chartElement, options);
             chart.render();
-
-            // Fungsi untuk mendapatkan tanggal dalam format Indonesia
-            function getIndonesiaFormattedDate(date) {
-                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'Asia/Jakarta' };
-                return new Intl.DateTimeFormat('id-ID', options).format(date);
-            }
-
-            // Fungsi untuk mendapatkan data berdasarkan periode
-            function getDataBasedOnPeriod(period) {
-                const today = new Date();
-                let newData;
-
-                switch (period) {
-                    case "Kemarin":
-                        newData = [40, 35, 25]; // Data contoh untuk kemarin
-                        break;
-                    case "Hari ini":
-                        newData = [30, 50, 20]; // Data contoh untuk hari ini
-                        break;
-                    case "7 hari terakhir":
-                        newData = [50, 25, 25]; // Data untuk 7 hari terakhir
-                        break;
-                    case "30 hari terakhir":
-                        newData = [45, 30, 25]; // Data untuk 30 hari terakhir
-                        break;
-                    default:
-                        newData = [50, 25, 25]; // Data default
-                }
-
-                return newData;
-            }
-
-            // Event Listener untuk Dropdown Filter
-            document.querySelectorAll("#lastDaysdropdown a").forEach(item => {
-                item.addEventListener("click", function (event) {
-                    event.preventDefault(); // Hindari reload halaman
-
-                    const selectedText = this.innerText;
-                    document.getElementById("dropdownDefaultButton").innerText = selectedText; // Update teks tombol
-
-                    // Update chart dengan data baru berdasarkan periode
-                    const newData = getDataBasedOnPeriod(selectedText);
-                    chart.updateSeries(newData);
-                });
-            });
         }
+
+        // Event Listener untuk Dropdown
+        document.querySelectorAll(".dropdown-item").forEach(item => {
+            item.addEventListener("click", function (event) {
+                event.preventDefault(); // Hindari reload halaman
+
+                const selectedPeriod = this.getAttribute("data-value"); // Ambil nilai dari data-value
+                console.log("Dropdown diklik:", selectedPeriod); // Debugging
+
+                document.getElementById("dropdownDefaultButton").innerText = this.innerText; // Update teks tombol
+
+                // Ambil data baru dari server berdasarkan periode yang dipilih
+                fetch(`${fetchUrl}?periode=${encodeURIComponent(selectedPeriod)}`, {
+                    method: "GET",
+                    headers: {
+                        "X-Requested-With": "XMLHttpRequest",
+                        "Accept": "application/json"
+                    }
+                })
+                .then(response => response.json())
+                .then(result => {
+                    console.log("Data yang diterima:", result); // Debugging
+                    if (result.labels && result.data) {
+                        chart.updateOptions({
+                            labels: result.labels,
+                            series: result.data
+                        });
+                    }
+                })
+                .catch(error => console.error("Error fetching data:", error));
+            });
+        });
     });
 </script>
 
-<!-- Script Statistik Pengunjung -->
+<!-- Script Diagram Booking Customer -->
 <script>
-    // Fungsi untuk format tanggal (misal: 01 Feb, 02 Feb, dst.)
-    function formatDate(date) {
-        const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-        const day = String(date.getDate()).padStart(2, '0');
-        const month = months[date.getMonth()];
-        return `${day} ${month}`;
-    }
-
-    // Menghitung tanggal 7 hari terakhir
-    function getLastNDays(n) {
-        const today = new Date();
-        let dates = [];
-        for (let i = n - 1; i >= 0; i--) {
-            let date = new Date(today);
-            date.setDate(today.getDate() - i);
-            dates.push(formatDate(date));
-        }
-        return dates;
-    }
-
-    // Menghitung tanggal 30 hari terakhir
-    function getLast30Days() {
-        return getLastNDays(30);
-    }
-
-    // Data untuk 7 hari terakhir dan 30 hari terakhir (diperbarui dinamis)
-    const chartData = {
+    // Data chart pengunjung
+    const pengunjungData = {
         "7 Hari Terakhir": {
-            data: [5, 1, 2, 0, 0, 1, 3], // Data dummy, bisa diganti sesuai data asli
-            categories: getLastNDays(7)
+            data: @json($pengunjungCounts),  // Ambil semua data dalam 7 hari
+            categories: @json($pengunjungLabels), // Semua label tanggal dalam 7 hari
         },
         "30 Hari Terakhir": {
-            data: [5, 1, 2, 0, 0, 1, 3, 4, 5, 3, 2, 1, 6, 7, 2, 3, 4, 5, 6, 2, 1, 3, 4, 5, 7, 8, 5, 3, 2, 1], // Data dummy, bisa diganti sesuai data asli
-            categories: getLast30Days()
+            data: @json($pengunjungCounts), // Ambil semua data dalam 30 hari
+            categories: @json($pengunjungLabels), // Semua label tanggal dalam 30 hari
         }
     };
 
-    // Opsi chart awal
-    let chartOptions = {
+    // Opsi chart pengunjung
+    let chartPengunjungOptions = {
         chart: {
             height: 300,
             width: "100%",
@@ -355,7 +320,15 @@
             dropShadow: { enabled: false },
             toolbar: { show: false },
         },
-        tooltip: { enabled: true, x: { show: false } },
+        tooltip: { 
+            enabled: true, 
+            x: { show: true },
+            y: { 
+                formatter: function (val) {
+                    return Math.floor(val); // Menghilangkan koma pada tooltip
+                }
+            }
+        },
         fill: {
             type: "gradient",
             gradient: { opacityFrom: 0.55, opacityTo: 0, shade: "#1C64F2", gradientToColors: ["#00C6BF"] },
@@ -363,42 +336,49 @@
         dataLabels: { enabled: false },
         stroke: { width: 6 },
         grid: {
-            show: false,
+            show: true,
             strokeDashArray: 4,
-            padding: { left: 10, right: 10, top: 0 },
+            padding: { left: 18, right: 10, top: 0 },
         },
-        series: [{ name: "User baru", data: chartData["7 Hari Terakhir"].data, color: "#00C6BF" }],
+        series: [{ name: "Booking", data: pengunjungData["7 Hari Terakhir"].data, color: "#00C6BF" }],
         xaxis: {
-            categories: chartData["7 Hari Terakhir"].categories,
+            categories: pengunjungData["7 Hari Terakhir"].categories, // Pastikan ini berisi semua tanggal untuk 7 hari terakhir
             labels: { show: true },
-            axisBorder: { show: false },
-            axisTicks: { show: false },
+            axisBorder: { show: true },
+            axisTicks: { show: true },
         },
-        yaxis: { show: false },
+        yaxis: { 
+            show: false,
+            labels: {
+                formatter: function (val) {
+                    return Math.floor(val); // Menghilangkan koma pada sumbu Y
+                }
+            }
+        },
     };
 
-    // Inisialisasi chart dengan data 7 hari terakhir
-    let chart = new ApexCharts(document.getElementById("area-chart"), chartOptions);
-    chart.render();
+    // Inisialisasi chart pengunjung
+    let chartPengunjung = new ApexCharts(document.getElementById("area-chart-pengunjung"), chartPengunjungOptions);
+    chartPengunjung.render();
 
-    // Fungsi untuk memperbarui chart berdasarkan periode yang dipilih
-    function updateChart(period) {
-        chart.updateOptions({
-            series: [{ name: "User baru", data: chartData[period].data }],
-            xaxis: { categories: chartData[period].categories }
+    // Fungsi untuk memperbarui chart pengunjung
+    function updateChartPengunjung(period) {
+        chartPengunjung.updateOptions({
+            series: [{ name: "Booking", data: pengunjungData[period].data }],
+            xaxis: { categories: pengunjungData[period].categories } // Menyesuaikan kategori berdasarkan periode
         });
     }
 
-    // Menampilkan dan menyembunyikan dropdown
+    // Menampilkan dan menyembunyikan dropdown pengunjung
     document.getElementById("dropdownPengunjung").addEventListener("click", function () {
         document.getElementById("dropdownPengunjungList").classList.toggle("hidden");
     });
 
-    // Fungsi untuk memperbarui dropdown dan chart
+    // Fungsi untuk memperbarui dropdown dan chart pengunjung
     function updateDropdown(period) {
         document.getElementById("dropdownPengunjung").innerText = period; // Perbarui teks dropdown
         document.getElementById("dropdownPengunjungList").classList.add("hidden"); // Sembunyikan dropdown setelah memilih
-        updateChart(period); // Perbarui chart berdasarkan pilihan
+        updateChartPengunjung(period); // Perbarui chart berdasarkan pilihan
     }
 </script>
 
