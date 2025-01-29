@@ -205,7 +205,7 @@
                                                 <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 text-white">
                                                     Disetujui
                                                 </div>
-                                            @else
+                                            @elseif ($booking->status == 'Ditolak')
                                                 <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 text-white">
                                                     Ditolak
                                                 </div>

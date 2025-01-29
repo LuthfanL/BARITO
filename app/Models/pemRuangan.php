@@ -22,6 +22,7 @@ class pemRuangan extends Model
         'idAdmin',
         'namaPemohon',
         'noWa',
+        'namaRuangan',
         'keperluan', 
         'keterangan',
         'tglMulai',

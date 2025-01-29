@@ -155,12 +155,12 @@
                         <tbody>
                             @if (!empty($bookings))
                                 @foreach ($bookings as $booking)
-                                    <tr class="booking-list" data-bookingid="{{ $booking->id }}" data-bookingidCustomer="{{ $booking->idCustomer }}" data-bookingnamaPemohon="{{ $booking->namaPemohon }}" data-bookingnamaRuangan="{{ $booking->ruangan->nama }}">
+                                    <tr class="booking-list" data-bookingid="{{ $booking->id }}" data-bookingidCustomer="{{ $booking->idCustomer }}" data-bookingnamaPemohon="{{ $booking->namaPemohon }}" data-bookingnamaRuangan="{{ $booking->namaRuangan }}">
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $booking->id }}</td>
                                         <td>{{ $booking->namaPemohon }}</td>
                                         <td>{{ $booking->noWa }}</td>
-                                        <td>{{ $booking->ruangan->nama ?? 'Tidak Ada Ruangan' }}</td>
+                                        <td>{{ $booking->namaRuangan }}</td>
                                         <td>{{ \Carbon\Carbon::parse($booking->tglMulai)->format('d/m/Y') }}</td>
                                         <td>{{ \Carbon\Carbon::parse($booking->tglSelesai)->format('d/m/Y') }}</td>
                                         <td class="text-center">
@@ -192,12 +192,21 @@
                                                 </button>
                                             </div>
                                         </td>
-
+                                        
                                         <!-- Tindakan -->
                                         <td class="text-center">
                                             <div class="flex flex-col gap-2">
-                                                <button data-modal-target="modal-setujui" data-modal-toggle="modal-setujui" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Setujui</button>
-                                                <button data-modal-target="modal-tolak" data-modal-toggle="modal-tolak" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Tolak</button>
+                                                <?php if ($booking->status == "Disetujui") : ?>
+                                                    <button disabled class="px-3 py-1 rounded-lg font-medium bg-gray-400 text-white cursor-not-allowed">Setujui</button>
+                                                <?php else : ?>
+                                                    <button data-modal-target="modal-setujui" data-modal-toggle="modal-setujui" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Setujui</button>
+                                                <?php endif; ?>
+
+                                                <?php if ($booking->status == "Ditolak") : ?>
+                                                    <button disabled class="px-3 py-1 rounded-lg font-medium bg-gray-400 text-white cursor-not-allowed">Tolak</button>
+                                                <?php else : ?>
+                                                    <button data-modal-target="modal-tolak" data-modal-toggle="modal-tolak" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Tolak</button>
+                                                <?php endif; ?>
                                             </div>
                                         </td>
                                     </tr>

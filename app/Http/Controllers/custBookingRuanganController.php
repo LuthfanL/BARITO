@@ -163,6 +163,7 @@ class custBookingRuanganController extends Controller
             'idAdmin'       => $request->input('idAdmin'),
             'namaPemohon'   => $request->input('namaPemohon'),
             'noWa'          => $request->input('noWa'),
+            'namaRuangan'   => $request->input('namaRuangan'),
             'keperluan'     => $request->input('keperluan'),
             'keterangan'    => $request->input('keterangan'),
             'tglMulai'      => $request->input('tglMulai'),

@@ -25,7 +25,7 @@
     <div class="p-10">
         <img class="w-auto" src="{{ asset('assets/logo-black.png') }}" alt="Logo">
     </div>
-    <nav class="mt-14 mr-6 text-left">
+    <nav class="mt-14 ml-3 mr-2 text-left">
         <ul>
             <!-- Admin Tenant -->
             <li class="pl-1 py-7 transition-colors duration-200">

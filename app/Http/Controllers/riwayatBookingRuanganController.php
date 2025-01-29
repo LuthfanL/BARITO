@@ -22,7 +22,10 @@ class riwayatBookingRuanganController extends Controller
         }
     
         // Ambil data pemRuangan berdasarkan idAdmin
-        $bookings = pemRuangan::where('idAdmin', $idAdmin)->get();
+        $bookings = pemRuangan::where('idAdmin', $idAdmin)            
+            ->whereIn('status', ['Disetujui', 'Ditolak']) // Filter status
+            ->orderBy('created_at', 'desc') // Urutkan berdasarkan tanggal dibuat (terbaru di atas)
+            ->get();
     
         // Kirimkan data ke view
         return view('riwayatBookingRuangan', [
