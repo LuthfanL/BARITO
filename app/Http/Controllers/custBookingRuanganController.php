@@ -124,6 +124,38 @@ class custBookingRuanganController extends Controller
             return back()->with('error', 'Customer tidak ditemukan');
         }
 
+        if ($validated['tglMulai'] == Carbon::now()->format('Y-m-d')){
+            return redirect()->back()->withErrors('Tidak bisa memesan untuk hari yang sama dengan hari yang dipesan, minimal 1 hari sebelum hari yang dipesan!');
+        }
+
+        $used = pemRuangan::where('idRuangan', $validated['idRuangan'])->get();
+
+        if ($used){
+            foreach ($used as $use) {
+                if ($validated['tglMulai'] == $use->tglMulai || $validated['tglMulai'] == $use->tglSelesai){
+                    return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain!');
+                }
+                if ($validated['tglSelesai'] == $use->tglMulai || $validated['tglSelesai'] == $use->tglSelesai){
+                    return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain!');
+                }
+                if ($validated['tglMulai'] < $use->tglMulai && $validated['tglSelesai'] > $use->tglSelesai) {
+                    return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain!');
+                }
+                if ($validated['tglMulai'] > $use->tglMulai && $validated['tglSelesai'] < $use->tglSelesai){
+                    return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain!');
+                }
+                if ($validated['tglMulai'] > $use->tglMulai && $validated['tglMulai'] < $use->tglSelesai){
+                    return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain!');
+                }
+                if ($validated['tglSelesai'] > $use->tglMulai && $validated['tglSelesai'] < $use->tglSelesai){
+                    return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain!');
+                }
+                if ($validated['tglSelesai'] < $validated['tglMulai']){
+                    return redirect()->back()->withErrors('Tanggal Selesai harus lebih dari atau sama dengan tanggal mulai!');
+                }
+            };
+        }
+
         // Siapkan data untuk disimpan
         $dataToStore = [
             'idCustomer'    => $nik,
