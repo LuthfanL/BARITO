@@ -347,7 +347,12 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                     </svg>
                     <h1 class="mb-5 text-lg font-bold text-gray-900">Konfirmasi Penolakan Booking</h1>
-                    <p class="mb-5 text-m font-normal text-gray-500">Apakah Anda yakin ingin menolak booking kendaraan ini? Tindakan ini akan memberi tahu customer bahwa booking tidak dapat diproses.</p>
+                    <p class="mb-2 ml-2 mr-2 text-m font-normal text-gray-500">Apakah Anda yakin ingin menolak booking kendaraan ini? Berikan alasan penolakan yang nantinya akan diberitahukan ke customer.</p>
+                    <div class="p-4 md:p-5 space-y-6">
+                        <div>
+                            <textarea id="alasanPenolakan" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-500 p-3" placeholder="Berikan alasan penolakan booking ini." oninput="toggleTolakButton()"></textarea>
+                        </div>
+                    </div>
                     @if (isset($booking))
                         <form action="{{ route('update.status') }}" method="POST">
                         @csrf
@@ -355,7 +360,8 @@
                             <input type="hidden" name="status" value="Ditolak"> <!-- Kirim status -->
                             <button 
                                 type="submit"
-                                class="btn-tolak px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                id="btnTolak"
+                                class="btn-tolak px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white disabled:opacity-50 disabled:cursor-not-allowed" disabled>
                                 Tolak
                             </button>
                             <button 
@@ -402,6 +408,14 @@
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 </body>
 
+<!-- Script agar button tolak tidak dapat diklik sebelum diisi alasan penolakannya -->
+<script>
+    function toggleTolakButton() {
+        const textarea = document.getElementById('alasanPenolakan');
+        const btnTolak = document.getElementById('btnTolak');
+        btnTolak.disabled = textarea.value.trim() === '';
+    }
+</script>
 
 <!-- Table -->
 <script>
