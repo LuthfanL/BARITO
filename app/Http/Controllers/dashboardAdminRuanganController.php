@@ -74,8 +74,9 @@ class dashboardAdminRuanganController extends Controller
                 break;
         }
 
-        // Statistik Peminjaman Lingkaran
+        // Statistik Peminjaman Lingkaran berdasarkan status
         $peminjamanData = PemRuangan::where('idAdmin', $idAdmin)
+            ->whereIn('status', ['Menunggu persetujuan', 'Disetujui'])
             ->whereBetween('created_at', [$startDate, $endDate])
             ->selectRaw('namaRuangan, COUNT(*) as total')
             ->groupBy('namaRuangan')
@@ -94,6 +95,7 @@ class dashboardAdminRuanganController extends Controller
 
         // Statistik Booking Customer
         $pengunjungData = pemRuangan::where('idAdmin', $idAdmin)
+            ->whereIn('status', ['Menunggu persetujuan', 'Disetujui'])
             ->whereBetween('created_at', [$startDate, $endDate])
             ->selectRaw('DATE(created_at) as date, COUNT(*) as total')
             ->groupBy('date')
