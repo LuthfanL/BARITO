@@ -19,6 +19,9 @@ class custBookingTenantController extends Controller
 
         // Ambil data ruangan berdasarkan 'nama', 'lokasi', dan 'deskripsi'
         $event = event::where('namaEvent', $namaEvent)->first();
+        $makanan = pemTenant::where('tipeTenant', 'Tenant Makanan')->count();
+        $barang = pemTenant::where('tipeTenant', 'Tenant Barang')->count();
+        $jasa = pemTenant::where('tipeTenant', 'Tenant Jasa')->count();
 
         $colors = ['#3788d8', '#f39c12', '#27ae60', '#8e44ad', '#e74c3c', '#16a085', '#d35400', '#2ecc71', '#3498db', '#9b59b6'];
 
@@ -42,7 +45,7 @@ class custBookingTenantController extends Controller
         }
 
         // Kirim data ruangan ke view
-        return view('custBookingTenant', compact('event', 'calendarEventsJson'));
+        return view('custBookingTenant', compact('event', 'calendarEventsJson', 'barang', 'jasa', 'makanan'));
     }
 
     public function store(Request $request)
@@ -52,8 +55,6 @@ class custBookingTenantController extends Controller
             'namaEvent'  => 'required|exists:event,namaEvent', // Validasi namaEvent di tabel event
             'idAdmin'      => 'required|exists:adminTenant,idAdmin', // Validasi idAdmin di tabel adminRuangan
             'namaTenant' => 'required|string',
-            'tglMulai' => 'required|date',
-            'tglSelesai' => 'required|date',
         ]);
 
         
@@ -76,7 +77,25 @@ class custBookingTenantController extends Controller
             return back()->with('error', 'Customer tidak ditemukan');
         }
 
-        // if ();
+        $already = pemTenant::where('idCustomer', $nik)->where('namaEvent', $request->input('namaEvent'))->first();
+
+        if ($already){
+            return redirect()->back()->withErrors('Anda hanya dapat memesan 1 tenant untuk 1 event!');
+        }
+
+        $makanan = event::where('namaEvent', $request->input('namaEvent'))->first()->nMakanan;
+        $jasa = event::where('namaEvent', $request->input('namaEvent'))->first()->nJasa;
+        $barang = event::where('namaEvent', $request->input('namaEvent'))->first()->nBarang;
+
+        if ($request->input('tipeTenant') == 'Tenant Makanan' && $makanan == 0) {
+            return redirect()->back()->withErrors('Maaf, kuota untuk tenant makanan sudah habis, silahkan berkunjung dilain waktu!');
+        }
+        if ($request->input('tipeTenant') == 'Tenant Jasa' && $jasa == 0) {
+            return redirect()->back()->withErrors('Maaf, kuota untuk tenant makanan sudah habis, silahkan berkunjung dilain waktu!');
+        }
+        if ($request->input('tipeTenant') == 'Tenant Barang' && $barang == 0) {
+            return redirect()->back()->withErrors('Maaf, kuota untuk tenant makanan sudah habis, silahkan berkunjung dilain waktu!');
+        }
 
         // Siapkan data untuk disimpan
         $dataToStore = [
@@ -87,14 +106,28 @@ class custBookingTenantController extends Controller
             'noWa'          => $request->input('noWa'),
             'namaTenant'   => $request->input('namaTenant'),
             'tipeTenant'     => $request->input('tipeTenant'),
-            'tglMulai'      => $request->input('tglMulai'),
-            'tglSelesai'    => $request->input('tglSelesai'),
-            'status'        => 'Belum disetujui',
+            'status'        => 'Belum dibayar',
              // 'buktiBayar'    => json_encode($fotoPaths),
             ];
 
         // Simpan data ke database
         pemTenant::create($dataToStore);
+
+        if ($request->input('tipeTenant') == 'Tenant Makanan') {
+            DB::table('event')->where('namaEvent', $request->input('namaEvent'))->update([
+                'nMakanan' => $makanan - 1,
+            ]);
+        }
+        if ($request->input('tipeTenant') == 'Tenant Jasa') {
+            DB::table('event')->where('namaEvent', $request->input('namaEvent'))->update([
+                'nJasa' => $jasa - 1,
+            ]);
+        }
+        if ($request->input('tipeTenant') == 'Tenant Barang') {
+            DB::table('event')->where('namaEvent', $request->input('namaEvent'))->update([
+                'nBarang' => $barang - 1,
+            ]);
+        }
 
         return redirect()->back()->with('success', 'Booking tenant berhasil!');
     }

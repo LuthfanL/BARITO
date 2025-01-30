@@ -24,10 +24,8 @@ class pemTenant extends Model
         'noWa',
         'namaTenant',
         'tipeTenant',
-        'tglMulai',
-        'tglSelesai',
         'status',
-        //'buktiBayar',
+        'buktiBayar',
     ];
 
     public function customer()

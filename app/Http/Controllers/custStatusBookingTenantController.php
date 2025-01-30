@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\customer;
 use App\Models\pemTenant;
+use App\Models\event;
 
 class custStatusBookingTenantController extends Controller
 {
@@ -23,12 +24,14 @@ class custStatusBookingTenantController extends Controller
 
         // Ambil data pemTenant berdasarkan idAdmin
         $bookings = pemTenant::where('idCustomer', $nik)
-            ->orderBy('created_at', 'desc') // Urutkan berdasarkan tanggal dibuat (terbaru di atas)
+            ->join('event', 'event.namaEvent', '=', 'pemTenant.namaEvent')
+            ->orderBy('pemTenant.created_at', 'desc') // Urutkan berdasarkan tanggal dibuat (terbaru di atas)
             ->get();
 
         // Kirimkan data ke view
         return view('custStatusBookingTenant', [
             'bookings' => $bookings,
+
         ]);
     }
 }

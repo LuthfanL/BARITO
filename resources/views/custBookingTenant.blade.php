@@ -230,19 +230,19 @@
                             </div>
                         </div>
                         <!-- Jenis Tenant -->
-                        <h2 class="font-semibold text-lg">Total Tenant yang Disediakan</h2>
+                        <h2 class="font-semibold text-lg">Sisa Kuota Tenant</h2>
                         <div class="grid grid-cols-2 gap-4">
                             <div>
                                 <label for="makanan" class="block text-sm font-medium text-gray-700">Tenant Makanan</label>
-                                <input type="number" id="makanan" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="{{ $event['nMakanan'] }}" readonly>
+                                <input type="text" id="makanan" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="{{ $event['nMakanan'] }} dari {{ $makanan }}" readonly>
                             </div>
                             <div>
                                 <label for="barang" class="block text-sm font-medium text-gray-700">Tenant Barang</label>
-                                <input type="number" id="barang" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="{{ $event['nBarang'] }}" readonly>
+                                <input type="text" id="barang" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="{{ $event['nBarang'] }} dari {{ $barang }}" readonly>
                             </div>
                             <div>
                                 <label for="jasa" class="block text-sm font-medium text-gray-700">Tenant Jasa</label>
-                                <input type="number" id="jasa" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="{{ $event['nJasa'] }}" readonly>
+                                <input type="text" id="jasa" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="{{ $event['nJasa'] }} dari {{ $jasa }}" readonly>
                             </div>
                         </div>
                         <div>
@@ -314,23 +314,13 @@
                         {{-- <input type="text" id="tipeTenant" name="tipeTenant" required> --}}
                         <select
                             id="tipeTenant"
+                            name="tipeTenant"
                             class="bg-gray-50 mb-4 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                             onchange="simpanPilihan()">
                             <option value="Tenant Makanan">Tenant Makanan</option>
                             <option value="Tenant Barang">Tenant Barang</option>
                             <option value="Tenant Jasa">Tenant Jasa</option>
                         </select>
-
-                        <!-- Input Tanggal -->
-                        <label for="tanggal-event" class="block font-bold">Tanggal</label>
-                        <div id="date-range-picker" class="flex items-center space-x-2">
-                            <div class="relative flex items-center">
-                                <input id="tglMulai" name="tglMulai" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 p-2.5 w-full" placeholder="Tanggal Mulai" required>
-                            </div>
-                            <div class="relative flex items-center">
-                                <input id="tglSelesai" name="tglSelesai" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 p-2.5 w-full" placeholder="Tanggal Selesai" required>
-                            </div>
-                        </div>
 
                         <!-- Input Bukti Pembayaran -->
                         <label for="bukti-bayar" class="block mb-2 text-sm font-medium text-gray-900">Upload Bukti Pembayaran</label>

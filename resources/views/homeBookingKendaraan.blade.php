@@ -18,7 +18,7 @@
 
 <body class="h-full bg-white">
     <!-- Navbar -->
-    <div class="relative z-50">
+    <div class="relative z-30">
         @include('components.navbargeneral')
     </div>
 
@@ -148,6 +148,7 @@
         </div>
     </div>
 
+    <!-- Modal Detail Kendaraan -->
     <div id="modal-detailKendaraan" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative p-4 w-full max-w-4xl max-h-full">
             <!-- Modal content -->
@@ -171,6 +172,25 @@
                             <!-- Foto di bawah -->
                             <div class="grid grid-cols-3 md:grid-cols-5 gap-2 md:gap-4" id="image-thumbnails-kendaraan">
                                 <!-- Thumbnails akan diubah dengan gambar dinamis -->
+                            </div>
+                        </div>
+
+                        <!-- Kolom Kanan: Fasilitas Kendaraan -->
+                        <div class="space-y-4">
+                            <h2 class="font-semibold text-lg">Fasilitas Kendaraan</h2>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label for="ac-kendaraan" class="block text-sm font-medium text-gray-700">AC</label>
+                                    <input type="text" id="ac-kendaraan" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" value="" readonly>
+                                </div>
+                                <div>
+                                    <label for="tv-kendaraan" class="block text-sm font-medium text-gray-700">TV</label>
+                                    <input type="text" id="tv-kendaraan" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" value="" readonly>
+                                </div>
+                                <div>
+                                    <label for="sound-kendaraan" class="block text-sm font-medium text-gray-700">Sound</label>
+                                    <input type="text" id="sound-kendaraan" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" value="" readonly>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -217,12 +237,22 @@
         });
     </script>
 
+    <!-- Script Detail Kendaraan -->
     <script>
         // Menambahkan event listener untuk tombol yang membuka modal
         document.querySelectorAll('[data-modal-target="modal-detailKendaraan"]').forEach(button => {
             button.addEventListener('click', function () {
+                // Ambil data dari atribut data-*
+                const tv = this.getAttribute('data-tv');
+                const sound = this.getAttribute('data-sound');
+                const ac = this.getAttribute('data-ac');
                 const fotoUrl = this.getAttribute('data-foto-url');
                 const thumbnails = JSON.parse(this.getAttribute('data-thumbnails'));
+
+                // Menampilkan data fasilitas kendaraan ke dalam input
+                document.getElementById('tv-kendaraan').value = tv || "Tidak Tersedia";
+                document.getElementById('sound-kendaraan').value = sound || "Tidak Tersedia";
+                document.getElementById('ac-kendaraan').value = ac || "Tidak Tersedia";
 
                 // Menampilkan foto utama di modal
                 const mainImage = document.getElementById('main-image-kendaraan');

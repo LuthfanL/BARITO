@@ -29,7 +29,7 @@ class pemKendaraan extends Model
         'tglMulai',
         'tglSelesai',
         'status',
-        // 'buktiBayar',
+        'buktiBayar',
     ];
 
     public function customer()

@@ -28,7 +28,7 @@ class pemRuangan extends Model
         'tglMulai',
         'tglSelesai',
         'status',
-        //'buktiBayar',
+        'buktiBayar',
     ];
 
     public function customer()
