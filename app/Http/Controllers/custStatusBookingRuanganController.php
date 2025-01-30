@@ -33,6 +33,23 @@ class custStatusBookingRuanganController extends Controller
         ]);
     }
 
+    public function destroy($id)
+    {
+        // Cari peminjaman ruangan berdasarkan id
+        $pemRuangan = pemRuangan::where('id', $id)->first();
+
+        // Periksa apakah pemRuangan ditemukan
+        if (!$pemRuangan) {
+            return redirect()->back()->with('error', 'Ruangan tidak ditemukan.');
+        }
+
+        // Hapus pemRuangan
+        $pemRuangan->delete();
+
+        // Redirect kembali dengan pesan sukses
+        return redirect()->back()->with('success', 'Booking berhasil dibatalkan!');
+    }
+
     public function uploadBukti(Request $request)
     {
         // Validasi input

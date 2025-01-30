@@ -33,6 +33,23 @@ class custStatusBookingKendaraanController extends Controller
         ]);
     }
 
+    public function destroy($id)
+    {
+        // Cari peminjaman kendaraan berdasarkan id
+        $pemKendaraan = pemKendaraan::where('id', $id)->first();
+
+        // Periksa apakah pemKendaraan ditemukan
+        if (!$pemKendaraan) {
+            return redirect()->back()->with('error', 'Ruangan tidak ditemukan.');
+        }
+
+        // Hapus pemKendaraan
+        $pemKendaraan->delete();
+
+        // Redirect kembali dengan pesan sukses
+        return redirect()->back()->with('success', 'Booking berhasil dibatalkan!');
+    }
+
     public function uploadBukti(Request $request)
     {
         // Validasi input

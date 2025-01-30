@@ -29,14 +29,14 @@ class dashboardAdminRuanganController extends Controller
         $totalCustomer = customer::count();
         $totalRuangan = $ruangan->count(); // Hitung total ruangan
 
-        // Hitung jumlah booking dengan status "Belum disetujui" atau "Disetujui"
+        // Hitung jumlah booking dengan status "Menunggu persetujuan" atau "Disetujui"
         $totalBooking = pemRuangan::where('idAdmin', $idAdmin)
-            ->whereIn('status', ['Belum disetujui', 'Disetujui'])
+            ->whereIn('status', ['Menunggu persetujuan', 'Disetujui'])
             ->count();
 
-        // Hitung jumlah booking dengan status "Belum disetujui"
+        // Hitung jumlah booking dengan status "Menunggu persetujuan"
         $verifikasi = pemRuangan::where('idAdmin', $idAdmin)
-        ->where('status', 'Belum disetujui')
+        ->where('status', 'Menunggu persetujuan')
         ->count();
 
         foreach ($ruangan as &$data) {
