@@ -164,7 +164,7 @@
                                         <td class="flex justify-center items-center text-center">
                                             @if($booking->buktiBayar)
                                                 <button onclick="showBukti('{{ asset($booking->buktiBayar) }}')" 
-                                                    class="px-3 py-1 bg-blue-500 text-white rounded-lg">
+                                                    class="px-3 py-1 bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white rounded-lg">
                                                     Lihat Bukti
                                                 </button>
                                             @else
