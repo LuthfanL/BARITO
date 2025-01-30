@@ -63,6 +63,10 @@ class custStatusBookingTenantController extends Controller
             // Simpan path file ke database
             $booking->buktiBayar = Storage::url($path);
             $booking->save();
+
+            // Perbarui status menjadi "Menunggu persetujuan"
+            $booking->status = "Menunggu persetujuan";
+            $booking->save();
         }
 
         return redirect()->back()->with('success', 'Bukti pembayaran berhasil diupload!');

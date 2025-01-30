@@ -106,7 +106,7 @@ class custBookingTenantController extends Controller
             'noWa'          => $request->input('noWa'),
             'namaTenant'   => $request->input('namaTenant'),
             'tipeTenant'     => $request->input('tipeTenant'),
-            'status'        => 'Belum dibayar',
+            'status'        => 'Belum bayar',
              // 'buktiBayar'    => json_encode($fotoPaths),
             ];
 

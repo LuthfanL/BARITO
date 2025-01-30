@@ -141,11 +141,11 @@
                                         Info Lain
                                     </span>
                                 </th>
-                                <th>
+                                {{-- <th>
                                     <span class="flex items-center justify-center">
                                         Pembatalan
                                     </span>
-                                </th>
+                                </th> --}}
                                 <th>
                                     <span class="flex items-center">
                                         Tindakan
@@ -192,7 +192,7 @@
                                             </div>
                                         </td>
 
-                                        <!-- Alasan Pembatalan -->
+                                        {{-- <!-- Alasan Pembatalan -->
                                         <td class=" items-center text-center mt-5"> 
                                             <div class="flex justify-center ">
                                                 <button 
@@ -203,7 +203,7 @@
                                                     Alasan
                                                 </button>
                                             </div>
-                                        </td>
+                                        </td> --}}
 
                                         <!-- Tindakan -->
                                         <td class="text-center">
@@ -373,7 +373,7 @@
         </div>
     </div>
 
-    <!-- Modal Alasan Pembatalan -->
+    {{-- <!-- Modal Alasan Pembatalan -->
     <div id="detail-batal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative p-4 w-full max-w-2xl max-h-full">
             <!-- Modal content -->
@@ -397,7 +397,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 </body>

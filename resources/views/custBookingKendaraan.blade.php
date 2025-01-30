@@ -347,16 +347,6 @@
                         <p class="mb-4 text-xs text-gray-500">
                             * Masukkan keterangan lokasi titik penjemputan.
                         </p>
-
-                        <!-- Input Bukti Pembayaran -->
-                        <label for="bukti-bayar" class="block mb-2 text-sm font-medium text-gray-900">Upload Bukti Pembayaran</label>
-                        {{-- <input type="file" id="bukti-bayar" name="buktiBayar" accept="image/jpeg, image/png" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50" required> --}}
-                    
-                        <!-- Informasi Tambahan -->
-                        <p class="info mt-1">
-                            * File maksimal 2 MB, format: JPEG atau PNG<br>
-                            * Upload bukti pembayaran Anda. Harap diperhatikan bahwa jika Anda membatalkan booking setelah mengonfirmasi, pengembalian biaya akan dilakukan sebesar 90% dari total biaya yang telah dibayar.
-                        </p>
                     </form>
                 </div>
 

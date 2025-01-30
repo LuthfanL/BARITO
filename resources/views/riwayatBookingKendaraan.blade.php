@@ -64,7 +64,7 @@
                                 name="keyword" 
                                 id="search-input" 
                                 class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500" 
-                                placeholder="Cari ID Booking atau ID Cust atau Nama Pemohon" 
+                                placeholder="Cari ID Booking atau Nama Pemohon" 
                             />
                         </div>
                     </form>
@@ -140,11 +140,6 @@
                                     </span>
                                 </th>
                                 <th>
-                                    <span class="flex items-center justify-center">
-                                        Pembatalan
-                                    </span>
-                                </th>
-                                <th>
                                     <span class="flex items-center">
                                         Status
                                         <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -192,13 +187,13 @@
                                                 </button>
                                             </div>
                                         </td>
-
+{{-- 
                                         <!-- Alasan Pembatalan -->
                                         <td class=" items-center text-center mt-5"> 
                                             <div class="flex justify-center ">
                                                 <button data-modal-target="detail-batal" data-modal-toggle="detail-batal" type="button" class="block px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-700 via-red-800 to-red-900 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Alasan</button>
                                             </div>
-                                        </td>
+                                        </td> --}}
                                         
                                         <!-- Status -->
                                         <td>
@@ -287,7 +282,7 @@
         </div>
     </div>
 
-    <!-- Modal Alasan Pembatalan -->
+    {{-- <!-- Modal Alasan Pembatalan -->
     <div id="detail-batal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative p-4 w-full max-w-2xl max-h-full">
             <!-- Modal content -->
@@ -311,7 +306,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 </body>

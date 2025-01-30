@@ -157,7 +157,7 @@ class custBookingKendaraanController extends Controller
             'titikJemput'   => $request->input('titikJemput'),
             'tglMulai'      => $request->input('tglMulai'),
             'tglSelesai'    => $request->input('tglSelesai'),
-            'status'        => 'Belum disetujui',
+            'status'        => 'Belum bayar',
              // 'buktiBayar'    => json_encode($fotoPaths),
             ];
 

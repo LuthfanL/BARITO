@@ -251,7 +251,7 @@
                                 <td>{{ \Carbon\Carbon::parse($booking->tglMulai)->format('d/m/Y') }}</td>
                                 <td>{{ \Carbon\Carbon::parse($booking->tglSelesai)->format('d/m/Y') }}</td>
 
-                                <!-- Status -->                
+                                 <!-- Status -->                
                                 <td>
                                     @if ($booking->status == 'Disetujui')
                                         <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 text-white">
@@ -261,9 +261,13 @@
                                         <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 text-white">
                                             Ditolak
                                         </div>
-                                    @elseif ($booking->status == 'Belum disetujui')
+                                    @elseif ($booking->status == 'Menunggu persetujuan')
                                         <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-yellow-500 via-yellow-600 to-yellow-700 text-white">
-                                            Belum disetujui
+                                            Menunggu persetujuan
+                                        </div>
+                                    @elseif ($booking->status == 'Belum bayar')
+                                        <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-indigo-500 via-indigo-600 to-indigo-700 text-white">
+                                            Belum bayar
                                         </div>
                                     @endif
                                 </td>
@@ -271,7 +275,7 @@
                                 <!-- Tindakan -->
                                 <td class="text-center">
                                     <div class="flex justify-center gap-2">
-                                        @if ($booking->status == 'Belum disetujui')
+                                        @if ($booking->status == 'Belum bayar')
                                             <!-- Tindakan Edit dan Batalkan -->
                                             <button data-modal-target="modal-edit" data-modal-toggle="modal-edit" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
                                                 Edit
