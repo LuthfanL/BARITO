@@ -18,7 +18,7 @@
 
 <body class="h-full bg-white">
     <!-- Navbar -->
-    <div class="relative z-30">
+    <div class="relative z-40">
         @include('components.navbargeneral')
     </div>
 
