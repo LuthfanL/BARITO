@@ -281,7 +281,11 @@
                                             <button data-modal-target="modal-edit" data-modal-toggle="modal-edit" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
                                                 Edit
                                             </button>
-                                            <button data-modal-target="modal-batalkan" data-modal-toggle="modal-batalkan" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                            <button 
+                                                data-modal-target="modal-batalkan" 
+                                                data-modal-toggle="modal-batalkan"
+                                                data-bookingid="{{ $booking->id }}"  
+                                                class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
                                                 Batalkan
                                             </button>
                                             <button 
@@ -419,24 +423,23 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                     </svg>
                     <h1 class="mb-5 text-lg font-bold text-gray-900">Konfirmasi Pembatalan Booking</h1>
-                    <p class="mb-5 text-m font-normal text-gray-500">Apakah Anda yakin ingin membatalkan booking ruangan ini? Tindakan ini akan dikonfirmasi terlebih dahulu oleh admin.</p>
-                    <textarea id="alasan-pembatalan" placeholder="Berikan Alasan Pembatalan" class="w-full h-24 mt-2 p-4 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm"></textarea>
-                    <p class="text-red-500 text-left text-xs mt-2">* Harap diperhatikan: Setelah Anda setuju untuk membatalkan booking, uang pembayaran akan dikembalikan sebesar 90% dari total pembayaran.</p>
-                    <!-- Checkbox -->
-                    <div class="flex items-center mt-4">
-                        <input id="link-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500" required>
-                        <label for="link-checkbox" class="ms-2 text-sm font-medium text-gray-900">Saya telah membaca dan memahami konsekuensi pembatalan.</label>
-                    </div>
-                    <!-- Tombol -->
-                    <div class="flex justify-center gap-4 mt-6">
-                        <!-- Button (disabled until checkbox is checked) -->
-                        <button id="submit-btn" data-modal-hide="modal-batalkan" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white disabled:opacity-50 disabled:cursor-not-allowed" disabled>
-                            Setujui dan Batalkan Booking
-                        </button>
-                        <button data-modal-hide="modal-batalkan" type="button" class="px-6 py-2 rounded-lg font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br text-white">
-                            Kembali
-                        </button>
-                    </div>
+                    <p class="mb-5 text-m font-normal text-gray-500">Apakah Anda yakin ingin membatalkan booking ruangan ini?</p>
+
+                    <!-- Form Pembatalan -->
+                    <form id="form-batal" action="" method="POST">
+                        @csrf
+                        @method('DELETE')
+
+                        <!-- Tombol Submit -->
+                        <div class="flex justify-center gap-4 mt-6">
+                            <button type="submit" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                Batalkan Booking
+                            </button>
+                            <button data-modal-hide="modal-batalkan" type="button" class="px-6 py-2 rounded-lg font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br text-white">
+                                Kembali
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -559,6 +562,21 @@
             document.getElementById('booking-id').value = bookingId;
         });
     });
+</script>
+
+{{-- Script untuk membatalkan booking --}}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const modalBatalkan = document.getElementById("modal-batalkan");
+    const deleteForm = document.getElementById("form-batal");
+
+    document.querySelectorAll("[data-modal-toggle='modal-batalkan']").forEach(button => {
+        button.addEventListener("click", function () {
+            let id = this.getAttribute("data-bookingid");
+            deleteForm.setAttribute("action", `/hapusPemRuangan/${id}`);
+        });
+    });
+});
 </script>
 
 </html>

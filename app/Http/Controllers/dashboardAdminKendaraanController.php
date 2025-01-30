@@ -29,14 +29,14 @@ class dashboardAdminKendaraanController extends Controller
         $totalCustomer = customer::count();
         $totalKendaraan = $kendaraan->count(); // Hitung total kendaraan
 
-        // Hitung jumlah booking dengan status "Belum disetujui" atau "Disetujui"
+        // Hitung jumlah booking dengan status "Menunggu persetujuan" atau "Disetujui"
         $totalBooking = pemKendaraan::where('idAdmin', $idAdmin)
-            ->whereIn('status', ['Belum disetujui', 'Disetujui'])
+            ->whereIn('status', ['Menunggu persetujuan', 'Disetujui'])
             ->count();
 
-        // Hitung jumlah booking dengan status "Belum disetujui"
+        // Hitung jumlah booking dengan status "Menunggu persetujuan"
         $verifikasi = pemKendaraan::where('idAdmin', $idAdmin)
-            ->where('status', 'Belum disetujui')
+            ->where('status', 'Menunggu persetujuan')
             ->count();
 
         foreach ($kendaraan as &$data) {

@@ -36,6 +36,23 @@ class custStatusBookingTenantController extends Controller
         ]);
     }
 
+    public function destroy($id)
+    {
+        // Cari peminjaman tenant berdasarkan id
+        $pemTenant = pemTenant::where('id', $id)->first();
+
+        // Periksa apakah pemTenant ditemukan
+        if (!$pemTenant) {
+            return redirect()->back()->with('error', 'Ruangan tidak ditemukan.');
+        }
+
+        // Hapus pemTenant
+        $pemTenant->delete();
+
+        // Redirect kembali dengan pesan sukses
+        return redirect()->back()->with('success', 'Booking berhasil dibatalkan!');
+    }
+
     public function uploadBukti(Request $request)
     {
         // Validasi input
