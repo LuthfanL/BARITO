@@ -113,7 +113,7 @@ class custBookingKendaraanController extends Controller
         }
 
         if ($validated['tglMulai'] == Carbon::now()->format('Y-m-d')){
-            return redirect()->back()->withErrors('Tidak bisa memesan untuk hari yang sama dengan hari yang dipesan, minimal 1 hari sebelum hari yang dipesan!');
+            return redirect()->back()->withErrors('Pemesanan tidak dapat dilakukan untuk hari yang sama. Harap lakukan pemesanan minimal 1 hari sebelumnya!');
         }
 
         $used = pemKendaraan::where('idKendaraan', $validated['idKendaraan'])->get();

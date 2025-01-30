@@ -76,7 +76,7 @@ class custBookingTenantController extends Controller
             return back()->with('error', 'Customer tidak ditemukan');
         }
 
-        if ()
+        // if ();
 
         // Siapkan data untuk disimpan
         $dataToStore = [
