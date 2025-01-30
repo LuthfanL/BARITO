@@ -55,7 +55,7 @@ class custStatusBookingTenantController extends Controller
             $extension = $file->getClientOriginalExtension();
 
             // Buat nama file sesuai format: bookingID_buktiBayar_TGLUPLOAD.ext
-            $filename = $request->booking_id . 'buktiBayar' . date('dmY') . '.' . $extension;
+            $filename = $request->booking_id . 'buktiBayarTenant' . date('dmY') . '.' . $extension;
 
             // Simpan file ke storage/public/buktibayar_pemTenant
             $path = $file->storeAs('buktibayar_pemTenant', $filename, 'public');
