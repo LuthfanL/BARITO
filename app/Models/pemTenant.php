@@ -25,7 +25,7 @@ class pemTenant extends Model
         'namaTenant',
         'tipeTenant',
         'status',
-        //'buktiBayar',
+        'buktiBayar',
     ];
 
     public function customer()

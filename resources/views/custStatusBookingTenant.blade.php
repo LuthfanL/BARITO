@@ -31,13 +31,82 @@
             overflow: hidden; /* Menyembunyikan teks yang terlalu panjang */
             text-overflow: ellipsis; /* Menambahkan elipsis untuk teks yang terlalu panjang */
         }
+        .form-container {
+            width: 100%;
+            max-width: 1400px; 
+            margin: auto; 
+            padding: 24px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.1);
+            background-color: white; 
+        }
+    
+        .form-inner {
+            margin: 8px auto; 
+            width: 100%; 
+            padding: 24px;
+            border-radius: 20px;
+            outline: 2px solid #00C6BF;
+            background-color: #fff;
+        }
+    
+        form {
+            width: 100%; 
+        }
+    
+        label {
+            font-size: 14px;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+    
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+    
+        textarea {
+            resize: vertical;
+        }
+    
+        .fasilitas-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+    
+        .fasilitas-container label {
+            display: inline-block;
+            font-size: 13px;
+            font-weight: normal;
+        }
+
+        #date-range-picker {
+            margin-top: 10px;
+        }
+
+        #date-range-picker input[type="text"] {
+            transition: all 0.2s ease-in-out;
+        }
+    
+        .info {
+            font-size: 12px;
+            color: red;
+            margin-bottom: 10px;
+        }
     </style>
 
 </head>
 
 <body class="h-full bg-white">
     <!-- Navbar -->
-    <div class="relative z-50">
+    <div class="relative z-30">
         @include('components.navbargeneral')
     </div>
 
@@ -113,7 +182,7 @@
                     />
                 </div>
             </form>
-           
+            
             <!-- Table Data -->
             <table id="default-table">
                 <thead>
@@ -278,7 +347,7 @@
                                             <button data-modal-target="modal-batalkan" data-modal-toggle="modal-batalkan" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
                                                 Batalkan
                                             </button>
-                                            <button data-modal-target="modal-bayar" data-modal-toggle="modal-bayar" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-yellow-500 via-yellow-600 to-yellow-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                            <button data-modal-target="modal-bayar" data-modal-toggle="modal-bayar" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
                                                 Bayar
                                             </button>
                                         @else
@@ -309,77 +378,84 @@
                 </div>
                 <!-- Modal body -->
                 <div class="p-4 md:p-5">
-                    <form id="editForm" action="/updateBookingTenant" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        @method('PUT') <!-- Gunakan metode PUT jika sesuai kebutuhan RESTful -->
-
-                        <!-- Input tersembunyi untuk nama event -->
-                        <input type="hidden" id="namaEvent" name="namaEvent" value="{{ $booking }}">
+                    <form id="booking-form">
 
                         <!-- Input Nama Event -->
-                        <input type="text" id="namaEvent" name="namaEvent" required style="display: none;">
-        
-                        <!-- Input Deskripsi Event -->
-                        <label for="deskripsi">Deskripsi Event</label>
-                        <textarea id="deskripsi" name="deskripsi" rows="3" required class="pl-2"></textarea>
-        
-                        <!-- Input Biaya Sewa -->
-                        <label for="hargaTenant">Biaya Sewa (Per Hari)</label>
-                        <input type="text" id="hargaTenant" name="hargaTenant" required>
+                        <label for="namaEvent"></label>
+                        <input 
+                            type="hidden"  
+                            id="namaEvent" 
+                            name="namaEvent" 
+                            value="" 
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 p-2.5 w-full">
+
+                        <!-- Input ID Admin -->
+                        <label for="idAdmin"></label>
+                        <input 
+                            type="hidden" 
+                            name="idAdmin" 
+                            value="">
+
+                        <!-- Input Nama Pemohon -->
+                        <label for="namaPemohon">Nama Pemohon</label>
+                        <input type="text" id="namaPemohon" name="namaPemohon" required>
+
+                        <!-- Input No. Whatapps -->
+                        <label for="noWa">No. Whatapps</label>
+                        <input type="text" id="noWa" name="noWa" required>
+
+                        <!-- Input Nama Tenant -->
+                        <label for="namaTenant">Nama Tenant</label>
+                        <input type="text" id="namaTenant" name="namaTenant" required>
 
                         <!-- Input Jenis Tenant -->
-                        <label>Jenis Tenant</label>
-                        <div class="tenant-container">
-                            <div>
-                                <label for="nBarang">Tenant Barang</label>
-                                <input type="text" id="nBarang" name="nBarang">
-                            </div>
-                            <div>
-                                <label for="nJasa">Tenant Jasa</label>
-                                <input type="text" id="nJasa" name="nJasa">
-                            </div>
-                            <div>
-                                <label for="nMakanan">Tenant Makanan</label>
-                                <input type="text" id="nMakanan" name="nMakanan">
-                            </div>
-                        </div>
-        
-                        <!-- Input Tanggal -->
-                        <label for="tanggal-event" class="block font-bold">Tanggal Event</label>
-                        <div id="date-range-picker" class="flex items-center space-x-2">
-                            <!-- Tanggal Mulai -->
-                            <div class="relative flex items-center">
-                                <svg class="w-5 h-5 absolute right-3 top-2 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 1 1 0-2Z"/>
-                                </svg>
-                                <input id="tglMulai" name="tglMulai" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 p-2.5 w-full" placeholder="">
-                            </div>
+                        <label for="tipeTenant">Jenis Tenant</label>
+                        {{-- <input type="text" id="tipeTenant" name="tipeTenant" required> --}}
+                        <select
+                            id="tipeTenant"
+                            name="tipeTenant"
+                            class="bg-gray-50 mb-4 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                            onchange="simpanPilihan()">
+                            <option value="Tenant Makanan">Tenant Makanan</option>
+                            <option value="Tenant Barang">Tenant Barang</option>
+                            <option value="Tenant Jasa">Tenant Jasa</option>
+                        </select>
 
-                            <!-- Tanggal Selesai -->
-                            <div class="relative flex items-center">
-                                <svg class="w-5 h-5 absolute right-3 top-2 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 1 1 0-2Z"/>
-                                </svg>
-                                <input id="tglSelesai" name="tglSelesai" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 p-2.5 w-full" placeholder="">
-                            </div>
-                        </div>        
-                        
-                        <!-- Input Foto Event -->
-                        <label for="foto">Upload Foto/Poster Event</label>
-                        <input type="file" id="foto" name="foto[]" accept="image/jpeg, image/png" class="block mb-2 w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50" multiple>
-        
+                        <!-- Input Bukti Pembayaran -->
+                        <label for="bukti-bayar" class="block mb-2 text-sm font-medium text-gray-900">Upload Bukti Pembayaran</label>
+                        {{-- <input type="file" id="bukti-bayar" name="bukti-bayar" accept="image/jpeg, image/png" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50" required> --}}
+                    
                         <!-- Informasi Tambahan -->
-                        <p class="info">
+                        <p class="info mt-1">
                             * File maksimal 2 MB, format: JPEG atau PNG<br>
-                            * Upload minimal 1 foto yang memperlihatkan informasi event
+                            * Upload bukti pembayaran Anda. Harap diperhatikan bahwa jika Anda membatalkan booking setelah mengonfirmasi, pengembalian biaya akan dilakukan sebesar 90% dari total biaya yang telah dibayar.
                         </p>
                     </form>
                 </div>
 
                 <!-- Modal footer -->
                 <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b space-x-2">
-                    <button id="konfirmasi-button" type="button" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 font-bold font-medium rounded-lg text-sm px-4 py-2 text-center">Simpan</button>
+                    <button data-modal-target="modal-konfirmasiEdit" data-modal-toggle="modal-konfirmasiEdit" data-modal-hide="modal-edit" id="konfirmasi-button" type="button" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 font-bold font-medium rounded-lg text-sm px-4 py-2 text-center">Simpan</button>
                     <button data-modal-hide="modal-edit" type="button" class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-bold font-medium rounded-lg text-sm px-4 py-2 text-center">Batal</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Konfirmasi Edit -->
+    <div id="modal-konfirmasiEdit" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative p-4 w-full max-w-xl max-h-full">
+            <div class="relative bg-white rounded-lg shadow">
+                <div class="p-4 md:p-5 text-center">
+                    <svg class="mx-auto mb-4 text-gray-400 w-16 h-16" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                    </svg>
+                    <h1 class="mb-5 text-lg font-bold text-gray-900">Konfirmasi Perubahan Booking</h1>
+                    <p class="mb-5 text-m font-normal text-gray-500">Apakah Anda yakin ingin merubah booking tenant ini? Pastikan semua telah sesuai sebelum melanjutkan.</p>
+                    <button data-modal-hide="modal-konfirmasiEdit" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                        Setujui
+                    </button>
+                    <button data-modal-hide="modal-konfirmasiEdit" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Kembali</button>
                 </div>
             </div>
         </div>
@@ -412,6 +488,58 @@
                             Kembali
                         </button>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Bayar -->
+    <div id="modal-bayar" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative p-4 w-full max-w-4xl max-h-full">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow">
+                <!-- Modal header -->
+                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
+                    <h3 class="text-lg md:text-xl font-semibold text-gray-900">
+                        Upload Bukti Pembayaran
+                    </h3>
+                </div>
+                <!-- Modal body -->
+                <div class="p-4 md:p-5">
+                    <form id="booking-form">
+
+                        <!-- Input Nama Event -->
+                        <label for="namaEvent"></label>
+                        <input 
+                            type="hidden"  
+                            id="namaEvent" 
+                            name="namaEvent" 
+                            value="" 
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 p-2.5 w-full">
+
+                        <!-- Input ID Admin -->
+                        <label for="idAdmin"></label>
+                        <input 
+                            type="hidden" 
+                            name="idAdmin" 
+                            value="">
+
+                        <!-- Input Bukti Pembayaran -->
+                        <label for="bukti-bayar" class="block mb-2 text-sm font-medium text-gray-900">Upload Bukti Pembayaran</label>
+                        <input type="file" id="bukti-bayar" name="bukti-bayar" accept="image/jpeg, image/png" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50" required>
+
+                        <!-- Informasi Tambahan -->
+                        <p class="info mt-1">
+                            * File maksimal 2 MB, format: JPEG atau PNG<br>
+                            * Upload bukti pembayaran Anda. Harap diperhatikan bahwa jika Anda membatalkan booking setelah mengonfirmasi, pengembalian biaya akan dilakukan sebesar 90% dari total biaya yang telah dibayar.
+                        </p>
+                    </form>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b space-x-2">
+                    <button data-modal-hide="modal-bayar" id="konfirmasi-button" type="button" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 font-bold font-medium rounded-lg text-sm px-4 py-2 text-center">Upload</button>
+                    <button data-modal-hide="modal-bayar" type="button" class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-bold font-medium rounded-lg text-sm px-4 py-2 text-center">Batal</button>
                 </div>
             </div>
         </div>

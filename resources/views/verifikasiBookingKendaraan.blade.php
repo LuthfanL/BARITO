@@ -165,21 +165,31 @@
                                         <td>{{ $booking->namaKendaraan }}</td>
                                         <td>{{ \Carbon\Carbon::parse($booking->tglMulai)->format('d/m/Y') }}</td>
                                         <td>{{ \Carbon\Carbon::parse($booking->tglSelesai)->format('d/m/Y') }}</td>
-                                        <td class="text-center">
-                                            BuktiPembayaran.jpg
-                                        </td>              
-                                        <!-- Info Lain -->
-                                        <td class="flex justify-center items-center text-center mt-5"> 
+                                        <!-- Bukti Bayar -->
+                                        <td class="flex justify-center items-center text-center mt-5">
                                             <button 
-                                                data-modal-target="detail-booking" 
-                                                data-modal-toggle="detail-booking"
-                                                data-bookingkeperluan="{{ $booking->keperluan }}" 
-                                                data-bookinglokasi="{{ $booking->lokasi }}" 
-                                                data-bookingtitikJemput="{{ $booking->titikJemput }}" 
-                                                type="button" 
-                                                class="block px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                                                Detail
+                                            data-modal-target="detail-bayar" 
+                                            data-modal-toggle="detail-bayar"
+                                            data-bookingBuktiBayar="" 
+                                            type="button" 
+                                            class="block px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                            Detail
                                             </button>
+                                        </td>            
+                                        <!-- Info Lain -->
+                                        <td class=" items-center text-center mt-5"> 
+                                            <div class="flex justify-center">
+                                                <button 
+                                                    data-modal-target="detail-booking" 
+                                                    data-modal-toggle="detail-booking"
+                                                    data-bookingkeperluan="{{ $booking->keperluan }}" 
+                                                    data-bookinglokasi="{{ $booking->lokasi }}" 
+                                                    data-bookingtitikJemput="{{ $booking->titikJemput }}" 
+                                                    type="button" 
+                                                    class="block px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                                    Detail
+                                                </button>
+                                            </div>
                                         </td>
 
                                         <!-- Alasan Pembatalan -->
@@ -223,6 +233,34 @@
                             </tr>
                         @endif
                     </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Bukti Bayar -->
+    <div id="detail-bayar" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative p-8 w-full max-w-xl max-h-full">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow">
+                <!-- Modal header -->
+                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
+                    <h3 class="text-lg md:text-xl font-semibold text-gray-900">
+                        Bukti Pembayaran
+                    </h3>
+                </div>
+                <!-- Modal body -->
+                <div class="p-10 md:p-10 space-y-4">
+                    <div>
+                        <div>
+                            <img id="buktibayar" class="h-auto max-w-full rounded-lg" src="" alt="Bukti Bayar">
+                        </div>
+                    </div>                    
+                </div>
+                <!-- Modal footer -->
+                <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b">
+                    <button data-modal-hide="detail-bayar" type="button" class="text-white mr-2 bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 text-center">Unduh</button>
+                    <button data-modal-hide="detail-bayar" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center">Kembali</button>
                 </div>
             </div>
         </div>

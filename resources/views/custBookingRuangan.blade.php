@@ -461,25 +461,26 @@
         });
     </script>
 
+    <!-- Kalendar -->
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const calendarEl = document.getElementById('calendar');
-        const calendarRuangan = {!! $calendarRuanganJson !!};
-    
-        const calendar = new FullCalendar.Calendar(calendarEl, {
-            locale: 'id', 
-            initialView: 'dayGridMonth', 
-            buttonText: {
-                today: 'Hari Ini' 
-            },
-            events: calendarRuangan, 
-            height: 'auto', 
-            contentHeight: 'auto', 
-            windowResize: true 
-        });
+        document.addEventListener('DOMContentLoaded', function() {
+            const calendarEl = document.getElementById('calendar');
+            const calendarRuangan = {!! $calendarRuanganJson !!};
+        
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                locale: 'id', 
+                initialView: 'dayGridMonth', 
+                buttonText: {
+                    today: 'Hari Ini' 
+                },
+                events: calendarRuangan, 
+                height: 'auto', 
+                contentHeight: 'auto', 
+                windowResize: true 
+            });
 
-        calendar.render(); 
-    });
+            calendar.render(); 
+        });
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
