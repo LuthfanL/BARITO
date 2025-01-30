@@ -279,7 +279,11 @@
                                             <button data-modal-target="modal-batalkan" data-modal-toggle="modal-batalkan" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
                                                 Batalkan
                                             </button>
-                                            <button data-modal-target="modal-bayar" data-modal-toggle="modal-bayar" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                            <button 
+                                                data-modal-target="modal-bayar" 
+                                                data-modal-toggle="modal-bayar" 
+                                                data-bookingid="{{ $booking->id }}" 
+                                                class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
                                                 Bayar
                                             </button>
                                         @else
@@ -452,50 +456,43 @@
                     </h3>
                 </div>
                 <!-- Modal body -->
-                <div class="p-4 md:p-5">
-                    <form id="booking-form">
-
-                        <!-- Input ID Kendaraan -->
-                        <label for="idKendaraan"></label>
-                        <input 
-                            type="hidden"  
-                            id="idKendaraan" 
-                            name="idKendaraan" 
-                            value="" 
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 p-2.5 w-full">
-
-                        <!-- Input ID Admin -->
-                        <label for="idAdmin"></label>
-                        <input 
-                            type="hidden" 
-                            name="idAdmin" 
-                            value="">
-
-                        <!-- Input Nama Kendaraan -->
-                        <label for="namaKendaraan"></label>
-                        <input 
-                            type="hidden"  
-                            id="namaKendaraan" 
-                            name="namaKendaraan" 
-                            value="" 
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 p-2.5 w-full">
-
+                <form action="{{ route('booking.uploadBukti') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                    <div class="p-4 md:p-5">
                         <!-- Input Bukti Pembayaran -->
-                        <label for="bukti-bayar" class="block mb-2 text-sm font-medium text-gray-900">Upload Bukti Pembayaran</label>
-                        <input type="file" id="bukti-bayar" name="bukti-bayar" accept="image/jpeg, image/png" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50" required>
+                        @if(isset($booking) && $booking)
+                            <input type="hidden" name="booking_id" id="booking-id" value={{$booking->id}}>
+                        @endif
+                        <label for="bukti-bayar" class="block mb-2 text-sm font-medium text-gray-900">
+                            Upload Bukti Pembayaran
+                        </label>
+                        <input type="file" id="bukti-bayar" name="buktiBayar" accept="image/jpeg, image/png" 
+                            class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50" 
+                            required>
 
                         <!-- Informasi Tambahan -->
                         <p class="info mt-1">
                             * File maksimal 2 MB, format: JPEG atau PNG<br>
                             * Upload bukti pembayaran Anda. Harap diperhatikan bahwa jika Anda membatalkan booking setelah mengonfirmasi, pengembalian biaya akan dilakukan sebesar 90% dari total biaya yang telah dibayar.
                         </p>
-                    </form>
-                </div>
+                    </div>
 
+                    <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b space-x-2">
+                        <button 
+                            type="submit" 
+                            class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 font-bold font-medium rounded-lg text-sm px-4 py-2 text-center">
+                            Upload
+                        </button>
+                    </div>
+                </form>
                 <!-- Modal footer -->
                 <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b space-x-2">
-                    <button data-modal-hide="modal-bayar" id="konfirmasi-button" type="button" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 font-bold font-medium rounded-lg text-sm px-4 py-2 text-center">Upload</button>
-                    <button data-modal-hide="modal-bayar" type="button" class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-bold font-medium rounded-lg text-sm px-4 py-2 text-center">Batal</button>
+                    <button 
+                        data-modal-hide="modal-bayar" 
+                        type="button" 
+                        class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-bold font-medium rounded-lg text-sm px-4 py-2 text-center">
+                        Batal
+                    </button>
                 </div>
             </div>
         </div>
@@ -554,5 +551,21 @@
         });
     });
 </script>
+
+<script>
+    // Ambil semua tombol "Bayar"
+    const bayarButtons = document.querySelectorAll('[data-modal-target="modal-bayar"]');
+
+    bayarButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            // Ambil booking_id dari atribut data-bookingid pada tombol yang diklik
+            const bookingId = this.getAttribute('data-bookingid');
+            
+            // Setel nilai booking_id di input tersembunyi dalam form modal
+            document.getElementById('booking-id').value = bookingId;
+        });
+    });
+</script>
+
 
 </html>

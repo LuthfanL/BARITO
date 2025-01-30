@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\customer;
 use App\Models\pemTenant;
 use App\Models\event;
+use Illuminate\Support\Facades\Storage;
 
 class custStatusBookingTenantController extends Controller
 {
@@ -33,5 +34,37 @@ class custStatusBookingTenantController extends Controller
             'bookings' => $bookings,
 
         ]);
+    }
+
+    public function uploadBukti(Request $request)
+    {
+        // Validasi input
+        $request->validate([
+            'booking_id' => 'required|exists:pemTenant,id', // Pastikan ID booking valid
+            'buktiBayar' => 'required|image|mimes:jpeg,png|max:2048', // Hanya menerima gambar max 2MB
+        ]);
+    
+        // Ambil data booking berdasarkan ID
+        $booking = pemTenant::findOrFail($request->booking_id);
+    
+        // Simpan gambar ke storage dengan nama yang dimodifikasi
+        if ($request->hasFile('buktiBayar')) {
+            $file = $request->file('buktiBayar');
+
+            // Ambil ekstensi file
+            $extension = $file->getClientOriginalExtension();
+
+            // Buat nama file sesuai format: bookingID_buktiBayar_TGLUPLOAD.ext
+            $filename = $request->booking_id . 'buktiBayar' . date('dmY') . '.' . $extension;
+
+            // Simpan file ke storage/public/buktibayar_pemTenant
+            $path = $file->storeAs('buktibayar_pemTenant', $filename, 'public');
+
+            // Simpan path file ke database
+            $booking->buktiBayar = Storage::url($path);
+            $booking->save();
+        }
+
+        return redirect()->back()->with('success', 'Bukti pembayaran berhasil diupload!');
     }
 }

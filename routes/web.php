@@ -69,6 +69,8 @@ Route::get('/custBookingRuangan', [custBookingRuanganController::class, 'index']
 
 Route::get('/custStatusBookingRuangan', [custStatusBookingRuanganController::class, 'index'])->name('custStatusBookingRuangan')->middleware('auth');
 
+Route::post('/custBuktiBayarPemRuangan', [custStatusBookingRuanganController::class, 'uploadBukti'])->name('booking.uploadBuktiRuang')->middleware('auth');
+
 Route::post('/booking-ruangan', [CustBookingRuanganController::class, 'store'])->name('bookingRuangan.store')->middleware('auth');
 
 Route::get('/kontakRuangan', [kontakRuanganController::class, 'index'])->name('kontakRuangan');
@@ -84,6 +86,8 @@ Route::get('/custBookingKendaraan', [custBookingKendaraanController::class, 'ind
 
 Route::get('/custStatusBookingKendaraan', [custStatusBookingKendaraanController::class, 'index'])->name('custStatusBookingKendaraan')->middleware('auth');
 
+Route::post('/custBuktiBayarPemKendaraan', [custStatusBookingKendaraanController::class, 'uploadBukti'])->name('booking.uploadBukti')->middleware('auth');
+
 Route::get('/kontakKendaraan', [kontakKendaraanController::class, 'index'])->name('kontakKendaraan');
 
 // Route::get('/cari-Kendaraan', [custDaftarKendaraanController::class, 'cari'])->name('cariKendaraan')->middleware('auth');
@@ -98,6 +102,8 @@ Route::get('/custDaftarEvent', [custDaftarEventController::class, 'index'])->nam
 Route::get('/custBookingTenant', [custBookingTenantController::class, 'index'])->name('custBookingTenant')->middleware('auth');
 
 Route::get('/custStatusBookingTenant', [custStatusBookingTenantController::class, 'index'])->name('custStatusBookingTenant')->middleware('auth');
+
+Route::post('/custBuktiBayarPemTenant', [custStatusBookingTenantController::class, 'uploadBukti'])->name('booking.uploadBuktiTenant')->middleware('auth');
 
 Route::post('/booking-tenant', [CustBookingTenantController::class, 'store'])->name('bookingTenant.store')->middleware('auth');
 
