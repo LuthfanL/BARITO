@@ -12,32 +12,6 @@ use Carbon\Carbon;
 
 class custBookingKendaraanController extends Controller
 {
-    // public function index(Request $request)
-    // {
-    //     // Ambil parameter 'nama', 'lokasi', dan 'deskripsi' dari URL
-    //     $nama = $request->input('nama');
-    //     $platNomor = $request->input('platNomor');
-
-    //     // Ambil data ruangan berdasarkan 'nama', 'lokasi', dan 'deskripsi'
-    //     $kendaraan = kendaraan::where('nama', $nama)
-    //                         ->where('platNomor', $platNomor)
-    //                         ->first();
-
-        
-
-    //     // Mengambil URL gambar utama dan URL thumbnail
-    //     if (!empty($kendaraan->foto)) {
-    //         $kendaraan->foto_url = Storage::url(json_decode($kendaraan->foto)[0]);  
-    //         $kendaraan->foto_urls = json_decode($kendaraan->foto); 
-    //     } else {
-    //         $kendaraan->foto_url = asset('default-image.jpg');
-    //         $kendaraan->foto_urls = []; // Tidak ada thumbnail jika tidak ada foto
-    //     }
-
-    //     // Kirim data ruangan ke view
-    //     return view('custBookingKendaraan', compact('kendaraan'));
-    // }
-
     public function index(Request $request)
     {
         // Ambil parameter 'nama', 'lokasi', dan 'deskripsi' dari URL
@@ -91,15 +65,6 @@ class custBookingKendaraanController extends Controller
             'tglMulai' => 'required|date',
             'tglSelesai' => 'required|date',
         ]);
-
-        
-        // $fotoPaths = [];
-        // if ($request->hasFile('buktiBayar')) {
-        //     foreach ($request->file('buktiBayar') as $buktiBayar) {
-        //         $path = $buktiBayar->store('foto_buktiBayar', 'public'); // Simpan di folder foto_ruangan
-        //         $fotoPaths[] = Storage::url($path); // Simpan path ke array
-        //     }
-        // }
 
         // Ambil pengguna yang sedang login
         $user = auth()->user();
@@ -158,7 +123,6 @@ class custBookingKendaraanController extends Controller
             'tglMulai'      => $request->input('tglMulai'),
             'tglSelesai'    => $request->input('tglSelesai'),
             'status'        => 'Belum bayar',
-             // 'buktiBayar'    => json_encode($fotoPaths),
             ];
 
         // Simpan data ke database
