@@ -41,6 +41,7 @@ class verifikasiBookingRuanganController extends Controller
         $request->validate([
             'id' => 'required|exists:pemRuangan,id', // Pastikan ID booking valid
             'status' => 'required|in:Disetujui,Ditolak', // Status harus valid
+            'alasanPenolakan',
         ]);
     
         // Cari data berdasarkan ID
@@ -53,6 +54,15 @@ class verifikasiBookingRuanganController extends Controller
         // Perbarui status booking
         $booking->status = $request->status;
         $booking->save();
+
+        if ($booking->status == 'Ditolak'){
+            $booking->alasanPenolakan = $request->input('alasanPenolakan');
+            $booking->save();
+        }
+        if ($booking->status == 'Disetujui'){
+            $booking->alasanPenolakan = null;
+            $booking->save();
+        }
     
         // Redirect dengan pesan sukses
         return redirect()->back()->with('success', 'Status booking berhasil diperbarui.');

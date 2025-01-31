@@ -25,6 +25,7 @@ return new class extends Migration
             $table->date('tglSelesai');
             $table->string('status', 20);
             $table->string('buktiBayar')->nullable();
+            $table->string('alasanPenolakan')->nullable();
             $table->foreign('idCustomer')->references('NIK')->on('customer')->onDelete('cascade');
             $table->foreign('idRuangan')->references('id')->on('ruangan')->onDelete('cascade');
             $table->foreign('idAdmin')->references('idAdmin')->on('adminRuangan')->onDelete('cascade');

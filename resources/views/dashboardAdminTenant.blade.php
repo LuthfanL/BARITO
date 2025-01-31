@@ -102,7 +102,7 @@
                         <div class="m-3 rounded-lg outline outline-2 outline-[#00C6BF] flex items-center justify-between">
                             <div>
                                 <h2 class="text-left ml-3 mt-6 text-3xl font-bold">{{ $totalEvent }}</h2>
-                                <p class="text-left text-gray-500 ml-3 mt-1 mb-6 text-lg font-semibold ">Total Event</p>
+                                <p class="text-left text-gray-500 ml-3 mt-1 mb-6 text-lg font-semibold ">Total Event Aktif</p>
                             </div>
                             <div class="mr-3">
                                 <img width="58" height="58" src="https://img.icons8.com/fluency-systems-filled/48/00c6bf/event.png" alt="event"/>

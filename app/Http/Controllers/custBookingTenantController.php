@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\event;
 use App\Models\adminTenant; 
 use App\Models\pemTenant; 
+use App\Models\customer;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -14,6 +15,10 @@ class custBookingTenantController extends Controller
 {
     public function index(Request $request)
     {
+        $user = auth()->user();
+        $nik = customer::getNikByEmail($user->email);
+        $cus = customer::where('NIK', $nik)->first();
+        
         // Ambil parameter 'nama', 'lokasi', dan 'deskripsi' dari URL
         $namaEvent = $request->input('namaEvent');
 
@@ -45,7 +50,7 @@ class custBookingTenantController extends Controller
         }
 
         // Kirim data ruangan ke view
-        return view('custBookingTenant', compact('event', 'calendarEventsJson', 'barang', 'jasa', 'makanan'));
+        return view('custBookingTenant', compact('cus', 'event', 'calendarEventsJson', 'barang', 'jasa', 'makanan'));
     }
 
     public function store(Request $request)
@@ -86,15 +91,18 @@ class custBookingTenantController extends Controller
         $makanan = event::where('namaEvent', $request->input('namaEvent'))->first()->nMakanan;
         $jasa = event::where('namaEvent', $request->input('namaEvent'))->first()->nJasa;
         $barang = event::where('namaEvent', $request->input('namaEvent'))->first()->nBarang;
+        $nMakanan = pemTenant::where('namaEvent', $request->input('namaEvent'))->where('tipeTenant', 'Tenant Makanan')->count();
+        $nJasa = pemTenant::where('namaEvent', $request->input('namaEvent'))->where('tipeTenant', 'Tenant Jasa')->count();
+        $nBarang = pemTenant::where('namaEvent', $request->input('namaEvent'))->where('tipeTenant', 'Tenant Barang')->count();
 
-        if ($request->input('tipeTenant') == 'Tenant Makanan' && $makanan == 0) {
+        if ($request->input('tipeTenant') == 'Tenant Makanan' && $makanan == $nMakanan) {
             return redirect()->back()->withErrors('Maaf, kuota untuk tenant makanan sudah habis, silahkan berkunjung dilain waktu!');
         }
-        if ($request->input('tipeTenant') == 'Tenant Jasa' && $jasa == 0) {
-            return redirect()->back()->withErrors('Maaf, kuota untuk tenant makanan sudah habis, silahkan berkunjung dilain waktu!');
+        if ($request->input('tipeTenant') == 'Tenant Jasa' && $jasa == $nJasa) {
+            return redirect()->back()->withErrors('Maaf, kuota untuk tenant jasa sudah habis, silahkan berkunjung dilain waktu!');
         }
-        if ($request->input('tipeTenant') == 'Tenant Barang' && $barang == 0) {
-            return redirect()->back()->withErrors('Maaf, kuota untuk tenant makanan sudah habis, silahkan berkunjung dilain waktu!');
+        if ($request->input('tipeTenant') == 'Tenant Barang' && $barang == $nBarang) {
+            return redirect()->back()->withErrors('Maaf, kuota untuk tenant barang sudah habis, silahkan berkunjung dilain waktu!');
         }
 
         // Siapkan data untuk disimpan
@@ -112,22 +120,6 @@ class custBookingTenantController extends Controller
 
         // Simpan data ke database
         pemTenant::create($dataToStore);
-
-        if ($request->input('tipeTenant') == 'Tenant Makanan') {
-            DB::table('event')->where('namaEvent', $request->input('namaEvent'))->update([
-                'nMakanan' => $makanan - 1,
-            ]);
-        }
-        if ($request->input('tipeTenant') == 'Tenant Jasa') {
-            DB::table('event')->where('namaEvent', $request->input('namaEvent'))->update([
-                'nJasa' => $jasa - 1,
-            ]);
-        }
-        if ($request->input('tipeTenant') == 'Tenant Barang') {
-            DB::table('event')->where('namaEvent', $request->input('namaEvent'))->update([
-                'nBarang' => $barang - 1,
-            ]);
-        }
 
         return redirect()->back()->with('success', 'Booking tenant berhasil!');
     }

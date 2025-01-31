@@ -230,19 +230,19 @@
                             </div>
                         </div>
                         <!-- Jenis Tenant -->
-                        <h2 class="font-semibold text-lg">Sisa Kuota Tenant</h2>
+                        <h2 class="font-semibold text-lg">Kuota Tenant Terisi</h2>
                         <div class="grid grid-cols-2 gap-4">
                             <div>
                                 <label for="makanan" class="block text-sm font-medium text-gray-700">Tenant Makanan</label>
-                                <input type="text" id="makanan" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="{{ $event['nMakanan'] }} dari {{ $makanan }}" readonly>
+                                <input type="text" id="makanan" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="{{ $makanan }}/{{ $event['nMakanan'] }}" readonly>
                             </div>
                             <div>
                                 <label for="barang" class="block text-sm font-medium text-gray-700">Tenant Barang</label>
-                                <input type="text" id="barang" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="{{ $event['nBarang'] }} dari {{ $barang }}" readonly>
+                                <input type="text" id="barang" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="{{ $barang }}/{{ $event['nBarang'] }}" readonly>
                             </div>
                             <div>
                                 <label for="jasa" class="block text-sm font-medium text-gray-700">Tenant Jasa</label>
-                                <input type="text" id="jasa" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="{{ $event['nJasa'] }} dari {{ $jasa }}" readonly>
+                                <input type="text" id="jasa" class="mt-1 block w-full rounded-md bg-transparent border-gray-300 shadow-sm text-gray-700 focus:outline-none pointer-events-none sm:text-sm" value="{{ $jasa }}/{{ $event['nJasa'] }}" readonly>
                             </div>
                         </div>
                         <div>
@@ -299,11 +299,11 @@
 
                         <!-- Input Nama Pemohon -->
                         <label for="namaPemohon">Nama Pemohon</label>
-                        <input type="text" id="namaPemohon" name="namaPemohon" required>
+                        <input type="text" id="namaPemohon" name="namaPemohon" value="{{ $cus->name }}" require>
 
                         <!-- Input No. Whatapps -->
                         <label for="noWa">No. Whatapps</label>
-                        <input type="text" id="noWa" name="noWa" required>
+                        <input type="text" id="noWa" name="noWa" value="{{ $cus->noHP }}" require>
 
                         <!-- Input Nama Tenant -->
                         <label for="namaTenant">Nama Tenant</label>

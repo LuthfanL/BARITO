@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\event;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class buatEventController extends Controller
 {
@@ -46,6 +47,19 @@ class buatEventController extends Controller
         if (!$idAdmin) {
             // Tangani error jika idAdmin tidak ditemukan
             return back()->with('error', 'Admin tidak ditemukan');
+        }
+
+        $tglMulai = Carbon::parse($request->input('tglMulai'))->startOfDay();
+        $sekarang = Carbon::now()->startOfDay();
+
+        $selisih = $sekarang->diffInDays($tglMulai);
+
+        if ($selisih < 3) {
+            return redirect()->back()->withErrors('Event harus dibuat maksimal 3 hari sebelum hari h event!');
+        }
+        
+        if ($request->input('tglSelesai') < $request->input('tglMulai')){
+            return redirect()->back()->withErrors('Tanggal Selesai harus lebih dari atau sama dengan tanggal mulai!');
         }
 
         // Simpan data ke database

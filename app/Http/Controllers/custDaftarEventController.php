@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\event;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class custDaftarEventController extends Controller
 {
     public function index(Request $request)
     {
         $events = event::all();
+        $now = Carbon::now()->startOfDay();
 
         foreach ($events as &$evt) {
             if (!empty($evt->foto)) {
@@ -23,6 +25,6 @@ class custDaftarEventController extends Controller
             }
         }
 
-        return view('custDaftarEvent', compact('events'));
+        return view('custDaftarEvent', compact('events', 'now'));
     }
 }

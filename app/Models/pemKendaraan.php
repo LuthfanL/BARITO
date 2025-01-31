@@ -30,6 +30,7 @@ class pemKendaraan extends Model
         'tglSelesai',
         'status',
         'buktiBayar',
+        'alasanPenolakan',
     ];
 
     public function customer()

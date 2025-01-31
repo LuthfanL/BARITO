@@ -181,8 +181,8 @@
                                         <td>{{ $booking->namaTenant }}</td>
                                         <td>{{ $booking->namaEvent }}</td>
                                         <td>{{ $booking->tipeTenant }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($booking->tglMulai)->format('d/m/Y') }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($booking->tglSelesai)->format('d/m/Y') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($booking->event->tglMulai)->format('d/m/Y') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($booking->event->tglSelesai)->format('d/m/Y') }}</td>
                                         <!-- Bukti Bayar -->
                                         <td class="flex justify-center items-center text-center mt-5">
                                             @if($booking->buktiBayar)
@@ -316,14 +316,14 @@
                     </svg>
                     <h1 class="mb-5 text-lg font-bold text-gray-900">Konfirmasi Penolakan Booking</h1>
                     <p class="mb-2 ml-2 mr-2 text-m font-normal text-gray-500">Apakah Anda yakin ingin menolak booking tenant ini? Berikan alasan penolakan yang nantinya akan diberitahukan ke customer.</p>
-                    <div class="p-4 md:p-5 space-y-6">
-                        <div>
-                            <textarea id="alasanPenolakan" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-500 p-3" placeholder="Berikan alasan penolakan booking ini." oninput="toggleTolakButton()"></textarea>
-                        </div>
-                    </div>
                     @if (isset($booking))
                         <form action="{{ route('update.statusTenant') }}" method="POST">
                             @csrf
+                            <div class="p-4 md:p-5 space-y-6">
+                                <div>
+                                    <input type="text" id="alasanPenolakan" name="alasanPenolakan" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-500 p-3" placeholder="Berikan alasan penolakan booking ini." require oninput="toggleTolakButton()"></input>
+                                </div>
+                            </div>
                             <input type="hidden" name="id" value="{{ $booking->id }}"> <!-- Kirim ID booking -->
                             <input type="hidden" name="status" value="Ditolak"> <!-- Kirim status -->
                             <button 

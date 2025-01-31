@@ -58,7 +58,7 @@ class DatabaseSeeder extends Seeder
         $adminT = adminTenant::create([
             'idAdmin' => 'AdminT01',
             'name' => 'David Nugroho',
-            'noHP' => '085870194309',
+            'noHP' => '085870195409',
             'email' => 'piddapid@gmail.com',
             'password' => hash::make('Dapid123!'),
         ]);

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('tipeTenant', 30);
             $table->string('status', 20);
             $table->string('buktiBayar')->nullable();
+            $table->string('alasanPenolakan')->nullable();
             $table->foreign('idCustomer')->references('NIK')->on('customer')->onDelete('cascade');
             $table->foreign('namaEvent')->references('namaEvent')->on('event')->onDelete('cascade');
             $table->foreign('idAdmin')->references('idAdmin')->on('adminTenant')->onDelete('cascade');

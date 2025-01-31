@@ -10,6 +10,7 @@ use App\Models\adminTenant;
 use App\Models\pemTenant;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon; 
+use Illuminate\Support\Facades\DB;
 
 class dashboardAdminTenantController extends Controller
 {
@@ -33,8 +34,9 @@ class dashboardAdminTenantController extends Controller
             return back()->with('error', 'Admin tidak ditemukan');
         }
 
-        $event = event::all();
-        $totalCustomer = customer::count();
+        $now = Carbon::now()->startOfDay();
+        $event = event::where('tglMulai', '>', $now);
+        $totalCustomer = pemTenant::where('status', 'Disetujui')->distinct('idCustomer')->count('idCustomer');
         $totalEvent = $event->count(); // Hitung total event
 
         // Hitung jumlah booking dengan status "Menunggu persetujuan" atau "Disetujui"

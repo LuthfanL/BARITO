@@ -26,7 +26,7 @@ class dashboardAdminKendaraanController extends Controller
         }
 
         $kendaraan = kendaraan::all();
-        $totalCustomer = customer::count();
+        $totalCustomer = pemKendaraan::where('status', 'Disetujui')->distinct('idCustomer')->count('idCustomer');
         $totalKendaraan = $kendaraan->count(); // Hitung total kendaraan
 
         // Hitung jumlah booking dengan status "Menunggu persetujuan" atau "Disetujui"

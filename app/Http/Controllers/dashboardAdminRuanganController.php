@@ -26,7 +26,7 @@ class dashboardAdminRuanganController extends Controller
         }
 
         $ruangan = ruangan::all();
-        $totalCustomer = customer::count();
+        $totalCustomer = pemRuangan::where('status', 'Disetujui')->distinct('idCustomer')->count('idCustomer');
         $totalRuangan = $ruangan->count(); // Hitung total ruangan
 
         // Hitung jumlah booking dengan status "Menunggu persetujuan" atau "Disetujui"

@@ -33,7 +33,7 @@ class custStatusBookingTenantController extends Controller
         // Kirimkan data ke view
         return view('custStatusBookingTenant', [
             'bookings' => $bookings,
-
+            'user' => $user,
         ]);
     }
 
@@ -135,14 +135,21 @@ class custStatusBookingTenantController extends Controller
         }
 
         // Periksa kuota berdasarkan tipe tenant
-        if ($request->tipeTenant === 'Tenant Makanan' && $event->nMakanan == 0) {
-            return redirect()->back()->withErrors('Maaf, kuota untuk tenant makanan sudah habis. Silakan berkunjung di lain waktu!');
+        $makanan = event::where('namaEvent', $namaEvent)->first()->nMakanan;
+        $jasa = event::where('namaEvent', $namaEvent)->first()->nJasa;
+        $barang = event::where('namaEvent', $namaEvent)->first()->nBarang;
+        $nMakanan = pemTenant::where('namaEvent', $namaEvent)->where('tipeTenant', 'Tenant Makanan')->count();
+        $nJasa = pemTenant::where('namaEvent', $namaEvent)->where('tipeTenant', 'Tenant Jasa')->count();
+        $nBarang = pemTenant::where('namaEvent', $namaEvent)->where('tipeTenant', 'Tenant Barang')->count();
+
+        if ($request->input('tipeTenant') == 'Tenant Makanan' && $makanan == $nMakanan) {
+            return redirect()->back()->withErrors('Maaf, kuota untuk tenant makanan sudah habis, silahkan berkunjung dilain waktu!');
         }
-        if ($request->tipeTenant === 'Tenant Jasa' && $event->nJasa == 0) {
-            return redirect()->back()->withErrors('Maaf, kuota untuk tenant jasa sudah habis. Silakan berkunjung di lain waktu!');
+        if ($request->input('tipeTenant') == 'Tenant Jasa' && $jasa == $nJasa) {
+            return redirect()->back()->withErrors('Maaf, kuota untuk tenant jasa sudah habis, silahkan berkunjung dilain waktu!');
         }
-        if ($request->tipeTenant === 'Tenant Barang' && $event->nBarang == 0) {
-            return redirect()->back()->withErrors('Maaf, kuota untuk tenant barang sudah habis. Silakan berkunjung di lain waktu!');
+        if ($request->input('tipeTenant') == 'Tenant Barang' && $barang == $nBarang) {
+            return redirect()->back()->withErrors('Maaf, kuota untuk tenant barang sudah habis, silahkan berkunjung dilain waktu!');
         }
 
         // Perbarui data booking
