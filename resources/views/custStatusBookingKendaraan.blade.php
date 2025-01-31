@@ -318,6 +318,16 @@
                                     </div>
                                 </td>
                             </tr>
+                            <!-- Popover Alasan Penolakan -->
+                            <div data-popover id="pop-alasan" role="tooltip" class="absolute z-[9999] invisible inline-block w-80 max-w-3xl text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-xl opacity-0">
+                                <div class="px-3 py-2 bg-gray-100 border-b border-gray-200 rounded-t-lg">
+                                    <h3 class="font-semibold text-gray-900">Alasan Penolakan</h3>
+                                </div>
+                                <div class="px-3 py-2">
+                                    <textarea id="keperluan-acara" rows="3" class="mt-1 block w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-500 p-3" readonly>{{ $booking->alasanPenolakan }}</textarea>
+                                </div>
+                                <div data-popper-arrow></div>
+                            </div>
                         @endforeach
                     @endif
                 </tbody>
@@ -325,16 +335,6 @@
         </div>
     </div>
 
-    <!-- Popover Alasan Penolakan -->
-    <div data-popover id="pop-alasan" role="tooltip" class="absolute z-[9999] invisible inline-block w-80 max-w-3xl text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-xl opacity-0">
-        <div class="px-3 py-2 bg-gray-100 border-b border-gray-200 rounded-t-lg">
-            <h3 class="font-semibold text-gray-900">Alasan Penolakan</h3>
-        </div>
-        <div class="px-3 py-2">
-            <textarea id="keperluan-acara" rows="3" class="mt-1 block w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-500 p-3" readonly>{{ $booking->alasanPenolakan }}</textarea>
-        </div>
-        <div data-popper-arrow></div>
-    </div>
 
     <!-- Modal Edit -->
     <div id="modal-edit" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">

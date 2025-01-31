@@ -77,8 +77,10 @@ class custBookingKendaraanController extends Controller
             return back()->with('error', 'Customer tidak ditemukan');
         }
 
-        if ($validated['tglMulai'] == Carbon::now()->format('Y-m-d')){
-            return redirect()->back()->withErrors('Pemesanan tidak dapat dilakukan untuk hari yang sama. Harap lakukan pemesanan minimal 1 hari sebelumnya!');
+        $now = Carbon::now()->startOfDay();
+
+        if ($now->diffInDays($validated['tglMulai']) < 2){
+            return redirect()->back()->withErrors('Anda harus memesan minimal 2 hari sebelum hari yang dipesan!');
         }
 
         $used = pemKendaraan::where('idKendaraan', $validated['idKendaraan'])->get();

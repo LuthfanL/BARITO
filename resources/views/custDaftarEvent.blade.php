@@ -90,7 +90,7 @@
             <!-- Daftar Event -->
             <div id="event-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 w-full mt-8">
                 @foreach ($events as $evt)
-                    @if ($evt->tglMulai >= $now)
+                    @if ($now->diffInDay($evt->tglMulai) > 1)
                     <!-- Card Item -->
                     <div class="col-span-1 events-card" data-namaEvent="{{ $evt->namaEvent }}">
                         <div class="bg-white border border-gray-200 rounded-lg shadow-[0_0_13px_3px_rgba(0,0,0,0.2)]">

@@ -124,8 +124,10 @@ class custBookingRuanganController extends Controller
             return back()->with('error', 'Customer tidak ditemukan');
         }
 
-        if ($validated['tglMulai'] == Carbon::now()->format('Y-m-d')){
-            return redirect()->back()->withErrors('Tidak bisa memesan untuk hari yang sama dengan hari yang dipesan, minimal 1 hari sebelum hari yang dipesan!');
+        $now = Carbon::now()->startOfDay();
+
+        if ($now->diffInDays($request->input('tglMulai')) < 2){
+            return redirect()->back()->withErrors('Anda harus memesan minimal 2 hari sebelum hari yang dipesan!');
         }
 
         $used = pemRuangan::where('idRuangan', $validated['idRuangan'])->get();

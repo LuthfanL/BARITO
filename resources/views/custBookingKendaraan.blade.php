@@ -379,7 +379,10 @@
                     </svg>
                     <h1 class="mb-5 text-lg font-bold text-gray-900">Konfirmasi Booking Kendaraan</h1>
                     <p class="mb-5 text-m font-normal text-gray-500">
-                        Apakah Anda yakin ingin konfirmasi booking ini? Harap diperhatikan kembali bahwa jika Anda membatalkan booking setelah mengonfirmasi, pengembalian biaya akan dilakukan sebesar 90% dari total biaya yang telah dibayar.
+                        Apakah Anda yakin ingin konfirmasi booking ini?
+                        <div class="mb-5 text-m font-normal text-red-500">
+                            Harap diperhatikan kembali bahwa Anda harus membayar sebelum hari ini berganti!
+                        </div>
                     </p>
 
                     <form action="{{ route('bookingKendaraan.store') }}" method="POST">

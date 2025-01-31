@@ -28,6 +28,16 @@ class custStatusBookingRuanganController extends Controller
             ->orderBy('created_at', 'desc') // Urutkan berdasarkan tanggal dibuat (terbaru di atas)
             ->get();
 
+        $now = Carbon::create(2025, 2, 1); //bisa diganti now, nek didalem create ada 6 parameter berarti tahun, bulan, hari, jam, menit, detik
+
+        foreach ($bookings as $book) {
+            $hariPesan = $book->created_at->startOfDay();
+            $selisih = $hariPesan->diffInDays($now);
+            if ($book->status == 'Belum bayar' && $selisih == 1){
+                $book->delete();
+            }
+        }
+
         // Kirimkan data ke view
         return view('custStatusBookingRuangan', [
             'bookings' => $bookings,
@@ -105,9 +115,10 @@ class custStatusBookingRuanganController extends Controller
             return redirect()->back()->with('error', 'Data booking tidak ditemukan!');
         }
 
-        
-        if ($request['tglMulai'] == Carbon::now()->format('Y-m-d')){
-            return redirect()->back()->withErrors('Tidak bisa memesan untuk hari yang sama dengan hari yang dipesan, minimal 1 hari sebelum hari yang dipesan!');
+        $now = Carbon::now()->startOfDay();
+
+        if ($now->diffInDays($request->input('tglMulai')) < 2){
+            return redirect()->back()->withErrors('Anda harus memesan minimal 2 hari sebelum hari yang dipesan!');
         }
 
         $used = pemRuangan::where('idRuangan', $request['idRuangan'])->get();

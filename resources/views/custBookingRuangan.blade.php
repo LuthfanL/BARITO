@@ -383,8 +383,11 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                     </svg>
                     <h1 class="mb-3 text-lg font-bold text-gray-900">Konfirmasi Booking Ruangan</h1>
-                    <p class="mb-4 text-m font-normal text-gray-500">
-                        Apakah Anda yakin ingin konfirmasi booking ini? Harap diperhatikan kembali bahwa jika Anda membatalkan booking setelah mengonfirmasi, pengembalian biaya akan dilakukan sebesar 90% dari total biaya yang telah dibayar.
+                    <p class="mb-5 text-m font-normal text-gray-500">
+                        Apakah Anda yakin ingin konfirmasi booking ini?
+                        <div class="mb-5 text-m font-normal text-red-500">
+                            Harap diperhatikan kembali bahwa Anda harus membayar sebelum hari ini berganti!
+                        </div>
                     </p>
 
                     <form action="{{ route('bookingRuangan.store') }}" method="POST">
