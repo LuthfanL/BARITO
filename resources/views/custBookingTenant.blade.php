@@ -321,15 +321,7 @@
                             <option value="Tenant Barang">Tenant Barang</option>
                             <option value="Tenant Jasa">Tenant Jasa</option>
                         </select>
-
-                        <!-- Input Bukti Pembayaran -->
-                        <label for="bukti-bayar" class="block mb-2 text-sm font-medium text-gray-900">Upload Bukti Pembayaran</label>
-                        {{-- <input type="file" id="bukti-bayar" name="bukti-bayar" accept="image/jpeg, image/png" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50" required> --}}
-                    
-                        <!-- Informasi Tambahan -->
-                        <p class="info mt-1">
-                            * File maksimal 2 MB, format: JPEG atau PNG<br>
-                            * Upload bukti pembayaran Anda. Harap diperhatikan bahwa jika Anda membatalkan booking setelah mengonfirmasi, pengembalian biaya akan dilakukan sebesar 90% dari total biaya yang telah dibayar.
+                        
                         </p>
                     </form>
                 </div>
@@ -472,14 +464,24 @@
     <!-- Tambahkan Flatpickr JS -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
-        flatpickr("#tglMulai", {
-            dateFormat: "Y-m-d",
-            minDate: "today"
-        });
+        document.addEventListener("DOMContentLoaded", function () {
+            // Inisialisasi Flatpickr untuk tglMulai
+            const tglMulaiPicker = flatpickr("#tglMulai", {
+                dateFormat: "Y-m-d",
+                minDate: "today", // Tidak bisa memilih tanggal sebelum hari ini
+                onChange: function (selectedDates) {
+                    // Jika tglMulai dipilih, update minDate untuk tglSelesai agar tidak bisa pilih sebelumnya
+                    if (selectedDates.length > 0) {
+                        tglSelesaiPicker.set("minDate", selectedDates[0]);
+                    }
+                }
+            });
 
-        flatpickr("#tglSelesai", {
-            dateFormat: "Y-m-d",
-            minDate: "today"
+            // Inisialisasi Flatpickr untuk tglSelesai
+            const tglSelesaiPicker = flatpickr("#tglSelesai", {
+                dateFormat: "Y-m-d",
+                minDate: "today" // Default minDate adalah hari ini
+            });
         });
     </script>
 

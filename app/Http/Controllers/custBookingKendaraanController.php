@@ -12,32 +12,6 @@ use Carbon\Carbon;
 
 class custBookingKendaraanController extends Controller
 {
-    // public function index(Request $request)
-    // {
-    //     // Ambil parameter 'nama', 'lokasi', dan 'deskripsi' dari URL
-    //     $nama = $request->input('nama');
-    //     $platNomor = $request->input('platNomor');
-
-    //     // Ambil data ruangan berdasarkan 'nama', 'lokasi', dan 'deskripsi'
-    //     $kendaraan = kendaraan::where('nama', $nama)
-    //                         ->where('platNomor', $platNomor)
-    //                         ->first();
-
-        
-
-    //     // Mengambil URL gambar utama dan URL thumbnail
-    //     if (!empty($kendaraan->foto)) {
-    //         $kendaraan->foto_url = Storage::url(json_decode($kendaraan->foto)[0]);  
-    //         $kendaraan->foto_urls = json_decode($kendaraan->foto); 
-    //     } else {
-    //         $kendaraan->foto_url = asset('default-image.jpg');
-    //         $kendaraan->foto_urls = []; // Tidak ada thumbnail jika tidak ada foto
-    //     }
-
-    //     // Kirim data ruangan ke view
-    //     return view('custBookingKendaraan', compact('kendaraan'));
-    // }
-
     public function index(Request $request)
     {
         // Ambil parameter 'nama', 'lokasi', dan 'deskripsi' dari URL
@@ -92,15 +66,6 @@ class custBookingKendaraanController extends Controller
             'tglSelesai' => 'required|date',
         ]);
 
-        
-        // $fotoPaths = [];
-        // if ($request->hasFile('buktiBayar')) {
-        //     foreach ($request->file('buktiBayar') as $buktiBayar) {
-        //         $path = $buktiBayar->store('foto_buktiBayar', 'public'); // Simpan di folder foto_ruangan
-        //         $fotoPaths[] = Storage::url($path); // Simpan path ke array
-        //     }
-        // }
-
         // Ambil pengguna yang sedang login
         $user = auth()->user();
 
@@ -113,7 +78,7 @@ class custBookingKendaraanController extends Controller
         }
 
         if ($validated['tglMulai'] == Carbon::now()->format('Y-m-d')){
-            return redirect()->back()->withErrors('Tidak bisa memesan untuk hari yang sama dengan hari yang dipesan, minimal 1 hari sebelum hari yang dipesan!');
+            return redirect()->back()->withErrors('Pemesanan tidak dapat dilakukan untuk hari yang sama. Harap lakukan pemesanan minimal 1 hari sebelumnya!');
         }
 
         $used = pemKendaraan::where('idKendaraan', $validated['idKendaraan'])->get();
@@ -157,8 +122,7 @@ class custBookingKendaraanController extends Controller
             'titikJemput'   => $request->input('titikJemput'),
             'tglMulai'      => $request->input('tglMulai'),
             'tglSelesai'    => $request->input('tglSelesai'),
-            'status'        => 'Belum disetujui',
-             // 'buktiBayar'    => json_encode($fotoPaths),
+            'status'        => 'Belum bayar',
             ];
 
         // Simpan data ke database

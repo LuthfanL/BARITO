@@ -12,6 +12,9 @@
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css"  rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script>
     <link rel="stylesheet" href="assets/style.css"/>
+    <!-- Tambahkan Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <style>
         #default-table {
@@ -31,12 +34,82 @@
             overflow: hidden; /* Menyembunyikan teks yang terlalu panjang */
             text-overflow: ellipsis; /* Menambahkan elipsis untuk teks yang terlalu panjang */
         }
+        .form-container {
+            width: 100%;
+            max-width: 1400px; 
+            margin: auto; 
+            padding: 24px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.1);
+            background-color: white; 
+        }
+
+        .form-inner {
+            margin: 8px auto; 
+            width: 100%; 
+            padding: 24px;
+            border-radius: 20px;
+            outline: 2px solid #00C6BF;
+            background-color: #fff;
+        }
+    
+        form {
+            width: 100%; 
+        }
+    
+        label {
+            font-size: 14px;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+    
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+    
+        textarea {
+            resize: vertical;
+        }
+    
+        .fasilitas-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+    
+        .fasilitas-container label {
+            display: inline-block;
+            font-size: 13px;
+            font-weight: normal;
+        }
+
+        #date-range-picker {
+            margin-top: 10px;
+        }
+
+        #date-range-picker input[type="text"] {
+            transition: all 0.2s ease-in-out;
+        }
+    
+        .info {
+            font-size: 12px;
+            color: red;
+            margin-bottom: 10px;
+        }
     </style>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body class="h-full bg-white">
     <!-- Navbar -->
-    <div class="relative z-50">
+    <div class="relative z-30">
         @include('components.navbargeneral')
     </div>
 
@@ -189,12 +262,16 @@
                                             Disetujui
                                         </div>
                                     @elseif ($booking->status == 'Ditolak')
-                                        <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 text-white">
-                                            Ditolak
+                                        <div data-popover-target="pop-alasan" data-popover-placement="top" class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 text-white">
+                                            Ditolak dan Alasannya
                                         </div>
-                                    @elseif ($booking->status == 'Belum disetujui')
+                                    @elseif ($booking->status == 'Menunggu persetujuan')
                                         <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-yellow-500 via-yellow-600 to-yellow-700 text-white">
-                                            Belum disetujui
+                                            Menunggu persetujuan
+                                        </div>
+                                    @elseif ($booking->status == 'Belum bayar')
+                                        <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-indigo-500 via-indigo-600 to-indigo-700 text-white">
+                                            Belum bayar
                                         </div>
                                     @endif
                                 </td>
@@ -202,13 +279,35 @@
                                 <!-- Tindakan -->
                                 <td class="text-center">
                                     <div class="flex justify-center gap-2">
-                                        @if ($booking->status == 'Belum disetujui')
+                                        @if ($booking->status == 'Belum bayar')
                                             <!-- Tindakan Edit dan Batalkan -->
-                                            <button data-modal-target="modal-edit" data-modal-toggle="modal-edit" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                            <button 
+                                                data-modal-target="modal-edit" 
+                                                data-modal-toggle="modal-edit"
+                                                data-id="{{ $booking['id'] }}"
+                                                data-namaPemohon="{{ $booking['namaPemohon'] }}" 
+                                                data-noWa="{{ $booking['noWa'] }}" 
+                                                data-keperluan="{{ $booking['keperluan'] }}" 
+                                                data-lokasi="{{ $booking['lokasi'] }}" 
+                                                data-titikJemput="{{ $booking['titikJemput'] }}" 
+                                                data-tglMulai="{{ $booking['tglMulai'] }}" 
+                                                data-tglSelesai="{{ $booking['tglSelesai'] }}"    
+                                                class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white btn-edit">
                                                 Edit
                                             </button>
-                                            <button data-modal-target="modal-batalkan" data-modal-toggle="modal-batalkan" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                            <button 
+                                                data-modal-target="modal-batalkan" 
+                                                data-modal-toggle="modal-batalkan"
+                                                data-bookingid="{{ $booking->id }}"  
+                                                class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
                                                 Batalkan
+                                            </button>
+                                            <button 
+                                                data-modal-target="modal-bayar" 
+                                                data-modal-toggle="modal-bayar" 
+                                                data-bookingid="{{ $booking->id }}" 
+                                                class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                                Bayar
                                             </button>
                                         @else
                                             <!-- Tindakan Selesai dengan background abu-abu -->
@@ -226,20 +325,124 @@
         </div>
     </div>
 
-    {{-- <!-- Modal Edit -->
-    <div id="modal-batalkan" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <!-- Popover Alasan Penolakan -->
+    <div data-popover id="pop-alasan" role="tooltip" class="absolute z-10 invisible inline-block w-80 max-w-3xl text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-xl opacity-0">
+        <div class="px-3 py-2 bg-gray-100 border-b border-gray-200 rounded-t-lg">
+            <h3 class="font-semibold text-gray-900">Alasan Penolakan</h3>
+        </div>
+        <div class="px-3 py-2">
+            <textarea id="keperluan-acara" rows="3" class="mt-1 block w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-500 p-3" readonly>Jumlah pembayaran tidak sesuai dengan yang tertera.</textarea>
+        </div>
+        <div data-popper-arrow></div>
+    </div>
+
+    <!-- Modal Edit -->
+    <div id="modal-edit" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative p-4 w-full max-w-4xl max-h-full">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow">
+                <!-- Modal header -->
+                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
+                    <h3 class="text-lg md:text-xl font-semibold text-gray-900">
+                        Edit Booking Kendaraan 
+                    </h3>
+                </div>
+                <!-- Modal body -->
+                <div class="p-4 md:p-5">
+                    <form id="editForm" action="/updateBookingKendaraan" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT') <!-- Gunakan metode PUT jika sesuai kebutuhan RESTful -->
+                        
+                        <!-- Input ID Booking -->
+                        <input 
+                            type="hidden"  
+                            id="id" 
+                            name="id" 
+                            value="" 
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 p-2.5 w-full">
+    
+                        <!-- Input Nama Pemohon -->
+                        <label for="namaPemohon">Nama Pemohon</label>
+                        <input type="text" id="namaPemohon" name="namaPemohon" required>
+
+                        <!-- Input No. Whatapps -->
+                        <label for="noWa">No. Whatapps</label>
+                        <input type="text" id="noWa" name="noWa" required>
+
+                        <!-- Input Tanggal -->
+                        <label for="tanggal-event" class="block font-bold">Tanggal</label>
+                        <div id="date-range-picker" class="flex items-center space-x-2">
+                            <div class="relative flex items-center">
+                                <input id="tglMulai" name="tglMulai" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 p-2.5 w-full" placeholder="Tanggal Mulai" required>
+                            </div>
+                            <div class="relative flex items-center">
+                                <input id="tglSelesai" name="tglSelesai" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 p-2.5 w-full" placeholder="Tanggal Selesai" required>
+                            </div>
+                        </div>
+
+                        <!-- Input Keperluan Acara -->
+                        <label for="keperluan">Keperluan Acara</label>
+                        <textarea id="keperluan" name="keperluan" rows="3" class="rounded-lg border border-gray-300" required></textarea>
+                        <p class="mb-4 text-xs text-gray-500">
+                            * Masukkan nama/judul acara yang akan dilaksanakan.
+                        </p>
+
+                        <!-- Input Lokasi Acara -->
+                        <label for="lokasi">Lokasi Acara</label>
+                        <textarea id="lokasi" name="lokasi" rows="3" class="rounded-lg border border-gray-300" required></textarea>
+                        <p class="mb-4 text-xs text-gray-500">
+                            * Masukkan keterangan lokasi acara akan dilakukan.
+                        </p>
+
+                        <!-- Input Titik Jemput -->
+                        <label for="titikJemput">Titik Jemput</label>
+                        <textarea id="titikJemput" name="titikJemput" rows="3" class="rounded-lg border border-gray-300" required></textarea>
+                        <p class="mb-4 text-xs text-gray-500">
+                            * Masukkan keterangan lokasi titik penjemputan.
+                        </p>
+                    </form>
+                </div>
+
+                <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b space-x-2">
+                   <button 
+                        data-modal-target="modal-konfirmasiEdit" 
+                        data-modal-toggle="modal-konfirmasiEdit" 
+                        data-modal-hide="modal-edit" 
+                        type="button" 
+                        class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 font-bold font-medium rounded-lg text-sm px-4 py-2 text-center">Simpan</button>
+                    <button data-modal-hide="modal-edit" type="button" class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-bold font-medium rounded-lg text-sm px-4 py-2 text-center">Batal</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Konfirmasi Edit -->
+    <div id="modal-konfirmasiEdit" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative p-4 w-full max-w-xl max-h-full">
             <div class="relative bg-white rounded-lg shadow">
                 <div class="p-4 md:p-5 text-center">
                     <svg class="mx-auto mb-4 text-gray-400 w-16 h-16" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                     </svg>
-                    <h1 class="mb-5 text-lg font-bold text-gray-900">Konfirmasi Persetujuan Booking</h1>
-                    <p class="mb-5 text-m font-normal text-gray-500">Apakah Anda yakin ingin menyetujui booking ruangan ini? Pastikan semua detail booking telah sesuai sebelum melanjutkan.</p>
-                    <button data-modal-hide="modal-edit" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                    <h1 class="mb-5 text-lg font-bold text-gray-900">Konfirmasi Perubahan Booking</h1>
+                    <p class="mb-5 text-m font-normal text-gray-500">Apakah Anda yakin ingin merubah booking kendaraan ini?</p>
+                    
+                    <!-- Tombol Konfirmasi -->
+                    <button 
+                        id="konfirmasi-button" 
+                        data-modal-hide="modal-konfirmasiEdit" 
+                        type="submit"
+                        class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
                         Setujui
                     </button>
-                    <button data-modal-hide="modal-edit" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Kembali</button>
+                    <button 
+                        data-modal-target="modal-edit" 
+                        data-modal-toggle="modal-edit" 
+                        data-modal-hide="modal-konfirmasiEdit" 
+                        type="button"
+                        class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                        Kembali
+                    </button>
                 </div>
             </div>
         </div>
@@ -254,58 +457,90 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                     </svg>
                     <h1 class="mb-5 text-lg font-bold text-gray-900">Konfirmasi Pembatalan Booking</h1>
-                    <p class="mb-5 text-m font-normal text-gray-500">Apakah Anda yakin ingin membatalkan booking kendaraan ini? Tindakan ini akan dikonfirmasi terlebih dahulu oleh admin.</p>
-                    <textarea id="alasan-pembatalan" placeholder="Berikan Alasan Pembatalan" class="w-full h-24 mt-2 p-4 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm"></textarea>
-                    <p class="text-red-500 text-left text-xs mt-2">* Harap diperhatikan: Setelah Anda setuju untuk membatalkan booking, uang pembayaran akan dikembalikan sebesar 90% dari total pembayaran.</p>
-                    <!-- Checkbox -->
-                    <div class="flex items-center mt-4">
-                        <input id="link-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500" required>
-                        <label for="link-checkbox" class="ms-2 text-sm font-medium text-gray-900">Saya telah membaca dan memahami konsekuensi pembatalan.</label>
-                    </div>
-                    <!-- Tombol -->
-                    <div class="flex justify-center gap-4 mt-6">
-                        <!-- Button (disabled until checkbox is checked) -->
-                        <button id="submit-btn" data-modal-hide="modal-batalkan" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white disabled:opacity-50 disabled:cursor-not-allowed" disabled>
-                            Setujui dan Batalkan Booking
-                        </button>
-                        <button data-modal-hide="modal-batalkan" type="button" class="px-6 py-2 rounded-lg font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br text-white">
-                            Kembali
-                        </button>
-                    </div>
+                    <p class="mb-5 text-m font-normal text-gray-500">Apakah Anda yakin ingin membatalkan booking kendaraan ini?</p>
+
+                    <!-- Form Pembatalan -->
+                    <form id="form-batal" action="" method="POST">
+                        @csrf
+                        @method('DELETE')
+
+                        <!-- Tombol Submit -->
+                        <div class="flex justify-center gap-4 mt-6">
+                            <button type="submit" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                Batalkan Booking
+                            </button>
+                            <button data-modal-hide="modal-batalkan" type="button" class="px-6 py-2 rounded-lg font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br text-white">
+                                Kembali
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </div> --}}
-    
+    </div>
+
+    <!-- Modal Bayar -->
+    <div id="modal-bayar" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative p-4 w-full max-w-4xl max-h-full">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow">
+                <!-- Modal header -->
+                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
+                    <h3 class="text-lg md:text-xl font-semibold text-gray-900">
+                        Upload Bukti Pembayaran
+                    </h3>
+                </div>
+                <!-- Modal body -->
+                <form action="{{ route('booking.uploadBukti') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                    <div class="p-4 md:p-5">
+                        <!-- Input Bukti Pembayaran -->
+                        @if(isset($booking) && $booking)
+                            <input type="hidden" name="booking_id" id="booking-id" value={{$booking->id}}>
+                        @endif
+                        <label for="bukti-bayar" class="block mb-2 text-sm font-medium text-gray-900">
+                            Upload Bukti Pembayaran
+                        </label>
+                        <input type="file" id="bukti-bayar" name="buktiBayar" accept="image/jpeg, image/png" 
+                            class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50" 
+                            required>
+
+                        <!-- Informasi Tambahan -->
+                        <p class="info mt-1">
+                            * File maksimal 2 MB, format: JPEG atau PNG<br>
+                            * Upload bukti pembayaran Anda. Harap diperhatikan bahwa jika Anda membatalkan booking setelah mengonfirmasi, pengembalian biaya akan dilakukan sebesar 90% dari total biaya yang telah dibayar.
+                        </p>
+                    </div>
+
+                    <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b space-x-2">
+                        <button 
+                            type="submit" 
+                            class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 font-bold font-medium rounded-lg text-sm px-4 py-2 text-center">
+                            Upload
+                        </button>
+                        <button 
+                            data-modal-hide="modal-bayar" 
+                            type="button" 
+                            class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-bold font-medium rounded-lg text-sm px-4 py-2 text-center">
+                            Batal
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 </body>
 
-    <!-- Table -->
-    <script>
-        if (document.getElementById("default-table") && typeof simpleDatatables.DataTable !== 'undefined') {
-            const dataTable = new simpleDatatables.DataTable("#default-table", {
-                searchable: false,
-                perPageSelect: false
-            });
-        }
-    </script>
-
-<!-- Checkbox Batalkan wajib diklik -->
+<!-- Table -->
 <script>
-    const checkbox = document.getElementById('link-checkbox');
-    const submitBtn = document.getElementById('submit-btn');
-    const alasanPembatalan = document.getElementById('alasan-pembatalan');
-
-    // Event listener untuk checkbox dan textarea
-    function toggleButtonState() {
-        submitBtn.disabled = !checkbox.checked || alasanPembatalan.value.trim() === '';
+    if (document.getElementById("default-table") && typeof simpleDatatables.DataTable !== 'undefined') {
+        const dataTable = new simpleDatatables.DataTable("#default-table", {
+            searchable: false,
+            perPageSelect: false
+        });
     }
-
-    // Cek ketika checkbox berubah
-    checkbox.addEventListener('change', toggleButtonState);
-
-    // Cek ketika textarea diubah
-    alasanPembatalan.addEventListener('input', toggleButtonState);
 </script>
 
 <!-- Search -->
@@ -328,6 +563,155 @@
                 }
             });
         });
+    });
+</script>
+
+<script>
+    // Ambil semua tombol "Bayar"
+    const bayarButtons = document.querySelectorAll('[data-modal-target="modal-bayar"]');
+
+    bayarButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            // Ambil booking_id dari atribut data-bookingid pada tombol yang diklik
+            const bookingId = this.getAttribute('data-bookingid');
+            
+            // Setel nilai booking_id di input tersembunyi dalam form modal
+            document.getElementById('booking-id').value = bookingId;
+        });
+    });
+</script>
+
+{{-- Script untuk membatalkan booking --}}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const modalBatalkan = document.getElementById("modal-batalkan");
+    const deleteForm = document.getElementById("form-batal");
+
+    document.querySelectorAll("[data-modal-toggle='modal-batalkan']").forEach(button => {
+        button.addEventListener("click", function () {
+            let id = this.getAttribute("data-bookingid");
+            deleteForm.setAttribute("action", `/hapusPemKendaraan/${id}`);
+        });
+    });
+});
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+<!-- FullCalendar JS -->
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@5.11.3/main.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@5.11.3/main.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@5.11.3/main.min.js"></script>
+
+<!-- Tambahkan Flatpickr JS -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Inisialisasi Flatpickr untuk tglMulai
+        const tglMulaiPicker = flatpickr("#tglMulai", {
+            dateFormat: "Y-m-d",
+            minDate: "today", // Tidak bisa memilih tanggal sebelum hari ini
+            onChange: function (selectedDates) {
+                // Jika tglMulai dipilih, update minDate untuk tglSelesai agar tidak bisa pilih sebelumnya
+                if (selectedDates.length > 0) {
+                    tglSelesaiPicker.set("minDate", selectedDates[0]);
+                }
+            }
+        });
+
+        // Inisialisasi Flatpickr untuk tglSelesai
+        const tglSelesaiPicker = flatpickr("#tglSelesai", {
+            dateFormat: "Y-m-d",
+            minDate: "today" // Default minDate adalah hari ini
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Ambil semua tombol edit
+        const editButtons = document.querySelectorAll(".btn-edit");
+
+        // Loop setiap tombol edit
+        editButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                // Ambil data dari atribut tombol
+                const id = button.getAttribute("data-id");
+                const namaPemohon = button.getAttribute("data-namaPemohon");
+                const noWa = button.getAttribute("data-noWa");
+                const keperluan = button.getAttribute("data-keperluan");
+                const lokasi = button.getAttribute("data-lokasi");
+                const titikJemput = button.getAttribute("data-titikJemput");
+                const tglMulai = button.getAttribute("data-tglMulai");
+                const tglSelesai = button.getAttribute("data-tglSelesai");
+
+                // Tampilkan modal edit
+                const modalEdit = document.getElementById("modal-edit");
+                modalEdit.classList.remove("hidden");
+
+                // Isi data input di modal
+                document.getElementById("id").value = id;
+                document.getElementById("namaPemohon").value = namaPemohon;
+                document.getElementById("noWa").value = noWa;
+                document.getElementById("keperluan").value = keperluan;
+                document.getElementById("lokasi").value = lokasi;
+                document.getElementById("titikJemput").value = titikJemput;
+                document.getElementById("tglMulai").value = tglMulai;
+                document.getElementById("tglSelesai").value = tglSelesai;
+            });
+        });
+
+        // Tambahkan event listener untuk tombol batal atau close modal
+        const closeModalButtons = document.querySelectorAll("[data-modal-hide]");
+        closeModalButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                const modalId = button.getAttribute("data-modal-hide");
+                const modal = document.getElementById(modalId);
+                modal.classList.add("hidden");
+            });
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Tombol Simpan di modal
+        const simpanButton = document.getElementById("konfirmasi-button");
+
+        simpanButton.addEventListener("click", function () {
+            // Ambil form dari modal
+            const editForm = document.getElementById("editForm");
+
+            // Update value form input dari modal
+            editForm.querySelector("#id").value = document.getElementById("id").value;
+            editForm.querySelector("#namaPemohon").value = document.getElementById("namaPemohon").value;
+            editForm.querySelector("#noWa").value = document.getElementById("noWa").value;
+            editForm.querySelector("#keperluan").value = document.getElementById("keperluan").value;
+            editForm.querySelector("#lokasi").value = document.getElementById("lokasi").value;
+            editForm.querySelector("#titikJemput").value = document.getElementById("titikJemput").value;
+            editForm.querySelector("#tglMulai").value = document.getElementById("tglMulai").value;
+            editForm.querySelector("#tglSelesai").value = document.getElementById("tglSelesai").value;
+
+            // Kirim form ke server
+            editForm.submit();
+        });
+
+        // Event listener untuk tombol batal atau close modal
+        const closeModalButtons = document.querySelectorAll("[data-modal-hide]");
+        closeModalButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                const modalId = button.getAttribute("data-modal-hide");
+                const modal = document.getElementById(modalId);
+                modal.classList.add("hidden");
+            });
+        });
+    });
+</script>
+
+<script>
+    document.getElementById("konfirmasi-button").addEventListener("click", function () {
+        const editForm = document.getElementById("editForm");
+        editForm.submit(); // Kirim form ke server
     });
 </script>
 

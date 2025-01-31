@@ -64,7 +64,7 @@
                                 name="keyword" 
                                 id="search-input" 
                                 class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500" 
-                                placeholder="Cari ID Booking atau ID Cust atau Nama Pemohon" 
+                                placeholder="Cari ID Booking atau Nama Pemohon" 
                             />
                         </div>
                     </form>
@@ -140,11 +140,6 @@
                                     </span>
                                 </th>
                                 <th>
-                                    <span class="flex items-center justify-center">
-                                        Pembatalan
-                                    </span>
-                                </th>
-                                <th>
                                     <span class="flex items-center">
                                         Status
                                         <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -165,12 +160,20 @@
                                         <td>{{ $booking->namaKendaraan }}</td>
                                         <td>{{ \Carbon\Carbon::parse($booking->tglMulai)->format('d/m/Y') }}</td>
                                         <td>{{ \Carbon\Carbon::parse($booking->tglSelesai)->format('d/m/Y') }}</td>
-                                        <td class="text-center">
-                                            BuktiPembayaran.jpg
-                                        </td>
+                                        <!-- Bukti Bayar -->
+                                        <td class="flex justify-center items-center text-center">
+                                            @if($booking->buktiBayar)
+                                                <button onclick="showBukti('{{ asset($booking->buktiBayar) }}')" 
+                                                    class="px-3 py-1 bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white rounded-lg">
+                                                    Lihat Bukti
+                                                </button>
+                                            @else
+                                                <span class="text-red-500">Belum diupload</span>
+                                            @endif
+                                        </td>    
 
                                         <!-- Info Lain -->
-                                        <td class=" items-center text-center mt-5"> 
+                                        <td class="mb-4 items-center text-center mt-5"> 
                                             <div class="flex justify-center ">
                                                 <button 
                                                     data-modal-target="detail-booking" 
@@ -184,13 +187,13 @@
                                                 </button>
                                             </div>
                                         </td>
-
+                                        {{-- 
                                         <!-- Alasan Pembatalan -->
                                         <td class=" items-center text-center mt-5"> 
                                             <div class="flex justify-center ">
                                                 <button data-modal-target="detail-batal" data-modal-toggle="detail-batal" type="button" class="block px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-700 via-red-800 to-red-900 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Alasan</button>
                                             </div>
-                                        </td>
+                                        </td> --}}
                                         
                                         <!-- Status -->
                                         <td>
@@ -199,7 +202,7 @@
                                                     Disetujui
                                                 </div>
                                             @elseif ($booking->status == 'Ditolak')
-                                                <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 text-white">
+                                                <div data-popover-target="pop-alasan" data-popover-placement="left" class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 text-white">
                                                     Ditolak
                                                 </div>
                                             @endif
@@ -210,6 +213,48 @@
                         @endif
                     </table>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popover Alasan Penolakan -->
+    <div data-popover id="pop-alasan" role="tooltip" class="absolute z-10 invisible inline-block w-80 max-w-3xl text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-xl opacity-0">
+        <div class="px-3 py-2 bg-gray-100 border-b border-gray-200 rounded-t-lg">
+            <h3 class="font-semibold text-gray-900">Alasan Penolakan</h3>
+        </div>
+        <div class="px-3 py-2">
+            <textarea id="keperluan-acara" rows="3" class="mt-1 block w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-500 p-3" readonly>Jumlah pembayaran tidak sesuai dengan yang tertera.</textarea>
+        </div>
+        <div data-popper-arrow></div>
+    </div>
+
+    <!-- Modal Bukti Bayar -->
+    <div id="detail-bayar" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" 
+        class="hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-screen bg-gray-900 bg-opacity-50">
+        
+        <div class="relative p-6 w-full max-w-xl bg-white rounded-lg shadow-lg">
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between border-b pb-4">
+                <h3 class="text-lg font-semibold text-gray-900">
+                    Bukti Pembayaran
+                </h3>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="p-6 space-y-4">
+                <div class="flex justify-center">
+                    <img id="buktiBayarImg" class="h-auto max-w-full rounded-lg" src="" alt="Bukti Bayar">
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="flex justify-end space-x-2 border-t pt-4">
+                <a id="downloadBukti" href="#" class="bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-800 focus:ring-4 focus:ring-green-300" download>
+                    Unduh
+                </a>
+                <button onclick="closeModal()" class="bg-blue-700 text-white px-4 py-2 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300">
+                    Kembali
+                </button>
             </div>
         </div>
     </div>
@@ -248,7 +293,7 @@
         </div>
     </div>
 
-    <!-- Modal Alasan Pembatalan -->
+    {{-- <!-- Modal Alasan Pembatalan -->
     <div id="detail-batal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative p-4 w-full max-w-2xl max-h-full">
             <!-- Modal content -->
@@ -272,7 +317,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 </body>
@@ -331,6 +376,19 @@
             });
         });
     });
+</script>
+
+<!-- Script Bukti Bayar -->
+<script>
+    function showBukti(url) {
+        document.getElementById('buktiBayarImg').src = url;
+        document.getElementById('downloadBukti').href = url;
+        document.getElementById('detail-bayar').classList.remove('hidden');
+    }
+
+    function closeModal() {
+        document.getElementById('detail-bayar').classList.add('hidden');
+    }
 </script>
 
 </html>

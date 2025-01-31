@@ -18,7 +18,7 @@
 
 <body class="h-full bg-white">
     <!-- Navbar -->
-    <div class="relative z-50">
+    <div class="relative z-30">
         @include('components.navbargeneral')
     </div>
 
@@ -113,22 +113,24 @@
     </div>
 
     <!-- Event Terfavorit -->
-    <div class="flex justify-center pt-10">
+    <div class="flex justify-center pt-4">
         <h2 class="font-bold text-2xl">Galeri Event</h2>
     </div>
     <div class="container swiper flex justify-center items-center pb-6">
         <div class="card-wrapper">
             <ul class="card-list swiper-wrapper">
-            @foreach ($events as $evt)
+                @foreach ($events as $evt)
                 <li class="card-item swiper-slide">
                     <div href="" class="card-link">
                         <img src="{{ $evt->foto_urls[0] }}" alt="Event" class="card-image">
                         <h2 class="font-bold pt-2 pb-2 ">{{ $evt->namaEvent }}</h2>
                         <p class="card-title">{{ $evt->deskripsi }}</p>
-                    </div>
-                    <button
+                        <button 
                         data-modal-target="modal-detailEvent" 
                         data-modal-toggle="modal-detailEvent"
+                        data-barang="{{ $evt->nBarang }}"
+                        data-jasa="{{ $evt->nJasa }}"
+                        data-makanan="{{ $evt->nMakanan }}"
                         data-foto-url="{{ $evt->foto_urls[0] }}"
                         data-thumbnails="{{ json_encode($evt->foto_urls) }}" 
                         class="inline-flex items-center mt-2 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-xl hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
@@ -137,8 +139,9 @@
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
                         </svg>
                     </button>
+                    </div>
                 </li>
-            @endforeach
+                @endforeach
             </ul>
             <div class="swiper-pagination"></div>
             <div class="swiper-button-prev"></div>
@@ -146,6 +149,7 @@
         </div>
     </div>
 
+    <!-- Modal Detail Event -->
     <div id="modal-detailEvent" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative p-4 w-full max-w-4xl max-h-full">
             <div class="relative bg-white rounded-lg shadow">
@@ -160,6 +164,23 @@
                             <h2 class="font-semibold mb-3 text-lg">Foto/Poster Event</h2>
                             <img id="main-image-event" class="h-auto max-w-full rounded-lg" src="" alt="Poster Event">
                             <div class="grid grid-cols-3 md:grid-cols-5 gap-2 md:gap-4" id="thumbnails-event"></div>
+                        </div>
+                        <div class="space-y-4">
+                            <h2 class="font-semibold text-lg">Jenis Tenant</h2>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Tenant Makanan</label>
+                                    <input id="tenant-makanan" type="number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" readonly>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Tenant Barang</label>
+                                    <input id="tenant-barang" type="number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" readonly>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Tenant Jasa</label>
+                                    <input id="tenant-jasa" type="number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" readonly>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -204,7 +225,8 @@
         });
     </script>
 
-<script>
+    <!-- Script Detail Event -->
+    <script>
         // Menambahkan event listener untuk tombol yang membuka modal
         document.querySelectorAll('[data-modal-target="modal-detailEvent"]').forEach(button => {
             button.addEventListener('click', function () {
@@ -223,6 +245,13 @@
                     `;
                     thumbnailContainer.appendChild(thumbnailElement);
                 });
+                const barang = this.getAttribute('data-barang');
+                const jasa = this.getAttribute('data-jasa');
+                const makanan = this.getAttribute('data-makanan');
+
+                document.getElementById('tenant-barang').value = barang || "Tidak Tersedia";
+                document.getElementById('tenant-jasa').value = jasa || "Tidak Tersedia";
+                document.getElementById('tenant-makanan').value = makanan || "Tidak Tersedia";
             });
         });
 

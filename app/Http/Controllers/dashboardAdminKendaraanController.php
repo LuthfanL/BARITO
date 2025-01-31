@@ -29,14 +29,14 @@ class dashboardAdminKendaraanController extends Controller
         $totalCustomer = customer::count();
         $totalKendaraan = $kendaraan->count(); // Hitung total kendaraan
 
-        // Hitung jumlah booking dengan status "Belum disetujui" atau "Disetujui"
+        // Hitung jumlah booking dengan status "Menunggu persetujuan" atau "Disetujui"
         $totalBooking = pemKendaraan::where('idAdmin', $idAdmin)
-            ->whereIn('status', ['Belum disetujui', 'Disetujui'])
+            ->whereIn('status', ['Menunggu persetujuan', 'Disetujui'])
             ->count();
 
-        // Hitung jumlah booking dengan status "Belum disetujui"
+        // Hitung jumlah booking dengan status "Menunggu persetujuan"
         $verifikasi = pemKendaraan::where('idAdmin', $idAdmin)
-            ->where('status', 'Belum disetujui')
+            ->where('status', 'Menunggu persetujuan')
             ->count();
 
         foreach ($kendaraan as &$data) {
@@ -76,6 +76,7 @@ class dashboardAdminKendaraanController extends Controller
 
         // Statistik Peminjaman Lingkaran
         $peminjamanData = pemKendaraan::where('idAdmin', $idAdmin)
+            ->whereIn('status', ['Menunggu persetujuan', 'Disetujui'])
             ->whereBetween('created_at', [$startDate, $endDate])
             ->selectRaw('namaKendaraan, COUNT(*) as total')
             ->groupBy('namaKendaraan')
@@ -94,6 +95,7 @@ class dashboardAdminKendaraanController extends Controller
 
         // Statistik Booking Customer
         $pengunjungData = pemKendaraan::where('idAdmin', $idAdmin)
+            ->whereIn('status', ['Menunggu persetujuan', 'Disetujui'])
             ->whereBetween('created_at', [$startDate, $endDate])
             ->selectRaw('DATE(created_at) as date, COUNT(*) as total')
             ->groupBy('date')

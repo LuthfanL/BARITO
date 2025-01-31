@@ -37,16 +37,15 @@ class dashboardAdminTenantController extends Controller
         $totalCustomer = customer::count();
         $totalEvent = $event->count(); // Hitung total event
 
-        // Hitung jumlah booking dengan status "Belum disetujui" atau "Disetujui"
+        // Hitung jumlah booking dengan status "Menunggu persetujuan" atau "Disetujui"
         $totalBooking = pemTenant::where('idAdmin', $idAdmin)
-            ->whereIn('status', ['Belum disetujui', 'Disetujui'])
+            ->whereIn('status', ['Menunggu persetujuan', 'Disetujui'])
             ->count();
 
-        // Hitung jumlah booking dengan status "Belum disetujui"
+        // Hitung jumlah booking dengan status "Menunggu persetujuan"
         $verifikasi = pemTenant::where('idAdmin', $idAdmin)
-            ->where('status', 'Belum disetujui')
+            ->where('status', 'Menunggu persetujuan')
             ->count();
-
         
         foreach ($event as &$data) {
             if (!empty($data->foto)) {
@@ -85,6 +84,7 @@ class dashboardAdminTenantController extends Controller
 
         // Statistik Peminjaman Lingkaran
         $peminjamanData = pemTenant::where('idAdmin', $idAdmin)
+            ->whereIn('status', ['Menunggu persetujuan', 'Disetujui'])
             ->whereBetween('created_at', [$startDate, $endDate])
             ->selectRaw('namaEvent, COUNT(*) as total')
             ->groupBy('namaEvent')
@@ -103,6 +103,7 @@ class dashboardAdminTenantController extends Controller
 
         // Statistik Booking Customer
         $pengunjungData = pemTenant::where('idAdmin', $idAdmin)
+            ->whereIn('status', ['Menunggu persetujuan', 'Disetujui'])
             ->whereBetween('created_at', [$startDate, $endDate])
             ->selectRaw('DATE(created_at) as date, COUNT(*) as total')
             ->groupBy('date')

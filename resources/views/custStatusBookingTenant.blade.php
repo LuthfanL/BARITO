@@ -31,13 +31,82 @@
             overflow: hidden; /* Menyembunyikan teks yang terlalu panjang */
             text-overflow: ellipsis; /* Menambahkan elipsis untuk teks yang terlalu panjang */
         }
+        .form-container {
+            width: 100%;
+            max-width: 1400px; 
+            margin: auto; 
+            padding: 24px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.1);
+            background-color: white; 
+        }
+    
+        .form-inner {
+            margin: 8px auto; 
+            width: 100%; 
+            padding: 24px;
+            border-radius: 20px;
+            outline: 2px solid #00C6BF;
+            background-color: #fff;
+        }
+    
+        form {
+            width: 100%; 
+        }
+    
+        label {
+            font-size: 14px;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+    
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+    
+        textarea {
+            resize: vertical;
+        }
+    
+        .fasilitas-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+    
+        .fasilitas-container label {
+            display: inline-block;
+            font-size: 13px;
+            font-weight: normal;
+        }
+
+        #date-range-picker {
+            margin-top: 10px;
+        }
+
+        #date-range-picker input[type="text"] {
+            transition: all 0.2s ease-in-out;
+        }
+    
+        .info {
+            font-size: 12px;
+            color: red;
+            margin-bottom: 10px;
+        }
     </style>
 
 </head>
 
 <body class="h-full bg-white">
     <!-- Navbar -->
-    <div class="relative z-50">
+    <div class="relative z-30">
         @include('components.navbargeneral')
     </div>
 
@@ -113,7 +182,7 @@
                     />
                 </div>
             </form>
-           
+            
             <!-- Table Data -->
             <table id="default-table">
                 <thead>
@@ -242,24 +311,16 @@
                                             Disetujui
                                         </div>
                                     @elseif ($booking->status == 'Ditolak')
-                                        <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 text-white">
-                                            Ditolak
+                                        <div data-popover-target="pop-alasan" data-popover-placement="top" class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 text-white">
+                                            Ditolak dan Alasannya
                                         </div>
-                                    @elseif ($booking->status == 'Belum disetujui')
+                                    @elseif ($booking->status == 'Menunggu persetujuan')
                                         <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-yellow-500 via-yellow-600 to-yellow-700 text-white">
-                                            Belum disetujui
+                                            Menunggu persetujuan
                                         </div>
-                                    @elseif ($booking->status == 'Belum dibayar')
-                                        <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-yellow-500 via-yellow-600 to-yellow-700 text-white">
-                                            Belum dibayar
-                                        </div>
-                                    @elseif ($booking->status == 'Dibatalkan')
-                                        <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 text-white">
-                                            Dibatalkan
-                                        </div>
-                                    @elseif ($booking->status == 'Tidak Dibayar')
-                                        <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 text-white">
-                                            Tidak dibayar
+                                    @elseif ($booking->status == 'Belum bayar')
+                                        <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-indigo-500 via-indigo-600 to-indigo-700 text-white">
+                                            Belum bayar
                                         </div>
                                     @endif
                                 </td>
@@ -267,21 +328,35 @@
                                 <!-- Tindakan -->
                                 <td class="text-center">
                                     <div class="flex justify-center gap-2">
-                                        @if ($booking->status == 'Belum disetujui')
-                                            <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-gray-300 via-gray-400 to-gray-500 text-white">
-                                                Menunggu
-                                            </div>
-                                        @elseif ($booking->status == 'Belum dibayar')
-                                            <button data-modal-target="modal-edit" data-modal-toggle="modal-edit" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                        @if ($booking->status == 'Belum bayar')
+                                            <!-- Tindakan Edit dan Batalkan -->
+                                            <button 
+                                                data-modal-target="modal-edit" 
+                                                data-modal-toggle="modal-edit"
+                                                data-id="{{ $booking['id'] }}"
+                                                data-namaPemohon="{{ $booking['namaPemohon'] }}" 
+                                                data-noWa="{{ $booking['noWa'] }}" 
+                                                data-namaTenant="{{ $booking['namaTenant'] }}" 
+                                                data-tipeTenant="{{ $booking['tipeTenant'] }}" 
+                                                class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white btn-edit">
                                                 Edit
                                             </button>
-                                            <button data-modal-target="modal-batalkan" data-modal-toggle="modal-batalkan" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                            <button 
+                                                data-modal-target="modal-batalkan" 
+                                                data-modal-toggle="modal-batalkan"
+                                                data-bookingid="{{ $booking->id }}"  
+                                                class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
                                                 Batalkan
                                             </button>
-                                            <button data-modal-target="modal-bayar" data-modal-toggle="modal-bayar" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-yellow-500 via-yellow-600 to-yellow-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                            <button 
+                                                data-modal-target="modal-bayar" 
+                                                data-modal-toggle="modal-bayar" 
+                                                data-bookingid="{{ $booking->id }}" 
+                                                class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
                                                 Bayar
                                             </button>
                                         @else
+                                            <!-- Tindakan Selesai dengan background abu-abu -->
                                             <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-gray-300 via-gray-400 to-gray-500 text-white">
                                                 Selesai
                                             </div>
@@ -294,6 +369,17 @@
                 </tbody>
             </table>
         </div>
+    </div>
+
+    <!-- Popover Alasan Penolakan -->
+    <div data-popover id="pop-alasan" role="tooltip" class="absolute z-10 invisible inline-block w-80 max-w-3xl text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-xl opacity-0">
+        <div class="px-3 py-2 bg-gray-100 border-b border-gray-200 rounded-t-lg">
+            <h3 class="font-semibold text-gray-900">Alasan Penolakan</h3>
+        </div>
+        <div class="px-3 py-2">
+            <textarea id="keperluan-acara" rows="3" class="mt-1 block w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-500 p-3" readonly>Jumlah pembayaran tidak sesuai dengan yang tertera.</textarea>
+        </div>
+        <div data-popper-arrow></div>
     </div>
 
     <!-- Modal Edit -->
@@ -312,74 +398,85 @@
                     <form id="editForm" action="/updateBookingTenant" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT') <!-- Gunakan metode PUT jika sesuai kebutuhan RESTful -->
+                    
+                        <!-- Input ID Booking -->
+                        <input 
+                            type="hidden"  
+                            id="id" 
+                            name="id" 
+                            value="" 
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 p-2.5 w-full">
 
-                        <!-- Input tersembunyi untuk nama event -->
-                        <input type="hidden" id="namaEvent" name="namaEvent" value="{{ $booking }}">
+                        <!-- Input Nama Pemohon -->
+                        <label for="namaPemohon">Nama Pemohon</label>
+                        <input type="text" id="namaPemohon" name="namaPemohon" required>
 
-                        <!-- Input Nama Event -->
-                        <input type="text" id="namaEvent" name="namaEvent" required style="display: none;">
-        
-                        <!-- Input Deskripsi Event -->
-                        <label for="deskripsi">Deskripsi Event</label>
-                        <textarea id="deskripsi" name="deskripsi" rows="3" required class="pl-2"></textarea>
-        
-                        <!-- Input Biaya Sewa -->
-                        <label for="hargaTenant">Biaya Sewa (Per Hari)</label>
-                        <input type="text" id="hargaTenant" name="hargaTenant" required>
+                        <!-- Input No. Whatapps -->
+                        <label for="noWa">No. Whatapps</label>
+                        <input type="text" id="noWa" name="noWa" required>
+
+                        <!-- Input Nama Tenant -->
+                        <label for="namaTenant">Nama Tenant</label>
+                        <input type="text" id="namaTenant" name="namaTenant" required>
 
                         <!-- Input Jenis Tenant -->
-                        <label>Jenis Tenant</label>
-                        <div class="tenant-container">
-                            <div>
-                                <label for="nBarang">Tenant Barang</label>
-                                <input type="text" id="nBarang" name="nBarang">
-                            </div>
-                            <div>
-                                <label for="nJasa">Tenant Jasa</label>
-                                <input type="text" id="nJasa" name="nJasa">
-                            </div>
-                            <div>
-                                <label for="nMakanan">Tenant Makanan</label>
-                                <input type="text" id="nMakanan" name="nMakanan">
-                            </div>
-                        </div>
-        
-                        <!-- Input Tanggal -->
-                        <label for="tanggal-event" class="block font-bold">Tanggal Event</label>
-                        <div id="date-range-picker" class="flex items-center space-x-2">
-                            <!-- Tanggal Mulai -->
-                            <div class="relative flex items-center">
-                                <svg class="w-5 h-5 absolute right-3 top-2 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 1 1 0-2Z"/>
-                                </svg>
-                                <input id="tglMulai" name="tglMulai" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 p-2.5 w-full" placeholder="">
-                            </div>
+                        <label for="tipeTenant">Jenis Tenant</label>
+                        {{-- <input type="text" id="tipeTenant" name="tipeTenant" required> --}}
+                        <select
+                            id="tipeTenant"
+                            name="tipeTenant"
+                            class="bg-gray-50 mb-4 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                            onchange="simpanPilihan()">
+                            <option value="Tenant Makanan">Tenant Makanan</option>
+                            <option value="Tenant Barang">Tenant Barang</option>
+                            <option value="Tenant Jasa">Tenant Jasa</option>
+                        </select>
 
-                            <!-- Tanggal Selesai -->
-                            <div class="relative flex items-center">
-                                <svg class="w-5 h-5 absolute right-3 top-2 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 1 1 0-2Z"/>
-                                </svg>
-                                <input id="tglSelesai" name="tglSelesai" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 p-2.5 w-full" placeholder="">
-                            </div>
-                        </div>        
-                        
-                        <!-- Input Foto Event -->
-                        <label for="foto">Upload Foto/Poster Event</label>
-                        <input type="file" id="foto" name="foto[]" accept="image/jpeg, image/png" class="block mb-2 w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50" multiple>
-        
-                        <!-- Informasi Tambahan -->
-                        <p class="info">
-                            * File maksimal 2 MB, format: JPEG atau PNG<br>
-                            * Upload minimal 1 foto yang memperlihatkan informasi event
-                        </p>
                     </form>
                 </div>
 
-                <!-- Modal footer -->
                 <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b space-x-2">
-                    <button id="konfirmasi-button" type="button" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 font-bold font-medium rounded-lg text-sm px-4 py-2 text-center">Simpan</button>
+                   <button 
+                        data-modal-target="modal-konfirmasiEdit" 
+                        data-modal-toggle="modal-konfirmasiEdit" 
+                        data-modal-hide="modal-edit" 
+                        type="button" 
+                        class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 font-bold font-medium rounded-lg text-sm px-4 py-2 text-center">
+                        Simpan
+                    </button>
                     <button data-modal-hide="modal-edit" type="button" class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-bold font-medium rounded-lg text-sm px-4 py-2 text-center">Batal</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Konfirmasi Edit -->
+    <div id="modal-konfirmasiEdit" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative p-4 w-full max-w-xl max-h-full">
+            <div class="relative bg-white rounded-lg shadow">
+                <div class="p-4 md:p-5 text-center">
+                    <svg class="mx-auto mb-4 text-gray-400 w-16 h-16" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                    </svg>
+                    <h1 class="mb-5 text-lg font-bold text-gray-900">Konfirmasi Perubahan Booking</h1>
+                    <p class="mb-5 text-m font-normal text-gray-500">Apakah Anda yakin ingin merubah booking tenant ini?</p>
+                    
+                    <!-- Tombol Konfirmasi -->
+                    <button 
+                        id="konfirmasi-button" 
+                        data-modal-hide="modal-konfirmasiEdit" 
+                        type="submit"
+                        class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                        Setujui
+                    </button>
+                    <button 
+                        data-modal-target="modal-edit" 
+                        data-modal-toggle="modal-edit" 
+                        data-modal-hide="modal-konfirmasiEdit" 
+                        type="button"
+                        class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                        Kembali
+                    </button>
                 </div>
             </div>
         </div>
@@ -394,25 +491,75 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                     </svg>
                     <h1 class="mb-5 text-lg font-bold text-gray-900">Konfirmasi Pembatalan Booking</h1>
-                    <p class="mb-5 text-m font-normal text-gray-500">Apakah Anda yakin ingin membatalkan booking tenant ini? Tindakan ini akan dikonfirmasi terlebih dahulu oleh admin.</p>
-                    <textarea id="alasan-pembatalan" placeholder="Berikan Alasan Pembatalan" class="w-full h-24 mt-2 p-4 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm"></textarea>
-                    <p class="text-red-500 text-left text-xs mt-2">* Harap diperhatikan: Setelah Anda setuju untuk membatalkan booking, uang pembayaran akan dikembalikan sebesar 90% dari total pembayaran.</p>
-                    <!-- Checkbox -->
-                    <div class="flex items-center mt-4">
-                        <input id="link-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500" required>
-                        <label for="link-checkbox" class="ms-2 text-sm font-medium text-gray-900">Saya telah membaca dan memahami konsekuensi pembatalan.</label>
-                    </div>
-                    <!-- Tombol -->
-                    <div class="flex justify-center gap-4 mt-6">
-                        <!-- Button (disabled until checkbox is checked) -->
-                        <button id="submit-btn" data-modal-hide="modal-batalkan" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white disabled:opacity-50 disabled:cursor-not-allowed" disabled>
-                            Setujui dan Batalkan Booking
-                        </button>
-                        <button data-modal-hide="modal-batalkan" type="button" class="px-6 py-2 rounded-lg font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br text-white">
-                            Kembali
-                        </button>
-                    </div>
+                    <p class="mb-5 text-m font-normal text-gray-500">Apakah Anda yakin ingin membatalkan booking tenant ini?</p>
+
+                    <!-- Form Pembatalan -->
+                    <form id="form-batal" action="" method="POST">
+                        @csrf
+                        @method('DELETE')
+
+                        <!-- Tombol Submit -->
+                        <div class="flex justify-center gap-4 mt-6">
+                            <button type="submit" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                Batalkan Booking
+                            </button>
+                            <button data-modal-hide="modal-batalkan" type="button" class="px-6 py-2 rounded-lg font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br text-white">
+                                Kembali
+                            </button>
+                        </div>
+                    </form>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Bayar -->
+    <div id="modal-bayar" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative p-4 w-full max-w-4xl max-h-full">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow">
+                <!-- Modal header -->
+                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
+                    <h3 class="text-lg md:text-xl font-semibold text-gray-900">
+                        Upload Bukti Pembayaran
+                    </h3>
+                </div>
+                <!-- Modal body -->
+                <form action="{{ route('booking.uploadBuktiTenant') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                    <div class="p-4 md:p-5">
+                        <!-- Input Bukti Pembayaran -->
+                        @if(isset($booking) && $booking)
+                            <input type="hidden" name="booking_id" id="booking-id" value={{$booking->id}}>
+                        @endif
+                        
+                        <label for="bukti-bayar" class="block mb-2 text-sm font-medium text-gray-900">
+                            Upload Bukti Pembayaran
+                        </label>
+                        <input type="file" id="bukti-bayar" name="buktiBayar" accept="image/jpeg, image/png" 
+                            class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50" 
+                            required>
+
+                        <!-- Informasi Tambahan -->
+                        <p class="info mt-1">
+                            * File maksimal 2 MB, format: JPEG atau PNG<br>
+                            * Upload bukti pembayaran Anda. Harap diperhatikan bahwa jika Anda membatalkan booking setelah mengonfirmasi, pengembalian biaya akan dilakukan sebesar 90% dari total biaya yang telah dibayar.
+                        </p>
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b space-x-2">
+                        <button 
+                            type="submit" 
+                            class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 font-bold font-medium rounded-lg text-sm px-4 py-2 text-center">
+                            Upload
+                        </button>
+                        <button data-modal-hide="modal-bayar" type="button" class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-bold font-medium rounded-lg text-sm px-4 py-2 text-center">Batal</button>
+                    </div>
+                </form>
+                {{-- <!-- Modal footer -->
+                <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b space-x-2">
+                    <button data-modal-hide="modal-bayar" type="button" class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-bold font-medium rounded-lg text-sm px-4 py-2 text-center">Batal</button>
+                </div> --}}
             </div>
         </div>
     </div>
@@ -430,24 +577,6 @@
             });
         }
     </script>
-
-<!-- Checkbox Batalkan wajib diklik -->
-<script>
-    const checkbox = document.getElementById('link-checkbox');
-    const submitBtn = document.getElementById('submit-btn');
-    const alasanPembatalan = document.getElementById('alasan-pembatalan');
-
-    // Event listener untuk checkbox dan textarea
-    function toggleButtonState() {
-        submitBtn.disabled = !checkbox.checked || alasanPembatalan.value.trim() === '';
-    }
-
-    // Cek ketika checkbox berubah
-    checkbox.addEventListener('change', toggleButtonState);
-
-    // Cek ketika textarea diubah
-    alasanPembatalan.addEventListener('input', toggleButtonState);
-</script>
 
 <!-- Search -->
 <script>
@@ -468,6 +597,115 @@
                 }
             });
         });
+    });
+</script>
+
+<script>
+    // Ambil semua tombol "Bayar"
+    const bayarButtons = document.querySelectorAll('[data-modal-target="modal-bayar"]');
+
+    bayarButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            // Ambil booking_id dari atribut data-bookingid pada tombol yang diklik
+            const bookingId = this.getAttribute('data-bookingid');
+            
+            // Setel nilai booking_id di input tersembunyi dalam form modal
+            document.getElementById('booking-id').value = bookingId;
+        });
+    });
+</script>
+
+{{-- Script untuk membatalkan booking --}}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const modalBatalkan = document.getElementById("modal-batalkan");
+    const deleteForm = document.getElementById("form-batal");
+
+    document.querySelectorAll("[data-modal-toggle='modal-batalkan']").forEach(button => {
+        button.addEventListener("click", function () {
+            let id = this.getAttribute("data-bookingid");
+            deleteForm.setAttribute("action", `/hapusPemTenant/${id}`);
+        });
+    });
+});
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Ambil semua tombol edit
+        const editButtons = document.querySelectorAll(".btn-edit");
+
+        // Loop setiap tombol edit
+        editButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                // Ambil data dari atribut tombol
+                const id = button.getAttribute("data-id");
+                const namaPemohon = button.getAttribute("data-namaPemohon");
+                const noWa = button.getAttribute("data-noWa");
+                const namaTenant = button.getAttribute("data-namaTenant");
+                const tipeTenant = button.getAttribute("data-tipeTenant");
+
+                // Tampilkan modal edit
+                const modalEdit = document.getElementById("modal-edit");
+                modalEdit.classList.remove("hidden");
+
+                // Isi data input di modal
+                document.getElementById("id").value = id;
+                document.getElementById("namaPemohon").value = namaPemohon;
+                document.getElementById("noWa").value = noWa;
+                document.getElementById("namaTenant").value = namaTenant;
+                document.getElementById("tipeTenant").value = tipeTenant;
+            });
+        });
+
+        // Tambahkan event listener untuk tombol batal atau close modal
+        const closeModalButtons = document.querySelectorAll("[data-modal-hide]");
+        closeModalButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                const modalId = button.getAttribute("data-modal-hide");
+                const modal = document.getElementById(modalId);
+                modal.classList.add("hidden");
+            });
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Tombol Simpan di modal
+        const simpanButton = document.getElementById("konfirmasi-button");
+
+        simpanButton.addEventListener("click", function () {
+            // Ambil form dari modal
+            const editForm = document.getElementById("editForm");
+
+            // Update value form input dari modal
+            editForm.querySelector("#id").value = document.getElementById("id").value;
+            editForm.querySelector("#namaPemohon").value = document.getElementById("namaPemohon").value;
+            editForm.querySelector("#noWa").value = document.getElementById("noWa").value;
+            editForm.querySelector("#namaTenant").value = document.getElementById("namaTenant").value;
+            editForm.querySelector("#tipeTenant").value = document.getElementById("tipeTenant").value;
+
+            // Kirim form ke server
+            editForm.submit();
+        });
+
+        // Event listener untuk tombol batal atau close modal
+        const closeModalButtons = document.querySelectorAll("[data-modal-hide]");
+        closeModalButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                const modalId = button.getAttribute("data-modal-hide");
+                const modal = document.getElementById(modalId);
+                modal.classList.add("hidden");
+            });
+        });
+    });
+</script>
+
+<script>
+    document.getElementById("konfirmasi-button").addEventListener("click", function () {
+        const editForm = document.getElementById("editForm");
+        editForm.submit(); // Kirim form ke server
     });
 </script>
 

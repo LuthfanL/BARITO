@@ -352,15 +352,6 @@
                             * Masukkan keterangan setting layout tempat saat pelaksanaan acara.
                         </p>
 
-                        <!-- Input Bukti Pembayaran -->
-                        <label for="bukti-bayar" class="block mb-2 text-sm font-medium text-gray-900">Upload Bukti Pembayaran</label>
-                        {{-- <input type="file" id="bukti-bayar" name="bukti-bayar" accept="image/jpeg, image/png" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50" required> --}}
-
-                        <!-- Informasi Tambahan -->
-                        <p class="info mt-1">
-                            * File maksimal 2 MB, format: JPEG atau PNG<br>
-                            * Upload bukti pembayaran Anda. Harap diperhatikan bahwa jika Anda membatalkan booking setelah mengonfirmasi, pengembalian biaya akan dilakukan sebesar 90% dari total biaya yang telah dibayar.
-                        </p>
                     </form>
                 </div>
 
@@ -461,25 +452,26 @@
         });
     </script>
 
+    <!-- Kalendar -->
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const calendarEl = document.getElementById('calendar');
-        const calendarRuangan = {!! $calendarRuanganJson !!};
-    
-        const calendar = new FullCalendar.Calendar(calendarEl, {
-            locale: 'id', 
-            initialView: 'dayGridMonth', 
-            buttonText: {
-                today: 'Hari Ini' 
-            },
-            events: calendarRuangan, 
-            height: 'auto', 
-            contentHeight: 'auto', 
-            windowResize: true 
-        });
+        document.addEventListener('DOMContentLoaded', function() {
+            const calendarEl = document.getElementById('calendar');
+            const calendarRuangan = {!! $calendarRuanganJson !!};
+        
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                locale: 'id', 
+                initialView: 'dayGridMonth', 
+                buttonText: {
+                    today: 'Hari Ini' 
+                },
+                events: calendarRuangan, 
+                height: 'auto', 
+                contentHeight: 'auto', 
+                windowResize: true 
+            });
 
-        calendar.render(); 
-    });
+            calendar.render(); 
+        });
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
@@ -492,14 +484,24 @@
     <!-- Tambahkan Flatpickr JS -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
-        flatpickr("#tglMulai", {
-            dateFormat: "Y-m-d",
-            minDate: "today"
-        });
+        document.addEventListener("DOMContentLoaded", function () {
+            // Inisialisasi Flatpickr untuk tglMulai
+            const tglMulaiPicker = flatpickr("#tglMulai", {
+                dateFormat: "Y-m-d",
+                minDate: "today", // Tidak bisa memilih tanggal sebelum hari ini
+                onChange: function (selectedDates) {
+                    // Jika tglMulai dipilih, update minDate untuk tglSelesai agar tidak bisa pilih sebelumnya
+                    if (selectedDates.length > 0) {
+                        tglSelesaiPicker.set("minDate", selectedDates[0]);
+                    }
+                }
+            });
 
-        flatpickr("#tglSelesai", {
-            dateFormat: "Y-m-d",
-            minDate: "today"
+            // Inisialisasi Flatpickr untuk tglSelesai
+            const tglSelesaiPicker = flatpickr("#tglSelesai", {
+                dateFormat: "Y-m-d",
+                minDate: "today" // Default minDate adalah hari ini
+            });
         });
     </script>
 

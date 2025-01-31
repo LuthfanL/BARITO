@@ -18,7 +18,7 @@
             border-collapse: collapse; /* Mengurangi jarak antar border */
         }
         #default-table th, #default-table td {
-            padding: 8px 4px; /* Mengurangi padding antar sel */
+            padding: 8px 3px; /* Mengurangi padding antar sel */
             text-align: center;
             white-space: nowrap; /* Membatasi teks agar tidak wrap */
         }
@@ -158,11 +158,11 @@
                                         Bukti Pembayaran
                                     </span>
                                 </th>
-                                <th>
+                                {{-- <th>
                                     <span class="flex items-center">
                                         Pembatalan
                                     </span>
-                                </th>
+                                </th> --}}
                                 <th>
                                     <span class="flex items-center">
                                         Tindakan
@@ -183,10 +183,18 @@
                                         <td>{{ $booking->tipeTenant }}</td>
                                         <td>{{ \Carbon\Carbon::parse($booking->tglMulai)->format('d/m/Y') }}</td>
                                         <td>{{ \Carbon\Carbon::parse($booking->tglSelesai)->format('d/m/Y') }}</td>
-                                        <td class="text-center">
-                                            BuktiPembayaran.jpg
-                                        </td>              
-                                        <!-- Alasan Pembatalan -->
+                                        <!-- Bukti Bayar -->
+                                        <td class="flex justify-center items-center text-center mt-5">
+                                            @if($booking->buktiBayar)
+                                                <button onclick="showBukti('{{ asset($booking->buktiBayar) }}')" 
+                                                    class="px-3 py-1 bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white rounded-lg">
+                                                    Lihat Bukti
+                                                </button>
+                                            @else
+                                                <span class="text-red-500">Belum diupload</span>
+                                            @endif
+                                        </td>               
+                                        {{-- <!-- Alasan Pembatalan -->
                                         <td class=" items-center text-center mt-5"> 
                                             <div class="flex justify-center ">
                                                 <button 
@@ -197,7 +205,7 @@
                                                     Alasan
                                                 </button>
                                             </div>
-                                        </td>
+                                        </td> --}}
                                         
                                         <!-- Tindakan -->
                                         <td class="text-center">
@@ -228,6 +236,37 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Bukti Bayar -->
+    <div id="detail-bayar" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" 
+        class="hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-screen bg-gray-900 bg-opacity-50">
+        
+        <div class="relative p-6 w-full max-w-xl bg-white rounded-lg shadow-lg">
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between border-b pb-4">
+                <h3 class="text-lg font-semibold text-gray-900">
+                    Bukti Pembayaran
+                </h3>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="p-6 space-y-4">
+                <div class="flex justify-center">
+                    <img id="buktiBayarImg" class="h-auto max-w-full rounded-lg" src="" alt="Bukti Bayar">
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="flex justify-end space-x-2 border-t pt-4">
+                <a id="downloadBukti" href="#" class="bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-800 focus:ring-4 focus:ring-green-300" download>
+                    Unduh
+                </a>
+                <button onclick="closeModal()" class="bg-blue-700 text-white px-4 py-2 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300">
+                    Kembali
+                </button>
             </div>
         </div>
     </div>
@@ -276,7 +315,12 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                     </svg>
                     <h1 class="mb-5 text-lg font-bold text-gray-900">Konfirmasi Penolakan Booking</h1>
-                    <p class="mb-5 text-m font-normal text-gray-500">Apakah Anda yakin ingin menolak booking event ini? Tindakan ini akan memberi tahu customer bahwa booking tidak dapat diproses.</p>
+                    <p class="mb-2 ml-2 mr-2 text-m font-normal text-gray-500">Apakah Anda yakin ingin menolak booking tenant ini? Berikan alasan penolakan yang nantinya akan diberitahukan ke customer.</p>
+                    <div class="p-4 md:p-5 space-y-6">
+                        <div>
+                            <textarea id="alasanPenolakan" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-500 p-3" placeholder="Berikan alasan penolakan booking ini." oninput="toggleTolakButton()"></textarea>
+                        </div>
+                    </div>
                     @if (isset($booking))
                         <form action="{{ route('update.statusTenant') }}" method="POST">
                             @csrf
@@ -284,7 +328,8 @@
                             <input type="hidden" name="status" value="Ditolak"> <!-- Kirim status -->
                             <button 
                                 type="submit"
-                                class="btn-tolak px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                id="btnTolak"
+                                class="btn-tolak px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white disabled:opacity-50 disabled:cursor-not-allowed" disabled>
                                 Tolak
                             </button>
                             <button 
@@ -302,7 +347,7 @@
         </div>
     </div>
 
-    <!-- Modal Alasan Pembatalan -->
+    {{-- <!-- Modal Alasan Pembatalan -->
     <div id="detail-batal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative p-4 w-full max-w-2xl max-h-full">
             <!-- Modal content -->
@@ -326,10 +371,19 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 </body>
+
+<!-- Script agar button tolak tidak dapat diklik sebelum diisi alasan penolakannya -->
+<script>
+    function toggleTolakButton() {
+        const textarea = document.getElementById('alasanPenolakan');
+        const btnTolak = document.getElementById('btnTolak');
+        btnTolak.disabled = textarea.value.trim() === '';
+    }
+</script>
 
 <!-- Table -->
 <script>
@@ -419,5 +473,18 @@
             });
         @endif
     </script>
+
+<!-- Script Bukti Bayar -->
+<script>
+    function showBukti(url) {
+        document.getElementById('buktiBayarImg').src = url;
+        document.getElementById('downloadBukti').href = url;
+        document.getElementById('detail-bayar').classList.remove('hidden');
+    }
+
+    function closeModal() {
+        document.getElementById('detail-bayar').classList.add('hidden');
+    }
+</script>
 
 </html>

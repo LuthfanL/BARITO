@@ -168,7 +168,7 @@ class custBookingRuanganController extends Controller
             'keterangan'    => $request->input('keterangan'),
             'tglMulai'      => $request->input('tglMulai'),
             'tglSelesai'    => $request->input('tglSelesai'),
-            'status'        => 'Belum disetujui',
+            'status'        => 'Belum bayar',
              // 'buktiBayar'    => json_encode($fotoPaths),
             ];
 

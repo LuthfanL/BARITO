@@ -18,7 +18,7 @@
 
 <body class="h-full bg-white">
     <!-- Navbar -->
-    <div class="relative z-50">
+    <div class="relative z-30">
         @include('components.navbargeneral')
     </div>
 
@@ -125,7 +125,7 @@
     <div class="container swiper flex justify-center items-center pb-6">
         <div class="card-wrapper">
             <ul class="card-list swiper-wrapper">
-            @foreach ($ruangan as $ruang)
+                @foreach ($ruangan as $ruang)
                 <li class="card-item swiper-slide">
                     <div href="" class="card-link">
                         <img src="{{ $ruang->foto_urls[0] }}" alt="Ruangan" class="card-image">
@@ -148,7 +148,7 @@
                         </button>
                     </div>
                 </li>
-            @endforeach
+                @endforeach
             </ul>
             <div class="swiper-pagination"></div>
             <div class="swiper-button-prev"></div>
@@ -156,6 +156,7 @@
         </div>
     </div>
 
+    <!-- Modal Lihat Detail Ruangan -->
     <div id="modal-detailRuangan" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative p-4 w-full max-w-4xl max-h-full">
             <div class="relative bg-white rounded-lg shadow">
@@ -173,6 +174,37 @@
                                 <img id="main-image-ruang" class="h-auto max-w-full rounded-lg" src="" alt="Foto Ruangan">
                             </div>
                             <div class="grid grid-cols-3 md:grid-cols-5 gap-2 md:gap-4" id="image-thumbnails-ruangan"></div>
+                        </div>
+
+                        <!-- Kolom Kanan: Fasilitas -->
+                        <div class="space-y-4">
+                            <h2 class="font-semibold text-lg">Fasilitas</h2>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label for="podium" class="block text-sm font-medium text-gray-700">Podium</label>
+                                    <input type="number" id="podium" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" readonly>
+                                </div>
+                                <div>
+                                    <label for="sound" class="block text-sm font-medium text-gray-700">Sound</label>
+                                    <input type="number" id="sound" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" readonly>
+                                </div>
+                                <div>
+                                    <label for="meja" class="block text-sm font-medium text-gray-700">Meja</label>
+                                    <input type="number" id="meja" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" readonly>
+                                </div>
+                                <div>
+                                    <label for="ac" class="block text-sm font-medium text-gray-700">AC</label>
+                                    <input type="number" id="ac" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" readonly>
+                                </div>
+                                <div>
+                                    <label for="kursi" class="block text-sm font-medium text-gray-700">Kursi</label>
+                                    <input type="number" id="kursi" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" readonly>
+                                </div>
+                                <div>
+                                    <label for="proyektor" class="block text-sm font-medium text-gray-700">Proyektor</label>
+                                    <input type="number" id="proyektor" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" readonly>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -217,6 +249,7 @@
         });
     </script>
 
+    <!-- Script Detail Ruangan -->
     <script>
         // Menambahkan event listener untuk tombol yang membuka modal
         document.querySelectorAll('[data-modal-target="modal-detailRuangan"]').forEach(button => {
@@ -237,6 +270,14 @@
                     `;
                     imageThumbnails.appendChild(thumbnailElement);
                 });
+        
+                // Update fasilitas di modal
+                document.getElementById('podium').value = this.getAttribute('data-podium') || 'Tidak tersedia';
+                document.getElementById('sound').value = this.getAttribute('data-sound') || 'Tidak tersedia';
+                document.getElementById('meja').value = this.getAttribute('data-meja') || 'Tidak tersedia';
+                document.getElementById('ac').value = this.getAttribute('data-ac') || 'Tidak tersedia';
+                document.getElementById('kursi').value = this.getAttribute('data-kursi') || 'Tidak tersedia';
+                document.getElementById('proyektor').value = this.getAttribute('data-proyektor') || 'Tidak tersedia';
             });
         });
         
