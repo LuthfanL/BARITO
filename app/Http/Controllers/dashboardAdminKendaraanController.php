@@ -76,6 +76,7 @@ class dashboardAdminKendaraanController extends Controller
 
         // Statistik Peminjaman Lingkaran
         $peminjamanData = pemKendaraan::where('idAdmin', $idAdmin)
+            ->whereIn('status', ['Menunggu persetujuan', 'Disetujui'])
             ->whereBetween('created_at', [$startDate, $endDate])
             ->selectRaw('namaKendaraan, COUNT(*) as total')
             ->groupBy('namaKendaraan')
@@ -94,6 +95,7 @@ class dashboardAdminKendaraanController extends Controller
 
         // Statistik Booking Customer
         $pengunjungData = pemKendaraan::where('idAdmin', $idAdmin)
+            ->whereIn('status', ['Menunggu persetujuan', 'Disetujui'])
             ->whereBetween('created_at', [$startDate, $endDate])
             ->selectRaw('DATE(created_at) as date, COUNT(*) as total')
             ->groupBy('date')

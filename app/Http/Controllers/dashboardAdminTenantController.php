@@ -84,6 +84,7 @@ class dashboardAdminTenantController extends Controller
 
         // Statistik Peminjaman Lingkaran
         $peminjamanData = pemTenant::where('idAdmin', $idAdmin)
+            ->whereIn('status', ['Menunggu persetujuan', 'Disetujui'])
             ->whereBetween('created_at', [$startDate, $endDate])
             ->selectRaw('namaEvent, COUNT(*) as total')
             ->groupBy('namaEvent')
@@ -102,6 +103,7 @@ class dashboardAdminTenantController extends Controller
 
         // Statistik Booking Customer
         $pengunjungData = pemTenant::where('idAdmin', $idAdmin)
+            ->whereIn('status', ['Menunggu persetujuan', 'Disetujui'])
             ->whereBetween('created_at', [$startDate, $endDate])
             ->selectRaw('DATE(created_at) as date, COUNT(*) as total')
             ->groupBy('date')
