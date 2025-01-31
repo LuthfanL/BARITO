@@ -185,6 +185,29 @@
                 </div>
             </form>
 
+            <!-- Alert Belum Bayar -->
+            @if ($bookings->where('status', 'Belum bayar')->count() > 0)
+                <div id="alert-box" class="flex items-center p-4 mt-2 text-yellow-800 border-l-4 border-yellow-500 bg-yellow-100 rounded-lg shadow-md" role="alert">
+                    <svg class="w-6 h-6 text-yellow-700 flex-shrink-0 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9 2a1 1 0 0 1 2 0v7a1 1 0 0 1-2 0V2Zm1 10a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z"/>
+                    </svg>
+                    <div class="flex-1">
+                        <strong>Perhatian!</strong> Anda memiliki pemesanan ruangan yang belum dibayar. Mohon segera selesaikan pembayaran dan unggah bukti pembayaran paling lambat 24 jam setelah booking.
+                    </div>
+                    <button onclick="closeAlert()" class="text-yellow-800 hover:text-yellow-600 ml-4 p-2 rounded-full transition">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 9l-3-3a1 1 0 0 1 1.414-1.414L10 6.586l3-3a1 1 0 1 1 1.414 1.414L11.414 8l3 3a1 1 0 0 1-1.414 1.414l-3-3-3 3a1 1 0 0 1-1.414-1.414l3-3Z" clip-rule="evenodd"/>
+                        </svg>
+                    </button>
+                </div>
+            
+                <script>
+                    function closeAlert() {
+                        document.getElementById("alert-box").style.display = "none";
+                    }
+                </script>
+            @endif
+
             <!-- Table Data -->
             <table id="default-table">
                 <thead>
@@ -334,7 +357,7 @@
     </div>
 
 
-     <!-- Modal Edit -->
+    <!-- Modal Edit -->
     <div id="modal-edit" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative p-4 w-full max-w-4xl max-h-full">
             <!-- Modal content -->
@@ -500,7 +523,7 @@
                         <!-- Informasi Tambahan -->
                         <p class="info mt-1">
                             * File maksimal 2 MB, format: JPEG atau PNG<br>
-                            * Upload bukti pembayaran Anda. Harap diperhatikan bahwa jika Anda membatalkan booking setelah mengonfirmasi, pengembalian biaya akan dilakukan sebesar 90% dari total biaya yang telah dibayar.
+                            * Mohon diperhatikan kembali, setelah Anda mengunggah bukti pembayaran maka booking tidak dapat diedit dan dibatalkan.
                         </p>
                     </div>
                     <!-- Modal footer -->
