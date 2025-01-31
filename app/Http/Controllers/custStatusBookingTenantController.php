@@ -7,6 +7,7 @@ use App\Models\customer;
 use App\Models\pemTenant;
 use App\Models\event;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class custStatusBookingTenantController extends Controller
 {
@@ -87,5 +88,71 @@ class custStatusBookingTenantController extends Controller
         }
 
         return redirect()->back()->with('success', 'Bukti pembayaran berhasil diupload!');
+    }
+
+    public function updateBookingTenant(Request $request)
+    {
+        // Validasi data
+        $request->validate([
+            'id'          => 'required',
+            'namaPemohon' => 'required|string',
+            'noWa'        => 'required|string',
+            'namaTenant'  => 'required|string',
+            'tipeTenant'  => 'required|string',
+        ]);
+
+        // Ambil pengguna yang sedang login
+        $user = auth()->user();
+
+        // Ambil nik dari model customer berdasarkan email
+        $nik = \App\Models\customer::getNikByEmail($user->email);
+
+        if (!$nik) {
+            return back()->with('error', 'Customer tidak ditemukan');
+        }
+
+        // Cari data pemTenant berdasarkan NIK user dan ID yang diberikan
+        $booking = pemTenant::where('id', $request->id)
+            ->where('idCustomer', $nik)
+            ->first();
+
+        if (!$booking) {
+            return redirect()->back()->with('error', 'Data booking tidak ditemukan atau Anda tidak memiliki izin untuk mengeditnya.');
+        }
+
+        // Ambil namaEvent dari booking yang ditemukan
+        $namaEvent = $booking->namaEvent;
+
+        if (!$namaEvent) {
+            return redirect()->back()->withErrors('Event tidak valid.');
+        }
+
+        // Ambil data kuota event terkait
+        $event = event::where('namaEvent', $namaEvent)->first();
+
+        if (!$event) {
+            return redirect()->back()->withErrors('Event tidak ditemukan.');
+        }
+
+        // Periksa kuota berdasarkan tipe tenant
+        if ($request->tipeTenant === 'Tenant Makanan' && $event->nMakanan == 0) {
+            return redirect()->back()->withErrors('Maaf, kuota untuk tenant makanan sudah habis. Silakan berkunjung di lain waktu!');
+        }
+        if ($request->tipeTenant === 'Tenant Jasa' && $event->nJasa == 0) {
+            return redirect()->back()->withErrors('Maaf, kuota untuk tenant jasa sudah habis. Silakan berkunjung di lain waktu!');
+        }
+        if ($request->tipeTenant === 'Tenant Barang' && $event->nBarang == 0) {
+            return redirect()->back()->withErrors('Maaf, kuota untuk tenant barang sudah habis. Silakan berkunjung di lain waktu!');
+        }
+
+        // Perbarui data booking
+        $booking->update([
+            'namaPemohon' => $request->namaPemohon,
+            'noWa'        => $request->noWa,
+            'namaTenant'  => $request->namaTenant,
+            'tipeTenant'  => $request->tipeTenant,
+        ]);
+
+        return redirect()->back()->with('success', 'Data booking berhasil diperbarui!');
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\customer;
 use App\Models\pemKendaraan;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class custStatusBookingKendaraanController extends Controller
 {
@@ -84,5 +85,72 @@ class custStatusBookingKendaraanController extends Controller
         }
 
         return redirect()->back()->with('success', 'Bukti pembayaran berhasil diupload!');
+    }
+
+    public function updateBookingKendaraan(Request $request)
+    {
+        // Validasi data
+        $request->validate([
+            'id' => 'required',
+            'namaPemohon' => 'required|string',
+            'noWa'        => 'required|string',
+            'tglMulai'    => 'required|date',
+            'tglSelesai'  => 'required|date',
+            'keperluan'   => 'required|string',
+            'lokasi'      => 'required|string',
+            'titikJemput' => 'required|string',
+        ]);
+
+        // Cari booking berdasarkan ID
+        $booking = pemKendaraan::where('id', $request->id)->firstOrFail();
+        if (!$booking) {
+            return redirect()->back()->with('error', 'Data booking tidak ditemukan!');
+        }
+
+        
+        if ($request['tglMulai'] == Carbon::now()->format('Y-m-d')){
+            return redirect()->back()->withErrors('Pemesanan tidak dapat dilakukan untuk hari yang sama. Harap lakukan pemesanan minimal 1 hari sebelumnya!');
+        }
+
+        $used = pemKendaraan::where('idKendaraan', $request['idKendaraan'])->get();
+
+        if ($used){
+            foreach ($used as $use) {
+                if ($request['tglMulai'] == $use->tglMulai || $request['tglMulai'] == $use->tglSelesai){
+                    return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain!');
+                }
+                if ($request['tglSelesai'] == $use->tglMulai || $request['tglSelesai'] == $use->tglSelesai){
+                    return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain!');
+                }
+                if ($request['tglMulai'] < $use->tglMulai && $request['tglSelesai'] > $use->tglSelesai) {
+                    return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain!');
+                }
+                if ($request['tglMulai'] > $use->tglMulai && $request['tglSelesai'] < $use->tglSelesai){
+                    return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain!');
+                }
+                if ($request['tglMulai'] > $use->tglMulai && $request['tglMulai'] < $use->tglSelesai){
+                    return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain!');
+                }
+                if ($request['tglSelesai'] > $use->tglMulai && $request['tglSelesai'] < $use->tglSelesai){
+                    return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain!');
+                }
+                if ($request['tglSelesai'] < $request['tglMulai']){
+                    return redirect()->back()->withErrors('Tanggal Selesai harus lebih dari atau sama dengan tanggal mulai!');
+                }
+            };
+        }
+
+        // Perbarui data
+        $booking->update([
+            'namaPemohon' => $request->namaPemohon,
+            'noWa'        => $request->noWa,
+            'tglMulai'    => $request->tglMulai,
+            'tglSelesai'  => $request->tglSelesai,
+            'keperluan'   => $request->keperluan,
+            'lokasi'      => $request->lokasi,
+            'titikJemput' => $request->titikJemput,
+        ]);        
+
+        return redirect()->back()->with('success', 'Data booking berhasil diperbarui!');
     }
 }
