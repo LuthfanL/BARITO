@@ -24,9 +24,9 @@ class custBookingTenantController extends Controller
 
         // Ambil data ruangan berdasarkan 'nama', 'lokasi', dan 'deskripsi'
         $event = event::where('namaEvent', $namaEvent)->first();
-        $makanan = pemTenant::where('namaEvent', $namaEvent)->where('tipeTenant', 'Tenant Makanan')->where('status', 'Disetujui')->count();
-        $barang = pemTenant::where('namaEvent', $namaEvent)->where('tipeTenant', 'Tenant Barang')->where('status', 'Disetujui')->count();
-        $jasa = pemTenant::where('namaEvent', $namaEvent)->where('tipeTenant', 'Tenant Jasa')->where('status', 'Disetujui')->count();
+        $makanan = pemTenant::where('namaEvent', $namaEvent)->where('tipeTenant', 'Tenant Makanan')->where('status', '!=', 'Ditolak')->count();
+        $barang = pemTenant::where('namaEvent', $namaEvent)->where('tipeTenant', 'Tenant Barang')->where('status', '!=', 'Ditolak')->count();
+        $jasa = pemTenant::where('namaEvent', $namaEvent)->where('tipeTenant', 'Tenant Jasa')->where('status', '!=', 'Ditolak')->count();
 
         $colors = ['#3788d8', '#f39c12', '#27ae60', '#8e44ad', '#e74c3c', '#16a085', '#d35400', '#2ecc71', '#3498db', '#9b59b6'];
 
@@ -91,9 +91,9 @@ class custBookingTenantController extends Controller
         $makanan = event::where('namaEvent', $request->input('namaEvent'))->first()->nMakanan;
         $jasa = event::where('namaEvent', $request->input('namaEvent'))->first()->nJasa;
         $barang = event::where('namaEvent', $request->input('namaEvent'))->first()->nBarang;
-        $nMakanan = pemTenant::where('namaEvent', $request->input('namaEvent'))->where('tipeTenant', 'Tenant Makanan')->where('status', 'Disetujui')->count();
-        $nJasa = pemTenant::where('namaEvent', $request->input('namaEvent'))->where('tipeTenant', 'Tenant Jasa')->where('status', 'Disetujui')->count();
-        $nBarang = pemTenant::where('namaEvent', $request->input('namaEvent'))->where('tipeTenant', 'Tenant Barang')->where('status', 'Disetujui')->count();
+        $nMakanan = pemTenant::where('namaEvent', $request->input('namaEvent'))->where('tipeTenant', 'Tenant Makanan')->where('status', '!=', 'Ditolak')->count();
+        $nJasa = pemTenant::where('namaEvent', $request->input('namaEvent'))->where('tipeTenant', 'Tenant Jasa')->where('status', '!=', 'Ditolak')->count();
+        $nBarang = pemTenant::where('namaEvent', $request->input('namaEvent'))->where('tipeTenant', 'Tenant Barang')->where('status', '!=', 'Ditolak')->count();
 
         if ($request->input('tipeTenant') == 'Tenant Makanan' && $makanan == $nMakanan) {
             return redirect()->back()->withErrors('Maaf, kuota untuk tenant makanan sudah habis, silahkan berkunjung dilain waktu!');

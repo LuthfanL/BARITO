@@ -148,9 +148,9 @@ class custStatusBookingTenantController extends Controller
         $makanan = event::where('namaEvent', $namaEvent)->first()->nMakanan;
         $jasa = event::where('namaEvent', $namaEvent)->first()->nJasa;
         $barang = event::where('namaEvent', $namaEvent)->first()->nBarang;
-        $nMakanan = pemTenant::where('namaEvent', $namaEvent)->where('tipeTenant', 'Tenant Makanan')->count();
-        $nJasa = pemTenant::where('namaEvent', $namaEvent)->where('tipeTenant', 'Tenant Jasa')->count();
-        $nBarang = pemTenant::where('namaEvent', $namaEvent)->where('tipeTenant', 'Tenant Barang')->count();
+        $nMakanan = pemTenant::where('namaEvent', $namaEvent)->where('tipeTenant', 'Tenant Makanan')->where('status', '!=', 'Ditolak')->count();
+        $nJasa = pemTenant::where('namaEvent', $namaEvent)->where('tipeTenant', 'Tenant Jasa')->where('status', '!=', 'Ditolak')->count();
+        $nBarang = pemTenant::where('namaEvent', $namaEvent)->where('tipeTenant', 'Tenant Barang')->where('status', '!=', 'Ditolak')->count();
 
         if ($request->input('tipeTenant') == 'Tenant Makanan' && $makanan == $nMakanan) {
             return redirect()->back()->withErrors('Maaf, kuota untuk tenant makanan sudah habis, silahkan berkunjung dilain waktu!');

@@ -125,7 +125,7 @@ class custStatusBookingKendaraanController extends Controller
 
         $idKendaraan = $booking->idKendaraan;
 
-        $used = pemKendaraan::where('idKendaraan', $idKendaraan)->get();
+        $used = pemKendaraan::where('idKendaraan', $idKendaraan)->where('status', '!=', 'Ditolak')->get();
 
         if ($used){
             foreach ($used as $use) {

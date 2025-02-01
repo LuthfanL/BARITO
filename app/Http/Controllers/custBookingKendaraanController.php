@@ -33,6 +33,7 @@ class custBookingKendaraanController extends Controller
                 'pemKendaraan.tglMulai as start', 
                 'pemKendaraan.tglSelesai as end'
             )->where('kendaraan.platNomor', $platNomor)
+            ->where('status', '!=', 'Ditolak')
             ->get()
             ->map(function ($event, $index) use ($colors) {
                 $event->color = $colors[$index % count($colors)];
@@ -83,7 +84,7 @@ class custBookingKendaraanController extends Controller
             return redirect()->back()->withErrors('Anda harus memesan minimal 2 hari sebelum hari yang dipesan!');
         }
 
-        $used = pemKendaraan::where('idKendaraan', $validated['idKendaraan'])->get();
+        $used = pemKendaraan::where('idKendaraan', $validated['idKendaraan'])->where('status','!=','Ditolak')->get();
 
         if ($used){
             foreach ($used as $use) {

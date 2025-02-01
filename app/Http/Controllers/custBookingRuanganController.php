@@ -35,6 +35,7 @@ class custBookingRuanganController extends Controller
             'pemRuangan.tglMulai as start', 
             'pemRuangan.tglSelesai as end'
         )->where('ruangan.nama', $nama)->where('ruangan.lokasi', $lokasi)
+        ->where('status', '!=', 'Ditolak')
         ->get()
         ->map(function ($event, $index) use ($colors) {
             $event->color = $colors[$index % count($colors)];
@@ -130,7 +131,7 @@ class custBookingRuanganController extends Controller
             return redirect()->back()->withErrors('Anda harus memesan minimal 2 hari sebelum hari yang dipesan!');
         }
 
-        $used = pemRuangan::where('idRuangan', $validated['idRuangan'])->get();
+        $used = pemRuangan::where('idRuangan', $validated['idRuangan'])->where('status', '!=', 'Ditolak')->get();
 
         if ($used){
             foreach ($used as $use) {

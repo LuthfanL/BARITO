@@ -123,7 +123,7 @@ class custStatusBookingRuanganController extends Controller
 
         $idRuangan = $booking->idRuangan;
 
-        $used = pemRuangan::where('idRuangan', $idRuangan)->get();
+        $used = pemRuangan::where('idRuangan', $idRuangan)->where('status', '!=', 'Ditolak')->get();
 
         if ($used){
             foreach ($used as $use) {
