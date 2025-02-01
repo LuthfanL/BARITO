@@ -156,7 +156,7 @@
                         <tbody>
                             @if (!empty($bookings))
                                 @foreach ($bookings as $booking)
-                                    <tr class="booking-list" data-bookingid="{{ $booking->id }}" data-bookingidCustomer="{{ $booking->idCustomer }}" data-bookingnamaPemohon="{{ $booking->namaPemohon }}" data-bookingnamaRuangan="{{ $booking->namaRuangan }}">
+                                    <tr class="booking-list @if($booking->status == 'Disetujui') bg-green-100 @elseif($booking->status == 'Ditolak') bg-red-100 @endif" data-bookingid="{{ $booking->id }}" data-bookingidCustomer="{{ $booking->idCustomer }}" data-bookingnamaPemohon="{{ $booking->namaPemohon }}" data-bookingnamaRuangan="{{ $booking->namaRuangan }}">
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $booking->id }}</td>
                                         <td>{{ $booking->namaPemohon }}</td>
