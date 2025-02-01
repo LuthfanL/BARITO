@@ -123,7 +123,9 @@ class custStatusBookingKendaraanController extends Controller
             return redirect()->back()->withErrors('Anda harus memesan minimal 2 hari sebelum hari yang dipesan!');
         }
 
-        $used = pemKendaraan::where('idKendaraan', $request['idKendaraan'])->get();
+        $idKendaraan = $booking->idKendaraan;
+
+        $used = pemKendaraan::where('idKendaraan', $idKendaraan)->get();
 
         if ($used){
             foreach ($used as $use) {
