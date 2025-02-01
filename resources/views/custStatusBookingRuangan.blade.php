@@ -11,6 +11,7 @@
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script>
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css"  rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Tambahkan Flatpickr CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="assets/style.css"/>
@@ -101,6 +102,23 @@
             font-size: 12px;
             color: red;
             margin-bottom: 10px;
+        }
+        /* Mengubah warna teks dan latar belakang tombol */
+        .swal2-confirm.custom-confirm-button {
+            background-color: #808080 !important; /* Warna abu-abu */
+            color: white !important; 
+            border: none;
+        }
+
+        /* Efek hover untuk tombol konfirmasi */
+        .swal2-confirm.custom-confirm-button:hover {
+            background-color: #A9A9A9 !important; /* Warna abu-abu lebih gelap */
+        }
+
+        /* Efek fokus untuk tombol konfirmasi */
+        .swal2-confirm.custom-confirm-button:focus {
+            outline: none !important; 
+            box-shadow: none !important;
         }
     </style>
 
@@ -735,5 +753,39 @@ document.addEventListener("DOMContentLoaded", function () {
         editForm.submit(); // Kirim form ke server
     });
 </script>
+
+    <!-- Script Alert -->
+    <script>
+        // Notifikasi jika berhasil
+        @if(session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: '{{ session('success') }}',
+                showConfirmButton: false,
+                timerProgressBar: true,
+                timer: 3000 // Durasi 3 detik
+            });
+        @endif
+    
+        // Notifikasi jika ada error
+        @if($errors->any())
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                html: `
+                    <ul style="text-align: left;">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                `,
+                confirmButtonText: 'Tutup',
+                customClass: {
+                    confirmButton: 'custom-confirm-button'
+                }
+            });
+        @endif
+    </script>
 
 </html>

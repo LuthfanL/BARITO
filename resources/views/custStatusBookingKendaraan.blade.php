@@ -103,6 +103,23 @@
             color: red;
             margin-bottom: 10px;
         }
+        /* Mengubah warna teks dan latar belakang tombol */
+        .swal2-confirm.custom-confirm-button {
+            background-color: #808080 !important; /* Warna abu-abu */
+            color: white !important; 
+            border: none;
+        }
+
+        /* Efek hover untuk tombol konfirmasi */
+        .swal2-confirm.custom-confirm-button:hover {
+            background-color: #A9A9A9 !important; /* Warna abu-abu lebih gelap */
+        }
+
+        /* Efek fokus untuk tombol konfirmasi */
+        .swal2-confirm.custom-confirm-button:focus {
+            outline: none !important; 
+            box-shadow: none !important;
+        }
     </style>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
@@ -737,5 +754,39 @@ document.addEventListener("DOMContentLoaded", function () {
         editForm.submit(); // Kirim form ke server
     });
 </script>
+
+    <!-- Script Alert -->
+    <script>
+        // Notifikasi jika berhasil
+        @if(session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: '{{ session('success') }}',
+                showConfirmButton: false,
+                timerProgressBar: true,
+                timer: 3000 // Durasi 3 detik
+            });
+        @endif
+    
+        // Notifikasi jika ada error
+        @if($errors->any())
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                html: `
+                    <ul style="text-align: left;">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                `,
+                confirmButtonText: 'Tutup',
+                customClass: {
+                    confirmButton: 'custom-confirm-button'
+                }
+            });
+        @endif
+    </script>
 
 </html>
