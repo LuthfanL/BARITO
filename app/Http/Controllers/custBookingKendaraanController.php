@@ -80,8 +80,8 @@ class custBookingKendaraanController extends Controller
 
         $now = Carbon::now()->startOfDay();
 
-        if ($now->diffInDays($validated['tglMulai']) < 2){
-            return redirect()->back()->withErrors('Anda harus memesan minimal 2 hari sebelum hari yang dipesan!');
+        if ($now->diffInDays($validated['tglMulai']) < 3){
+            return redirect()->back()->withErrors('Anda harus memesan minimal 3 hari sebelum hari yang dipesan!');
         }
 
         $used = pemKendaraan::where('idKendaraan', $validated['idKendaraan'])->where('status','!=','Ditolak')->get();

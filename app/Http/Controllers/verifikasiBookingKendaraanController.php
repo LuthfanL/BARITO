@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\adminKendaraan;
 use App\Models\pemKendaraan;
+use Carbon\Carbon;
 
 class verifikasiBookingKendaraanController extends Controller
 {
@@ -21,9 +22,11 @@ class verifikasiBookingKendaraanController extends Controller
             return back()->with('error', 'Admin tidak ditemukan');
         }
 
+        $now = Carbon::create(2025,02,04)->startOfDay();
         // Ambil data pemKendaraan berdasarkan idAdmin
         $bookings = pemKendaraan::where('idAdmin', $idAdmin)
             ->whereIn('status', ['Disetujui', 'Ditolak', 'Menunggu persetujuan']) // Filter status
+            ->where('event.tglMulai', '>', $now)
             ->orderBy('created_at', 'desc') // Urutkan berdasarkan tanggal dibuat (terbaru di atas)
             ->get();
 
@@ -47,6 +50,36 @@ class verifikasiBookingKendaraanController extends Controller
     
         if (!$booking) {
             return redirect()->back()->with('error', 'Data booking tidak ditemukan.');
+        }
+
+        $idKendaraan = $booking->idKendaraan;
+        
+        $used = pemKendaraan::where('idKendaraan', $idKendaraan)->where('status', '!=', 'Ditolak')->get();
+        
+        if ($used){
+            foreach ($used as $use) {
+                if ($booking->tglMulai == $use->tglMulai || $booking->tglMulai == $use->tglSelesai){
+                    return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain!');
+                }
+                if ($booking->tglSelesai == $use->tglMulai || $booking->tglSelesai == $use->tglSelesai){
+                    return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain!');
+                }
+                if ($booking->tglMulai < $use->tglMulai && $booking->tglSelesai > $use->tglSelesai) {
+                    return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain!');
+                }
+                if ($booking->tglMulai > $use->tglMulai && $booking->tglSelesai < $use->tglSelesai){
+                    return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain!');
+                }
+                if ($booking->tglMulai > $use->tglMulai && $booking->tglMulai < $use->tglSelesai){
+                    return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain!');
+                }
+                if ($booking->tglSelesai > $use->tglMulai && $booking->tglSelesai < $use->tglSelesai){
+                    return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain!');
+                }
+                if ($booking->tglSelesai < $booking->tglMulai){
+                    return redirect()->back()->withErrors('Tanggal Selesai harus lebih dari atau sama dengan tanggal mulai!');
+                }
+            };
         }
     
         // Perbarui status booking

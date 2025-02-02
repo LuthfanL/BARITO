@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\adminTenant;
 use App\Models\pemTenant;
-use App\Models\customer;
+use App\Models\event;
 use Carbon\Carbon;
 
 class verifikasiBookingTenantController extends Controller
@@ -23,12 +23,12 @@ class verifikasiBookingTenantController extends Controller
             return back()->with('error', 'Admin tidak ditemukan');
         }
 
-        $now = Carbon::now()->startOfDay();
+        $now = Carbon::create(2025,02,04)->startOfDay();
         // Ambil data pemTenant berdasarkan idAdmin
         $bookings = pemTenant::where('pemTenant.idAdmin', $idAdmin)
             ->whereIn('pemTenant.status', ['Disetujui', 'Ditolak', 'Menunggu persetujuan']) // Filter status
             ->join('event', 'event.namaEvent' , '=', 'pemTenant.namaEvent')
-            ->where('event.tglMulai', '>=', $now)
+            ->where('event.tglMulai', '>', $now)
             ->orderBy('pemTenant.created_at', 'desc') // Urutkan berdasarkan tanggal dibuat (terbaru di atas)
             ->get();
 
@@ -52,6 +52,24 @@ class verifikasiBookingTenantController extends Controller
     
         if (!$booking) {
             return redirect()->back()->with('error', 'Data booking tidak ditemukan.');
+        }
+
+        // Periksa kuota berdasarkan tipe tenant
+        $makanan = event::where('namaEvent', $booking->namaEvent)->first()->nMakanan;
+        $jasa = event::where('namaEvent', $booking->namaEvent)->first()->nJasa;
+        $barang = event::where('namaEvent', $booking->namaEvent)->first()->nBarang;
+        $nMakanan = pemTenant::where('namaEvent', $booking->namaEvent)->where('tipeTenant', 'Tenant Makanan')->where('status', '!=', 'Ditolak')->count();
+        $nJasa = pemTenant::where('namaEvent', $booking->namaEvent)->where('tipeTenant', 'Tenant Jasa')->where('status', '!=', 'Ditolak')->count();
+        $nBarang = pemTenant::where('namaEvent', $booking->namaEvent)->where('tipeTenant', 'Tenant Barang')->where('status', '!=', 'Ditolak')->count();
+
+        if ($booking->tipeTenant == 'Tenant Makanan' && $makanan == $nMakanan) {
+            return redirect()->back()->withErrors('Maaf, kuota untuk tenant makanan sudah habis, silahkan berkunjung dilain waktu!');
+        }
+        if ($booking->tipeTenant == 'Tenant Jasa' && $jasa == $nJasa) {
+            return redirect()->back()->withErrors('Maaf, kuota untuk tenant jasa sudah habis, silahkan berkunjung dilain waktu!');
+        }
+        if ($booking->tipeTenant == 'Tenant Barang' && $barang == $nBarang) {
+            return redirect()->back()->withErrors('Maaf, kuota untuk tenant barang sudah habis, silahkan berkunjung dilain waktu!');
         }
     
         // Perbarui status booking
