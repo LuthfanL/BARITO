@@ -125,33 +125,54 @@ class custStatusBookingKendaraanController extends Controller
 
         $idKendaraan = $booking->idKendaraan;
 
-        $used = pemKendaraan::where('idKendaraan', $idKendaraan)->where('status', '!=', 'Ditolak')->get();
+        // Hanya lakukan validasi bentrok jika tglMulai atau tglSelesai berubah
+        if ($request->tglMulai != $booking->tglMulai || $request->tglSelesai != $booking->tglSelesai) {
+            $idKendaraan = $booking->idKendaraan;
 
-        if ($used){
+            // Ambil semua booking kendaraan yang aktif kecuali yang sedang diperbarui
+            $used = pemKendaraan::where('idKendaraan', $idKendaraan)
+                ->where('status', '!=', 'Ditolak')
+                ->where('id', '!=', $request->id) // Mengecualikan booking yang sedang diupdate
+                ->get();
+
             foreach ($used as $use) {
-                if ($request['tglMulai'] == $use->tglMulai || $request['tglMulai'] == $use->tglSelesai){
+                if (
+                    ($request->tglMulai >= $use->tglMulai && $request->tglMulai <= $use->tglSelesai) ||
+                    ($request->tglSelesai >= $use->tglMulai && $request->tglSelesai <= $use->tglSelesai) ||
+                    ($request->tglMulai <= $use->tglMulai && $request->tglSelesai >= $use->tglSelesai)
+                ) {
                     return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain!');
                 }
-                if ($request['tglSelesai'] == $use->tglMulai || $request['tglSelesai'] == $use->tglSelesai){
-                    return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain!');
-                }
-                if ($request['tglMulai'] < $use->tglMulai && $request['tglSelesai'] > $use->tglSelesai) {
-                    return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain!');
-                }
-                if ($request['tglMulai'] > $use->tglMulai && $request['tglSelesai'] < $use->tglSelesai){
-                    return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain!');
-                }
-                if ($request['tglMulai'] > $use->tglMulai && $request['tglMulai'] < $use->tglSelesai){
-                    return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain!');
-                }
-                if ($request['tglSelesai'] > $use->tglMulai && $request['tglSelesai'] < $use->tglSelesai){
-                    return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain!');
-                }
-                if ($request['tglSelesai'] < $request['tglMulai']){
-                    return redirect()->back()->withErrors('Tanggal Selesai harus lebih dari atau sama dengan tanggal mulai!');
-                }
-            };
+            }
         }
+
+        // $used = pemKendaraan::where('idKendaraan', $idKendaraan)->where('status', '!=', 'Ditolak')->get();
+
+        // if ($used){
+        //     foreach ($used as $use) {
+        //         if ($request['tglMulai'] == $use->tglMulai || $request['tglMulai'] == $use->tglSelesai){
+        //             return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain!');
+        //         }
+        //         if ($request['tglSelesai'] == $use->tglMulai || $request['tglSelesai'] == $use->tglSelesai){
+        //             return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain!');
+        //         }
+        //         if ($request['tglMulai'] < $use->tglMulai && $request['tglSelesai'] > $use->tglSelesai) {
+        //             return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain!');
+        //         }
+        //         if ($request['tglMulai'] > $use->tglMulai && $request['tglSelesai'] < $use->tglSelesai){
+        //             return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain!');
+        //         }
+        //         if ($request['tglMulai'] > $use->tglMulai && $request['tglMulai'] < $use->tglSelesai){
+        //             return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain!');
+        //         }
+        //         if ($request['tglSelesai'] > $use->tglMulai && $request['tglSelesai'] < $use->tglSelesai){
+        //             return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain!');
+        //         }
+        //         if ($request['tglSelesai'] < $request['tglMulai']){
+        //             return redirect()->back()->withErrors('Tanggal Selesai harus lebih dari atau sama dengan tanggal mulai!');
+        //         }
+        //     };
+        // }
 
         // Perbarui data
         $booking->update([
