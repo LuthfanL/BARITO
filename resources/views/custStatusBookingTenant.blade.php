@@ -184,27 +184,79 @@
             </form>
 
             <!-- Alert Belum Bayar -->
-            @if ($bookings->where('status', 'Belum bayar')->count() > 0)
-                <div id="alert-box" class="flex items-center p-4 mt-2 text-yellow-800 border-l-4 border-yellow-500 bg-yellow-100 rounded-lg shadow-md" role="alert">
+            @foreach ($bookings->where('status', 'Belum bayar') as $booking)
+                @php
+                    // Hitung waktu kedaluwarsa (created_at + 1 menit)
+                    $expiredTime = \Carbon\Carbon::parse($booking->created_at)->addMinutes(1)->timestamp;
+                @endphp
+
+                <div id="alert-box-{{ $booking->id }}" 
+                    class="flex items-center p-4 mt-2 text-yellow-800 border-l-4 border-yellow-500 bg-yellow-100 rounded-lg shadow-md" 
+                    role="alert"
+                    data-expired="{{ $expiredTime }}">
+                    
                     <svg class="w-6 h-6 text-yellow-700 flex-shrink-0 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M9 2a1 1 0 0 1 2 0v7a1 1 0 0 1-2 0V2Zm1 10a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z"/>
                     </svg>
+
                     <div class="flex-1">
-                        <strong>Perhatian!</strong> Anda memiliki pemesanan tenant yang belum dibayar. Mohon segera selesaikan pembayaran dan unggah bukti pembayaran paling lambat 24 jam setelah booking.
+                        <strong>Perhatian!</strong> Anda memiliki pemesanan kendaraan dengan ID Booking 
+                        <span class="font-semibold">{{ $booking->id }}</span>  
+                        yang belum dibayar.  
+                        Mohon segera selesaikan pembayaran dan unggah bukti pembayaran dalam 
+                        <span id="countdown-{{ $booking->id }}" class="font-semibold text-red-600"></span>.
                     </div>
-                    <button onclick="closeAlert()" class="text-yellow-800 hover:text-yellow-600 ml-4 p-2 rounded-full transition">
+
+                    <button onclick="closeAlert({{ $booking->id }})" class="text-yellow-800 hover:text-yellow-600 ml-4 p-2 rounded-full transition">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 9l-3-3a1 1 0 0 1 1.414-1.414L10 6.586l3-3a1 1 0 1 1 1.414 1.414L11.414 8l3 3a1 1 0 0 1-1.414 1.414l-3-3-3 3a1 1 0 0 1-1.414-1.414l3-3Z" clip-rule="evenodd"/>
                         </svg>
                     </button>
                 </div>
-            
-                <script>
-                    function closeAlert() {
-                        document.getElementById("alert-box").style.display = "none";
+            @endforeach
+
+            <script>
+                function closeAlert(id) {
+                    document.getElementById("alert-box-" + id).style.display = "none";
+                }
+
+                function startCountdown(id, expiredTime) {
+                    let countdownElement = document.getElementById("countdown-" + id);
+
+                    function updateCountdown() {
+                        let now = Math.floor(Date.now() / 1000); // Waktu sekarang dalam detik
+                        let remainingTime = expiredTime - now;
+
+                        if (remainingTime <= 0) {
+                            countdownElement.innerText = "Waktu pembayaran telah habis!";
+                            countdownElement.classList.add("text-red-700", "font-bold");
+                            return;
+                        }
+
+                        let minutes = Math.floor(remainingTime / 60);
+                        let seconds = remainingTime % 60;
+                        countdownElement.innerText = `${seconds} detik`;
+
+                        setTimeout(updateCountdown, 1000);
                     }
-                </script>
-            @endif
+
+                    updateCountdown();
+                }
+
+                document.addEventListener("DOMContentLoaded", function () {
+                    document.querySelectorAll("[id^='alert-box-']").forEach(alertBox => {
+                        let id = alertBox.id.replace("alert-box-", "");
+                        let expiredTime = alertBox.getAttribute("data-expired");
+
+                        // Simpan ke LocalStorage agar tetap berjalan meski halaman direfresh
+                        if (!localStorage.getItem("expiredTime-" + id)) {
+                            localStorage.setItem("expiredTime-" + id, expiredTime);
+                        }
+
+                        startCountdown(id, localStorage.getItem("expiredTime-" + id));
+                    });
+                });
+            </script>
             
             <!-- Table Data -->
             <table id="default-table">
@@ -731,6 +783,13 @@ document.addEventListener("DOMContentLoaded", function () {
         const editForm = document.getElementById("editForm");
         editForm.submit(); // Kirim form ke server
     });
+</script>
+
+<script>
+    // Refresh halaman setiap 60 detik
+    setTimeout(function () {
+        location.reload();
+    }, 1000); // 60000 ms = 60 detik
 </script>
 
 </html>

@@ -35,7 +35,14 @@
                     @csrf
                     <div class="my-6">
                         <div>
-                            <input placeholder="Masukkan NIK" id="nik" name="nik" type="text" value="{{ old('nik') }}" autocomplete="new-nik" class="block w-full rounded-md bg-white-700 border border-gray-600 py-2 px-3 text-gray-900 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                            <input 
+                                placeholder="Masukkan NIK" 
+                                id="nik" name="nik" 
+                                type="text" 
+                                value="{{ old('nik') }}" 
+                                autocomplete="new-nik"
+                                maxlength="16" 
+                                class="block w-full rounded-md bg-white-700 border border-gray-600 py-2 px-3 text-gray-900 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
                         </div>
                     </div>
                     <div class="my-6">

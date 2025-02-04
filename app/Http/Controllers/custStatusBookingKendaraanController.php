@@ -12,6 +12,8 @@ class custStatusBookingKendaraanController extends Controller
 {
     public function index(Request $request)
     {
+        $this->hapusBookingTanpaBukti();
+        
         // Ambil pengguna yang sedang login
         $user = auth()->user();
 
@@ -146,34 +148,6 @@ class custStatusBookingKendaraanController extends Controller
             }
         }
 
-        // $used = pemKendaraan::where('idKendaraan', $idKendaraan)->where('status', '!=', 'Ditolak')->get();
-
-        // if ($used){
-        //     foreach ($used as $use) {
-        //         if ($request['tglMulai'] == $use->tglMulai || $request['tglMulai'] == $use->tglSelesai){
-        //             return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain!');
-        //         }
-        //         if ($request['tglSelesai'] == $use->tglMulai || $request['tglSelesai'] == $use->tglSelesai){
-        //             return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain!');
-        //         }
-        //         if ($request['tglMulai'] < $use->tglMulai && $request['tglSelesai'] > $use->tglSelesai) {
-        //             return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain!');
-        //         }
-        //         if ($request['tglMulai'] > $use->tglMulai && $request['tglSelesai'] < $use->tglSelesai){
-        //             return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain!');
-        //         }
-        //         if ($request['tglMulai'] > $use->tglMulai && $request['tglMulai'] < $use->tglSelesai){
-        //             return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain!');
-        //         }
-        //         if ($request['tglSelesai'] > $use->tglMulai && $request['tglSelesai'] < $use->tglSelesai){
-        //             return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain!');
-        //         }
-        //         if ($request['tglSelesai'] < $request['tglMulai']){
-        //             return redirect()->back()->withErrors('Tanggal Selesai harus lebih dari atau sama dengan tanggal mulai!');
-        //         }
-        //     };
-        // }
-
         // Perbarui data
         $booking->update([
             'namaPemohon' => $request->namaPemohon,
@@ -186,5 +160,42 @@ class custStatusBookingKendaraanController extends Controller
         ]);        
 
         return redirect()->back()->with('success', 'Data booking berhasil diperbarui!');
+    }
+
+    public function hapusBookingTanpaBukti()
+    {
+        // Ambil pengguna yang sedang login
+        $user = auth()->user();
+
+        // Ambil nik dari model customer
+        $nik = customer::getNikByEmail($user->email);
+        
+        if (!$nik) {
+            // Tangani error jika nik tidak ditemukan
+            return back()->with('error', 'Customer tidak ditemukan');
+        }
+
+        // Set batas waktu 1 menit sejak dibuat
+        $batasWaktu = Carbon::now()->subMinutes(1);
+
+        // Ambil semua booking milik pengguna yang belum mengunggah bukti bayar dalam 1 menit
+        $bookings = pemKendaraan::where('idCustomer', $nik)
+            ->whereNull('buktiBayar')
+            ->where('created_at', '<', $batasWaktu)
+            ->get();
+
+        // Cek apakah ada booking yang perlu dihapus
+        if ($bookings->isNotEmpty()) {
+            // Hapus semua booking yang memenuhi kriteria
+            foreach ($bookings as $booking) {
+                $booking->delete();
+            }
+
+            // Set session flash message hanya jika ada data yang dihapus
+            return redirect()->back()->with('success', 'Semua pemesanan tanpa bukti pembayaran yang melewati batas waktu telah dihapus');
+        }
+
+        // Jika tidak ada booking yang dihapus, langsung return tanpa pesan
+        return;
     }
 }

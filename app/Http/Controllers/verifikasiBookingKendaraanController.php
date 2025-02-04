@@ -26,7 +26,7 @@ class verifikasiBookingKendaraanController extends Controller
         // Ambil data pemKendaraan berdasarkan idAdmin
         $bookings = pemKendaraan::where('idAdmin', $idAdmin)
             ->whereIn('status', ['Disetujui', 'Ditolak', 'Menunggu persetujuan']) // Filter status
-            ->where('event.tglMulai', '>', $now)
+            ->where('pemKendaraan.tglMulai', '>', $now)
             ->orderBy('created_at', 'desc') // Urutkan berdasarkan tanggal dibuat (terbaru di atas)
             ->get();
 
@@ -54,7 +54,10 @@ class verifikasiBookingKendaraanController extends Controller
 
         $idKendaraan = $booking->idKendaraan;
         
-        $used = pemKendaraan::where('idKendaraan', $idKendaraan)->where('status', '!=', 'Ditolak')->get();
+        $used = pemKendaraan::where('idKendaraan', $idKendaraan)
+        ->where('status', '!=', 'Ditolak')
+        ->where('id', '!=', $request->id) // Mengecualikan booking yang sedang diupdate
+        ->get();
         
         if ($used){
             foreach ($used as $use) {
