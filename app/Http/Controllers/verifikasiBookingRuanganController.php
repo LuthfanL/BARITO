@@ -23,13 +23,18 @@ class verifikasiBookingRuanganController extends Controller
             return back()->with('error', 'Admin tidak ditemukan');
         }
 
-        $now = Carbon::create(2025,02,04)->startOfDay();
-        // Ambil data pemRuangan berdasarkan idAdmin
+        $now = Carbon::now()->startOfDay(); // Gunakan waktu sekarang
+        
+        // Query data pemKendaraan berdasarkan idAdmin
         $bookings = pemRuangan::where('idAdmin', $idAdmin)
-            ->with('ruangan')
-            ->whereIn('status', ['Disetujui', 'Ditolak', 'Menunggu persetujuan']) // Filter status
-            ->where('pemRuangan.tglMulai', '>', $now)
-            ->orderBy('created_at', 'desc') // Urutkan berdasarkan tanggal dibuat (terbaru di atas)
+            ->where(function ($query) use ($now) {
+                $query->where('tglSelesai', '>', $now) // Jika tglSelesai lebih besar dari sekarang, ambil semua status
+                    ->orWhere(function ($query) use ($now) {
+                        $query->where('tglSelesai', '=', $now) // Jika tglSelesai sama dengan sekarang
+                            ->where('status', 'Menunggu persetujuan'); // Hanya ambil yang statusnya "Menunggu persetujuan"
+                    });
+            })
+            ->orderBy('created_at', 'desc')
             ->get();
 
         // Kirimkan data ke view

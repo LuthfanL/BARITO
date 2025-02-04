@@ -186,11 +186,11 @@
             <!-- Alert Belum Bayar -->
             @foreach ($bookings->where('status', 'Belum bayar') as $booking)
                 @php
-                    // Hitung waktu kedaluwarsa (created_at + 1 menit)
+                    // Hitung waktu kedaluwarsa (created_at + 15 menit)
                     $expiredTime = \Carbon\Carbon::parse($booking->created_at)->addMinutes(15)->timestamp;
                 @endphp
 
-                <div id="alert-box-{{ $booking->id }}" 
+                <div id="alert-box-tenant-{{ $booking->id }}" 
                     class="flex items-center p-4 mt-2 text-yellow-800 border-l-4 border-yellow-500 bg-yellow-100 rounded-lg shadow-md" 
                     role="alert"
                     data-expired="{{ $expiredTime }}">
@@ -204,10 +204,10 @@
                         <span class="font-semibold">{{ $booking->id }}</span>  
                         yang belum dibayar.  
                         Mohon segera selesaikan pembayaran dan unggah bukti pembayaran dalam 
-                        <span id="countdown-{{ $booking->id }}" class="font-semibold text-red-600"></span>.
+                        <span id="countdown-tenant-{{ $booking->id }}" class="font-semibold text-red-600"></span>.
                     </div>
 
-                    <button onclick="closeAlert({{ $booking->id }})" class="text-yellow-800 hover:text-yellow-600 ml-4 p-2 rounded-full transition">
+                    <button onclick="closeAlertTenant({{ $booking->id }})" class="text-yellow-800 hover:text-yellow-600 ml-4 p-2 rounded-full transition">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 9l-3-3a1 1 0 0 1 1.414-1.414L10 6.586l3-3a1 1 0 1 1 1.414 1.414L11.414 8l3 3a1 1 0 0 1-1.414 1.414l-3-3-3 3a1 1 0 0 1-1.414-1.414l3-3Z" clip-rule="evenodd"/>
                         </svg>
@@ -216,12 +216,12 @@
             @endforeach
 
             <script>
-                function closeAlert(id) {
-                    document.getElementById("alert-box-" + id).style.display = "none";
+                function closeAlertTenant(id) {
+                    document.getElementById("alert-box-tenant-" + id).style.display = "none";
                 }
             
-                function startCountdown(id, expiredTime) {
-                    let countdownElement = document.getElementById("countdown-" + id);
+                function startCountdownTenant(id, expiredTime) {
+                    let countdownElement = document.getElementById("countdown-tenant-" + id);
             
                     function updateCountdown() {
                         let now = Math.floor(Date.now() / 1000); // Waktu sekarang dalam detik
@@ -234,7 +234,7 @@
                             // Auto refresh setelah waktu habis dengan delay 3 detik
                             setTimeout(function() {
                                 location.reload(); // Refresh halaman
-                            }, 3000); // Delay 3 detik
+                            }, 10000); // Delay 3 detik
             
                             return;
                         }
@@ -250,18 +250,18 @@
                 }
             
                 document.addEventListener("DOMContentLoaded", function () {
-                    document.querySelectorAll("[id^='alert-box-']").forEach(alertBox => {
-                        let id = alertBox.id.replace("alert-box-", "");
+                    document.querySelectorAll("[id^='alert-box-tenant-']").forEach(alertBox => {
+                        let id = alertBox.id.replace("alert-box-tenant-", "");
                         let expiredTime = parseInt(alertBox.getAttribute("data-expired"), 10); // Konversi ke angka
             
                         // Jika expiredTime belum tersimpan di LocalStorage, simpan sekarang
-                        if (!localStorage.getItem("expiredTime-" + id)) {
-                            localStorage.setItem("expiredTime-" + id, expiredTime);
+                        if (!localStorage.getItem("expiredTime-tenant-" + id)) {
+                            localStorage.setItem("expiredTime-tenant-" + id, expiredTime);
                         } else {
-                            expiredTime = parseInt(localStorage.getItem("expiredTime-" + id), 10);
+                            expiredTime = parseInt(localStorage.getItem("expiredTime-tenant-" + id), 10);
                         }
             
-                        startCountdown(id, expiredTime);
+                        startCountdownTenant(id, expiredTime);
                     });
                 });
             </script>

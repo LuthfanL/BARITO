@@ -13,23 +13,28 @@ class verifikasiBookingKendaraanController extends Controller
     {
         // Ambil pengguna yang sedang login
         $user = auth()->user();
-
+    
         // Ambil idAdmin dari model adminKendaraan berdasarkan email
         $idAdmin = adminKendaraan::getIdAdminByEmail($user->email);
-
+    
         if (!$idAdmin) {
-            // Tangani error jika idAdmin tidak ditemukan
             return back()->with('error', 'Admin tidak ditemukan');
         }
-
-        $now = Carbon::create(2025,02,04)->startOfDay();
-        // Ambil data pemKendaraan berdasarkan idAdmin
+    
+        $now = Carbon::now()->startOfDay(); // Gunakan waktu sekarang
+    
+        // Query data pemKendaraan berdasarkan idAdmin
         $bookings = pemKendaraan::where('idAdmin', $idAdmin)
-            ->whereIn('status', ['Disetujui', 'Ditolak', 'Menunggu persetujuan']) // Filter status
-            ->where('pemKendaraan.tglMulai', '>', $now)
-            ->orderBy('created_at', 'desc') // Urutkan berdasarkan tanggal dibuat (terbaru di atas)
+            ->where(function ($query) use ($now) {
+                $query->where('tglSelesai', '>', $now) // Jika tglSelesai lebih besar dari sekarang, ambil semua status
+                    ->orWhere(function ($query) use ($now) {
+                        $query->where('tglSelesai', '=', $now) // Jika tglSelesai sama dengan sekarang
+                            ->where('status', 'Menunggu persetujuan'); // Hanya ambil yang statusnya "Menunggu persetujuan"
+                    });
+            })
+            ->orderBy('created_at', 'desc')
             ->get();
-
+    
         // Kirimkan data ke view
         return view('verifikasiBookingKendaraan', [
             'bookings' => $bookings,
