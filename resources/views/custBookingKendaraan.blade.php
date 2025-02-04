@@ -381,7 +381,7 @@
                     <p class="mb-5 text-m font-normal text-gray-500">
                         Apakah Anda yakin ingin konfirmasi booking ini?
                         <div class="mb-5 text-m font-normal text-red-500">
-                            Harap diperhatikan kembali bahwa Anda harus membayar sebelum hari ini berganti!
+                            Harap diperhatikan bahwa pembayaran harus dilakukan selambat-lambatnya 15 menit setelah waktu pemesanan kendaraan ini!
                         </div>
                     </p>
 

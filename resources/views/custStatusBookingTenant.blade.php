@@ -187,7 +187,7 @@
             @foreach ($bookings->where('status', 'Belum bayar') as $booking)
                 @php
                     // Hitung waktu kedaluwarsa (created_at + 1 menit)
-                    $expiredTime = \Carbon\Carbon::parse($booking->created_at)->addMinutes(1)->timestamp;
+                    $expiredTime = \Carbon\Carbon::parse($booking->created_at)->addMinutes(15)->timestamp;
                 @endphp
 
                 <div id="alert-box-{{ $booking->id }}" 
@@ -200,7 +200,7 @@
                     </svg>
 
                     <div class="flex-1">
-                        <strong>Perhatian!</strong> Anda memiliki pemesanan kendaraan dengan ID Booking 
+                        <strong>Perhatian!</strong> Anda memiliki pemesanan tenant dengan ID Booking 
                         <span class="font-semibold">{{ $booking->id }}</span>  
                         yang belum dibayar.  
                         Mohon segera selesaikan pembayaran dan unggah bukti pembayaran dalam 
@@ -219,41 +219,49 @@
                 function closeAlert(id) {
                     document.getElementById("alert-box-" + id).style.display = "none";
                 }
-
+            
                 function startCountdown(id, expiredTime) {
                     let countdownElement = document.getElementById("countdown-" + id);
-
+            
                     function updateCountdown() {
                         let now = Math.floor(Date.now() / 1000); // Waktu sekarang dalam detik
                         let remainingTime = expiredTime - now;
-
+            
                         if (remainingTime <= 0) {
                             countdownElement.innerText = "Waktu pembayaran telah habis!";
                             countdownElement.classList.add("text-red-700", "font-bold");
+            
+                            // Auto refresh setelah waktu habis dengan delay 3 detik
+                            setTimeout(function() {
+                                location.reload(); // Refresh halaman
+                            }, 3000); // Delay 3 detik
+            
                             return;
                         }
-
+            
                         let minutes = Math.floor(remainingTime / 60);
                         let seconds = remainingTime % 60;
-                        countdownElement.innerText = `${seconds} detik`;
-
+                        countdownElement.innerText = `${minutes} menit ${seconds} detik`;
+            
                         setTimeout(updateCountdown, 1000);
                     }
-
+            
                     updateCountdown();
                 }
-
+            
                 document.addEventListener("DOMContentLoaded", function () {
                     document.querySelectorAll("[id^='alert-box-']").forEach(alertBox => {
                         let id = alertBox.id.replace("alert-box-", "");
-                        let expiredTime = alertBox.getAttribute("data-expired");
-
-                        // Simpan ke LocalStorage agar tetap berjalan meski halaman direfresh
+                        let expiredTime = parseInt(alertBox.getAttribute("data-expired"), 10); // Konversi ke angka
+            
+                        // Jika expiredTime belum tersimpan di LocalStorage, simpan sekarang
                         if (!localStorage.getItem("expiredTime-" + id)) {
                             localStorage.setItem("expiredTime-" + id, expiredTime);
+                        } else {
+                            expiredTime = parseInt(localStorage.getItem("expiredTime-" + id), 10);
                         }
-
-                        startCountdown(id, localStorage.getItem("expiredTime-" + id));
+            
+                        startCountdown(id, expiredTime);
                     });
                 });
             </script>
@@ -785,11 +793,11 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 </script>
 
-<script>
-    // Refresh halaman setiap 60 detik
+{{-- <script>
+    // Refresh halaman setiap 3 menit
     setTimeout(function () {
         location.reload();
-    }, 1000); // 60000 ms = 60 detik
-</script>
+    }, 180000); // 180000 ms = 3 menit
+</script> --}}
 
 </html>
