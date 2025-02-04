@@ -203,8 +203,8 @@
                                                     Disetujui
                                                 </div>
                                             @elseif ($booking->status == 'Ditolak')
-                                                <div data-popover-target="pop-alasan" data-popover-placement="left" class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 text-white">
-                                                    Ditolak
+                                                <div data-popover-target="pop-alasan-{{ $booking->id }}" data-popover-placement="left" class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 text-white">
+                                                    Ditolak dan Alasannya
                                                 </div>
                                             @endif
                                         </td>

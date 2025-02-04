@@ -189,7 +189,7 @@ class custStatusBookingTenantController extends Controller
         }
 
         // Set batas waktu 1 menit sejak dibuat
-        $batasWaktu = Carbon::now()->subMinutes(1);
+        $batasWaktu = Carbon::now()->subMinutes(15);
 
         // Ambil semua booking milik pengguna yang belum mengunggah bukti bayar dalam 1 menit
         $bookings = pemTenant::where('idCustomer', $nik)
