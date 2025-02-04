@@ -785,11 +785,11 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 </script>
 
-<script>
+{{-- <script>
     // Refresh halaman setiap 60 detik
     setTimeout(function () {
         location.reload();
     }, 1000); // 60000 ms = 60 detik
-</script>
+</script> --}}
 
 </html>

@@ -23,12 +23,18 @@ class verifikasiBookingTenantController extends Controller
             return back()->with('error', 'Admin tidak ditemukan');
         }
 
-        $now = Carbon::create(2025,02,04)->startOfDay();
-        // Ambil data pemTenant berdasarkan idAdmin
-        $bookings = pemTenant::where('pemTenant.idAdmin', $idAdmin)
-            ->whereIn('pemTenant.status', ['Disetujui', 'Ditolak', 'Menunggu persetujuan']) // Filter status
-            ->join('event', 'event.namaEvent' , '=', 'pemTenant.namaEvent')
-            ->where('event.tglMulai', '>', $now)
+        $now = Carbon::now()->startOfDay(); // Waktu sekarang tanpa jam
+
+        // Query data pemTenant berdasarkan idAdmin
+        $bookings = pemTenant::join('event', 'event.namaEvent', '=', 'pemTenant.namaEvent')
+            ->where('pemTenant.idAdmin', $idAdmin)
+            ->where(function ($query) use ($now) {
+                $query->where('event.tglSelesai', '<', $now) // Jika tglSelesai lebih besar dari now, ambil semua status
+                    ->orWhere(function ($query) use ($now) {
+                        $query->where('event.tglSelesai', '=', $now) // Jika tglSelesai sama dengan now
+                            ->where('pemTenant.status', 'Menunggu persetujuan'); // Hanya ambil yang statusnya "Menunggu persetujuan"
+                    });
+            })
             ->orderBy('pemTenant.created_at', 'desc') // Urutkan berdasarkan tanggal dibuat (terbaru di atas)
             ->get();
 
