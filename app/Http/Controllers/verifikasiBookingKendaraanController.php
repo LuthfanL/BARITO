@@ -54,7 +54,7 @@ class verifikasiBookingKendaraanController extends Controller
 
         $idKendaraan = $booking->idKendaraan;
         
-        $used = pemKendaraan::where('idKendaraan', $idKendaraan)->where('status', '!=', 'Ditolak')->get();
+        $used = pemKendaraan::where('idKendaraan', $idKendaraan)->where('status', '!=', 'Ditolak')->where('id', '!=', $request->input('id'))->get();
         
         if ($used){
             foreach ($used as $use) {
