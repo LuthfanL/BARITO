@@ -11,6 +11,7 @@
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script>
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css"  rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="assets/style.css"/>
     
     <style>
@@ -99,6 +100,23 @@
             font-size: 12px;
             color: red;
             margin-bottom: 10px;
+        }
+        /* Mengubah warna teks dan latar belakang tombol */
+        .swal2-confirm.custom-confirm-button {
+            background-color: #808080 !important; /* Warna abu-abu */
+            color: white !important; 
+            border: none;
+        }
+
+        /* Efek hover untuk tombol konfirmasi */
+        .swal2-confirm.custom-confirm-button:hover {
+            background-color: #A9A9A9 !important; /* Warna abu-abu lebih gelap */
+        }
+
+        /* Efek fokus untuk tombol konfirmasi */
+        .swal2-confirm.custom-confirm-button:focus {
+            outline: none !important; 
+            box-shadow: none !important;
         }
     </style>
 
@@ -219,52 +237,53 @@
                 function closeAlertTenant(id) {
                     document.getElementById("alert-box-tenant-" + id).style.display = "none";
                 }
-            
+
                 function startCountdownTenant(id, expiredTime) {
                     let countdownElement = document.getElementById("countdown-tenant-" + id);
-            
-                    function updateCountdown() {
+
+                    function updateCountdownTenant() {
                         let now = Math.floor(Date.now() / 1000); // Waktu sekarang dalam detik
                         let remainingTime = expiredTime - now;
-            
+
                         if (remainingTime <= 0) {
                             countdownElement.innerText = "Waktu pembayaran telah habis!";
                             countdownElement.classList.add("text-red-700", "font-bold");
-            
+
                             // Auto refresh setelah waktu habis dengan delay 3 detik
                             setTimeout(function() {
                                 location.reload(); // Refresh halaman
-                            }, 10000); // Delay 3 detik
-            
+                            }, 3000); // Delay 3 detik
+
                             return;
                         }
-            
+
                         let minutes = Math.floor(remainingTime / 60);
                         let seconds = remainingTime % 60;
                         countdownElement.innerText = `${minutes} menit ${seconds} detik`;
-            
-                        setTimeout(updateCountdown, 1000);
+
+                        setTimeout(updateCountdownTenant, 1000);
                     }
-            
-                    updateCountdown();
+
+                    updateCountdownTenant();
                 }
-            
+
                 document.addEventListener("DOMContentLoaded", function () {
                     document.querySelectorAll("[id^='alert-box-tenant-']").forEach(alertBox => {
                         let id = alertBox.id.replace("alert-box-tenant-", "");
                         let expiredTime = parseInt(alertBox.getAttribute("data-expired"), 10); // Konversi ke angka
-            
+
                         // Jika expiredTime belum tersimpan di LocalStorage, simpan sekarang
                         if (!localStorage.getItem("expiredTime-tenant-" + id)) {
                             localStorage.setItem("expiredTime-tenant-" + id, expiredTime);
                         } else {
                             expiredTime = parseInt(localStorage.getItem("expiredTime-tenant-" + id), 10);
                         }
-            
+
                         startCountdownTenant(id, expiredTime);
                     });
                 });
             </script>
+
             
             <!-- Table Data -->
             <table id="default-table">
@@ -792,6 +811,40 @@ document.addEventListener("DOMContentLoaded", function () {
         editForm.submit(); // Kirim form ke server
     });
 </script>
+
+    <!-- Script Alert -->
+    <script>
+        // Notifikasi jika berhasil
+        @if(session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: '{{ session('success') }}',
+                showConfirmButton: false,
+                timerProgressBar: true,
+                timer: 3000 // Durasi 3 detik
+            });
+        @endif
+    
+        // Notifikasi jika ada error
+        @if($errors->any())
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                html: `
+                    <ul style="text-align: left;">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                `,
+                confirmButtonText: 'Tutup',
+                customClass: {
+                    confirmButton: 'custom-confirm-button'
+                }
+            });
+        @endif
+    </script>
 
 {{-- <script>
     // Refresh halaman setiap 3 menit

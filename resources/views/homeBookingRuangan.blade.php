@@ -120,7 +120,7 @@
 
     <!-- Ruangan Terfavorit -->
     <div class="flex justify-center pt-10">
-        <h2 class="font-bold text-2xl">Galeri Ruangan</h2>
+        <h2 class="font-bold text-2xl">Ruangan Terfavorit</h2>
     </div>
     <div class="container swiper flex justify-center items-center pb-6">
         <div class="card-wrapper">
@@ -129,18 +129,19 @@
                 <li class="card-item swiper-slide">
                     <div href="" class="card-link">
                         <img src="{{ $ruang->foto_urls[0] }}" alt="Ruangan" class="card-image">
-                        <h2 class="font-bold pt-2 pb-2 ">{{ $ruang->nama }}</h2>
+                        <h2 class="font-bold pt-2 pb-2">{{ $ruang->nama }}</h2>
                         <p class="card-title">{{ $ruang->deskripsi }}</p>
+                        <p class="card-title">Banyak peminjaman: <strong>{{ $ruang->total_peminjaman }}</strong></p>
                         <button href="#" data-modal-target="modal-detailRuangan" data-modal-toggle="modal-detailRuangan"
-                        data-podium="{{ $ruang->podium }}" 
-                        data-sound="{{ $ruang->sound }}" 
-                        data-ac="{{ $ruang->ac }}" 
-                        data-meja="{{ $ruang->meja }}" 
-                        data-kursi="{{ $ruang->kursi }}" 
-                        data-proyektor="{{ $ruang->proyektor }}"
-                        data-foto-url="{{ $ruang->foto_urls[0] }}"
-                        data-thumbnails="{{ json_encode($ruang->foto_urls) }}"  
-                        class="inline-flex items-center mt-2 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-xl hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                            data-podium="{{ $ruang->podium }}" 
+                            data-sound="{{ $ruang->sound }}" 
+                            data-ac="{{ $ruang->ac }}" 
+                            data-meja="{{ $ruang->meja }}" 
+                            data-kursi="{{ $ruang->kursi }}" 
+                            data-proyektor="{{ $ruang->proyektor }}"
+                            data-foto-url="{{ $ruang->foto_urls[0] }}"
+                            data-thumbnails="{{ json_encode($ruang->foto_urls) }}"  
+                            class="inline-flex items-center mt-2 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-xl hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
                             Lihat detail
                             <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
@@ -155,6 +156,7 @@
             <div class="swiper-button-next"></div>
         </div>
     </div>
+
 
     <!-- Modal Lihat Detail Ruangan -->
     <div id="modal-detailRuangan" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -224,27 +226,42 @@
 
     <!-- Script Swiper JS-->
     <script>
-        const swiper = new Swiper('.card-wrapper', {
-            loop: false,
-            spaceBetween: 30,
+        document.addEventListener("DOMContentLoaded", function () {
+            const totalCards = document.querySelectorAll('.swiper-slide').length;
+            const swiperContainer = document.querySelector('.swiper-container');
 
-            // If we need pagination
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
-                dynamicBullets: true,
-            },
+            if (totalCards > 1) {
+                new Swiper('.card-wrapper', {
+                    loop: false,
+                    spaceBetween: 30,
+                    slidesPerView: 2,
+                    pagination: {
+                        el: '.swiper-pagination',
+                        clickable: true,
+                        dynamicBullets: true,
+                    },
+                    navigation: {
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                    },
+                });
+            } else {
+                // Jika hanya ada 1 card, ubah struktur HTML agar Swiper tidak aktif
+                if (swiperContainer) {
+                    const wrapper = swiperContainer.querySelector('.swiper-wrapper');
 
-            // Navigation arrows
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
+                    // Hapus class Swiper agar tidak error
+                    swiperContainer.classList.remove('swiper-container');
+                    if (wrapper) {
+                        wrapper.classList.remove('swiper-wrapper');
+                        swiperContainer.appendChild(wrapper); // Pindahkan wrapper keluar dari swiper
+                    }
 
-            breakpoints: {
-                0: {
-                    slidesPerView: 2
-                },
+                    // Hapus tombol navigasi & pagination
+                    document.querySelector('.swiper-button-next')?.remove();
+                    document.querySelector('.swiper-button-prev')?.remove();
+                    document.querySelector('.swiper-pagination')?.remove();
+                }
             }
         });
     </script>

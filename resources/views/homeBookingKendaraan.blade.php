@@ -114,7 +114,7 @@
 
     <!-- Kendaraan Terfavorit -->
     <div class="flex justify-center pt-10">
-        <h2 class="font-bold text-2xl">Galeri Kendaraan</h2>
+        <h2 class="font-bold text-2xl">Kendaraan Terfavorit</h2>
     </div>
     <div class="container swiper flex justify-center items-center pb-6">
         <div class="card-wrapper">
@@ -125,6 +125,7 @@
                         <img src="{{ $kendara->foto_urls[0] }}" alt="Kendaraan" class="card-image">
                         <h2 class="font-bold pt-2 pb-2 ">{{ $kendara->nama }}</h2>
                         <p class="card-title">{{ $kendara->deskripsi }}</p>
+                        <p class="card-title">Banyak peminjaman: <strong>{{ $kendara->total_peminjaman }}</strong></p>
                         <button
                         data-modal-target="modal-detailKendaraan" data-modal-toggle="modal-detailKendaraan"
                         data-tv="{{ $kendara->tv }}" 
@@ -212,27 +213,42 @@
 
     <!-- Script Swiper JS-->
     <script>
-        const swiper = new Swiper('.card-wrapper', {
-            loop: false,
-            spaceBetween: 30,
+        document.addEventListener("DOMContentLoaded", function () {
+            const totalCards = document.querySelectorAll('.swiper-slide').length;
+            const swiperContainer = document.querySelector('.swiper-container');
 
-            // If we need pagination
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
-                dynamicBullets: true,
-            },
+            if (totalCards > 1) {
+                new Swiper('.card-wrapper', {
+                    loop: false,
+                    spaceBetween: 30,
+                    slidesPerView: 2,
+                    pagination: {
+                        el: '.swiper-pagination',
+                        clickable: true,
+                        dynamicBullets: true,
+                    },
+                    navigation: {
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                    },
+                });
+            } else {
+                // Jika hanya ada 1 card, ubah struktur HTML agar Swiper tidak aktif
+                if (swiperContainer) {
+                    const wrapper = swiperContainer.querySelector('.swiper-wrapper');
 
-            // Navigation arrows
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
+                    // Hapus class Swiper agar tidak error
+                    swiperContainer.classList.remove('swiper-container');
+                    if (wrapper) {
+                        wrapper.classList.remove('swiper-wrapper');
+                        swiperContainer.appendChild(wrapper); // Pindahkan wrapper keluar dari swiper
+                    }
 
-            breakpoints: {
-                0: {
-                    slidesPerView: 2
-                },
+                    // Hapus tombol navigasi & pagination
+                    document.querySelector('.swiper-button-next')?.remove();
+                    document.querySelector('.swiper-button-prev')?.remove();
+                    document.querySelector('.swiper-pagination')?.remove();
+                }
             }
         });
     </script>
