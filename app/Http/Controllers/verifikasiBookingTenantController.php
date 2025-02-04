@@ -58,9 +58,9 @@ class verifikasiBookingTenantController extends Controller
         $makanan = event::where('namaEvent', $booking->namaEvent)->first()->nMakanan;
         $jasa = event::where('namaEvent', $booking->namaEvent)->first()->nJasa;
         $barang = event::where('namaEvent', $booking->namaEvent)->first()->nBarang;
-        $nMakanan = pemTenant::where('namaEvent', $booking->namaEvent)->where('tipeTenant', 'Tenant Makanan')->where('status', '!=', 'Ditolak')->count();
-        $nJasa = pemTenant::where('namaEvent', $booking->namaEvent)->where('tipeTenant', 'Tenant Jasa')->where('status', '!=', 'Ditolak')->count();
-        $nBarang = pemTenant::where('namaEvent', $booking->namaEvent)->where('tipeTenant', 'Tenant Barang')->where('status', '!=', 'Ditolak')->count();
+        $nMakanan = pemTenant::where('namaEvent', $booking->namaEvent)->where('tipeTenant', 'Tenant Makanan')->where('status', '!=', 'Ditolak')->where('id', '!=', $request->input('id'))->count();
+        $nJasa = pemTenant::where('namaEvent', $booking->namaEvent)->where('tipeTenant', 'Tenant Jasa')->where('status', '!=', 'Ditolak')->where('id', '!=', $request->input('id'))->count();
+        $nBarang = pemTenant::where('namaEvent', $booking->namaEvent)->where('tipeTenant', 'Tenant Barang')->where('status', '!=', 'Ditolak')->where('id', '!=', $request->input('id'))->count();
 
         if ($booking->tipeTenant == 'Tenant Makanan' && $makanan == $nMakanan) {
             return redirect()->back()->withErrors('Maaf, kuota untuk tenant makanan sudah habis, silahkan berkunjung dilain waktu!');

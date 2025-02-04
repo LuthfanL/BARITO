@@ -54,10 +54,7 @@ class verifikasiBookingKendaraanController extends Controller
 
         $idKendaraan = $booking->idKendaraan;
         
-        $used = pemKendaraan::where('idKendaraan', $idKendaraan)
-        ->where('status', '!=', 'Ditolak')
-        ->where('id', '!=', $request->id) // Mengecualikan booking yang sedang diupdate
-        ->get();
+        $used = pemKendaraan::where('idKendaraan', $idKendaraan)->where('status', '!=', 'Ditolak')->get();
         
         if ($used){
             foreach ($used as $use) {
