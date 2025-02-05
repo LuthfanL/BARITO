@@ -203,10 +203,14 @@
 
             <!-- Alert Belum Bayar -->
             @foreach ($bookings->where('status', 'Belum bayar') as $booking)
-                @php
-                    // Hitung waktu kedaluwarsa (created_at + 15 menit)
-                    $expiredTime = \Carbon\Carbon::parse($booking->created_at)->addMinutes(15)->timestamp;
-                @endphp
+                @foreach ($waktuBuat->where('id', $booking->id) as $wb)
+                    @if ($booking->id == $wb->id)
+                        @php
+                            // Hitung waktu kedaluwarsa (created_at + 15 menit)
+                            $expiredTime = \Carbon\Carbon::parse($wb->created_at)->addMinutes(15)->timestamp;
+                        @endphp
+                    @endif
+                @endforeach
 
                 <div id="alert-box-tenant-{{ $booking->id }}" 
                     class="flex items-center p-4 mt-2 text-yellow-800 border-l-4 border-yellow-500 bg-yellow-100 rounded-lg shadow-md" 

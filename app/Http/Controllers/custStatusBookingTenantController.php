@@ -32,20 +32,16 @@ class custStatusBookingTenantController extends Controller
             ->orderBy('pemTenant.created_at', 'desc') // Urutkan berdasarkan tanggal dibuat (terbaru di atas)
             ->get();
 
-        $now = Carbon::create(2025, 2, 1); //bisa diganti now, nek didalem create ada 6 parameter berarti tahun, bulan, hari, jam, menit, detik
-
-        foreach ($bookings as $book) {
-            $hariPesan = $book->created_at->startOfDay();
-            $selisih = $hariPesan->diffInDays($now);
-            if ($book->status == 'Belum bayar' && $selisih == 1){
-                $book->delete();
-            }
-        }
+        $waktuBuat = pemTenant::where('idCustomer', $nik)
+        ->where('idCustomer', $nik)
+        ->orderBy('created_at', 'desc')
+        ->get();
 
         // Kirimkan data ke view
         return view('custStatusBookingTenant', [
             'bookings' => $bookings,
             'user' => $user,
+            'waktuBuat' =>$waktuBuat,
         ]);
     }
 
