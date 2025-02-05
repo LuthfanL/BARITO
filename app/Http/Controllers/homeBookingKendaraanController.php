@@ -19,6 +19,18 @@ class homeBookingKendaraanController extends Controller
             ->limit(4) // Ambil maksimal 4 kendaraan
             ->get();
 
+        // Jika belum ada peminjaman, ambil semua kendaraan dengan batas 4
+        if ($kendaraanTerfavorit->isEmpty()) {
+            $kendaraan = Kendaraan::limit(4)->get()->map(function ($kendaraan) {
+                $kendaraan->total_peminjaman = 0; // Set total peminjaman ke 0
+                $kendaraan->foto_urls = !empty($kendaraan->foto) ? json_decode($kendaraan->foto) : [];
+                $kendaraan->foto_url = !empty($kendaraan->foto_urls) ? Storage::url($kendaraan->foto_urls[0]) : asset('default-image.jpg');
+                return $kendaraan;
+            });
+
+            return view('homeBookingKendaraan', compact('kendaraan'));
+        }    
+
         // Ambil platNomor kendaraan yang sudah diurutkan
         $platNomorList = $kendaraanTerfavorit->pluck('idKendaraan')->toArray();
 

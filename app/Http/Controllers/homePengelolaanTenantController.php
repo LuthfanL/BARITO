@@ -37,6 +37,18 @@ class homePengelolaanTenantController extends Controller
             ->limit(4) // Ambil maksimal 4 event favorit
             ->get();
 
+        // Jika belum ada peminjaman, ambil semua kendaraan dengan batas 4
+        if ($eventTerfavorit->isEmpty()) {
+            $events = Event::limit(4)->get()->map(function ($events) {
+                $events->total_peminjaman = 0; // Set total peminjaman ke 0
+                $events->foto_urls = !empty($events->foto) ? json_decode($events->foto) : [];
+                $events->foto_url = !empty($events->foto_urls) ? Storage::url($events->foto_urls[0]) : asset('default-image.jpg');
+                return $events;
+            });
+
+            return view('homePengelolaanTenant', compact('events'));
+        }   
+
         // Ambil daftar event_id yang sudah diurutkan
         $eventIdList = $eventTerfavorit->pluck('namaEvent')->toArray();
 

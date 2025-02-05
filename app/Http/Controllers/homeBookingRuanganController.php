@@ -19,6 +19,18 @@ class homeBookingRuanganController extends Controller
             ->limit(4) // Ambil maksimal 4 ruangan
             ->get();
 
+        // Jika belum ada peminjaman, ambil semua ruangan dengan batas 4
+        if ($ruanganTerfavorit->isEmpty()) {
+            $ruangan = Ruangan::limit(4)->get()->map(function ($ruang) {
+                $ruang->total_peminjaman = 0; // Set total peminjaman ke 0
+                $ruang->foto_urls = !empty($ruang->foto) ? json_decode($ruang->foto) : [];
+                $ruang->foto_url = !empty($ruang->foto_urls) ? Storage::url($ruang->foto_urls[0]) : asset('default-image.jpg');
+                return $ruang;
+            });
+
+            return view('homeBookingRuangan', compact('ruangan'));
+        }
+
         // Ambil ID ruangan yang sudah diurutkan
         $ruanganIds = $ruanganTerfavorit->pluck('idRuangan')->toArray();
 

@@ -23,17 +23,17 @@ class verifikasiBookingKendaraanController extends Controller
     
         $now = Carbon::now()->startOfDay(); // Gunakan waktu sekarang
     
-        // Query data pemKendaraan berdasarkan idAdmin
         $bookings = pemKendaraan::where('idAdmin', $idAdmin)
-            ->where(function ($query) use ($now) {
-                $query->where('tglSelesai', '>', $now) // Jika tglSelesai lebih besar dari sekarang, ambil semua status
-                    ->orWhere(function ($query) use ($now) {
-                        $query->where('tglSelesai', '=', $now) // Jika tglSelesai sama dengan sekarang
-                            ->where('status', 'Menunggu persetujuan'); // Hanya ambil yang statusnya "Menunggu persetujuan"
-                    });
-            })
-            ->orderBy('created_at', 'desc')
-            ->get();
+        ->where(function ($query) use ($now) {
+            $query->where('tglMulai', '>', $now) // Jika tglMulai lebih besar dari sekarang
+                ->whereIn('status', ['Disetujui', 'Ditolak', 'Menunggu persetujuan']) // Ambil semua status yang diinginkan
+                ->orWhere(function ($query) use ($now) {
+                    $query->where('tglMulai', '=', $now) // Jika tglMulai sama dengan sekarang
+                        ->where('status', 'Menunggu persetujuan'); // Hanya ambil yang "Menunggu persetujuan"
+                });
+        })
+        ->orderBy('created_at', 'desc')
+        ->get();
     
         // Kirimkan data ke view
         return view('verifikasiBookingKendaraan', [
@@ -64,25 +64,22 @@ class verifikasiBookingKendaraanController extends Controller
         if ($used){
             foreach ($used as $use) {
                 if ($booking->tglMulai == $use->tglMulai || $booking->tglMulai == $use->tglSelesai){
-                    return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain!');
+                    return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, tidak bisa melakukan persetujuan peminjaman.');
                 }
                 if ($booking->tglSelesai == $use->tglMulai || $booking->tglSelesai == $use->tglSelesai){
-                    return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain!');
+                    return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, tidak bisa melakukan persetujuan peminjaman.');
                 }
                 if ($booking->tglMulai < $use->tglMulai && $booking->tglSelesai > $use->tglSelesai) {
-                    return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain!');
+                    return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, tidak bisa melakukan persetujuan peminjaman.');
                 }
                 if ($booking->tglMulai > $use->tglMulai && $booking->tglSelesai < $use->tglSelesai){
-                    return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain!');
+                    return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, tidak bisa melakukan persetujuan peminjaman.');
                 }
                 if ($booking->tglMulai > $use->tglMulai && $booking->tglMulai < $use->tglSelesai){
-                    return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain!');
+                    return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, tidak bisa melakukan persetujuan peminjaman.');
                 }
                 if ($booking->tglSelesai > $use->tglMulai && $booking->tglSelesai < $use->tglSelesai){
-                    return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain!');
-                }
-                if ($booking->tglSelesai < $booking->tglMulai){
-                    return redirect()->back()->withErrors('Tanggal Selesai harus lebih dari atau sama dengan tanggal mulai!');
+                    return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, tidak bisa melakukan persetujuan peminjaman.');
                 }
             };
         }

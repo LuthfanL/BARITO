@@ -212,23 +212,26 @@
         @endif
     </script>
 
-    <!-- Tambahkan Flatpickr JS -->
+   <!-- Tambahkan Flatpickr JS -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            flatpickr("#tglMulai", {
-                dateFormat: "Y-m-d",  // Format sesuai MySQL (YYYY-MM-DD)
-                altInput: true,
-                altFormat: "d/m/Y",   // Tampilkan ke pengguna dalam format DD/MM/YYYY
-                allowInput: true
+        document.addEventListener("DOMContentLoaded", function () {
+            // Inisialisasi Flatpickr untuk tglMulai
+            const tglMulaiPicker = flatpickr("#tglMulai", {
+                dateFormat: "Y-m-d",
+                minDate: "today", // Tidak bisa memilih tanggal sebelum hari ini
+                onChange: function (selectedDates) {
+                    // Jika tglMulai dipilih, update minDate untuk tglSelesai agar tidak bisa pilih sebelumnya
+                    if (selectedDates.length > 0) {
+                        tglSelesaiPicker.set("minDate", selectedDates[0]);
+                    }
+                }
             });
 
-            flatpickr("#tglSelesai", {
+            // Inisialisasi Flatpickr untuk tglSelesai
+            const tglSelesaiPicker = flatpickr("#tglSelesai", {
                 dateFormat: "Y-m-d",
-                altInput: true,
-                altFormat: "d/m/Y",
-                allowInput: true
+                minDate: "today" // Default minDate adalah hari ini
             });
         });
     </script>
