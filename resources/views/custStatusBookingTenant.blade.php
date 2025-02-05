@@ -793,11 +793,11 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 </script>
 
-{{-- <script>
+{{-- {{-- <script>
     // Refresh halaman setiap 3 menit
     setTimeout(function () {
         location.reload();
     }, 1000); // 60000 ms = 60 detik
-</script>
+</script> --}}
 
 </html>

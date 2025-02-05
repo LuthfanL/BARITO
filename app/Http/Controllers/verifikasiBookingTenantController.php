@@ -29,7 +29,7 @@ class verifikasiBookingTenantController extends Controller
         $bookings = pemTenant::join('event', 'event.namaEvent', '=', 'pemTenant.namaEvent')
             ->where('pemTenant.idAdmin', $idAdmin)
             ->where(function ($query) use ($now) {
-                $query->where('event.tglSelesai', '<', $now) // Jika tglSelesai lebih besar dari now, ambil semua status
+                $query->where('event.tglSelesai', '>', $now) // Jika tglSelesai lebih besar dari now, ambil semua status
                     ->orWhere(function ($query) use ($now) {
                         $query->where('event.tglSelesai', '=', $now) // Jika tglSelesai sama dengan now
                             ->where('pemTenant.status', 'Menunggu persetujuan'); // Hanya ambil yang statusnya "Menunggu persetujuan"
