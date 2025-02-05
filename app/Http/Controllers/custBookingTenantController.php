@@ -82,7 +82,7 @@ class custBookingTenantController extends Controller
             return back()->with('error', 'Customer tidak ditemukan');
         }
 
-        $already = pemTenant::where('idCustomer', $nik)->where('namaEvent', $request->input('namaEvent'))->where('status', 'Disetujui')->first();
+        $already = pemTenant::where('idCustomer', $nik)->where('namaEvent', $request->input('namaEvent'))->where('status', '!=', 'Ditolak')->first();
 
         if ($already){
             return redirect()->back()->withErrors('Anda hanya dapat memesan 1 tenant untuk 1 event!');
