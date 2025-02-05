@@ -10,6 +10,34 @@ use Carbon\Carbon;
 
 class verifikasiBookingTenantController extends Controller
 {
+    // public function index(Request $request)
+    // {
+    //     // Ambil pengguna yang sedang login
+    //     $user = auth()->user();
+
+    //     // Ambil idAdmin dari model adminTenant berdasarkan email
+    //     $idAdmin = adminTenant::getIdAdminByEmail($user->email);
+
+    //     if (!$idAdmin) {
+    //         // Tangani error jika idAdmin tidak ditemukan
+    //         return back()->with('error', 'Admin tidak ditemukan');
+    //     }
+
+    //     $now = Carbon::create(2025,02,04)->startOfDay();
+    //     // Ambil data pemTenant berdasarkan idAdmin
+    //     $bookings = pemTenant::where('pemTenant.idAdmin', $idAdmin)
+    //         ->whereIn('pemTenant.status', ['Disetujui', 'Ditolak', 'Menunggu persetujuan']) // Filter status
+    //         ->join('event', 'event.namaEvent' , '=', 'pemTenant.namaEvent')
+    //         ->where('event.tglMulai', '>', $now)
+    //         ->orderBy('pemTenant.created_at', 'desc') // Urutkan berdasarkan tanggal dibuat (terbaru di atas)
+    //         ->get();
+
+    //     // Kirimkan data ke view
+    //     return view('verifikasiBookingTenant', [
+    //         'bookings' => $bookings,
+    //     ]);
+    // }
+
     public function index(Request $request)
     {
         // Ambil pengguna yang sedang login
