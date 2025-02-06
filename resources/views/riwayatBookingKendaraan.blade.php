@@ -243,9 +243,9 @@
             </div>
 
             <!-- Modal Body -->
-            <div class="p-6 space-y-4">
+            <div class="p-4 space-y-4">
                 <div class="flex justify-center">
-                    <img id="buktiBayarImg" class="h-auto max-w-full rounded-lg" src="" alt="Bukti Bayar">
+                    <img id="buktiBayarImg" class="h-96 max-w-xl rounded-lg" src="" alt="Bukti Bayar">
                 </div>
             </div>
 
