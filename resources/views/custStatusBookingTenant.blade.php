@@ -635,11 +635,20 @@
                 <form action="{{ route('booking.uploadBuktiTenant') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                     <div class="p-4 md:p-5">
-                        <!-- Input Bukti Pembayaran -->
                         @if(isset($booking) && $booking)
                             <input type="hidden" name="booking_id" id="booking-id" value={{$booking->id}}>
                         @endif
-                        
+                        <!-- Informasi Rekening -->
+                        <div class="mt-3 mb-4 p-3 border border-yellow-500 bg-yellow-100 rounded-lg text-center">
+                            <p class="text-sm font-medium text-gray-900">
+                                Pembayaran dapat dikirimkan ke rekening berikut :
+                            </p>
+                            <p class="text-xl font-bold text-red-600 mt-1">
+                                1360 0318 8562
+                            </p>
+                            <p class="text-sm text-gray-700">Bank Mandiri</p>
+                        </div>
+                        <!-- Input Bukti -->
                         <label for="bukti-bayar" class="block mb-2 text-sm font-medium text-gray-900">
                             Upload Bukti Pembayaran
                         </label>
