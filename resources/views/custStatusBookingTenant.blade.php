@@ -206,12 +206,14 @@
                 @php
                     // Hitung waktu kedaluwarsa (created_at + 15 menit)
                     $expiredTime = \Carbon\Carbon::parse($booking->created_at)->addMinutes(15)->timestamp;
+                    $currentTime = \Carbon\Carbon::now()->timestamp; // Waktu sekarang dari server
                 @endphp
 
                 <div id="alert-box-tenant-{{ $booking->id }}" 
                     class="flex items-center p-4 mt-2 text-yellow-800 border-l-4 border-yellow-500 bg-yellow-100 rounded-lg shadow-md" 
                     role="alert"
-                    data-expired="{{ $expiredTime }}">
+                    data-expired="{{ $expiredTime }}"
+                    data-now="{{ $currentTime }}"> 
                     
                     <svg class="w-6 h-6 text-yellow-700 flex-shrink-0 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M9 2a1 1 0 0 1 2 0v7a1 1 0 0 1-2 0V2Zm1 10a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z"/>
@@ -233,55 +235,53 @@
                 </div>
             @endforeach
 
+
             <script>
-                function closeAlertTenant(id) {
-                    document.getElementById("alert-box-tenant-" + id).style.display = "none";
-                }
+              function startCountdownTenant(id, expiredTime, serverNow) {
+    let countdownElement = document.getElementById("countdown-tenant-" + id);
 
-                function startCountdownTenant(id, expiredTime) {
-                    let countdownElement = document.getElementById("countdown-tenant-" + id);
+    // Sinkronisasi waktu browser dengan waktu server
+    let localNow = Math.floor(Date.now() / 1000);
+    let offset = localNow - serverNow; // Selisih waktu lokal dan server
+    let adjustedExpiredTime = expiredTime + offset; // Sesuaikan expired time
 
-                    function updateCountdownTenant() {
-                        let now = Math.floor(Date.now() / 1000); // Waktu sekarang dalam detik
-                        let remainingTime = expiredTime - now;
+    function updateCountdownTenant() {
+        let now = Math.floor(Date.now() / 1000);
+        let remainingTime = adjustedExpiredTime - now;
 
-                        if (remainingTime <= 0) {
-                            countdownElement.innerText = "Waktu pembayaran telah habis!";
-                            countdownElement.classList.add("text-red-700", "font-bold");
+        if (remainingTime <= 0) {
+            countdownElement.innerText = "Waktu pembayaran telah habis!";
+            countdownElement.classList.add("text-red-700", "font-bold");
 
-                            // Auto refresh setelah waktu habis dengan delay 3 detik
-                            setTimeout(function() {
-                                location.reload(); // Refresh halaman
-                            }, 3000); // Delay 3 detik
+            setTimeout(function() {
+                location.reload();
+            }, 3000);
+            return;
+        }
 
-                            return;
-                        }
+        let minutes = Math.floor(remainingTime / 60);
+        let seconds = remainingTime % 60;
+        countdownElement.innerText = `${minutes} menit ${seconds} detik`;
 
-                        let minutes = Math.floor(remainingTime / 60);
-                        let seconds = remainingTime % 60;
-                        countdownElement.innerText = `${minutes} menit ${seconds} detik`;
+        // Buat interval baru untuk setiap elemen (tidak tumpang tindih)
+        setTimeout(updateCountdownTenant, 1000);
+    }
 
-                        setTimeout(updateCountdownTenant, 1000);
-                    }
+    updateCountdownTenant();
+}
 
-                    updateCountdownTenant();
-                }
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll("[id^='alert-box-tenant-']").forEach(alertBox => {
+        let id = alertBox.id.replace("alert-box-tenant-", "").trim();
+        let expiredTime = parseInt(alertBox.getAttribute("data-expired"), 10);
+        let serverNow = parseInt(alertBox.getAttribute("data-now"), 10);
 
-                document.addEventListener("DOMContentLoaded", function () {
-                    document.querySelectorAll("[id^='alert-box-tenant-']").forEach(alertBox => {
-                        let id = alertBox.id.replace("alert-box-tenant-", "");
-                        let expiredTime = parseInt(alertBox.getAttribute("data-expired"), 10); // Konversi ke angka
+        if (!isNaN(expiredTime) && !isNaN(serverNow)) {
+            startCountdownTenant(id, expiredTime, serverNow);
+        }
+    });
+});
 
-                        // Jika expiredTime belum tersimpan di LocalStorage, simpan sekarang
-                        if (!localStorage.getItem("expiredTime-tenant-" + id)) {
-                            localStorage.setItem("expiredTime-tenant-" + id, expiredTime);
-                        } else {
-                            expiredTime = parseInt(localStorage.getItem("expiredTime-tenant-" + id), 10);
-                        }
-
-                        startCountdownTenant(id, expiredTime);
-                    });
-                });
             </script>
 
             

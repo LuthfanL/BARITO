@@ -62,16 +62,7 @@ class custBookingTenantController extends Controller
             'namaTenant' => 'required|string',
         ]);
 
-        
-        // $fotoPaths = [];
-        // if ($request->hasFile('buktiBayar')) {
-        //     foreach ($request->file('buktiBayar') as $buktiBayar) {
-        //         $path = $buktiBayar->store('foto_buktiBayar', 'public'); // Simpan di folder foto_ruangan
-        //         $fotoPaths[] = Storage::url($path); // Simpan path ke array
-        //     }
-        // }
-
-        // Ambil pengguna yang sedang login
+                // Ambil pengguna yang sedang login
         $user = auth()->user();
 
         // Ambil nik dari model customer
