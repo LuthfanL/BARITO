@@ -124,7 +124,10 @@
                                 <div class="flex items-center space-x-4">
                                     <!-- Dropdown -->
                                     <div class="relative">
-                                        <button
+                                        <p class="text-sm font-medium text-gray-500 text-center inline-flex items-center">
+                                            7 hari terakhir
+                                        </p>
+                                        {{-- <button
                                         id="dropdownPengunjung"
                                         class="dropdown text-sm font-medium text-gray-500 hover:text-gray-900 text-center inline-flex items-center"
                                         type="button">
@@ -132,8 +135,8 @@
                                         <svg class="w-2.5 m-2.5 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                                         </svg>
-                                        </button>
-                                        <!-- Dropdown menu -->
+                                        </button> --}}
+                                        {{-- <!-- Dropdown menu -->
                                         <div id="dropdownPengunjungList" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 absolute top-full mt-2">
                                             <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
                                                 <li id="7HariTerakhir">
@@ -143,7 +146,7 @@
                                                     <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" onclick="updateDropdown('30 Hari Terakhir')">30 hari terakhir</a>
                                                 </li>
                                             </ul>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                             </div>
