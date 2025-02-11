@@ -105,16 +105,27 @@ class dashboardAdminTenantController extends Controller
 
         // Statistik Booking Customer
         $pengunjungData = pemTenant::where('idAdmin', $idAdmin)
-            ->whereIn('status', ['Menunggu persetujuan', 'Disetujui'])
-            ->whereBetween('created_at', [$startDate, $endDate])
-            ->selectRaw('DATE(created_at) as date, COUNT(*) as total')
-            ->groupBy('date')
-            ->get();
-        
-        $pengunjungLabels = $pengunjungData->pluck('date')->map(function ($date) {
-            return Carbon::parse($date)->locale('id')->isoFormat('DD MMM'); // Format tanggal dalam format Indonesia
+        ->whereIn('status', ['Menunggu persetujuan', 'Disetujui'])
+        ->whereBetween('created_at', [$startDate, $endDate])
+        ->selectRaw('DATE(created_at) as date, COUNT(*) as total')
+        ->groupBy('date')
+        ->get()
+        ->pluck('total', 'date'); // Menggunakan pluck untuk mendapatkan array tanggal dan total booking
+
+        // Buat daftar tanggal lengkap dalam periode yang dipilih
+        $allDates = collect();
+        $currentDate = $startDate->copy();
+
+        while ($currentDate <= $endDate) {
+        $allDates->put($currentDate->toDateString(), 0);
+        $currentDate->addDay();
+        }
+
+        // Gabungkan data booking dengan daftar tanggal lengkap
+        $pengunjungCounts = $allDates->merge($pengunjungData)->values();
+        $pengunjungLabels = $allDates->keys()->map(function ($date) {
+        return Carbon::parse($date)->locale('id')->isoFormat('DD MMM');
         });
-        $pengunjungCounts = $pengunjungData->pluck('total');
         
         // Kirim data event dan total event ke blade
         return view('dashboardAdminTenant', compact('event', 'totalEvent', 'totalCustomer', 'totalBooking', 'verifikasi', 'labels', 'data', 'pengunjungLabels', 'pengunjungCounts'));
