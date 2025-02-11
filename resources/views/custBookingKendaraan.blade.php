@@ -310,11 +310,33 @@
                         
                         <!-- Input Nama Pemohon -->
                         <label for="namaPemohon">Nama Pemohon</label>
-                        <input type="text" id="namaPemohon" name="namaPemohon" required>
+                        <input type="text" id="namaPemohon" name="namaPemohon" required oninput="validateNamaPemohon(this)">
+                        <script>
+                        function validateNamaPemohon(input) {
+                            // Hanya izinkan huruf dan spasi
+                            input.value = input.value.replace(/[^a-zA-Z\s]/g, '');
+                        
+                            // Jika ada angka atau karakter khusus yang dimasukkan, tampilkan alert
+                            if (/\d/.test(input.value)) {
+                                alert("Nama Pemohon hanya boleh berisi huruf!");
+                            }
+                        }
+                        </script>
 
-                        <!-- Input No. Whatapps -->
-                        <label for="noWa">No. Whatapps</label>
-                        <input type="text" id="noWa" name="noWa" required>
+                        <!-- Input No. WhatsApp -->
+                        <label for="noWa">No. WhatsApp</label>
+                        <input type="text" id="noWa" name="noWa" required oninput="validateWhatsApp(this)">
+                        <script>
+                            function validateWhatsApp(input) {
+                                // Hanya izinkan angka (0-9)
+                                input.value = input.value.replace(/\D/g, '');
+                            
+                                // Jika ada karakter selain angka, tampilkan alert
+                                if (input.value.match(/\D/)) {
+                                    alert("Nomor WhatsApp hanya boleh berisi angka!");
+                                }
+                            }
+                        </script>
 
                         <!-- Input Tanggal -->
                         <label for="tanggal-event" class="block font-bold">Tanggal</label>

@@ -326,24 +326,36 @@
         
                         <!-- Input Biaya Sewa -->
                         <label for="hargaTenant">Biaya Sewa (Per Hari)</label>
-                        <input type="text" id="hargaTenant" name="hargaTenant" required>
+                        <input type="text" id="hargaTenant" name="hargaTenant" required oninput="validateAngka(this)">
 
                         <!-- Input Jenis Tenant -->
                         <label>Jenis Tenant</label>
                         <div class="tenant-container">
                             <div>
                                 <label for="nBarang">Tenant Barang</label>
-                                <input type="text" id="nBarang" name="nBarang">
+                                <input type="text" id="nBarang" name="nBarang" oninput="validateAngka(this)">
                             </div>
                             <div>
                                 <label for="nJasa">Tenant Jasa</label>
-                                <input type="text" id="nJasa" name="nJasa">
+                                <input type="text" id="nJasa" name="nJasa" oninput="validateAngka(this)">
                             </div>
                             <div>
                                 <label for="nMakanan">Tenant Makanan</label>
-                                <input type="text" id="nMakanan" name="nMakanan">
+                                <input type="text" id="nMakanan" name="nMakanan" oninput="validateAngka(this)">
                             </div>
                         </div>
+
+                        <script>
+                            function validateAngka(input) {
+                                // Hapus karakter selain angka
+                                input.value = input.value.replace(/[^0-9]/g, '');
+
+                                // Jika ada karakter selain angka yang dimasukkan, tampilkan alert
+                                if (input.value !== '' && isNaN(input.value)) {
+                                    alert("Hanya boleh memasukkan angka!");
+                                }
+                            }
+                        </script>
         
                         <!-- Input Tanggal -->
                         <label for="tanggal-event" class="block font-bold">Tanggal Event</label>

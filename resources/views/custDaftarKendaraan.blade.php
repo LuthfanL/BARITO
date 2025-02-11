@@ -206,7 +206,7 @@
 
                 // Menampilkan foto utama di modal
                 const mainImage = document.getElementById('main-image-kendaraan');
-                mainImage.src = fotoUrl;
+                mainImage.src = fotoUrl || thumbnails[0];
 
                 // Kosongkan dulu thumbnail sebelumnya
                 const imageThumbnails = document.getElementById('image-thumbnails-kendaraan');

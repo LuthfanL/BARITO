@@ -338,18 +338,18 @@
         
                         <!-- Input Biaya Sewa, Kapasitas, Plat Nomor, CC dan Tahun Kendaraan -->
                         <label for="biayaSewa">Biaya Sewa (Per Hari)</label>
-                        <input type="text" id="biayaSewa" name="biayaSewa" required>
+                        <input type="text" id="biayaSewa" name="biayaSewa" required oninput="validateAngka(this)">
 
                         <label for="jumlahKursi">Kapasitas</label>
-                        <input type="text" id="jumlahKursi" name="jumlahKursi" required>
+                        <input type="text" id="jumlahKursi" name="jumlahKursi" required oninput="validateAngka(this)">
         
                         <input type="text" id="plat" name="platNomor" required style="display: none;">
 
                         <label for="cc">CC</label>
-                        <input type="text" id="cc" name="cc" required>
+                        <input type="text" id="cc" name="cc" required oninput="validateAngka(this)">
 
                         <label for="tahunKeluar">Tahun</label>
-                        <input type="text" id="tahunKeluar" name="tahunKeluar" required>
+                        <input type="text" id="tahunKeluar" name="tahunKeluar" required oninput="validateAngka(this)">
         
                         <!-- Input Fasilitas Kendaraan -->
                         <label>Fasilitas Kendaraan</label>
@@ -367,6 +367,18 @@
                                 <input type="text" id="ac" name="ac">
                             </div>
                         </div>
+
+                        <script>
+                            function validateAngka(input) {
+                                // Hapus karakter selain angka
+                                input.value = input.value.replace(/[^0-9]/g, '');
+
+                                // Jika ada karakter selain angka yang dimasukkan, tampilkan alert
+                                if (input.value !== '' && isNaN(input.value)) {
+                                    alert("Hanya boleh memasukkan angka!");
+                                }
+                            }
+                        </script>
                                 
                         <!-- Input Foto Kendaraan -->
                         <label for="foto">Upload Foto Kendaraan</label>

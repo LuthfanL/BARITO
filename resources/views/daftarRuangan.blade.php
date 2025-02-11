@@ -337,13 +337,13 @@
         
                         <!-- Input Biaya Sewa, Lokasi, Lantai dan Luas Ruangan -->
                         <label for="biayaSewa">Biaya Sewa (Per Hari)</label>
-                        <input type="text" id="biayaSewa" name="biayaSewa" required>
+                        <input type="text" id="biayaSewa" name="biayaSewa" required oninput="validateAngka(this)">
 
                         <label for="lokasi">Lokasi (Nama Gedung)</label>
                         <input type="text" id="lokasi" name="lokasi" required>
         
                         <label for="lantai">Lantai</label>
-                        <input type="text" id="lantai" name="lantai" required>
+                        <input type="text" id="lantai" name="lantai" required oninput="validateAngka(this)">
 
                         <label for="luas">Luas Ruangan</label>
                         <input type="text" id="luas" name="luas" required>
@@ -353,29 +353,41 @@
                         <div class="fasilitas-container">
                             <div>
                                 <label for="podium">Podium</label>
-                                <input type="text" id="podium" name="podium">
+                                <input type="text" id="podium" name="podium" oninput="validateAngka(this)">
                             </div>
                             <div>
                                 <label for="sound">Sound</label>
-                                <input type="text" id="sound" name="sound">
+                                <input type="text" id="sound" name="sound" oninput="validateAngka(this)">
                             </div>
                             <div>
                                 <label for="meja">Meja</label>
-                                <input type="text" id="meja" name="meja">
+                                <input type="text" id="meja" name="meja" oninput="validateAngka(this)">
                             </div>
                             <div>
                                 <label for="ac">AC</label>
-                                <input type="text" id="ac" name="ac">
+                                <input type="text" id="ac" name="ac" oninput="validateAngka(this)">
                             </div>
                             <div>
                                 <label for="kursi">Kursi</label>
-                                <input type="text" id="kursi" name="kursi">
+                                <input type="text" id="kursi" name="kursi" oninput="validateAngka(this)">
                             </div>
                             <div>
                                 <label for="proyektor">Proyektor</label>
-                                <input type="text" id="proyektor" name="proyektor">
+                                <input type="text" id="proyektor" name="proyektor" oninput="validateAngka(this)">
                             </div>
                         </div>
+
+                        <script>
+                            function validateAngka(input) {
+                                // Hapus karakter selain angka
+                                input.value = input.value.replace(/[^0-9]/g, '');
+
+                                // Jika ada karakter selain angka yang dimasukkan, tampilkan alert
+                                if (input.value !== '' && isNaN(input.value)) {
+                                    alert("Hanya boleh memasukkan angka!");
+                                }
+                            }
+                        </script>
         
                         <!-- Input Foto Ruangan -->
                         <label for="foto">Upload Foto Ruangan</label>
