@@ -254,7 +254,7 @@
                             // Auto refresh setelah waktu habis dengan delay 3 detik
                             setTimeout(function() {
                                 location.reload(); // Refresh halaman
-                            }, 3000); // Delay 3 detik
+                            }, 10000); // Delay 3 detik
             
                             return;
                         }

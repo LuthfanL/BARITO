@@ -30,7 +30,7 @@ class custStatusBookingKendaraanController extends Controller
             ->orderBy('created_at', 'desc') // Urutkan berdasarkan tanggal dibuat (terbaru di atas)
             ->get();
 
-        $now = Carbon::create(2025, 2, 1); //bisa diganti now, nek didalem create ada 6 parameter berarti tahun, bulan, hari, jam, menit, detik
+        $now = Carbon::now();
 
         foreach ($bookings as $book) {
             $hariPesan = $book->created_at->startOfDay();
