@@ -256,11 +256,14 @@
             countdownElement.innerText = "Waktu pembayaran telah habis!";
             countdownElement.classList.add("text-red-700", "font-bold");
 
-            setTimeout(function() {
-                location.reload();
-            }, 3000);
-            return;
-        }
+                            // Auto refresh setelah waktu habis dengan delay 3 detik
+                            setTimeout(function() {
+                                localStorage.removeItem("expiredTime-tenant-" + id);
+                                location.reload();
+                            }, 3000);
+
+                            return;
+                        }
 
         let minutes = Math.floor(remainingTime / 60);
         let seconds = remainingTime % 60;

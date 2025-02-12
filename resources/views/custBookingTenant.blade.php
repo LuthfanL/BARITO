@@ -299,11 +299,33 @@
 
                         <!-- Input Nama Pemohon -->
                         <label for="namaPemohon">Nama Pemohon</label>
-                        <input type="text" id="namaPemohon" name="namaPemohon" value="{{ $cus->name }}" require>
+                        <input type="text" id="namaPemohon" name="namaPemohon" value="{{ $cus->name }}" require oninput="validateNamaPemohon(this)">
+                        <script>
+                        function validateNamaPemohon(input) {
+                            // Hanya izinkan huruf dan spasi
+                            input.value = input.value.replace(/[^a-zA-Z\s]/g, '');
+                        
+                            // Jika ada angka atau karakter khusus yang dimasukkan, tampilkan alert
+                            if (/\d/.test(input.value)) {
+                                alert("Nama Pemohon hanya boleh berisi huruf!");
+                            }
+                        }
+                        </script>
 
                         <!-- Input No. Whatapps -->
                         <label for="noWa">No. Whatapps</label>
-                        <input type="text" id="noWa" name="noWa" value="{{ $cus->noHP }}" require>
+                        <input type="text" id="noWa" name="noWa" value="{{ $cus->noHP }}" require oninput="validateWhatsApp(this)">
+                        <script>
+                            function validateWhatsApp(input) {
+                                // Hanya izinkan angka (0-9)
+                                input.value = input.value.replace(/\D/g, '');
+                            
+                                // Jika ada karakter selain angka, tampilkan alert
+                                if (input.value.match(/\D/)) {
+                                    alert("Nomor WhatsApp hanya boleh berisi angka!");
+                                }
+                            }
+                        </script>
 
                         <!-- Input Nama Tenant -->
                         <label for="namaTenant">Nama Tenant</label>

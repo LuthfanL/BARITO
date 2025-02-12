@@ -253,8 +253,9 @@
             
                             // Auto refresh setelah waktu habis dengan delay 3 detik
                             setTimeout(function() {
-                                location.reload(); // Refresh halaman
-                            }, 10000); // Delay 3 detik
+                                localStorage.removeItem("expiredTime-kendaraan-" + id);
+                                location.reload();
+                            }, 3000);
             
                             return;
                         }
