@@ -88,11 +88,6 @@ class custBookingKendaraanController extends Controller
             ->whereIn('status', ['Disetujui', 'Belum bayar', 'Menunggu persetujuan'])
             ->get();
 
-        // $used = pemKendaraan::where('idKendaraan', $validated['idKendaraan'])
-        // ->where('status','!=','Ditolak')
-        // ->where('id', '!=', $request->id) // Mengecualikan booking yang sedang diupdate
-        // ->get();
-
         if ($used){
             foreach ($used as $use) {
                 if ($validated['tglMulai'] == $use->tglMulai || $validated['tglMulai'] == $use->tglSelesai){

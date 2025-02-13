@@ -58,7 +58,7 @@ class verifikasiBookingTenantController extends Controller
             ->where('pemTenant.idAdmin', $idAdmin)
             ->where(function ($query) use ($now) {
                 $query->where('event.tglMulai', '>', $now) // Jika tglMulai lebih besar dari now, ambil semua status
-                    ->whereIn('status', ['Disetujui', 'Ditolak', 'Menunggu persetujuan']) // Ambil semua status yang diinginkan
+                    ->whereIn('status', ['Disetujui', 'Ditolak', 'Belum bayar','Menunggu persetujuan']) // Ambil semua status yang diinginkan
                     ->orWhere(function ($query) use ($now) {
                         $query->where('event.tglMulai', '=', $now) // Jika tglMulai sama dengan now
                             ->where('pemTenant.status', 'Menunggu persetujuan'); // Hanya ambil yang statusnya "Menunggu persetujuan"
@@ -93,9 +93,9 @@ class verifikasiBookingTenantController extends Controller
         $makanan = event::where('namaEvent', $booking->namaEvent)->first()->nMakanan;
         $jasa = event::where('namaEvent', $booking->namaEvent)->first()->nJasa;
         $barang = event::where('namaEvent', $booking->namaEvent)->first()->nBarang;
-        $nMakanan = pemTenant::where('namaEvent', $booking->namaEvent)->where('tipeTenant', 'Tenant Makanan')->where('status', '!=', 'Ditolak')->where('id', '!=', $request->input('id'))->count();
-        $nJasa = pemTenant::where('namaEvent', $booking->namaEvent)->where('tipeTenant', 'Tenant Jasa')->where('status', '!=', 'Ditolak')->where('id', '!=', $request->input('id'))->count();
-        $nBarang = pemTenant::where('namaEvent', $booking->namaEvent)->where('tipeTenant', 'Tenant Barang')->where('status', '!=', 'Ditolak')->where('id', '!=', $request->input('id'))->count();
+        $nMakanan = pemTenant::where('namaEvent', $booking->namaEvent)->where('tipeTenant', 'Tenant Makanan')->whereIn('status', ['Disetujui', 'Belum bayar', 'Menunggu persetujuan'])->where('id', '!=', $request->input('id'))->count();
+        $nJasa = pemTenant::where('namaEvent', $booking->namaEvent)->where('tipeTenant', 'Tenant Jasa')->whereIn('status', ['Disetujui', 'Belum bayar', 'Menunggu persetujuan'])->where('id', '!=', $request->input('id'))->count();
+        $nBarang = pemTenant::where('namaEvent', $booking->namaEvent)->where('tipeTenant', 'Tenant Barang')->whereIn('status', ['Disetujui', 'Belum bayar', 'Menunggu persetujuan'])->where('id', '!=', $request->input('id'))->count();
 
         if ($booking->tipeTenant == 'Tenant Makanan' && $makanan == $nMakanan) {
             return redirect()->back()->withErrors('Maaf, kuota untuk tenant makanan sudah habis, silahkan berkunjung dilain waktu!');

@@ -29,7 +29,7 @@ class verifikasiBookingRuanganController extends Controller
         $bookings = pemRuangan::where('idAdmin', $idAdmin)
             ->where(function ($query) use ($now) {
                 $query->where('tglMulai', '>', $now) // Jika tglMulai lebih besar dari sekarang, ambil semua status
-                    ->whereIn('status', ['Disetujui', 'Ditolak', 'Menunggu persetujuan']) // Ambil semua status yang diinginkan
+                    ->whereIn('status', ['Disetujui', 'Ditolak', 'Belum bayar','Menunggu persetujuan']) // Ambil semua status yang diinginkan
                     ->orWhere(function ($query) use ($now) {
                         $query->where('tglMulai', '=', $now) // Jika tglMulai sama dengan sekarang
                             ->where('status', 'Menunggu persetujuan'); // Hanya ambil yang statusnya "Menunggu persetujuan"
@@ -62,7 +62,10 @@ class verifikasiBookingRuanganController extends Controller
 
         $idRuangan = $booking->idRuangan;
         
-        $used = pemRuangan::where('idRuangan', $idRuangan)->where('status', '!=', 'Ditolak')->where('id', '!=', $request->input('id'))->get();
+        $used = pemRuangan::where('idRuangan', $idRuangan)
+            ->whereIn('status', ['Disetujui', 'Belum bayar', 'Menunggu persetujuan'])
+            ->where('id', '!=', $request->input('id'))
+            ->get();
         
         if ($used){
             foreach ($used as $use) {

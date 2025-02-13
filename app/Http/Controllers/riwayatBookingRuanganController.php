@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\adminRuangan;
 use App\Models\pemRuangan;
+use Carbon\Carbon;
 
 class riwayatBookingRuanganController extends Controller
 {
@@ -21,12 +22,20 @@ class riwayatBookingRuanganController extends Controller
             return back()->with('error', 'Admin tidak ditemukan');
         }
     
-        // Ambil data pemRuangan berdasarkan idAdmin
-        $bookings = pemRuangan::where('idAdmin', $idAdmin)            
-            ->whereIn('status', ['Disetujui', 'Ditolak']) // Filter status
-            ->orderBy('created_at', 'desc') // Urutkan berdasarkan tanggal dibuat (terbaru di atas)
-            ->get();
-    
+        $now = Carbon::now();
+
+        // Ambil data pemRuangan berdasarkan idAdmin dengan filter tambahan
+        $bookings = pemRuangan::where('idAdmin', $idAdmin)
+        ->where(function ($query) use ($now) {
+            $query->whereIn('status', ['Expired', 'Dibatalkan']) // Ambil langsung jika status Expired atau Dibatalkan
+                ->orWhere(function ($q) use ($now) {
+                    $q->where('tglMulai', '<=', $now) // Hanya ambil jika tglMulai < now
+                        ->whereIn('status', ['Disetujui', 'Ditolak']); // Dan statusnya Disetujui atau Ditolak
+                });
+        })
+        ->orderBy('created_at', 'desc') // Urutkan berdasarkan tanggal dibuat (terbaru di atas)
+        ->get();
+
         // Kirimkan data ke view
         return view('riwayatBookingRuangan', [
             'bookings' => $bookings,

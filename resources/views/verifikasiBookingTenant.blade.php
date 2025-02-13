@@ -228,13 +228,13 @@
                                         <!-- Tindakan -->
                                         <td class="text-center">
                                             <div class="flex flex-col gap-2">
-                                                <?php if ($booking->status == "Disetujui") : ?>
+                                                <?php if ($booking->status == "Disetujui" || $booking->status == "Belum bayar") : ?>
                                                     <button disabled class="px-3 py-1 rounded-lg font-medium bg-gray-400 text-white cursor-not-allowed">Setujui</button>
                                                 <?php else : ?>
                                                     <button data-modal-target="modal-setujui" data-modal-toggle="modal-setujui" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Setujui</button>
                                                 <?php endif; ?>
 
-                                                <?php if ($booking->status == "Ditolak") : ?>
+                                                <?php if ($booking->status == "Ditolak" || $booking->status == "Belum bayar") : ?>
                                                     <button disabled class="px-3 py-1 rounded-lg font-medium bg-gray-400 text-white cursor-not-allowed">Tolak</button>
                                                 <?php else : ?>
                                                     <button data-modal-target="modal-tolak" data-modal-toggle="modal-tolak" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Tolak</button>
@@ -364,32 +364,6 @@
             </div>
         </div>
     </div>
-
-    {{-- <!-- Modal Alasan Pembatalan -->
-    <div id="detail-batal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-        <div class="relative p-4 w-full max-w-2xl max-h-full">
-            <!-- Modal content -->
-            <div class="relative bg-white rounded-lg shadow">
-                <!-- Modal header -->
-                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
-                    <h3 class="text-xl font-semibold text-gray-900">
-                        Booking Dibatalkan Customer
-                    </h3>
-                </div>
-                <!-- Modal body -->
-                <div class="p-4 md:p-5 space-y-6">
-                    <div>
-                        <label for="keperluan-acara" class="block text-sm font-medium text-gray-900 mb-2">Alasan Pembatalan</label>
-                        <textarea id="keperluan-acara" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-500 p-3" readonly>Ada rencana lain</textarea>
-                    </div>
-                </div>
-                <!-- Modal footer -->
-                <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b">
-                    <button data-modal-hide="detail-batal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Kembali</button>
-                </div>
-            </div>
-        </div>
-    </div> --}}
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 </body>

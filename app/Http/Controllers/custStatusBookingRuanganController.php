@@ -25,12 +25,14 @@ class custStatusBookingRuanganController extends Controller
             return back()->with('error', 'Customer tidak ditemukan');
         }
 
+        $now = Carbon::now();
+
         // Ambil data pemRuangan berdasarkan idAdmin
         $bookings = pemRuangan::where('idCustomer', $nik)
+            ->where('tglMulai', '>', $now) // Hanya ambil data dengan tglMulai lebih besar dari sekarang
+            ->whereIn('status', ['disetujui', 'ditolak', 'belum bayar', 'menunggu persetujuan']) // Filter berdasarkan status
             ->orderBy('created_at', 'desc') // Urutkan berdasarkan tanggal dibuat (terbaru di atas)
             ->get();
-
-        $now = Carbon::create(2025, 2, 1); //bisa diganti now, nek didalem create ada 6 parameter berarti tahun, bulan, hari, jam, menit, detik
 
         foreach ($bookings as $book) {
             $hariPesan = $book->created_at->startOfDay();
@@ -53,11 +55,12 @@ class custStatusBookingRuanganController extends Controller
 
         // Periksa apakah pemRuangan ditemukan
         if (!$pemRuangan) {
-            return redirect()->back()->with('error', 'Ruangan tidak ditemukan.');
+            return redirect()->back()->with('error', 'Peminjaman ruangan tidak ditemukan.');
         }
 
-        // Hapus pemRuangan
-        $pemRuangan->delete();
+        // Perbarui status menjadi "Dibatalkan"
+        $pemRuangan->status = "Dibatalkan";
+        $pemRuangan->save();
 
         // Redirect kembali dengan pesan sukses
         return redirect()->back()->with('success', 'Booking berhasil dibatalkan!');
@@ -131,7 +134,7 @@ class custStatusBookingRuanganController extends Controller
 
             // Ambil semua booking kendaraan yang aktif kecuali yang sedang diperbarui
             $used = pemRuangan::where('idRuangan', $idRuangan)
-                ->where('status', '!=', 'Ditolak')
+                ->whereIn('status', ['Disetujui', 'Belum bayar', 'Menunggu persetujuan'])
                 ->where('id', '!=', $request->id) // Mengecualikan booking yang sedang diupdate
                 ->get();
 
@@ -173,26 +176,37 @@ class custStatusBookingRuanganController extends Controller
         }
 
         // Set batas waktu 1 menit sejak dibuat
-        $batasWaktu = Carbon::now()->subMinutes(15);
+        $batasWaktu = Carbon::now()->subMinutes(1);
 
         // Ambil semua booking milik pengguna yang belum mengunggah bukti bayar dalam 1 menit
         $bookings = pemRuangan::where('idCustomer', $nik)
             ->whereNull('buktiBayar')
             ->where('created_at', '<', $batasWaktu)
+            ->where('status', '!=', 'Dibatalkan') // Pengecualian untuk status "Dibatalkan"
             ->get();
 
-        // Cek apakah ada booking yang perlu dihapus
+        // Cek apakah ada booking yang perlu diperbarui
         if ($bookings->isNotEmpty()) {
-            // Hapus semua booking yang memenuhi kriteria
-            foreach ($bookings as $booking) {
-                $booking->delete();
+            // Cek apakah semua booking sudah berstatus "Expired"
+            $allExpired = $bookings->every(fn($booking) => $booking->status === "Expired");
+
+            if ($allExpired) {
+                return redirect()->back(); // Jika semua sudah expired, langsung return
             }
 
-            // Set session flash message hanya jika ada data yang dihapus
-            return redirect()->back()->with('success', 'Semua pemesanan tanpa bukti pembayaran yang melewati batas waktu telah dihapus');
+            // Ubah status semua booking yang belum expired menjadi "Expired"
+            foreach ($bookings as $booking) {
+                if ($booking->status !== "Expired") {
+                    $booking->status = "Expired";
+                    $booking->save();
+                }
+            }
+
+            // Set session flash message hanya jika ada data yang diperbarui
+            return redirect()->back()->with('success', 'Semua pemesanan tanpa bukti pembayaran yang melewati batas waktu telah diubah menjadi Expired');
         }
 
-        // Jika tidak ada booking yang dihapus, langsung return tanpa pesan
-        return;
+        // Jika tidak ada booking, tetap redirect
+        return redirect()->back();
     }
 }

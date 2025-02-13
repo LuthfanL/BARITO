@@ -375,14 +375,6 @@
                                         <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-indigo-500 via-indigo-600 to-indigo-700 text-white">
                                             Belum bayar
                                         </div>
-                                    @elseif ($booking->status == 'Expired')
-                                        <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-slate-500 via-slate-600 to-slate-700 text-white">
-                                            Expired
-                                        </div>
-                                    @elseif ($booking->status == 'Dibatalkan')
-                                        <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-amber-700 via-amber-800 to-amber-900 text-white">
-                                            Dibatalkan
-                                        </div>
                                     @endif
                                 </td>
 

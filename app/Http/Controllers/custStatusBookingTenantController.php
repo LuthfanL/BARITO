@@ -26,9 +26,13 @@ class custStatusBookingTenantController extends Controller
             return back()->with('error', 'Customer tidak ditemukan');
         }
 
+        $now = Carbon::now();
+
         // Ambil data pemTenant berdasarkan idAdmin
         $bookings = pemTenant::where('idCustomer', $nik)
             ->join('event', 'event.namaEvent', '=', 'pemTenant.namaEvent')
+            ->where('event.tglMulai', '>=', $now) // Hanya ambil data dengan tglMulai lebih besar dari sekarang
+            ->whereIn('pemTenant.status', ['disetujui', 'ditolak', 'belum bayar', 'menunggu persetujuan']) // Filter berdasarkan status
             ->orderBy('pemTenant.created_at', 'desc') // Urutkan berdasarkan tanggal dibuat (terbaru di atas)
             ->get();
 
@@ -55,8 +59,9 @@ class custStatusBookingTenantController extends Controller
             return redirect()->back()->with('error', 'Ruangan tidak ditemukan.');
         }
 
-        // Hapus pemTenant
-        $pemTenant->delete();
+        // Perbarui status menjadi "Dibatalkan"
+        $pemTenant->status = "Dibatalkan";
+        $pemTenant->save();
 
         // Redirect kembali dengan pesan sukses
         return redirect()->back()->with('success', 'Booking berhasil dibatalkan!');
@@ -185,7 +190,7 @@ class custStatusBookingTenantController extends Controller
         }
 
         // Set batas waktu 1 menit sejak dibuat
-        $batasWaktu = Carbon::now()->subMinutes(15);
+        $batasWaktu = Carbon::now()->subMinutes(1);
 
         // Ambil semua booking milik pengguna yang belum mengunggah bukti bayar dalam 1 menit
         $bookings = pemTenant::where('idCustomer', $nik)
@@ -193,18 +198,28 @@ class custStatusBookingTenantController extends Controller
             ->where('created_at', '<', $batasWaktu)
             ->get();
 
-        // Cek apakah ada booking yang perlu dihapus
+        // Cek apakah ada booking yang perlu diperbarui
         if ($bookings->isNotEmpty()) {
-            // Hapus semua booking yang memenuhi kriteria
-            foreach ($bookings as $booking) {
-                $booking->delete();
+            // Cek apakah semua booking sudah berstatus "Expired"
+            $allExpired = $bookings->every(fn($booking) => $booking->status === "Expired");
+
+            if ($allExpired) {
+                return redirect()->back(); // Jika semua sudah expired, langsung return
             }
 
-            // Set session flash message hanya jika ada data yang dihapus
-            return redirect()->back()->with('success', 'Semua pemesanan tanpa bukti pembayaran yang melewati batas waktu telah dihapus');
+            // Ubah status semua booking yang belum expired menjadi "Expired"
+            foreach ($bookings as $booking) {
+                if ($booking->status !== "Expired") {
+                    $booking->status = "Expired";
+                    $booking->save();
+                }
+            }
+
+            // Set session flash message hanya jika ada data yang diperbarui
+            return redirect()->back()->with('success', 'Semua pemesanan tanpa bukti pembayaran yang melewati batas waktu telah diubah menjadi Expired');
         }
 
-        // Jika tidak ada booking yang dihapus, langsung return tanpa pesan
-        return;
+        // Jika tidak ada booking, tetap redirect
+        return redirect()->back();
     }
 }

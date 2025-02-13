@@ -107,7 +107,7 @@
                         name="keyword" 
                         id="search-input" 
                         class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500" 
-                        placeholder="Cari ID Booking atau Nama Kendaraan" 
+                        placeholder="Cari ID Booking atau Nama Pemohon" 
                     />
                 </div>
             </form>
@@ -241,7 +241,15 @@
                                         <div data-popover-target="pop-alasan-{{ $booking->id }}" data-popover-placement="left" class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 text-white">
                                             Ditolak dan Alasannya
                                         </div>
-                                    @endif
+                                    @elseif ($booking->status == 'Expired')
+                                        <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-slate-500 via-slate-600 to-slate-700 text-white">
+                                            Expired
+                                        </div>
+                                    @elseif ($booking->status == 'Dibatalkan')
+                                        <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-amber-700 via-amber-800 to-amber-900 text-white">
+                                            Dibatalkan
+                                        </div>
+                                    @endif    
                                 </td>
                             </tr>
                             <!-- Popover alasan ditolak -->
@@ -328,6 +336,16 @@
         </div>
     </div>
 
+ <!-- Table -->
+    <script>
+        if (document.getElementById("default-table") && typeof simpleDatatables.DataTable !== 'undefined') {
+            const dataTable = new simpleDatatables.DataTable("#default-table", {
+                searchable: false,
+                perPageSelect: false
+            });
+        }
+    </script>
+
     <!-- Search -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -349,16 +367,6 @@
                 });
             });
         });
-    </script>
-
-    <!-- Table -->
-    <script>
-        if (document.getElementById("default-table") && typeof simpleDatatables.DataTable !== 'undefined') {
-            const dataTable = new simpleDatatables.DataTable("#default-table", {
-                searchable: false,
-                perPageSelect: false
-            });
-        }
     </script>
 
     <!-- Script Info Detail -->
