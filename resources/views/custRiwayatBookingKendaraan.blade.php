@@ -107,7 +107,7 @@
                         name="keyword" 
                         id="search-input" 
                         class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500" 
-                        placeholder="Cari ID Booking atau Nama Pemohon" 
+                        placeholder="Cari ID Booking" 
                     />
                 </div>
             </form>
@@ -357,9 +357,8 @@
                 
                 kendaraanList.forEach(function(card) {
                     const bookingId = card.getAttribute("data-bookingid");
-                    const bookingnamaKendaraaan = card.getAttribute("data-bookingnamaKendaraan").toLowerCase();   
 
-                    if (bookingId.includes(searchQuery) || bookingnamaKendaraaan.includes(searchQuery)) {
+                    if (bookingId.includes(searchQuery)) {
                         card.style.display = 'table-row'; 
                     } else {
                         card.style.display = 'none'; 
