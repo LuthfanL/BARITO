@@ -206,8 +206,8 @@
             <!-- Alert Belum Bayar -->
             @foreach ($bookings->where('status', 'Belum bayar') as $booking)
                 @php
-                    // Hitung waktu kedaluwarsa (created_at + 15 menit)
-                    $expiredTime = \Carbon\Carbon::parse($booking->created_at)->addMinutes(15)->timestamp;
+                    // Hitung waktu kedaluwarsa (created_at + 1 menit)
+                    $expiredTime = \Carbon\Carbon::parse($booking->created_at)->addMinutes(1)->timestamp;
                 @endphp
 
                 <div id="alert-box-kendaraan-{{ $booking->id }}" 
@@ -255,7 +255,7 @@
                             setTimeout(function() {
                                 localStorage.removeItem("expiredTime-kendaraan-" + id);
                                 location.reload();
-                            }, 3000);
+                            }, 0);
             
                             return;
                         }
@@ -374,6 +374,14 @@
                                     @elseif ($booking->status == 'Belum bayar')
                                         <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-indigo-500 via-indigo-600 to-indigo-700 text-white">
                                             Belum bayar
+                                        </div>
+                                    @elseif ($booking->status == 'Expired')
+                                        <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-slate-500 via-slate-600 to-slate-700 text-white">
+                                            Expired
+                                        </div>
+                                    @elseif ($booking->status == 'Dibatalkan')
+                                        <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-amber-700 via-amber-800 to-amber-900 text-white">
+                                            Dibatalkan
                                         </div>
                                     @endif
                                 </td>

@@ -46,6 +46,23 @@ class custStatusBookingKendaraanController extends Controller
         ]);
     }
 
+    // public function destroy($id)
+    // {
+    //     // Cari peminjaman kendaraan berdasarkan id
+    //     $pemKendaraan = pemKendaraan::where('id', $id)->first();
+
+    //     // Periksa apakah pemKendaraan ditemukan
+    //     if (!$pemKendaraan) {
+    //         return redirect()->back()->with('error', 'Ruangan tidak ditemukan.');
+    //     }
+
+    //     // Hapus pemKendaraan
+    //     $pemKendaraan->delete();
+
+    //     // Redirect kembali dengan pesan sukses
+    //     return redirect()->back()->with('success', 'Booking berhasil dibatalkan!');
+    // }
+
     public function destroy($id)
     {
         // Cari peminjaman kendaraan berdasarkan id
@@ -53,11 +70,12 @@ class custStatusBookingKendaraanController extends Controller
 
         // Periksa apakah pemKendaraan ditemukan
         if (!$pemKendaraan) {
-            return redirect()->back()->with('error', 'Ruangan tidak ditemukan.');
+            return redirect()->back()->with('error', 'Peminjaman kendaraan tidak ditemukan.');
         }
 
-        // Hapus pemKendaraan
-        $pemKendaraan->delete();
+        // Perbarui status menjadi "Dibatalkan"
+        $pemKendaraan->status = "Dibatalkan";
+        $pemKendaraan->save();
 
         // Redirect kembali dengan pesan sukses
         return redirect()->back()->with('success', 'Booking berhasil dibatalkan!');
@@ -133,7 +151,7 @@ class custStatusBookingKendaraanController extends Controller
 
             // Ambil semua booking kendaraan yang aktif kecuali yang sedang diperbarui
             $used = pemKendaraan::where('idKendaraan', $idKendaraan)
-                ->where('status', '!=', 'Ditolak')
+                ->whereIn('status', ['Disetujui', 'Belum bayar', 'Menunggu persetujuan'])
                 ->where('id', '!=', $request->id) // Mengecualikan booking yang sedang diupdate
                 ->get();
 
@@ -162,40 +180,79 @@ class custStatusBookingKendaraanController extends Controller
         return redirect()->back()->with('success', 'Data booking berhasil diperbarui!');
     }
 
+    // public function hapusBookingTanpaBukti()
+    // {
+    //     // Ambil pengguna yang sedang login
+    //     $user = auth()->user();
+
+    //     // Ambil nik dari model customer
+    //     $nik = customer::getNikByEmail($user->email);
+        
+    //     if (!$nik) {
+    //         // Tangani error jika nik tidak ditemukan
+    //         return back()->with('error', 'Customer tidak ditemukan');
+    //     }
+
+    //     // Set batas waktu 15 menit sejak dibuat
+    //     $batasWaktu = Carbon::now()->subMinutes(15);
+
+    //     // Ambil semua booking milik pengguna yang belum mengunggah bukti bayar dalam 15 menit
+    //     $bookings = pemKendaraan::where('idCustomer', $nik)
+    //         ->whereNull('buktiBayar')
+    //         ->where('created_at', '<', $batasWaktu)
+    //         ->get();
+
+    //     // Cek apakah ada booking yang perlu dihapus
+    //     if ($bookings->isNotEmpty()) {
+    //         // Hapus semua booking yang memenuhi kriteria
+    //         foreach ($bookings as $booking) {
+    //             $booking->delete();
+    //         }
+
+    //         // Set session flash message hanya jika ada data yang dihapus
+    //         return redirect()->back()->with('success', 'Semua pemesanan tanpa bukti pembayaran yang melewati batas waktu telah dihapus');
+    //     }
+
+    //     // Jika tidak ada booking yang dihapus, langsung return tanpa pesan
+    //     return;
+    // }
+
     public function hapusBookingTanpaBukti()
     {
         // Ambil pengguna yang sedang login
         $user = auth()->user();
 
-        // Ambil nik dari model customer
+        // Ambil NIK dari model customer
         $nik = customer::getNikByEmail($user->email);
         
         if (!$nik) {
-            // Tangani error jika nik tidak ditemukan
+            // Tangani error jika NIK tidak ditemukan
             return back()->with('error', 'Customer tidak ditemukan');
         }
 
         // Set batas waktu 1 menit sejak dibuat
-        $batasWaktu = Carbon::now()->subMinutes(15);
+        $batasWaktu = Carbon::now()->subMinutes(1);
 
         // Ambil semua booking milik pengguna yang belum mengunggah bukti bayar dalam 1 menit
         $bookings = pemKendaraan::where('idCustomer', $nik)
             ->whereNull('buktiBayar')
             ->where('created_at', '<', $batasWaktu)
+            ->where('status', '!=', 'Dibatalkan') // Pengecualian untuk status "Dibatalkan"
             ->get();
 
-        // Cek apakah ada booking yang perlu dihapus
+        // Cek apakah ada booking yang perlu diperbarui
         if ($bookings->isNotEmpty()) {
-            // Hapus semua booking yang memenuhi kriteria
+            // Ubah status semua booking yang memenuhi kriteria menjadi "Expired"
             foreach ($bookings as $booking) {
-                $booking->delete();
+                $booking->status = "Expired";
+                $booking->save();
             }
 
-            // Set session flash message hanya jika ada data yang dihapus
-            return redirect()->back()->with('success', 'Semua pemesanan tanpa bukti pembayaran yang melewati batas waktu telah dihapus');
+            // Set session flash message hanya jika ada data yang diperbarui
+            return redirect()->back()->with('success', 'Semua pemesanan tanpa bukti pembayaran yang melewati batas waktu telah diubah menjadi Expired');
         }
 
-        // Jika tidak ada booking yang dihapus, langsung return tanpa pesan
+        // Jika tidak ada booking yang diperbarui, langsung return tanpa pesan
         return;
     }
 }

@@ -33,7 +33,7 @@ class custBookingKendaraanController extends Controller
                 'pemKendaraan.tglMulai as start', 
                 'pemKendaraan.tglSelesai as end'
             )->where('kendaraan.platNomor', $platNomor)
-            ->where('status', '!=', 'Ditolak')
+            ->whereIn('status', ['Disetujui', 'Belum bayar', 'Menunggu persetujuan'])
             ->get()
             ->map(function ($event, $index) use ($colors) {
                 $event->color = $colors[$index % count($colors)];
@@ -84,7 +84,9 @@ class custBookingKendaraanController extends Controller
             return redirect()->back()->withErrors('Anda harus memesan minimal 3 hari sebelum hari yang dipesan!');
         }
 
-        $used = pemKendaraan::where('idKendaraan', $validated['idKendaraan'])->where('status','!=','Ditolak')->get();
+        $used = pemKendaraan::where('idKendaraan', $validated['idKendaraan'])
+            ->whereIn('status', ['Disetujui', 'Belum bayar', 'Menunggu persetujuan'])
+            ->get();
 
         // $used = pemKendaraan::where('idKendaraan', $validated['idKendaraan'])
         // ->where('status','!=','Ditolak')
