@@ -94,6 +94,21 @@
                     </div>
                 </div>
             </a>
+            <!-- Riwayat Booking -->
+            <a href="custRiwayatBookingKendaraan" class="block transform transition-transform duration-300 hover:scale-105 group">
+                <div class="bg-white-300 shadow-[0_0_12px_2px_rgba(0,0,0,0.1)] rounded-xl flex hover:shadow-xl">
+                    <div class="m-3 rounded-lg outline outline-2 outline-[#00C6BF] flex items-center">
+                        <div>
+                            <p class="text-left text-gray-500 pt-3 pb-3 pr-3 ml-4 mt-6 mb-6 text-m font-semibold">
+                                Riwayat Booking
+                            </p>
+                        </div>
+                        <div class="mr-4">
+                            <img width="40" height="40" src="https://img.icons8.com/ios-filled/50/737373/literature--v1.png" alt="riwayat"/>
+                        </div>
+                    </div>
+                </div>
+            </a>
             <!-- Kontak -->
             <a href="kontakKendaraan" class="block transform transition-transform duration-300 hover:scale-105 group">
                 <div class="bg-white-300 shadow-[0_0_12px_2px_rgba(0,0,0,0.1)] rounded-xl flex hover:shadow-xl">
