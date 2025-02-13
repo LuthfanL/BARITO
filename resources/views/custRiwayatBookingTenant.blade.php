@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-white">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riwayat Booking Tenant</title>
+    <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('assets/favicon-96x96.png') }}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMJTVF1a1wMA2gO/YHbx+fyfJhN/0Q5ntv7zYY" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css"  rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script>
+    <link rel="stylesheet" href="assets/style.css"/>
+    
+    <style>
+        #default-table {
+            width: 100%;
+            border-collapse: collapse; /* Mengurangi jarak antar border */
+        }
+        #default-table th, #default-table td {
+            padding: 8px 3px; /* Mengurangi padding antar sel */
+            text-align: center;
+            white-space: nowrap; /* Membatasi teks agar tidak wrap */
+        }
+
+        #default-table td.nama-tenant {
+            white-space: normal; /* Mengizinkan teks untuk membungkus */
+            max-width: 140px; /* Atur lebar maksimal sesuai kebutuhan */
+        }
+
+        #default-table th {
+            max-width: 140px; /* Membatasi lebar maksimal header kolom */
+        }
+        #default-table td {
+            max-width: 200px; /* Membatasi lebar maksimal sel data */
+            overflow: hidden; /* Menyembunyikan teks yang terlalu panjang */
+            text-overflow: ellipsis; /* Menambahkan elipsis untuk teks yang terlalu panjang */
+        }
+    </style>
+
+</head>
+
+<body class="h-full bg-white">
+    <!-- Navbar -->
+    <div class="relative z-30">
+        @include('components.navbargeneral')
+    </div>
+
+    <!-- Cover DIV -->
+    <div id="default-carousel" class="relative w-full pt-24 m-0 shadow-xl" data-carousel="slide">
+        <!-- Cover -->
+        <div class="relative h-56 overflow-hidden md:h-96">
+            <!-- Gambar dengan teks -->
+            <div class="hidden" data-carousel-item>
+                <img 
+                    src="assets/tenant.png" 
+                    class="absolute w-full h-full object-cover" 
+                    alt="Cover Image"
+                />
+                <!-- Teks di tengah gambar -->
+                <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+                    <h2 class="text-white text-4xl md:text-5xl font-bold drop-shadow-lg">
+                        Riwayat Booking Tenant
+                    </h2>
+                <!-- Breadcrumb -->
+                <nav class="mt-4 flex justify-center" aria-label="Breadcrumb">
+                    <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
+                        <li class="inline-flex items-center">
+                            <a href="/" class="inline-flex items-center text-sm font-medium text-white hover:font-bold group">
+                                <svg class="w-3 h-3 me-2.5 transition-transform duration-200 group-hover:scale-110" 
+                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"/>
+                                </svg>
+                                Home
+                            </a>
+                        </li>
+                        <li>
+                            <a href="homePengelolaanTenant" class="inline-flex items-center text-sm font-medium text-white hover:font-bold">
+                                <svg class="rtl:rotate-180 w-3 h-3 text-white mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                                </svg>
+                                Pemesanan Tenant
+                            </a>
+                        </li>
+                        <li aria-current="page">
+                            <div class="flex items-center">
+                                <svg class="rtl:rotate-180 w-3 h-3 text-white mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                                </svg>
+                                <span class="ms-1 text-sm font-medium text-white md:ms-2">Riwayat Booking</span>
+                            </div>
+                        </li>
+                    </ol>
+                </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="px-8 pt-8 pb-8 flex justify-center items-center">
+        <div class="max-w-full w-full">
+
+            <!-- Cari Booking -->
+            <form id="searchForm" class="w-full mx-auto">   
+                <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Cari Booking</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                        <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                        </svg>
+                    </div>
+                    <input 
+                        type="search" 
+                        name="keyword" 
+                        id="search-input" 
+                        class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500" 
+                        placeholder="Cari ID Booking atau Nama Tenant" 
+                    />
+                </div>
+            </form>
+
+            <!-- Table Data -->
+            <table id="default-table">
+                <thead>
+                    <tr>
+                        <th>
+                            <span class="flex items-center">
+                                No
+                                <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4"/>
+                                </svg>
+                            </span>
+                        </th>
+                        <th>
+                            <span class="flex items-center">
+                                ID. Booking
+                                <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4"/>
+                                </svg>
+                            </span>
+                        </th>
+                        <th>
+                            <span class="flex items-center">
+                                Nama Pemohon
+                                <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4"/>
+                                </svg>
+                            </span>
+                        </th>
+                        <th>
+                            <span class="flex items-center">
+                                No. Whatapps
+                                <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4"/>
+                                </svg>
+                            </span>
+                        </th>
+                        <th>
+                            <span class="flex items-center">
+                                Nama Tenant
+                                <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4"/>
+                                </svg>
+                            </span>
+                        </th>
+                        <th>
+                            <span class="flex items-center">
+                                Jenis Tenant
+                                <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4"/>
+                                </svg>
+                            </span>
+                        </th>
+                        <th>
+                            <span class="flex items-center">
+                                Event
+                                <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4"/>
+                                </svg>
+                            </span>
+                        </th>
+                        <th data-type="date" data-format="DD/MM/YYYY">
+                            <span class="flex items-center">
+                                Tgl Mulai
+                                <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4"/>
+                                </svg>
+                            </span>
+                        </th>
+                        <th data-type="date" data-format="DD/MM/YYYY">
+                            <span class="flex items-center">
+                                Tgl Selesai
+                                <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4"/>
+                                </svg>
+                            </span>
+                        </th>
+                        <th>
+                            <span class="flex items-center">
+                                Bukti Pembayaran
+                            </span>
+                        </th>
+                        <th>
+                            <span class="flex items-center">
+                                Status
+                                <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4"/>
+                                </svg>
+                            </span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!empty($bookings))
+                        @foreach ($bookings as $booking)
+                            <tr class="booking-list" data-bookingid="{{ $booking->id }}" data-bookingidCustomer="{{ $booking->idCustomer }}" data-bookingnamaPemohon="{{ $booking->namaPemohon }}" data-bookingnamaEvent="{{ $booking->namaEvent }}">
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $booking->id }}</td>
+                                <td>{{ $booking->namaPemohon }}</td>
+                                <td>{{ $booking->noWa }}</td>
+                                <td>{{ $booking->namaTenant }}</td>
+                                <td>{{ $booking->tipeTenant }}</td>
+                                <td>{{ $booking->namaEvent }}</td>
+                                <td>{{ \Carbon\Carbon::parse($booking->tglMulai)->format('d/m/Y') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($booking->tglSelesai)->format('d/m/Y') }}</td>
+                                <!-- Bukti Bayar -->
+                                <td class="flex justify-center items-center text-center">
+                                    @if($booking->buktiBayar)
+                                        <button onclick="showBukti('{{ asset($booking->buktiBayar) }}')" 
+                                            class="px-3 py-1 bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white rounded-lg">
+                                            Lihat Bukti
+                                        </button>
+                                    @else
+                                        <span class="text-red-500">Belum diupload</span>
+                                    @endif
+                                </td>              
+                                <td>
+                                    @if ($booking->status == 'Disetujui')
+                                        <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 text-white">
+                                            Disetujui
+                                        </div>
+                                    @elseif ($booking->status == 'Ditolak')
+                                        <div data-popover-target="pop-alasan-{{ $booking->id }}" data-popover-placement="left" class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 text-white">
+                                            Ditolak dan Alasannya
+                                        </div>
+                                    @endif
+                                </td>
+                            </tr>
+                            <!-- Popover alasan ditolak -->
+                            @if ($booking->status == 'Ditolak')
+                                <div data-popover id="pop-alasan-{{ $booking->id }}" role="tooltip" class="absolute z-10 invisible inline-block w-80 max-w-3xl text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-xl opacity-0">
+                                    <div class="px-3 py-2 bg-gray-100 border-b border-gray-200 rounded-t-lg">
+                                        <h3 class="font-semibold text-gray-900">Alasan Penolakan</h3>
+                                    </div>
+                                    <div class="px-3 py-2">
+                                        <textarea id="keperluan-acara" rows="3" class="mt-1 block w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-500 p-3" readonly>{{ isset($booking) && !empty($booking->alasanPenolakan) ? $booking->alasanPenolakan : 'Tidak ada alasan penolakan.' }}</textarea>
+                                    </div>
+                                    <div data-popper-arrow></div>
+                                </div>
+                            @endif
+                        @endforeach
+                    @endif
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal Bukti Bayar -->
+    <div id="detail-bayar" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" 
+        class="hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-screen bg-gray-900 bg-opacity-50">
+        
+        <div class="relative p-6 w-full max-w-xl bg-white rounded-lg shadow-lg">
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between border-b pb-4">
+                <h3 class="text-lg font-semibold text-gray-900">
+                    Bukti Pembayaran
+                </h3>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="p-4 space-y-4">
+                <div class="flex justify-center">
+                    <img id="buktiBayarImg" class="h-96 max-w-xl rounded-lg" src="" alt="Bukti Bayar">
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="flex justify-end space-x-2 border-t pt-4">
+                <a id="downloadBukti" href="#" class="bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-800 focus:ring-4 focus:ring-green-300" download>
+                    Unduh
+                </a>
+                <button onclick="closeModal()" class="bg-blue-700 text-white px-4 py-2 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300">
+                    Kembali
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const searchInput = document.getElementById("search-input"); 
+            const kendaraanList = document.querySelectorAll(".booking-list"); 
+
+            searchInput.addEventListener("input", function() {
+                const searchQuery = searchInput.value.toLowerCase(); 
+                
+                kendaraanList.forEach(function(card) {
+                    const bookingId = card.getAttribute("data-bookingid");
+
+                    if (bookingId.includes(searchQuery)) {
+                        card.style.display = 'table-row'; 
+                    } else {
+                        card.style.display = 'none'; 
+                    }
+                });
+            });
+        });
+    </script>
+
+    <!-- Table -->
+    <script>
+        if (document.getElementById("default-table") && typeof simpleDatatables.DataTable !== 'undefined') {
+            const dataTable = new simpleDatatables.DataTable("#default-table", {
+                searchable: false,
+                perPageSelect: false
+            });
+        }
+    </script>
+
+    <!-- Script Bukti Bayar -->
+    <script>
+        function showBukti(url) {
+            document.getElementById('buktiBayarImg').src = url;
+            document.getElementById('downloadBukti').href = url;
+            document.getElementById('detail-bayar').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('detail-bayar').classList.add('hidden');
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+</body>
+
+</html>

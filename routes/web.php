@@ -13,6 +13,9 @@ use App\Http\Controllers\custDaftarEventController;
 use App\Http\Controllers\custStatusBookingRuanganController;
 use App\Http\Controllers\custStatusBookingKendaraanController;
 use App\Http\Controllers\custStatusBookingTenantController;
+use App\Http\Controllers\custRiwayatBookingRuanganController;
+use App\Http\Controllers\custRiwayatBookingKendaraanController;
+use App\Http\Controllers\custRiwayatBookingTenantController;
 use App\Http\Controllers\custBookingRuanganController;
 use App\Http\Controllers\custBookingKendaraanController;
 use App\Http\Controllers\custBookingTenantController;
@@ -69,6 +72,8 @@ Route::get('/custBookingRuangan', [custBookingRuanganController::class, 'index']
 
 Route::get('/custStatusBookingRuangan', [custStatusBookingRuanganController::class, 'index'])->name('custStatusBookingRuangan')->middleware('auth');
 
+Route::get('/custRiwayatBookingRuangan', [custRiwayatBookingRuanganController::class, 'index'])->name('custRiwayatBookingRuangan')->middleware('auth');
+
 Route::put('/updateBookingRuangan', [custStatusBookingRuanganController::class, 'updateBookingRuangan'])->name('updateBookingRuangan');
 
 Route::post('/custBuktiBayarPemRuangan', [custStatusBookingRuanganController::class, 'uploadBukti'])->name('booking.uploadBuktiRuang')->middleware('auth');
@@ -90,6 +95,8 @@ Route::get('/custBookingKendaraan', [custBookingKendaraanController::class, 'ind
 
 Route::get('/custStatusBookingKendaraan', [custStatusBookingKendaraanController::class, 'index'])->name('custStatusBookingKendaraan')->middleware('auth');
 
+Route::get('/custRiwayatBookingKendaraan', [custRiwayatBookingKendaraanController::class, 'index'])->name('custRiwayatBookingKendaraan')->middleware('auth');
+
 Route::put('/updateBookingKendaraan', [custStatusBookingKendaraanController::class, 'updateBookingKendaraan'])->name('updateBookingKendaraan');
 
 Route::post('/custBuktiBayarPemKendaraan', [custStatusBookingKendaraanController::class, 'uploadBukti'])->name('booking.uploadBukti')->middleware('auth');
@@ -110,6 +117,8 @@ Route::get('/custDaftarEvent', [custDaftarEventController::class, 'index'])->nam
 Route::get('/custBookingTenant', [custBookingTenantController::class, 'index'])->name('custBookingTenant')->middleware('auth');
 
 Route::get('/custStatusBookingTenant', [custStatusBookingTenantController::class, 'index'])->name('custStatusBookingTenant')->middleware('auth');
+
+Route::get('/custRiwayatBookingTenant', [custRiwayatBookingTenantController::class, 'index'])->name('custRiwayatBookingTenant')->middleware('auth');
 
 Route::put('/updateBookingTenant', [custStatusBookingTenantController::class, 'updateBookingTenant'])->name('updateBookingTenant');
 

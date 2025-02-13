@@ -366,7 +366,7 @@
     });
 </script>
 
-{{-- Scipt untuk mengambil data fasilitas  --}}
+<!-- Script Info Detail -->
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         // Ambil semua tombol yang membuka modal fasilitas
