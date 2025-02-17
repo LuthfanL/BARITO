@@ -107,7 +107,7 @@
                         name="keyword" 
                         id="search-input" 
                         class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500" 
-                        placeholder="Cari ID Booking"  
+                        placeholder="Cari ID Booking atau Nama Ruangan"  
                     />
                 </div>
             </form>
@@ -177,11 +177,11 @@
                                 Bukti Pembayaran
                             </span>
                         </th>
-                        <th>
+                        {{-- <th>
                             <span class="flex items-center justify-center">
                                 Info Lain
                             </span>
-                        </th>
+                        </th> --}}
                         <th>
                             <span class="flex items-center">
                                 Status
@@ -195,7 +195,7 @@
                 <tbody>
                     @if (!empty($bookings))
                         @foreach ($bookings as $booking)
-                            <tr class="booking-list" data-bookingid="{{ $booking->id }}" data-bookingidCustomer="{{ $booking->idCustomer }}" data-bookingnamaPemohon="{{ $booking->namaPemohon }}" data-bookingnamaRuangan="{{ $booking->namaRuangan }}">
+                            <tr class="booking-list" data-bookingid="{{ $booking->id }}" data-bookingnamaRuangan="{{ $booking->namaRuangan }}">
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $booking->id }}</td>
                                 <td>{{ $booking->namaPemohon }}</td>
@@ -215,7 +215,7 @@
                                     @endif
                                 </td>              
                     
-                                <!-- Info Lain -->
+                                {{-- <!-- Info Lain -->
                                 <td class="mb-4 items-center text-center mt-5"> 
                                     <div class="flex justify-center ">
                                         <button 
@@ -228,7 +228,7 @@
                                             Detail
                                         </button>
                                     </div>
-                                </td>
+                                </td> --}}
 
                                 <!-- Status -->
                                 <td>
@@ -291,9 +291,11 @@
 
             <!-- Modal Footer -->
             <div class="flex justify-end space-x-2 border-t pt-4">
-                <a id="downloadBukti" href="#" class="bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-800 focus:ring-4 focus:ring-green-300" download>
-                    Unduh
+                <a id="downloadBukti" href="#" download>
                 </a>
+                {{-- <a id="downloadBukti" href="#" class="bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-800 focus:ring-4 focus:ring-green-300" download>
+                    Unduh
+                </a> --}}
                 <button onclick="closeModal()" class="bg-blue-700 text-white px-4 py-2 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300">
                     Kembali
                 </button>
@@ -301,7 +303,7 @@
         </div>
     </div>
 
-    <!-- Modal Info Lain -->
+    {{-- <!-- Modal Info Lain -->
     <div id="detail-booking" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative p-4 w-full max-w-2xl max-h-full">
             <!-- Modal content -->
@@ -329,7 +331,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <!-- Table -->
     <script>
@@ -341,7 +343,7 @@
         }
     </script>
 
-     <!-- Search -->
+    <!-- Search -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const searchInput = document.getElementById("search-input"); 
@@ -349,11 +351,12 @@
 
             searchInput.addEventListener("input", function() {
                 const searchQuery = searchInput.value.toLowerCase(); 
-                
+        
                 kendaraanList.forEach(function(card) {
                     const bookingId = card.getAttribute("data-bookingid");
+                    const bookingnamaRuangan = card.getAttribute("data-bookingnamaRuangan").toLowerCase();   
 
-                    if (bookingId.includes(searchQuery)) {
+                    if (bookingId.includes(searchQuery) || bookingnamaRuangan.includes(searchQuery)) {
                         card.style.display = 'table-row'; 
                     } else {
                         card.style.display = 'none'; 
@@ -363,7 +366,7 @@
         });
     </script>
 
-    <!-- Script Info Detail -->
+    {{-- <!-- Script Info Detail -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const detailButtons = document.querySelectorAll("[data-modal-target='detail-booking']");
@@ -380,7 +383,7 @@
                 });
             });
         });
-    </script>
+    </script> --}}
 
     <!-- Script Bukti Bayar -->
     <script>

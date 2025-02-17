@@ -26,13 +26,16 @@ class riwayatBookingRuanganController extends Controller
 
         // Ambil data pemRuangan berdasarkan idAdmin dengan filter tambahan
         $bookings = pemRuangan::where('idAdmin', $idAdmin)
-        ->where(function ($query) use ($now) {
-            $query->whereIn('status', ['Expired', 'Dibatalkan']) // Ambil langsung jika status Expired atau Dibatalkan
-                ->orWhere(function ($q) use ($now) {
-                    $q->where('tglMulai', '<=', $now) // Hanya ambil jika tglMulai < now
-                        ->whereIn('status', ['Disetujui', 'Ditolak']); // Dan statusnya Disetujui atau Ditolak
-                });
+        ->where(function ($query) {
+            $query->whereIn('status', ['Disetujui', 'Ditolak', 'Expired', 'Dibatalkan']); // Ambil langsung jika status Expired atau Dibatalkan
         })
+        // ->where(function ($query) use ($now) {
+        //     $query->whereIn('status', ['Expired', 'Dibatalkan']) // Ambil langsung jika status Expired atau Dibatalkan
+        //         ->orWhere(function ($q) use ($now) {
+        //             $q->where('tglMulai', '<=', $now) // Hanya ambil jika tglMulai < now
+        //                 ->whereIn('status', ['Disetujui', 'Ditolak']); // Dan statusnya Disetujui atau Ditolak
+        //         });
+        // })
         ->orderBy('created_at', 'desc') // Urutkan berdasarkan tanggal dibuat (terbaru di atas)
         ->get();
 

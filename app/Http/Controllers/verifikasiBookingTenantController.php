@@ -58,7 +58,7 @@ class verifikasiBookingTenantController extends Controller
             ->where('pemTenant.idAdmin', $idAdmin)
             ->where(function ($query) use ($now) {
                 $query->where('event.tglMulai', '>', $now) // Jika tglMulai lebih besar dari now, ambil semua status
-                    ->whereIn('status', ['Disetujui', 'Ditolak', 'Belum bayar','Menunggu persetujuan']) // Ambil semua status yang diinginkan
+                    ->whereIn('status', ['Belum bayar','Menunggu persetujuan']) // Ambil semua status yang diinginkan
                     ->orWhere(function ($query) use ($now) {
                         $query->where('event.tglMulai', '=', $now) // Jika tglMulai sama dengan now
                             ->where('pemTenant.status', 'Menunggu persetujuan'); // Hanya ambil yang statusnya "Menunggu persetujuan"

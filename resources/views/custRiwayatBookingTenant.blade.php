@@ -114,7 +114,7 @@
                         name="keyword" 
                         id="search-input" 
                         class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500" 
-                        placeholder="Cari ID Booking" 
+                        placeholder="Cari ID Booking atau Nama Tenant" 
                     />
                 </div>
             </form>
@@ -213,7 +213,7 @@
                 <tbody>
                     @if (!empty($bookings))
                         @foreach ($bookings as $booking)
-                            <tr class="booking-list" data-bookingid="{{ $booking->id }}" data-bookingidCustomer="{{ $booking->idCustomer }}" data-bookingnamaPemohon="{{ $booking->namaPemohon }}" data-bookingnamaEvent="{{ $booking->namaEvent }}">
+                            <tr class="booking-list" data-bookingid="{{ $booking->id }}" data-bookingnamaTenant="{{ $booking->namaTenant }}">
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $booking->id }}</td>
                                 <td>{{ $booking->namaPemohon }}</td>
@@ -296,9 +296,11 @@
 
             <!-- Modal Footer -->
             <div class="flex justify-end space-x-2 border-t pt-4">
-                <a id="downloadBukti" href="#" class="bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-800 focus:ring-4 focus:ring-green-300" download>
-                    Unduh
+                <a id="downloadBukti" href="#" download>
                 </a>
+                {{-- <a id="downloadBukti" href="#" class="bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-800 focus:ring-4 focus:ring-green-300" download>
+                    Unduh
+                </a> --}}
                 <button onclick="closeModal()" class="bg-blue-700 text-white px-4 py-2 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300">
                     Kembali
                 </button>
@@ -317,8 +319,9 @@
                 
                 kendaraanList.forEach(function(card) {
                     const bookingId = card.getAttribute("data-bookingid");
+                    const bookingnamaTenant = card.getAttribute("data-bookingnamaTenant").toLowerCase();   
 
-                    if (bookingId.includes(searchQuery)) {
+                    if (bookingId.includes(searchQuery)|| bookingnamaTenant.includes(searchQuery)) {
                         card.style.display = 'table-row'; 
                     } else {
                         card.style.display = 'none'; 

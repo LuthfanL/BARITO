@@ -28,11 +28,13 @@ class riwayatBookingTenantController extends Controller
         $bookings = pemTenant::where('pemTenant.idAdmin', $idAdmin)            
             ->join('event', 'event.namaEvent', '=', 'pemTenant.namaEvent')
             ->where(function ($query) use ($now) {
-                $query->whereIn('pemTenant.status', ['Expired', 'Dibatalkan']) // Ambil langsung jika status Expired atau Dibatalkan
-                    ->orWhere(function ($q) use ($now) {
-                        $q->where('event.tglMulai', '<=', $now) // Hanya ambil jika event.tglMulai <= now
-                        ->whereIn('pemTenant.status', ['Disetujui', 'Ditolak']); // Dan statusnya Disetujui atau Ditolak
-                    });
+                $query->whereIn('pemTenant.status', ['Disetujui', 'Ditolak', 'Expired', 'Dibatalkan']); // Ambil status
+                
+                // $query->whereIn('pemTenant.status', ['Expired', 'Dibatalkan']) // Ambil langsung jika status Expired atau Dibatalkan
+                //     ->orWhere(function ($q) use ($now) {
+                //         $q->where('event.tglMulai', '<=', $now) // Hanya ambil jika event.tglMulai <= now
+                //         ->whereIn('pemTenant.status', ['Disetujui', 'Ditolak']); // Dan statusnya Disetujui atau Ditolak
+                //     });
             })
             ->orderBy('pemTenant.created_at', 'desc') // Urutkan berdasarkan tanggal dibuat (terbaru di atas)
             ->get();
