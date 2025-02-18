@@ -155,9 +155,9 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody>
-                            @if (!empty($bookings))
-                                @foreach ($bookings as $booking)
+                        @if (!empty($bookings))
+                            <tbody>
+                                @foreach ($bookings as $index => $booking)
                                     <tr class="booking-list" data-bookingid="{{ $booking->id }}" data-bookingidCustomer="{{ $booking->idCustomer }}" data-bookingnamaPemohon="{{ $booking->namaPemohon }}" data-bookingnamaRuangan="{{ $booking->namaRuangan }}">
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $booking->id }}</td>
@@ -226,8 +226,8 @@
                                         </div>
                                     @endif
                                 @endforeach    
-                            @endif
-                        </tbody>
+                            </tbody>
+                        @endif
                     </table>
                 </div>
             </div>
@@ -303,6 +303,7 @@
     if (document.getElementById("default-table") && typeof simpleDatatables.DataTable !== 'undefined') {
         const dataTable = new simpleDatatables.DataTable("#default-table", {
             searchable: false,
+            perPage: -1, // Menampilkan semua baris
             perPageSelect: false
         });
     }
