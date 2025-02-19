@@ -202,7 +202,7 @@
                                                     data-bookingketerangan="{{ $booking->keterangan }}" 
                                                     type="button" 
                                                     class="block px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                                                    Detail
+                                                    Lihat
                                                 </button>
                                             </div>
                                         </td>
@@ -276,7 +276,7 @@
                     Unduh
                 </a>
                 <button onclick="closeModal()" class="bg-blue-700 text-white px-4 py-2 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300">
-                    Kembali
+                    Tutup
                 </button>
             </div>
         </div>
@@ -297,16 +297,16 @@
                 <div class="p-4 md:p-5 space-y-6">
                     <div>
                         <label for="keperluan" class="block text-sm font-medium text-gray-900 mb-2">Keperluan Acara</label>
-                        <input type="text" id="keperluan" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 sm:text-sm" value="{{ $booking->keperluan ?? '' }}" readonly>
+                        <input type="text" id="keperluan" class="mt-1 block w-full rounded-md pointer-events-none border-gray-300 shadow-sm sm:text-sm" value="{{ $booking->keperluan ?? '' }}" readonly>
                     </div>
                     <div>
-                        <label for="keterangan" class="block text-sm font-medium text-gray-900 mb-2">Keterangan Acara</label>
-                        <input type="text" id="keterangan" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 sm:text-sm" value="{{ $booking->keterangan ?? '' }}" readonly>
+                        <label for="keterangan" class="block text-sm font-medium text-gray-900 mb-2">Deskripsi Tambahan</label>
+                        <input type="text" id="keterangan" class="mt-1 block w-full rounded-md pointer-events-none border-gray-300 shadow-sm sm:text-sm" value="{{ $booking->keterangan ?? '' }}" readonly>
                     </div>
                 </div>
                 <!-- Modal footer -->
                 <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b">
-                    <button data-modal-hide="detail-booking" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Kembali</button>
+                    <button data-modal-hide="detail-booking" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Tutup</button>
                 </div>
             </div>
         </div>
@@ -336,7 +336,7 @@
                             <button 
                                 data-modal-hide="modal-setujui" 
                                 type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                                Kembali
+                                Batal
                             </button>
                         </form>
                     @else
@@ -377,7 +377,7 @@
                                 data-modal-hide="modal-tolak" 
                                 type="button" 
                                 class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                                Kembali
+                                Batal
                             </button>
                         </form>
                     @else

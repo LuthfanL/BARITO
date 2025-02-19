@@ -256,7 +256,7 @@
                                                 data-thumbnails="{{ json_encode($data->foto_urls) }}"   
                                                 type="button" 
                                                 class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                                                Detail
+                                                Lihat
                                             </button>
                                         </td>
                                         <td class="text-center">
@@ -327,6 +327,9 @@
                         <!-- Input Biaya Sewa -->
                         <label for="hargaTenant">Biaya Sewa (Per Hari)</label>
                         <input type="text" id="hargaTenant" name="hargaTenant" required oninput="validateAngka(this)">
+                        <p class="mb-4 text-xs text-gray-500">
+                            * Masukkan jumlah biaya sewa dalam angka, misalnya 500000. Nilai tersebut akan otomatis dikonversi ke format rupiah.
+                        </p>
 
                         <!-- Input Jenis Tenant -->
                         <label>Jenis Tenant</label>
@@ -423,7 +426,7 @@
                 </div>
                 <!-- Modal footer -->
                 <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b">
-                    <button data-modal-hide="modal-foto" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center">Kembali</button>
+                    <button data-modal-hide="modal-foto" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center">Tutup</button>
                 </div>
             </div>
         </div>
@@ -447,7 +450,7 @@
                             Hapus
                         </button>
                         <button data-modal-hide="modal-hapus" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                            Kembali
+                            Tutup
                         </button>
                 </form>
                 </div>

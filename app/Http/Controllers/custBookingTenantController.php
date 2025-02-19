@@ -76,7 +76,7 @@ class custBookingTenantController extends Controller
         $already = pemTenant::where('idCustomer', $nik)->where('namaEvent', $request->input('namaEvent')) ->whereIn('status', ['Disetujui', 'Belum bayar', 'Menunggu persetujuan'])->first();
 
         if ($already){
-            return redirect()->back()->withErrors('Anda hanya dapat memesan 1 tenant untuk 1 event!');
+            return redirect()->back()->withErrors('Mohon maaf, Anda hanya dapat memesan 1 tenant untuk 1 event.');
         }
 
         $makanan = event::where('namaEvent', $request->input('namaEvent'))->first()->nMakanan;
@@ -87,13 +87,13 @@ class custBookingTenantController extends Controller
         $nBarang = pemTenant::where('namaEvent', $request->input('namaEvent'))->where('tipeTenant', 'Tenant Barang') ->whereIn('status', ['Disetujui', 'Belum bayar', 'Menunggu persetujuan'])->count();
 
         if ($request->input('tipeTenant') == 'Tenant Makanan' && $makanan == $nMakanan) {
-            return redirect()->back()->withErrors('Maaf, kuota untuk tenant makanan sudah habis, silahkan berkunjung dilain waktu!');
+            return redirect()->back()->withErrors('Mohon maaf, kuota untuk tenant makanan sudah habis, silahkan berkunjung dilain waktu.');
         }
         if ($request->input('tipeTenant') == 'Tenant Jasa' && $jasa == $nJasa) {
-            return redirect()->back()->withErrors('Maaf, kuota untuk tenant jasa sudah habis, silahkan berkunjung dilain waktu!');
+            return redirect()->back()->withErrors('Mohon maaf, kuota untuk tenant jasa sudah habis, silahkan berkunjung dilain waktu.');
         }
         if ($request->input('tipeTenant') == 'Tenant Barang' && $barang == $nBarang) {
-            return redirect()->back()->withErrors('Maaf, kuota untuk tenant barang sudah habis, silahkan berkunjung dilain waktu!');
+            return redirect()->back()->withErrors('Mohon maaf, kuota untuk tenant barang sudah habis, silahkan berkunjung dilain waktu.');
         }
 
         // Siapkan data untuk disimpan

@@ -251,7 +251,7 @@
                                                 data-proyektor="{{ $data['proyektor'] }}" 
                                                 type="button" 
                                                 class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                                                Detail
+                                                Lihat
                                             </button>
                                         </td>
                                         <td class="text-center">
@@ -262,7 +262,7 @@
                                                 data-thumbnails="{{ json_encode($data->foto_urls) }}"   
                                                 type="button" 
                                                 class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                                                Detail
+                                                Lihat
                                             </button>
                                         </td>
                                         <td class="text-center">
@@ -338,6 +338,9 @@
                         <!-- Input Biaya Sewa, Lokasi, Lantai dan Luas Ruangan -->
                         <label for="biayaSewa">Biaya Sewa (Per Hari)</label>
                         <input type="text" id="biayaSewa" name="biayaSewa" required oninput="validateAngka(this)">
+                        <p class="mb-4 text-xs text-gray-500">
+                            * Masukkan jumlah biaya sewa dalam angka, misalnya 500000. Nilai tersebut akan otomatis dikonversi ke format rupiah.
+                        </p>
 
                         <label for="lokasi">Lokasi (Nama Gedung)</label>
                         <input type="text" id="lokasi" name="lokasi" required>
@@ -352,27 +355,27 @@
                         <label>Fasilitas Ruangan</label>
                         <div class="fasilitas-container">
                             <div>
-                                <label for="podium">Podium</label>
+                                <label for="podium">Jumlah Podium</label>
                                 <input type="text" id="podium" name="podium" oninput="validateAngka(this)">
                             </div>
                             <div>
-                                <label for="sound">Sound</label>
+                                <label for="sound">Jumlah Sound</label>
                                 <input type="text" id="sound" name="sound" oninput="validateAngka(this)">
                             </div>
                             <div>
-                                <label for="meja">Meja</label>
+                                <label for="meja">Jumlah Meja</label>
                                 <input type="text" id="meja" name="meja" oninput="validateAngka(this)">
                             </div>
                             <div>
-                                <label for="ac">AC</label>
+                                <label for="ac">Jumlah AC</label>
                                 <input type="text" id="ac" name="ac" oninput="validateAngka(this)">
                             </div>
                             <div>
-                                <label for="kursi">Kursi</label>
+                                <label for="kursi">Jumlah Kursi</label>
                                 <input type="text" id="kursi" name="kursi" oninput="validateAngka(this)">
                             </div>
                             <div>
-                                <label for="proyektor">Proyektor</label>
+                                <label for="proyektor">Jumlah Proyektor</label>
                                 <input type="text" id="proyektor" name="proyektor" oninput="validateAngka(this)">
                             </div>
                         </div>
@@ -448,34 +451,34 @@
                 <div class="p-4 md:p-5 space-y-4">
                     <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <label for="podium" class="block text-sm font-medium text-gray-700">Podium</label>
-                            <input type="number" id="podium" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" value="{{ $data['podium'] ?? '' }}" readonly>
+                            <label for="podium" class="block text-sm font-medium text-gray-700">Jumlah Podium</label>
+                            <input type="number" id="podium" class="mt-1 block w-full rounded-md pointer-events-none border-gray-300 shadow-sm sm:text-sm" value="{{ $data['podium'] ?? '' }}" readonly>
                         </div>
                         <div>
-                            <label for="sound" class="block text-sm font-medium text-gray-700">Sound</label>
-                            <input type="number" id="sound" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" value="{{ $data['sound'] ?? '' }}" readonly>
+                            <label for="sound" class="block text-sm font-medium text-gray-700">Jumlah Sound</label>
+                            <input type="number" id="sound" class="mt-1 block w-full rounded-md pointer-events-none border-gray-300 shadow-sm sm:text-sm" value="{{ $data['sound'] ?? '' }}" readonly>
                         </div>
                         <div>
-                            <label for="meja" class="block text-sm font-medium text-gray-700">Meja</label>
-                            <input type="number" id="meja" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" value="{{ $data['meja'] ?? '' }}" readonly>
+                            <label for="meja" class="block text-sm font-medium text-gray-700">Jumlah Meja</label>
+                            <input type="number" id="meja" class="mt-1 block w-full rounded-md pointer-events-none border-gray-300 shadow-sm sm:text-sm" value="{{ $data['meja'] ?? '' }}" readonly>
                         </div>
                         <div>
-                            <label for="ac" class="block text-sm font-medium text-gray-700">AC</label>
-                            <input type="number" id="ac" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" value="{{ $data['ac'] ?? '' }}" readonly>
+                            <label for="ac" class="block text-sm font-medium text-gray-700">Jumlah AC</label>
+                            <input type="number" id="ac" class="mt-1 block w-full rounded-md pointer-events-none border-gray-300 shadow-sm sm:text-sm" value="{{ $data['ac'] ?? '' }}" readonly>
                         </div>
                         <div>
-                            <label for="kursi" class="block text-sm font-medium text-gray-700">Kursi</label>
-                            <input type="number" id="kursi" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"value="{{ $data['kursi'] ?? '' }}" readonly>
+                            <label for="kursi" class="block text-sm font-medium text-gray-700">Jumlah Kursi</label>
+                            <input type="number" id="kursi" class="mt-1 block w-full rounded-md pointer-events-none border-gray-300 shadow-sm sm:text-sm"value="{{ $data['kursi'] ?? '' }}" readonly>
                         </div>
                         <div>
-                            <label for="proyektor" class="block text-sm font-medium text-gray-700">Proyektor</label>
-                            <input type="number" id="proyektor" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" value="{{ $data['proyektor'] ?? '' }}" readonly>
+                            <label for="proyektor" class="block text-sm font-medium text-gray-700">Jumlah Proyektor</label>
+                            <input type="number" id="proyektor" class="mt-1 block w-full rounded-md pointer-events-none border-gray-300 shadow-sm sm:text-sm" value="{{ $data['proyektor'] ?? '' }}" readonly>
                         </div>
                     </div>
                 </div>
                 <!-- Modal footer -->
                 <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b">
-                    <button data-modal-hide="modal-fasilitas" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Kembali</button>
+                    <button data-modal-hide="modal-fasilitas" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Tutup</button>
                 </div>
             </div>
         </div>
@@ -505,7 +508,7 @@
                 </div>
                 <!-- Modal footer -->
                 <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b">
-                    <button data-modal-hide="modal-foto" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center">Kembali</button>
+                    <button data-modal-hide="modal-foto" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center">Tutup</button>
                 </div>
             </div>
         </div>
@@ -529,7 +532,7 @@
                             Hapus
                         </button>
                         <button data-modal-hide="modal-hapus" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                            Kembali
+                            Batal
                         </button>
                     </form>
                 </div>

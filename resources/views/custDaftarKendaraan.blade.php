@@ -22,7 +22,7 @@
     <!-- Cover DIV -->
     <div id="default-carousel" class="relative w-full pt-24 m-0 shadow-xl" data-carousel="slide">
         <!-- Cover -->
-        <div class="relative h-56 overflow-hidden md:h-96">
+        <div class="relative h-56 md:h-40 overflow-hidden">
             <!-- Gambar dengan teks -->
             <div class="hidden" data-carousel-item>
                 <img 
@@ -32,7 +32,7 @@
                 />
                 <!-- Teks di tengah gambar -->
                 <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
-                    <h2 class="text-white text-4xl md:text-5xl font-bold drop-shadow-lg">
+                    <h2 class="text-white text-4xl md:text-4xl font-bold drop-shadow-lg">
                         Kendaraan Kami
                     </h2>
                     <!-- Breadcrumb -->
@@ -165,15 +165,15 @@
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
                                     <label for="ac-kendaraan" class="block text-sm font-medium text-gray-700">AC</label>
-                                    <input type="text" id="ac-kendaraan" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" value="" readonly>
+                                    <input type="text" id="ac-kendaraan" class="mt-1 block w-full rounded-md pointer-events-none border-gray-300 shadow-sm sm:text-sm" value="" readonly>
                                 </div>
                                 <div>
                                     <label for="tv-kendaraan" class="block text-sm font-medium text-gray-700">TV</label>
-                                    <input type="text" id="tv-kendaraan" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" value="" readonly>
+                                    <input type="text" id="tv-kendaraan" class="mt-1 block w-full rounded-md pointer-events-none border-gray-300 shadow-sm sm:text-sm" value="" readonly>
                                 </div>
                                 <div>
                                     <label for="sound-kendaraan" class="block text-sm font-medium text-gray-700">Sound</label>
-                                    <input type="text" id="sound-kendaraan" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" value="" readonly>
+                                    <input type="text" id="sound-kendaraan" class="mt-1 block w-full rounded-md pointer-events-none border-gray-300 shadow-sm sm:text-sm" value="" readonly>
                                 </div>
                             </div>
                         </div>
@@ -181,7 +181,16 @@
                 </div>
                 <!-- Modal footer -->
                 <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b">
-                    <button data-modal-hide="modal-detailKendaraan" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center">Kembali</button>
+                    <!-- Button Booking -->
+                    <a href="{{ route('custBookingKendaraan', [
+                        'nama' => $kendara->nama,
+                        'platNomor' => $kendara->platNomor,
+                    ]) }}" 
+                    class="inline-flex items-center px-4 py-2 mr-2 text-sm font-medium rounded-lg bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                        Booking
+                    </a>
+                    <!-- Button Tutup -->
+                    <button data-modal-hide="modal-detailKendaraan" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center">Tutup</button>
                 </div>
             </div>
         </div>

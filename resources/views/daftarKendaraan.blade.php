@@ -252,7 +252,7 @@
                                                 data-ac="{{ $data['ac'] }}" 
                                                 type="button" 
                                                 class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                                                Detail
+                                                Lihat
                                             </button>
                                         </td>
                                         <td class="text-center">
@@ -263,7 +263,7 @@
                                                 data-thumbnails="{{ json_encode($data->foto_urls) }}"   
                                                 type="button" 
                                                 class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                                                Detail
+                                                Lihat
                                             </button>
                                         </td>
                                         <td class="text-center">
@@ -339,6 +339,9 @@
                         <!-- Input Biaya Sewa, Kapasitas, Plat Nomor, CC dan Tahun Kendaraan -->
                         <label for="biayaSewa">Biaya Sewa (Per Hari)</label>
                         <input type="text" id="biayaSewa" name="biayaSewa" required oninput="validateAngka(this)">
+                        <p class="mb-4 text-xs text-gray-500">
+                            * Masukkan jumlah biaya sewa dalam angka, misalnya 500000. Nilai tersebut akan otomatis dikonversi ke format rupiah.
+                        </p>
 
                         <label for="jumlahKursi">Kapasitas</label>
                         <input type="text" id="jumlahKursi" name="jumlahKursi" required oninput="validateAngka(this)">
@@ -436,21 +439,21 @@
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label for="tv" class="block text-sm font-medium text-gray-700">TV</label>
-                            <input type="text" id="tv" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 sm:text-sm" value="{{ $data['tv'] ?? '' }}" readonly>
+                            <input type="text" id="tv" class="mt-1 block w-full rounded-md pointer-events-none border-gray-300 shadow-sm sm:text-sm" value="{{ $data['tv'] ?? '' }}" readonly>
                         </div>
                         <div>
                             <label for="sound" class="block text-sm font-medium text-gray-700">Sound</label>
-                            <input type="text" id="sound" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 sm:text-sm" value="{{ $data['sound'] ?? '' }}" readonly>
+                            <input type="text" id="sound" class="mt-1 block w-full rounded-md pointer-events-none border-gray-300 shadow-sm focus:ring-blue-500 sm:text-sm" value="{{ $data['sound'] ?? '' }}" readonly>
                         </div>
                         <div>
                             <label for="ac" class="block text-sm font-medium text-gray-700">AC</label>
-                            <input type="text" id="ac" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 sm:text-sm" value="{{ $data['ac'] ?? '' }}" readonly>
+                            <input type="text" id="ac" class="mt-1 block w-full rounded-md pointer-events-none border-gray-300 shadow-sm sm:text-sm" value="{{ $data['ac'] ?? '' }}" readonly>
                         </div>
                     </div>
                 </div>
                 <!-- Modal footer -->
                 <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b">
-                    <button data-modal-hide="modal-fasilitas" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Kembali</button>
+                    <button data-modal-hide="modal-fasilitas" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Tutup</button>
                 </div>
             </div>
         </div>
@@ -480,7 +483,7 @@
                 </div>
                 <!-- Modal footer -->
                 <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b">
-                    <button data-modal-hide="modal-foto" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center">Kembali</button>
+                    <button data-modal-hide="modal-foto" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center">Tutup</button>
                 </div>
             </div>
         </div>
@@ -504,7 +507,7 @@
                             Hapus
                         </button>
                         <button data-modal-hide="modal-hapus" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                            Kembali
+                            Batal
                         </button>
                 </form>
                 </div>
@@ -564,7 +567,7 @@
         }
     </script>
 
-// Scipt untuk mengambil data fasilitas 
+<!-- Scipt untuk mengambil data fasilitas -->
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         // Ambil semua tombol yang membuka modal fasilitas
@@ -586,7 +589,7 @@
     });
 </script>
 
-// Script untuk menghapus data 
+<!--Script untuk menghapus data--> 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const modalHapus = document.getElementById("modal-hapus");

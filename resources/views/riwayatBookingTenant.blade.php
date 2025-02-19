@@ -275,7 +275,7 @@
                     Unduh
                 </a>
                 <button onclick="closeModal()" class="bg-blue-700 text-white px-4 py-2 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300">
-                    Kembali
+                    Tutup
                 </button>
             </div>
         </div>

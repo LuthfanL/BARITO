@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('assets/favicon-96x96.png') }}">
-    <title>Buat Event</title>
+    <title>Tambah Event</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMJTVF1a1wMA2gO/YHbx+fyfJhN/0Q5ntv7zYY" crossorigin="anonymous">
     <!-- Tambahkan Flatpickr CSS -->
@@ -100,7 +100,7 @@
                 <div class="w-full">
                     <!-- Judul Form -->
                     <div class="flex justify-center text-center pb-6">
-                        <h1 class="font-bold text-2xl">Buat Event</h1>
+                        <h1 class="font-bold text-2xl">Tambah Event</h1>
                     </div>
             
                     <!-- Form Pembuatan Event -->
@@ -120,6 +120,9 @@
                                 <!-- Input Biaya Sewa -->
                                 <label for="hargaTenant">Biaya Sewa (Per Hari)</label>
                                 <input type="text" id="hargaTenant" name="hargaTenant" required oninput="validateAngka(this)">
+                                <p class="mb-4 text-xs text-gray-500">
+                                    * Masukkan jumlah biaya sewa dalam angka, misalnya 500000. Nilai tersebut akan otomatis dikonversi ke format rupiah.
+                                </p>
 
                                 <!-- Input Jenis Tenant -->
                                 <label>Jenis Tenant</label>
@@ -184,7 +187,7 @@
                 
                                 <!-- Tombol Submit -->
                                 <div class="flex justify-end">
-                                    <button type="submit" class="justify-end text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300  font-bold rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Buat Event</button>
+                                    <button type="submit" class="justify-end text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300  font-bold rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Tambah Event</button>
                                 </div>
                             </form>
                         </div>

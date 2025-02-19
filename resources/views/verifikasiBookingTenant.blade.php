@@ -283,7 +283,7 @@
                     Unduh
                 </a>
                 <button onclick="closeModal()" class="bg-blue-700 text-white px-4 py-2 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300">
-                    Kembali
+                    Tutup
                 </button>
             </div>
         </div>
@@ -313,7 +313,7 @@
                             <button 
                                 data-modal-hide="modal-setujui" 
                                 type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                                Kembali
+                                Batal
                             </button>
                         </form>
                     @else
@@ -354,7 +354,7 @@
                                 data-modal-hide="modal-tolak" 
                                 type="button" 
                                 class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                                Kembali
+                                Batal
                             </button>
                         </form>
                     @else

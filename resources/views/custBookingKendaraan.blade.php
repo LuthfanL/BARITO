@@ -115,7 +115,7 @@
     <!-- Cover DIV -->
     <div id="default-carousel" class="relative w-full pt-24 m-0 shadow-xl" data-carousel="slide">
         <!-- Cover -->
-        <div class="relative h-56 overflow-hidden md:h-96">
+        <div class="relative h-56 md:h-40 overflow-hidden">
             <!-- Gambar dengan teks -->
             <div class="hidden" data-carousel-item>
                 <img 
@@ -125,7 +125,7 @@
                 />
                 <!-- Teks di tengah gambar -->
                 <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
-                    <h2 class="text-white text-4xl md:text-5xl font-bold drop-shadow-lg">
+                    <h2 class="text-white text-4xl md:text-4xl font-bold drop-shadow-lg">
                         Kendaraan Kami
                     </h2>
                     <!-- Breadcrumb -->
@@ -373,65 +373,78 @@
                 </div>
 
                 <!-- Modal footer -->
-                <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b space-x-2">
-                    <button    
-                        data-modal-target="modal-konfirmasi" 
-                        data-modal-toggle="modal-konfirmasi" 
-                        class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 font-bold font-medium rounded-lg text-sm px-4 py-2 text-center opacity-50 cursor-not-allowed" disabled>
-                        Konfirmasi Booking
-                    </button>
-                    <button 
-                        data-modal-hide="modal-booking" 
-                        type="button" 
-                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold font-medium rounded-lg text-sm px-4 py-2 text-center">
-                        Kembali
-                    </button>
+                <div class="flex justify-between p-4 md:p-5 border-t border-gray-200 rounded-b space-x-2">
+                    <p class="mb-4 text-sm text-red-500">
+                        * Mohon lengkapi semua informasi sebelum konfirmasi booking.
+                    </p>
+                    <div class="flex justify-end items-center space-x-2">
+                        <button    
+                            data-modal-target="modal-konfirmasi" 
+                            data-modal-toggle="modal-konfirmasi" 
+                            class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 font-bold font-medium rounded-lg text-sm px-4 py-2 text-center opacity-50 cursor-not-allowed" disabled>
+                            Konfirmasi Booking
+                        </button>
+                        <button 
+                            data-modal-hide="modal-booking" 
+                            type="button" 
+                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold font-medium rounded-lg text-sm px-4 py-2 text-center">
+                            Batal
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Modal Booking Konfirmasi -->
-    <div id="modal-konfirmasi" data-modal-backdrop="static" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-        <div class="relative p-4 w-full max-w-2xl max-h-full">
-            <div class="relative bg-white rounded-lg shadow">
-                <div class="p-4 md:p-5 text-center">
-                    <svg class="mx-auto mb-4 text-gray-400 w-16 h-16" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                    </svg>
-                    <h1 class="mb-5 text-lg font-bold text-gray-900">Konfirmasi Booking Kendaraan</h1>
-                    <p class="mb-5 text-m font-normal text-gray-500">
-                        Apakah Anda yakin ingin konfirmasi booking ini?
-                        <div class="mb-5 text-m font-normal text-red-500">
-                            Harap diperhatikan bahwa pembayaran harus dilakukan selambat-lambatnya 15 menit setelah waktu pemesanan kendaraan ini!
-                        </div>
-                    </p>
+    <div id="modal-konfirmasi" data-modal-backdrop="static" tabindex="-1" class="hidden fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-black bg-opacity-50">
+        <div class="relative w-full max-w-lg p-6 bg-white rounded-lg shadow-lg">
+            <!-- Header -->
+            <div class="text-center">
+                <svg class="mx-auto mb-4 text-gray-400 w-16 h-16" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                </svg>
+                <h1 class="text-xl font-bold text-gray-900">Konfirmasi Booking Kendaraan</h1>
+            </div>
 
-                    <form action="{{ route('bookingKendaraan.store') }}" method="POST">
-                        @csrf    
-                        <div class="">
-                            <!-- Input tersembunyi untuk menyimpan data -->
-                            <input type="hidden" name="idKendaraan" id="confirm-idKendaraan">
-                            <input type="hidden" name="idAdmin" id="confirm-idAdmin">
-                            <input type="hidden" name="namaPemohon" id="confirm-namaPemohon">
-                            <input type="hidden" name="noWa" id="confirm-noWa">
-                            <input type="hidden" name="namaKendaraan" id="confirm-namaKendaraan">
-                            <input type="hidden" name="keperluan" id="confirm-keperluan">
-                            <input type="hidden" name="lokasi" id="confirm-lokasi">
-                            <input type="hidden" name="titikJemput" id="confirm-titikJemput">
-                            <input type="hidden" name="tglMulai" id="confirm-tglMulai">
-                            <input type="hidden" name="tglSelesai" id="confirm-tglSelesai">
-                        </div>
-
-                        <button type="submit" class="px-3 py-1 rounded-lg cursor-pointer font-bold font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                            Setuju, Konfirmasi Booking
-                        </button>
-                        <button data-modal-hide="modal-konfirmasi" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-bold font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white mt-4">
-                            Kembali
-                        </button>
-                    </form>
+            <!-- Isi Modal -->
+            <div class="mt-4 text-center">
+                <p class="text-gray-600 text-sm">
+                    Apakah Anda yakin ingin mengonfirmasi booking ini?
+                </p>
+                <!-- Pengingat pembayaran -->
+                <div class="mt-4 p-3 border-l-4 border-yellow-500 bg-yellow-100 text-yellow-800 text-sm font-semibold rounded-lg">
+                    Perlu diingat, pembayaran harus dilakukan selambat-lambatnya <b>24 jam</b> setelah waktu pemesanan!
                 </div>
             </div>
+
+            <!-- Formulir -->
+            <form action="{{ route('bookingKendaraan.store') }}" method="POST">
+                @csrf    
+                <div class="">
+                    <!-- Input tersembunyi untuk menyimpan data -->
+                    <input type="hidden" name="idKendaraan" id="confirm-idKendaraan">
+                    <input type="hidden" name="idAdmin" id="confirm-idAdmin">
+                    <input type="hidden" name="namaPemohon" id="confirm-namaPemohon">
+                    <input type="hidden" name="noWa" id="confirm-noWa">
+                    <input type="hidden" name="namaKendaraan" id="confirm-namaKendaraan">
+                    <input type="hidden" name="keperluan" id="confirm-keperluan">
+                    <input type="hidden" name="lokasi" id="confirm-lokasi">
+                    <input type="hidden" name="titikJemput" id="confirm-titikJemput">
+                    <input type="hidden" name="tglMulai" id="confirm-tglMulai">
+                    <input type="hidden" name="tglSelesai" id="confirm-tglSelesai">
+                </div>
+
+                <!-- Tombol -->
+                <div class="mt-6 flex justify-center space-x-4">
+                    <button type="submit" class="px-4 py-2 text-white font-semibold rounded-lg bg-green-600 hover:bg-green-700 transition duration-200">
+                        Konfirmasi Booking
+                    </button>
+                    <button data-modal-hide="modal-konfirmasi" type="button" class="px-4 py-2 text-white font-semibold rounded-lg bg-gray-500 hover:bg-gray-600 transition duration-200">
+                        Batal
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -715,10 +728,10 @@
         // Notifikasi jika ada error
         @if($errors->any())
             Swal.fire({
-                icon: 'error',
-                title: 'Gagal',
+                icon: 'info',
+                title: 'Perhatian',
                 html: `
-                    <ul style="text-align: left;">
+                    <ul style="text-align: center;">
                         @foreach($errors->all() as $error)
                             <li>{{ $error }}</li>
                         @endforeach

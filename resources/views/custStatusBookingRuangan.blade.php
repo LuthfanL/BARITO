@@ -133,7 +133,7 @@
     <!-- Cover DIV -->
     <div id="default-carousel" class="relative w-full pt-24 m-0 shadow-xl" data-carousel="slide">
         <!-- Cover -->
-        <div class="relative h-56 overflow-hidden md:h-96">
+        <div class="relative h-52 md:h-40 overflow-hidden">
             <!-- Gambar dengan teks -->
             <div class="hidden" data-carousel-item>
                 <img 
@@ -143,7 +143,7 @@
                 />
                 <!-- Teks di tengah gambar -->
                 <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
-                    <h2 class="text-white text-4xl md:text-5xl font-bold drop-shadow-lg">
+                    <h2 class="text-white text-4xl md:text-4xl font-bold drop-shadow-lg">
                         Status Booking Ruangan
                     </h2>
                     <!-- Breadcrumb -->
@@ -518,7 +518,7 @@
                 </div>
 
                 <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b space-x-2">
-                   <button 
+                    <button 
                         data-modal-target="modal-konfirmasiEdit" 
                         data-modal-toggle="modal-konfirmasiEdit" 
                         data-modal-hide="modal-edit" 
@@ -555,7 +555,7 @@
                         data-modal-hide="modal-konfirmasiEdit" 
                         type="button"
                         class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                        Kembali
+                        Batal
                     </button>
                 </div>
             </div>
@@ -581,10 +581,10 @@
                         <!-- Tombol Submit -->
                         <div class="flex justify-center gap-4 mt-6">
                             <button type="submit" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                                Batalkan Booking
+                                Konfirmasi
                             </button>
                             <button data-modal-hide="modal-batalkan" type="button" class="px-6 py-2 rounded-lg font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br text-white">
-                                Kembali
+                                Batal
                             </button>
                         </div>
                     </form>

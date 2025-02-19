@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('assets/favicon-96x96.png') }}">
-    <title>Buat Ruangan</title>
+    <title>Tambah Ruangan</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMJTVF1a1wMA2gO/YHbx+fyfJhN/0Q5ntv7zYY" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -90,7 +90,7 @@
                 <div class="w-full">
                     <!-- Judul Form -->
                     <div class="flex justify-center text-center pb-6">
-                        <h1 class="font-bold text-2xl">Buat Ruangan</h1>
+                        <h1 class="font-bold text-2xl">Tambah Ruangan</h1>
                     </div>
 
                     {{-- <!-- Alert Pesan Sukses/Gagal -->
@@ -125,6 +125,9 @@
                                 <!-- Input Biaya Sewa, Lokasi, Lantai dan Luas Ruangan -->
                                 <label for="biayaSewa">Biaya Sewa (Per Hari)</label>
                                 <input type="text" id="biayaSewa" name="biayaSewa" required oninput="validateAngka(this)">
+                                <p class="mb-4 text-xs text-gray-500">
+                                    * Masukkan jumlah biaya sewa dalam angka, misalnya 500000. Nilai tersebut akan otomatis dikonversi ke format rupiah.
+                                </p>
 
                                 <label for="lokasi">Lokasi (Nama Gedung)</label>
                                 <input type="text" id="lokasi" name="lokasi" required>
@@ -139,27 +142,27 @@
                                 <label>Fasilitas Ruangan</label>
                                 <div class="fasilitas-container">
                                     <div>
-                                        <label for="podium">Podium</label>
+                                        <label for="podium">Jumlah Podium</label>
                                         <input type="text" id="podium" name="podium" required oninput="validateAngka(this)">
                                     </div>
                                     <div>
-                                        <label for="sound">Sound</label>
+                                        <label for="sound">Jumlah Sound</label>
                                         <input type="text" id="sound" name="sound" required oninput="validateAngka(this)">
                                     </div>
                                     <div>
-                                        <label for="meja">Meja</label>
+                                        <label for="meja">Jumlah Meja</label>
                                         <input type="text" id="meja" name="meja" required oninput="validateAngka(this)">
                                     </div>
                                     <div>
-                                        <label for="ac">AC</label>
+                                        <label for="ac">Jumlah AC</label>
                                         <input type="text" id="ac" name="ac" required oninput="validateAngka(this)">
                                     </div>
                                     <div>
-                                        <label for="kursi">Kursi</label>
+                                        <label for="kursi">Jumlah Kursi</label>
                                         <input type="text" id="kursi" name="kursi" required oninput="validateAngka(this)">
                                     </div>
                                     <div>
-                                        <label for="proyektor">Proyektor</label>
+                                        <label for="proyektor">Jumlah Proyektor</label>
                                         <input type="text" id="proyektor" name="proyektor" required oninput="validateAngka(this)">
                                     </div>
                                 </div>
@@ -188,7 +191,7 @@
                 
                                 <!-- Tombol Submit -->
                                 <div class="flex justify-end">
-                                    <button type="submit" class="justify-end text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300  font-bold rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Buat Ruangan</button>
+                                    <button type="submit" class="justify-end text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300  font-bold rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Tambah Ruangan</button>
                                 </div>
                             </form>
                         </div>

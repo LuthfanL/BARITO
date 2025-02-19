@@ -45,7 +45,7 @@
                         aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                         <path fill-rule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4.243a1 1 0 1 0-2 0V11H7.757a1 1 0 1 0 0 2H11v3.243a1 1 0 1 0 2 0V13h3.243a1 1 0 1 0 0-2H13V7.757Z" clip-rule="evenodd"/>
                     </svg>
-                    <span class="transition-transform duration-100 transform translate-x-3 group-hover:translate-x-3">Buat Kendaraan</span>
+                    <span class="transition-transform duration-100 transform translate-x-3 group-hover:translate-x-3">Tambah Kendaraan</span>
                 </a>
             </li>
 
@@ -109,7 +109,7 @@
                 <a href="/logout" data-modal-hide="modal-logout" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
                     Logout
                 </a>
-                <button data-modal-hide="modal-logout" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Kembali</button>
+                <button data-modal-hide="modal-logout" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Batal</button>
             </div>
         </div>
     </div>
