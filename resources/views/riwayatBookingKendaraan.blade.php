@@ -159,8 +159,8 @@
                                         <td>{{ $booking->namaPemohon }}</td>
                                         <td>{{ $booking->noWa }}</td>
                                         <td>{{ $booking->namaKendaraan }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($booking->tglMulai)->format('d/m/Y') }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($booking->tglSelesai)->format('d/m/Y') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($booking->tglMulai)->format('d-M-Y') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($booking->tglSelesai)->format('d-M-Y') }}</td>
                                         <!-- Bukti Bayar -->
                                         <td class="flex justify-center items-center text-center">
                                             @if($booking->buktiBayar)

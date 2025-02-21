@@ -199,8 +199,8 @@
                                         <td>{{ $booking->namaTenant }}</td>
                                         <td>{{ $booking->namaEvent }}</td>
                                         <td>{{ $booking->tipeTenant }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($booking->event->tglMulai)->format('d/m/Y') }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($booking->event->tglSelesai)->format('d/m/Y') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($booking->event->tglMulai)->format('d-M-Y') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($booking->event->tglSelesai)->format('d-M-Y') }}</td>
                                         <!-- Bukti Bayar -->
                                         <td class="flex justify-center items-center text-center mt-5">
                                             @if($booking->buktiBayar)

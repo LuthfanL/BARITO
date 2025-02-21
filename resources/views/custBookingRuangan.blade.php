@@ -520,10 +520,11 @@
         document.addEventListener("DOMContentLoaded", function () {
             // Inisialisasi Flatpickr untuk tglMulai
             const tglMulaiPicker = flatpickr("#tglMulai", {
-                dateFormat: "Y-m-d",
-                minDate: "today", // Tidak bisa memilih tanggal sebelum hari ini
+                dateFormat: "Y-m-d", // Format yang dikirim ke database
+                altInput: true, // Menampilkan format berbeda di UI
+                altFormat: "d-M-Y", // Format yang ditampilkan ke user
+                minDate: "today",
                 onChange: function (selectedDates) {
-                    // Jika tglMulai dipilih, update minDate untuk tglSelesai agar tidak bisa pilih sebelumnya
                     if (selectedDates.length > 0) {
                         tglSelesaiPicker.set("minDate", selectedDates[0]);
                     }
@@ -533,7 +534,9 @@
             // Inisialisasi Flatpickr untuk tglSelesai
             const tglSelesaiPicker = flatpickr("#tglSelesai", {
                 dateFormat: "Y-m-d",
-                minDate: "today" // Default minDate adalah hari ini
+                altInput: true,
+                altFormat: "d-M-Y",
+                minDate: "today"
             });
         });
     </script>
@@ -701,37 +704,50 @@
 
     <!-- Script Alert -->
     <script>
-        // Notifikasi jika berhasil
-        @if(session('success'))
-            Swal.fire({
-                icon: 'success',
-                title: 'Berhasil',
-                text: '{{ session('success') }}',
-                showConfirmButton: false,
-                timerProgressBar: true,
-                timer: 3000 // Durasi 3 detik
-            });
-        @endif
-    
-        // Notifikasi jika ada error
-        @if($errors->any())
-            Swal.fire({
-                icon: 'info',
-                title: 'Perhatian',
-                html: `
-                    <ul style="text-align: center;">
-                        @foreach($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                `,
-                confirmButtonText: 'Tutup',
-                customClass: {
-                    confirmButton: 'custom-confirm-button'
-                }
-            });
-        @endif
+        document.addEventListener("DOMContentLoaded", function () {
+            // Notifikasi jika berhasil
+            @if(session('success'))
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: '{{ session('success') }}',
+                    showConfirmButton: false,
+                    timerProgressBar: true,
+                    timer: 3000 // Durasi 3 detik
+                });
+            @endif
+
+            // Notifikasi jika ada error
+            @if($errors->any())
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Perhatian',
+                    html: `
+                        <ul style="text-align: center;">
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    `,
+                    confirmButtonText: 'Tutup',
+                    customClass: {
+                        confirmButton: 'custom-confirm-button'
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed || result.isDismissed) {
+                        // Cari tombol yang memiliki atribut data-modal-toggle="modal-booking"
+                        const bookingToggle = document.querySelector('[data-modal-toggle="modal-booking"]');
+                        
+                        // Jika tombol ada, klik secara otomatis untuk membuka modal booking
+                        if (bookingToggle) {
+                            bookingToggle.click();
+                        }
+                    }
+                });
+            @endif
+        });
     </script>
+    
 </body>
 
 </html>

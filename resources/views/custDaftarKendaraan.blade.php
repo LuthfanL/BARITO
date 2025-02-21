@@ -103,19 +103,23 @@
                                 <a href="">
                                     <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900">{{ $kendara->nama }}</h5>
                                 </a>
+
                                 <!-- Deskripsi -->
                                 <p class="mb-3 text-sm text-gray-700">{{ $kendara->deskripsi }}</p>
+
                                 <!-- Button Detail -->
                                 <button 
-                                data-modal-target="modal-detailKendaraan" data-modal-toggle="modal-detailKendaraan"
-                                data-tv="{{ $kendara->tv }}" 
-                                data-sound="{{ $kendara->sound }}" 
-                                data-ac="{{ $kendara->ac }}" 
-                                {{-- data-foto-url="{{ $kendara->foto_urls[0] }}" --}}
-                                data-thumbnails="{{ json_encode($kendara->foto_urls) }}"
-                                class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                                    data-modal-target="modal-detailKendaraan" data-modal-toggle="modal-detailKendaraan"
+                                    data-tv="{{ $kendara->tv }}" 
+                                    data-sound="{{ $kendara->sound }}" 
+                                    data-ac="{{ $kendara->ac }}" 
+                                    data-thumbnails="{{ json_encode($kendara->foto_urls) }}"
+                                    data-nama="{{ $kendara->nama }}"
+                                    data-plat="{{ $kendara->platNomor }}"
+                                    class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
                                     Lihat Detail
                                 </button>
+
                                 <!-- Button Booking -->
                                 <a href="{{ route('custBookingKendaraan', [
                                     'nama' => $kendara->nama,
@@ -258,6 +262,25 @@
                         card.style.display = 'block'; 
                     } else {
                         card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const detailButtons = document.querySelectorAll("[data-modal-toggle='modal-detailKendaraan']");
+            const bookingButton = document.querySelector("#modal-detailKendaraan a[href*='custBookingKendaraan']");
+
+            detailButtons.forEach(button => {
+                button.addEventListener("click", function () {
+                    const nama = this.getAttribute("data-nama");
+                    const plat = this.getAttribute("data-plat");
+                    
+                    // Update URL Booking di modal
+                    if (bookingButton) {
+                        bookingButton.href = `/custBookingKendaraan?nama=${encodeURIComponent(nama)}&platNomor=${encodeURIComponent(plat)}`;
                     }
                 });
             });

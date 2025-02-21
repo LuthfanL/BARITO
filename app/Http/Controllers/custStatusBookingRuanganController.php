@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\customer;
 use App\Models\pemRuangan;
+use App\Models\ruangan;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 
@@ -32,6 +33,7 @@ class custStatusBookingRuanganController extends Controller
             ->where('tglMulai', '>', $now) // Hanya ambil data dengan tglMulai lebih besar dari sekarang
             ->whereIn('status', ['disetujui', 'ditolak', 'belum bayar', 'menunggu persetujuan']) // Filter berdasarkan status
             ->orderBy('created_at', 'desc') // Urutkan berdasarkan tanggal dibuat (terbaru di atas)
+            ->with('ruangan') // Ambil relasi ruangan
             ->get();
 
         foreach ($bookings as $book) {
@@ -175,10 +177,10 @@ class custStatusBookingRuanganController extends Controller
             return back()->with('error', 'Customer tidak ditemukan');
         }
 
-        // Set batas waktu 1 menit sejak dibuat
-        $batasWaktu = Carbon::now()->subMinutes(1);
+        // Set batas waktu 24 jam sejak dibuat
+        $batasWaktu = Carbon::now()->subHours(24);
 
-        // Ambil semua booking milik pengguna yang belum mengunggah bukti bayar dalam 1 menit
+        // Ambil semua booking milik pengguna yang belum mengunggah bukti bayar dalam 24 jam
         $bookings = pemRuangan::where('idCustomer', $nik)
             ->whereNull('buktiBayar')
             ->where('created_at', '<', $batasWaktu)

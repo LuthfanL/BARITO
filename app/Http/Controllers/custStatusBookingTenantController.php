@@ -34,6 +34,7 @@ class custStatusBookingTenantController extends Controller
             ->where('event.tglMulai', '>=', $now) // Hanya ambil data dengan tglMulai lebih besar dari sekarang
             ->whereIn('pemTenant.status', ['disetujui', 'ditolak', 'belum bayar', 'menunggu persetujuan']) // Filter berdasarkan status
             ->orderBy('pemTenant.created_at', 'desc') // Urutkan berdasarkan tanggal dibuat (terbaru di atas)
+            ->with('event') // Ambil relasi event
             ->get();
 
         $waktuBuat = pemTenant::where('idCustomer', $nik)
@@ -189,10 +190,10 @@ class custStatusBookingTenantController extends Controller
             return back()->with('error', 'Customer tidak ditemukan');
         }
 
-        // Set batas waktu 1 menit sejak dibuat
-        $batasWaktu = Carbon::now()->subMinutes(1);
+        // Set batas waktu 24 jam sejak dibuat
+        $batasWaktu = Carbon::now()->subHours(24);
 
-        // Ambil semua booking milik pengguna yang belum mengunggah bukti bayar dalam 1 menit
+        // Ambil semua booking milik pengguna yang belum mengunggah bukti bayar dalam 24 jam
         $bookings = pemTenant::where('idCustomer', $nik)
             ->whereNull('buktiBayar')
             ->where('created_at', '<', $batasWaktu)

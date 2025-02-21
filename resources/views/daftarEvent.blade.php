@@ -246,8 +246,8 @@
                                         <td class="text-center">{{ $data['nBarang'] }}</td>
                                         <td class="text-center">{{ $data['nJasa'] }}</td>
                                         <td class="text-center">{{ $data['nMakanan'] }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($data['tglMulai'])->format('d/m/Y') }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($data['tglSelesai'])->format('d/m/Y') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($data['tglMulai'])->format('d-M-Y') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($data['tglSelesai'])->format('d-M-Y') }}</td>
                                         <td class="text-center">
                                             <button 
                                                 data-modal-target="modal-foto" 

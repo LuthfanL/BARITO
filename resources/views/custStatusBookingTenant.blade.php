@@ -205,9 +205,9 @@
             @foreach ($bookings->where('status', 'Belum bayar') as $booking)
                 @foreach ($waktuBuat->where('id', $booking->id) as $wb)
                     @if ($booking->id == $wb->id)
-                        @php
-                            // Hitung waktu kedaluwarsa (created_at + 1 menit)
-                            $expiredTime = \Carbon\Carbon::parse($wb->created_at)->addMinutes(1)->timestamp;
+                       @php
+                            // Hitung waktu kedaluwarsa (created_at + 24 jam)
+                            $expiredTime = \Carbon\Carbon::parse($booking->created_at)->addHours(24)->timestamp;
                         @endphp
                     @endif
                 @endforeach
@@ -264,9 +264,11 @@
                             return;
                         }
 
-        let minutes = Math.floor(remainingTime / 60);
-        let seconds = remainingTime % 60;
-        countdownElement.innerText = `${minutes} menit ${seconds} detik`;
+           let hours = Math.floor(remainingTime / 3600);
+                        let minutes = Math.floor((remainingTime % 3600) / 60);
+                        let seconds = remainingTime % 60;
+
+                        countdownElement.innerText = `${hours} jam ${minutes} menit ${seconds} detik`;
 
         // Buat interval baru untuk setiap elemen (tidak tumpang tindih)
         setTimeout(updateCountdownTenant, 1000);
@@ -426,8 +428,10 @@ document.addEventListener("DOMContentLoaded", function () {
                                 <td>{{ $booking->namaEvent }}</td>
                                 <td>{{ $booking->namaTenant }}</td>
                                 <td>{{ $booking->tipeTenant }}</td>
-                                <td>{{ \Carbon\Carbon::parse($booking->event->tglMulai)->format('d/m/Y') }}</td>
-                                <td>{{ \Carbon\Carbon::parse($booking->event->tglSelesai)->format('d/m/Y') }}</td>
+                                {{-- <td>{{ $booking->event->hargaTenant }}</td> --}}
+                                {{-- <td>{{ (\Carbon\Carbon::parse($booking->event->tglMulai)->diffInDays(\Carbon\Carbon::parse($booking->event->tglSelesai)) + 1) * $booking->event->hargaTenant }}</td> --}}
+                                <td>{{ \Carbon\Carbon::parse($booking->event->tglMulai)->format('d-M-Y') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($booking->event->tglSelesai)->format('d-M-Y') }}</td>
 
                                 <!-- Status -->                
                                 <td>
@@ -476,15 +480,29 @@ document.addEventListener("DOMContentLoaded", function () {
                                             <button 
                                                 data-modal-target="modal-bayar" 
                                                 data-modal-toggle="modal-bayar" 
-                                                data-bookingid="{{ $booking->id }}" 
+                                                data-bookingid="{{ $booking->id }}"
+                                                data-totalbiaya="{{ (\Carbon\Carbon::parse($booking->event->tglMulai)->diffInDays(\Carbon\Carbon::parse($booking->event->tglSelesai)) + 1) * $booking->event->hargaTenant }}" 
                                                 class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
                                                 Bayar
                                             </button>
                                         @else
-                                            <!-- Tindakan Selesai dengan background abu-abu -->
-                                            <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-gray-300 via-gray-400 to-gray-500 text-white">
-                                                Selesai
-                                            </div>
+                                            <button disabled 
+                                                class="px-3 py-1 rounded-lg cursor-not-allowed font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 text-white opacity-50"
+                                                title="Disabled">
+                                                Edit
+                                            </button>
+
+                                            <button disabled 
+                                                class="px-3 py-1 rounded-lg cursor-not-allowed font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 text-white opacity-50"
+                                                title="Disabled">
+                                                Batalkan
+                                            </button>
+
+                                            <button disabled 
+                                                class="px-3 py-1 rounded-lg cursor-not-allowed font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 text-white opacity-50"
+                                                title="Disabled">
+                                                Bayar
+                                            </button>
                                         @endif
                                     </div>
                                 </td>
@@ -667,6 +685,13 @@ document.addEventListener("DOMContentLoaded", function () {
                             </p>
                             <p class="text-sm text-gray-700">Bank Mandiri</p>
                         </div>
+
+                        <!-- Tambahkan di dalam modal bayar -->
+                        <div class="p-4 md:p-5">
+                            <label class="block mb-2 text-sm font-medium text-gray-900">Total Biaya</label>
+                            <p id="total-biaya" class="text-lg font-bold text-gray-900"></p>
+                        </div>
+
                         <!-- Input Bukti -->
                         <label for="bukti-bayar" class="block mb-2 text-sm font-medium text-gray-900">
                             Upload Bukti Pembayaran
@@ -911,6 +936,33 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             });
         @endif
+    </script>
+
+     <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll("[data-modal-target='modal-bayar']").forEach(button => {
+                button.addEventListener("click", function () {
+                    let bookingId = this.getAttribute("data-bookingid"); // Ambil ID booking dari tombol
+                    let totalBiaya = this.getAttribute("data-totalbiaya"); // Ambil total biaya dari tombol
+                    
+                    // Set nilai booking_id di dalam modal
+                    document.getElementById("booking-id").value = bookingId;
+                    
+                    // Tampilkan total biaya di modal
+                    document.getElementById("total-biaya").innerText = "Rp. " + new Intl.NumberFormat('id-ID').format(totalBiaya) + ",00";
+
+                    // Tampilkan modal
+                    document.getElementById("modal-bayar").classList.remove("hidden");
+                });
+            });
+
+            // Event untuk tombol batal (menutup modal)
+            document.querySelectorAll("[data-modal-hide='modal-bayar']").forEach(button => {
+                button.addEventListener("click", function () {
+                    document.getElementById("modal-bayar").classList.add("hidden");
+                });
+            });
+        });
     </script>
 
 {{-- {{-- <script>

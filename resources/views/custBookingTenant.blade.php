@@ -299,7 +299,7 @@
 
                         <!-- Input Nama Pemohon -->
                         <label for="namaPemohon">Nama Pemohon</label>
-                        <input type="text" id="namaPemohon" name="namaPemohon" value="{{ $cus->name }}" require oninput="validateNamaPemohon(this)">
+                        <input type="text" id="namaPemohon" name="namaPemohon" require oninput="validateNamaPemohon(this)">
                         <script>
                         function validateNamaPemohon(input) {
                             // Hanya izinkan huruf dan spasi
@@ -314,7 +314,7 @@
 
                         <!-- Input No. Whatapps -->
                         <label for="noWa">No. Whatapps</label>
-                        <input type="text" id="noWa" name="noWa" value="{{ $cus->noHP }}" require oninput="validateWhatsApp(this)">
+                        <input type="text" id="noWa" name="noWa" require oninput="validateWhatsApp(this)">
                         <script>
                             function validateWhatsApp(input) {
                                 // Hanya izinkan angka (0-9)
@@ -680,37 +680,50 @@
 
     <!-- Script Alert -->
     <script>
-        // Notifikasi jika berhasil
-        @if(session('success'))
-            Swal.fire({
-                icon: 'success',
-                title: 'Berhasil',
-                text: '{{ session('success') }}',
-                showConfirmButton: false,
-                timerProgressBar: true,
-                timer: 3000 // Durasi 3 detik
-            });
-        @endif
-    
-        // Notifikasi jika ada error
-        @if($errors->any())
-            Swal.fire({
-                icon: 'info',
-                title: 'Perhatian',
-                html: `
-                    <ul style="text-align: center;">
-                        @foreach($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                `,
-                confirmButtonText: 'Tutup',
-                customClass: {
-                    confirmButton: 'custom-confirm-button'
-                }
-            });
-        @endif
+        document.addEventListener("DOMContentLoaded", function () {
+            // Notifikasi jika berhasil
+            @if(session('success'))
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: '{{ session('success') }}',
+                    showConfirmButton: false,
+                    timerProgressBar: true,
+                    timer: 3000 // Durasi 3 detik
+                });
+            @endif
+
+            // Notifikasi jika ada error
+            @if($errors->any())
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Perhatian',
+                    html: `
+                        <ul style="text-align: center;">
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    `,
+                    confirmButtonText: 'Tutup',
+                    customClass: {
+                        confirmButton: 'custom-confirm-button'
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed || result.isDismissed) {
+                        // Cari tombol yang memiliki atribut data-modal-toggle="modal-booking"
+                        const bookingToggle = document.querySelector('[data-modal-toggle="modal-booking"]');
+                        
+                        // Jika tombol ada, klik secara otomatis untuk membuka modal booking
+                        if (bookingToggle) {
+                            bookingToggle.click();
+                        }
+                    }
+                });
+            @endif
+        });
     </script>
+
 </body>
 
 </html>

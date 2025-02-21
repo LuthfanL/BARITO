@@ -114,6 +114,7 @@
                                 data-makanan="{{ $evt->nMakanan }}"
                                 data-foto-url="{{ $evt->foto_urls[0] }}"
                                 data-thumbnails="{{ json_encode($evt->foto_urls) }}" 
+                                data-namaEvent="{{ $evt->namaEvent }}""
                                 class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
                                     Lihat Detail
                                 </button>
@@ -236,6 +237,24 @@
                         card.style.display = 'block'; 
                     } else {
                         card.style.display = 'none'; 
+                    }
+                });
+            });
+        });
+    </script>
+
+<script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const detailButtons = document.querySelectorAll("[data-modal-toggle='modal-detailEvent']");
+            const bookingButton = document.querySelector("#modal-detailEvent a[href*='custBookingTenant']");
+
+            detailButtons.forEach(button => {
+                button.addEventListener("click", function () {
+                    const namaEvent = this.getAttribute("data-namaEvent");
+                    
+                    // Update URL Booking di modal
+                    if (bookingButton) {
+                        bookingButton.href = `/custBookingTenant?namaEvent=${encodeURIComponent(namaEvent)}`;
                     }
                 });
             });
