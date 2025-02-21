@@ -638,8 +638,28 @@
                         @if(isset($booking) && $booking)
                             <input type="hidden" name="booking_id" id="booking-id" value={{$booking->id}}>
                         @endif
+                        <!-- Informasi Total Biaya -->
+                        <div class="bg-gray-100 p-3 mb-2 border border-gray-300 rounded-md text-center shadow-inner">
+                            <label class="block text-lg font-semibold text-gray-800">Total Biaya</label>
+                            <p class="text-sm text-gray-700">Lama sewa × Biaya Sewa per Hari</p>
+                            
+                            <div class="bg-gray-200 p-4 rounded-lg shadow-md mt-3">
+                                <div class="flex justify-between text-sm text-gray-700">
+                                    <span>Lama Sewa</span>
+                                    <span id="lama-sewa"></span>
+                                </div>
+                                <div class="flex justify-between text-sm text-gray-700 mt-1">
+                                    <span>Biaya Sewa per Hari</span>
+                                    <span id="biaya-sewa"></span>
+                                </div>
+                                <div class="bg-green-500 p-2 rounded-lg text-white text-center font-bold text-lg mt-3">
+                                    <span id="total-biaya"></span>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Informasi Rekening -->
-                        <div class="mt-3 mb-4 p-3 border border-yellow-500 bg-yellow-100 rounded-lg text-center">
+                        <div class="mt-3 mb-4 p-3 border border-yellow-500 bg-yellow-100 rounded-lg text-center shadow-md">
                             <p class="text-sm font-medium text-gray-900">
                                 Pembayaran dapat dikirimkan ke rekening berikut :
                             </p>
@@ -647,12 +667,6 @@
                                 1360 0318 8562
                             </p>
                             <p class="text-sm text-gray-700">Bank Mandiri</p>
-                        </div>
-
-                        <!-- Tambahkan di dalam modal bayar -->
-                        <div class="p-4 md:p-5">
-                            <label class="block mb-2 text-sm font-medium text-gray-900">Total Biaya</label>
-                            <p id="total-biaya" class="text-lg font-bold text-gray-900"></p>
                         </div>
 
                         <!-- Input Bukti -->
@@ -913,31 +927,26 @@ document.addEventListener("DOMContentLoaded", function () {
         document.addEventListener("DOMContentLoaded", function () {
             document.querySelectorAll("[data-modal-target='modal-bayar']").forEach(button => {
                 button.addEventListener("click", function () {
-                    let bookingId = this.getAttribute("data-bookingid"); // Ambil ID booking dari tombol
-                    let totalBiaya = this.getAttribute("data-totalbiaya"); // Ambil total biaya dari tombol
-                    let biayaSewa = this.getAttribute("data-biayaSewa"); // Biaya sewa per hari
-                    let lamaPinjam = this.getAttribute("data-lamaPinjam"); // Lama pinjam dalam hari
-
-                    // Format angka ke Rupiah
+                    let bookingId = this.getAttribute("data-bookingid");
+                    let totalBiaya = this.getAttribute("data-totalbiaya");
+                    let biayaSewa = this.getAttribute("data-biayaSewa");
+                    let lamaPinjam = this.getAttribute("data-lamaPinjam");
+    
                     let formatRupiah = (angka) => "Rp. " + new Intl.NumberFormat('id-ID').format(angka) + ",00";
-
-                    // Set nilai booking_id di dalam modal (pastikan elemen dengan id "booking-id" ada)
+                    
                     let bookingIdInput = document.getElementById("booking-id");
                     if (bookingIdInput) {
                         bookingIdInput.value = bookingId;
                     }
-
-                    // Tampilkan perhitungan biaya sewa
-                    document.getElementById("total-biaya").innerHTML = `
-                        (${lamaPinjam} hari) × ${formatRupiah(biayaSewa)} = <span class="text-green-600 font-bold">${formatRupiah(totalBiaya)}</span>
-                    `;
-
-                    // Tampilkan modal
+                    
+                    document.getElementById("lama-sewa").innerText = lamaPinjam + " hari";
+                    document.getElementById("biaya-sewa").innerText = formatRupiah(biayaSewa);
+                    document.getElementById("total-biaya").innerText = formatRupiah(totalBiaya);
+    
                     document.getElementById("modal-bayar").classList.remove("hidden");
                 });
             });
-
-            // Event untuk tombol batal (menutup modal)
+            
             document.querySelectorAll("[data-modal-hide='modal-bayar']").forEach(button => {
                 button.addEventListener("click", function () {
                     document.getElementById("modal-bayar").classList.add("hidden");
