@@ -430,6 +430,8 @@
                                                 data-modal-toggle="modal-bayar" 
                                                 data-bookingid="{{ $booking->id }}" 
                                                 data-totalbiaya="{{ (\Carbon\Carbon::parse($booking->tglMulai)->diffInDays(\Carbon\Carbon::parse($booking->tglSelesai)) + 1) * $booking->kendaraan->biayaSewa }}"
+                                                data-biayaSewa="{{ $booking->kendaraan->biayaSewa }}"
+                                                data-lamaPinjam="{{ (\Carbon\Carbon::parse($booking->tglMulai)->diffInDays(\Carbon\Carbon::parse($booking->tglSelesai)) + 1) }}"
                                                 class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
                                                 Bayar
                                             </button>
@@ -906,18 +908,29 @@ document.addEventListener("DOMContentLoaded", function () {
         @endif
     </script>
 
+    {{-- Script hitung harga sewa --}}
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             document.querySelectorAll("[data-modal-target='modal-bayar']").forEach(button => {
                 button.addEventListener("click", function () {
                     let bookingId = this.getAttribute("data-bookingid"); // Ambil ID booking dari tombol
                     let totalBiaya = this.getAttribute("data-totalbiaya"); // Ambil total biaya dari tombol
-                    
-                    // Set nilai booking_id di dalam modal
-                    document.getElementById("booking-id").value = bookingId;
-                    
-                    // Tampilkan total biaya di modal
-                    document.getElementById("total-biaya").innerText = "Rp. " + new Intl.NumberFormat('id-ID').format(totalBiaya) + ",00";
+                    let biayaSewa = this.getAttribute("data-biayaSewa"); // Biaya sewa per hari
+                    let lamaPinjam = this.getAttribute("data-lamaPinjam"); // Lama pinjam dalam hari
+
+                    // Format angka ke Rupiah
+                    let formatRupiah = (angka) => "Rp. " + new Intl.NumberFormat('id-ID').format(angka) + ",00";
+
+                    // Set nilai booking_id di dalam modal (pastikan elemen dengan id "booking-id" ada)
+                    let bookingIdInput = document.getElementById("booking-id");
+                    if (bookingIdInput) {
+                        bookingIdInput.value = bookingId;
+                    }
+
+                    // Tampilkan perhitungan biaya sewa
+                    document.getElementById("total-biaya").innerHTML = `
+                        (${lamaPinjam} hari) × ${formatRupiah(biayaSewa)} = <span class="text-green-600 font-bold">${formatRupiah(totalBiaya)}</span>
+                    `;
 
                     // Tampilkan modal
                     document.getElementById("modal-bayar").classList.remove("hidden");
@@ -932,7 +945,6 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
     </script>
-
 
 {{-- <script>
     // Refresh halaman setiap 3 menit
