@@ -75,26 +75,47 @@ class custBookingTenantController extends Controller
 
         $already = pemTenant::where('idCustomer', $nik)->where('namaEvent', $request->input('namaEvent')) ->whereIn('status', ['Disetujui', 'Belum bayar', 'Menunggu persetujuan'])->first();
 
-        if ($already){
-            return redirect()->back()->withErrors('Mohon maaf, Anda hanya dapat memesan 1 tenant untuk 1 event.')->withInput();
+        if ($already) {
+            return redirect()->back()->with('custom_errors', ['Mohon maaf, Anda hanya dapat memesan 1 tenant untuk 1 event.'])->withInput();
         }
-
+        
         $makanan = event::where('namaEvent', $request->input('namaEvent'))->first()->nMakanan;
         $jasa = event::where('namaEvent', $request->input('namaEvent'))->first()->nJasa;
         $barang = event::where('namaEvent', $request->input('namaEvent'))->first()->nBarang;
-        $nMakanan = pemTenant::where('namaEvent', $request->input('namaEvent'))->where('tipeTenant', 'Tenant Makanan') ->whereIn('status', ['Disetujui', 'Belum bayar', 'Menunggu persetujuan'])->count();
-        $nJasa = pemTenant::where('namaEvent', $request->input('namaEvent'))->where('tipeTenant', 'Tenant Jasa') ->whereIn('status', ['Disetujui', 'Belum bayar', 'Menunggu persetujuan'])->count();
-        $nBarang = pemTenant::where('namaEvent', $request->input('namaEvent'))->where('tipeTenant', 'Tenant Barang') ->whereIn('status', ['Disetujui', 'Belum bayar', 'Menunggu persetujuan'])->count();
-
+        
+        $nMakanan = pemTenant::where('namaEvent', $request->input('namaEvent'))
+            ->where('tipeTenant', 'Tenant Makanan')
+            ->whereIn('status', ['Disetujui', 'Belum bayar', 'Menunggu persetujuan'])
+            ->count();
+        
+        $nJasa = pemTenant::where('namaEvent', $request->input('namaEvent'))
+            ->where('tipeTenant', 'Tenant Jasa')
+            ->whereIn('status', ['Disetujui', 'Belum bayar', 'Menunggu persetujuan'])
+            ->count();
+        
+        $nBarang = pemTenant::where('namaEvent', $request->input('namaEvent'))
+            ->where('tipeTenant', 'Tenant Barang')
+            ->whereIn('status', ['Disetujui', 'Belum bayar', 'Menunggu persetujuan'])
+            ->count();
+        
+        $errorMessages = [];
+        
         if ($request->input('tipeTenant') == 'Tenant Makanan' && $makanan == $nMakanan) {
-            return redirect()->back()->withErrors('Mohon maaf, kuota untuk tenant makanan sudah habis, silahkan berkunjung dilain waktu.')->withInput();
+            $errorMessages[] = 'Mohon maaf, kuota untuk tenant makanan sudah habis, silahkan berkunjung di lain waktu.';
         }
+        
         if ($request->input('tipeTenant') == 'Tenant Jasa' && $jasa == $nJasa) {
-            return redirect()->back()->withErrors('Mohon maaf, kuota untuk tenant jasa sudah habis, silahkan berkunjung dilain waktu.')->withInput();
+            $errorMessages[] = 'Mohon maaf, kuota untuk tenant jasa sudah habis, silahkan berkunjung di lain waktu.';
         }
+        
         if ($request->input('tipeTenant') == 'Tenant Barang' && $barang == $nBarang) {
-            return redirect()->back()->withErrors('Mohon maaf, kuota untuk tenant barang sudah habis, silahkan berkunjung dilain waktu.')->withInput();
+            $errorMessages[] = 'Mohon maaf, kuota untuk tenant barang sudah habis, silahkan berkunjung di lain waktu.';
         }
+        
+        if (!empty($errorMessages)) {
+            return redirect()->back()->with('custom_errors', $errorMessages)->withInput();
+        }
+        
 
         // Siapkan data untuk disimpan
         $dataToStore = [

@@ -717,7 +717,6 @@
     <!-- Script Alert -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            // Notifikasi jika berhasil
             @if(session('success'))
                 Swal.fire({
                     icon: 'success',
@@ -728,15 +727,14 @@
                     timer: 3000 // Durasi 3 detik
                 });
             @endif
-
-            // Notifikasi jika ada error
-            @if($errors->any())
+    
+            @if(session('custom_errors'))
                 Swal.fire({
-                    icon: 'info',
+                    icon: 'info', // Paksa hanya menggunakan icon 'info'
                     title: 'Perhatian',
                     html: `
                         <ul style="text-align: center;">
-                            @foreach($errors->all() as $error)
+                            @foreach(session('custom_errors') as $error)
                                 <li>{{ $error }}</li>
                             @endforeach
                         </ul>
@@ -747,10 +745,7 @@
                     }
                 }).then((result) => {
                     if (result.isConfirmed || result.isDismissed) {
-                        // Cari tombol yang memiliki atribut data-modal-toggle="modal-booking"
                         const bookingToggle = document.querySelector('[data-modal-toggle="modal-booking"]');
-                        
-                        // Jika tombol ada, klik secara otomatis untuk membuka modal booking
                         if (bookingToggle) {
                             bookingToggle.click();
                         }

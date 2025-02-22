@@ -80,35 +80,41 @@ class custBookingKendaraanController extends Controller
 
         $now = Carbon::now()->startOfDay();
 
-        if ($now->diffInDays($validated['tglMulai']) < 3){
-            return redirect()->back()->withErrors('Mohon maaf, anda harus memesan minimal 3 hari sebelum hari yang dipesan.')->withInput();
+        if ($now->diffInDays($request->input('tglMulai')) < 3) {
+            return redirect()->back()->with('custom_errors', ['Mohon maaf, Anda harus memesan minimal 3 hari sebelum hari yang dipesan.'])->withInput();
         }
 
         $used = pemKendaraan::where('idKendaraan', $validated['idKendaraan'])
             ->whereIn('status', ['Disetujui', 'Belum bayar', 'Menunggu persetujuan'])
             ->get();
 
-        if ($used){
+        if ($used->isNotEmpty()) {
+            $errorMessages = [];
+        
             foreach ($used as $use) {
-                if ($validated['tglMulai'] == $use->tglMulai || $validated['tglMulai'] == $use->tglSelesai){
-                    return redirect()->back()->withErrors('Mohon maaf, tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain.')->withInput();
+                $message = 'Mohon maaf, tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain.';
+        
+                if (
+                    $validated['tglMulai'] == $use->tglMulai || $validated['tglMulai'] == $use->tglSelesai ||
+                    $validated['tglSelesai'] == $use->tglMulai || $validated['tglSelesai'] == $use->tglSelesai ||
+                    ($validated['tglMulai'] < $use->tglMulai && $validated['tglSelesai'] > $use->tglSelesai) ||
+                    ($validated['tglMulai'] > $use->tglMulai && $validated['tglSelesai'] < $use->tglSelesai) ||
+                    ($validated['tglMulai'] > $use->tglMulai && $validated['tglMulai'] < $use->tglSelesai) ||
+                    ($validated['tglSelesai'] > $use->tglMulai && $validated['tglSelesai'] < $use->tglSelesai)
+                ) {
+                    if (!in_array($message, $errorMessages)) {
+                        $errorMessages[] = $message;
+                    }
                 }
-                if ($validated['tglSelesai'] == $use->tglMulai || $validated['tglSelesai'] == $use->tglSelesai){
-                    return redirect()->back()->withErrors('Mohon maaf, tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain.')->withInput();
-                }
-                if ($validated['tglMulai'] < $use->tglMulai && $validated['tglSelesai'] > $use->tglSelesai) {
-                    return redirect()->back()->withErrors('Mohon maaf, tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain.')->withInput();
-                }
-                if ($validated['tglMulai'] > $use->tglMulai && $validated['tglSelesai'] < $use->tglSelesai){
-                    return redirect()->back()->withErrors('Mohon maaf, tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain.')->withInput();
-                }
-                if ($validated['tglMulai'] > $use->tglMulai && $validated['tglMulai'] < $use->tglSelesai){
-                    return redirect()->back()->withErrors('Mohon maaf, tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain.')->withInput();
-                }
-                if ($validated['tglSelesai'] > $use->tglMulai && $validated['tglSelesai'] < $use->tglSelesai){
-                    return redirect()->back()->withErrors('Mohon maaf, tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain.')->withInput();
-                }
-            };
+            }
+        
+            if ($validated['tglSelesai'] < $validated['tglMulai']) {
+                $errorMessages[] = 'Mohon maaf, tanggal selesai harus lebih dari atau sama dengan tanggal mulai.';
+            }
+        
+            if (!empty($errorMessages)) {
+                return redirect()->back()->with('custom_errors', $errorMessages)->withInput();
+            }
         }
 
         // Siapkan data untuk disimpan

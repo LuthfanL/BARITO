@@ -904,10 +904,10 @@ document.addEventListener("DOMContentLoaded", function () {
         // Notifikasi jika ada error
         @if($errors->any())
             Swal.fire({
-                icon: 'error',
-                title: 'Gagal',
+                icon: 'info',
+                title: 'Perhatian',
                 html: `
-                    <ul style="text-align: left;">
+                    <ul style="text-align: center;">
                         @foreach($errors->all() as $error)
                             <li>{{ $error }}</li>
                         @endforeach
