@@ -81,7 +81,7 @@ class custBookingKendaraanController extends Controller
         $now = Carbon::now()->startOfDay();
 
         if ($now->diffInDays($validated['tglMulai']) < 3){
-            return redirect()->back()->withErrors('Mohon maaf, anda harus memesan minimal 3 hari sebelum hari yang dipesan.');
+            return redirect()->back()->withErrors('Mohon maaf, anda harus memesan minimal 3 hari sebelum hari yang dipesan.')->withInput();
         }
 
         $used = pemKendaraan::where('idKendaraan', $validated['idKendaraan'])
@@ -91,22 +91,22 @@ class custBookingKendaraanController extends Controller
         if ($used){
             foreach ($used as $use) {
                 if ($validated['tglMulai'] == $use->tglMulai || $validated['tglMulai'] == $use->tglSelesai){
-                    return redirect()->back()->withErrors('Mohon maaf, tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain.');
+                    return redirect()->back()->withErrors('Mohon maaf, tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain.')->withInput();
                 }
                 if ($validated['tglSelesai'] == $use->tglMulai || $validated['tglSelesai'] == $use->tglSelesai){
-                    return redirect()->back()->withErrors('Mohon maaf, tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain.');
+                    return redirect()->back()->withErrors('Mohon maaf, tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain.')->withInput();
                 }
                 if ($validated['tglMulai'] < $use->tglMulai && $validated['tglSelesai'] > $use->tglSelesai) {
-                    return redirect()->back()->withErrors('Mohon maaf, tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain.');
+                    return redirect()->back()->withErrors('Mohon maaf, tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain.')->withInput();
                 }
                 if ($validated['tglMulai'] > $use->tglMulai && $validated['tglSelesai'] < $use->tglSelesai){
-                    return redirect()->back()->withErrors('Mohon maaf, tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain.');
+                    return redirect()->back()->withErrors('Mohon maaf, tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain.')->withInput();
                 }
                 if ($validated['tglMulai'] > $use->tglMulai && $validated['tglMulai'] < $use->tglSelesai){
-                    return redirect()->back()->withErrors('Mohon maaf, tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain.');
+                    return redirect()->back()->withErrors('Mohon maaf, tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain.')->withInput();
                 }
                 if ($validated['tglSelesai'] > $use->tglMulai && $validated['tglSelesai'] < $use->tglSelesai){
-                    return redirect()->back()->withErrors('Mohon maaf, tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain.');
+                    return redirect()->back()->withErrors('Mohon maaf, tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain.')->withInput();
                 }
             };
         }

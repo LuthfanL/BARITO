@@ -299,7 +299,7 @@
 
                         <!-- Input Nama Pemohon -->
                         <label for="namaPemohon">Nama Pemohon</label>
-                        <input type="text" id="namaPemohon" name="namaPemohon" require oninput="validateNamaPemohon(this)">
+                        <input type="text" id="namaPemohon" name="namaPemohon" value="{{ old('namaPemohon') }}" require oninput="validateNamaPemohon(this)">
                         <script>
                         function validateNamaPemohon(input) {
                             // Hanya izinkan huruf dan spasi
@@ -314,7 +314,7 @@
 
                         <!-- Input No. Whatapps -->
                         <label for="noWa">No. Whatapps</label>
-                        <input type="text" id="noWa" name="noWa" require oninput="validateWhatsApp(this)">
+                        <input type="text" id="noWa" name="noWa" value="{{ old('noWa') }}" require oninput="validateWhatsApp(this)">
                         <script>
                             function validateWhatsApp(input) {
                                 // Hanya izinkan angka (0-9)
@@ -329,14 +329,14 @@
 
                         <!-- Input Nama Tenant -->
                         <label for="namaTenant">Nama Tenant</label>
-                        <input type="text" id="namaTenant" name="namaTenant" required>
+                        <input type="text" id="namaTenant" name="namaTenant" value="{{ old('namaTenant') }}" required>
 
                         <!-- Input Jenis Tenant -->
                         <label for="tipeTenant">Jenis Tenant</label>
-                        {{-- <input type="text" id="tipeTenant" name="tipeTenant" required> --}}
                         <select
                             id="tipeTenant"
                             name="tipeTenant"
+                            value="{{ old('tipeTenant') }}"
                             class="bg-gray-50 mb-4 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                             onchange="simpanPilihan()">
                             <option value="Tenant Makanan">Tenant Makanan</option>
