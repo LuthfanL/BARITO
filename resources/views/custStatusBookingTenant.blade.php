@@ -206,9 +206,10 @@
                 @foreach ($waktuBuat->where('id', $booking->id) as $wb)
                     @if ($booking->id == $wb->id)
                        @php
-                            // Hitung waktu kedaluwarsa (created_at + 24 jam)
-                            $expiredTime = \Carbon\Carbon::parse($booking->created_at)->addHours(24)->timestamp;
+                            // Hitung waktu kedaluwarsa (wb->created_at + 24 jam)
+                            $expiredTime = \Carbon\Carbon::parse($wb->created_at)->addHours(24)->timestamp;
                         @endphp
+                        <p>{{ $expiredTime }}</p>
                     @endif
                 @endforeach
 

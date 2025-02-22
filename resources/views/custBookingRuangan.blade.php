@@ -362,14 +362,14 @@
 
                         <!-- Input Keperluan Acara -->
                         <label for="keperluan">Keperluan Acara</label>
-                        <textarea id="keperluan" name="keperluan" value="{{ old('keperluan') }}" rows="3" class="rounded-lg border border-gray-300" required></textarea>
+                        <textarea id="keperluan" name="keperluan" rows="3" class="rounded-lg border border-gray-300" required>{{ old('keperluan', null) }}</textarea>
                         <p class="mb-4 text-xs text-gray-500">
                             * Masukkan nama/judul acara yang akan dilaksanakan.
                         </p>
 
                         <!-- Input Deskripsi Tambahan -->
                         <label for="keterangan">Deskripsi Tambahan</label>
-                        <textarea id="keterangan" name="keterangan" value="{{ old('keterangan') }}" rows="3" class="rounded-lg border border-gray-300" required></textarea>
+                        <textarea id="keterangan" name="keterangan" rows="3" class="rounded-lg border border-gray-300" required>{{ old('keterangan', null) }}</textarea>
                         <p class="mb-4 text-xs text-gray-500">
                             * Masukkan deskripsi tambahan bila perlu misal keterangan setting layout tempat saat pelaksanaan acara.
                         </p>

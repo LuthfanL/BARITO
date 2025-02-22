@@ -351,21 +351,21 @@
 
                         <!-- Input Keperluan Acara -->
                         <label for="keperluan">Keperluan Acara</label>
-                        <textarea id="keperluan" name="keperluan" value="{{ old('keperluan') }}" rows="3" class="rounded-lg border border-gray-300" required></textarea>
+                        <textarea id="keperluan" name="keperluan" rows="3" class="rounded-lg border border-gray-300" required>{{ old('keperluan', null) }}</textarea>
                         <p class="mb-4 text-xs text-gray-500">
                             * Masukkan nama/judul acara yang akan dilaksanakan.
                         </p>
 
                         <!-- Input Lokasi Acara -->
                         <label for="lokasi">Lokasi Acara</label>
-                        <textarea id="lokasi" name="lokasi" value="{{ old('lokasi') }}" rows="3" class="rounded-lg border border-gray-300" required></textarea>
+                        <textarea id="lokasi" name="lokasi" rows="3" class="rounded-lg border border-gray-300" required>{{ old('lokasi', null) }}</textarea>
                         <p class="mb-4 text-xs text-gray-500">
                             * Masukkan keterangan lokasi acara akan dilakukan.
                         </p>
 
                         <!-- Input Titik Jemput -->
                         <label for="titikJemput">Titik Jemput</label>
-                        <textarea id="titikJemput" name="titikJemput" value="{{ old('titikJemput') }}" rows="3" class="rounded-lg border border-gray-300" required></textarea>
+                        <textarea id="titikJemput" name="titikJemput" rows="3" class="rounded-lg border border-gray-300" required>{{ old('titikJemput', null) }}</textarea>
                         <p class="mb-4 text-xs text-gray-500">
                             * Masukkan keterangan lokasi titik penjemputan.
                         </p>
