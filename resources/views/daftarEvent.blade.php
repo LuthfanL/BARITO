@@ -185,23 +185,7 @@
                                 </th>
                                 <th>
                                     <span class="flex items-center">
-                                        Tenant Barang
-                                        <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4"/>
-                                        </svg>
-                                    </span>
-                                </th>
-                                <th>
-                                    <span class="flex items-center">
-                                        Tenant Jasa
-                                        <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4"/>
-                                        </svg>
-                                    </span>
-                                </th>
-                                <th>
-                                    <span class="flex items-center">
-                                        Tenant Makanan
+                                        Jumlah Tenant
                                         <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4"/>
                                         </svg>
@@ -243,9 +227,11 @@
                                         <td class="text-center">{{ $data['namaEvent'] }}</td>
                                         <td class="text-center">{{ $data['deskripsi'] }}</td>
                                         <td class="text-center">Rp. {{ number_format($data['hargaTenant'], 0, ',', '.') }}</td>
-                                        <td class="text-center">{{ $data['nBarang'] }}</td>
-                                        <td class="text-center">{{ $data['nJasa'] }}</td>
-                                        <td class="text-center">{{ $data['nMakanan'] }}</td>
+                                        <td class="text-center">
+                                            Tenant Makanan = {{ $data['nMakanan'] }} <br>
+                                            Tenant Barang = {{ $data['nBarang'] }} <br>
+                                            Tenant Jasa = {{ $data['nJasa'] }}
+                                        </td>
                                         <td>{{ \Carbon\Carbon::parse($data['tglMulai'])->format('d-M-Y') }}</td>
                                         <td>{{ \Carbon\Carbon::parse($data['tglSelesai'])->format('d-M-Y') }}</td>
                                         <td class="text-center">
