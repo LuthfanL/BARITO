@@ -55,11 +55,11 @@ class buatEventController extends Controller
         $selisih = $sekarang->diffInDays($tglMulai);
 
         if ($selisih < 3) {
-            return redirect()->back()->withErrors('Event harus dibuat maksimal 3 hari sebelum hari h event!');
+            return redirect()->back()->withErrors('Event harus dibuat maksimal 3 hari sebelum hari h event!')->withInput();
         }
         
         if ($request->input('tglSelesai') < $request->input('tglMulai')){
-            return redirect()->back()->withErrors('Tanggal Selesai harus lebih dari atau sama dengan tanggal mulai!');
+            return redirect()->back()->withErrors('Tanggal Selesai harus lebih dari atau sama dengan tanggal mulai!')->withInput();
         }
 
         // Simpan data ke database

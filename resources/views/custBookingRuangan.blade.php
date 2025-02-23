@@ -321,7 +321,7 @@
 
                         <!-- Input Nama Pemohon -->
                         <label for="namaPemohon">Nama Pemohon</label>
-                        <input type="text" id="namaPemohon" name="namaPemohon" required oninput="validateNamaPemohon(this)">
+                        <input type="text" id="namaPemohon" name="namaPemohon" value="{{ old('namaPemohon') }}" required oninput="validateNamaPemohon(this)">
                         <script>
                         function validateNamaPemohon(input) {
                             // Hanya izinkan huruf dan spasi
@@ -336,7 +336,7 @@
 
                         <!-- Input No. WhatsApp -->
                         <label for="noWa">No. WhatsApp</label>
-                        <input type="text" id="noWa" name="noWa" required oninput="validateWhatsApp(this)">
+                        <input type="text" id="noWa" name="noWa" value="{{ old('noWa') }}" required oninput="validateWhatsApp(this)">
                         <script>
                             function validateWhatsApp(input) {
                                 // Hanya izinkan angka (0-9)
@@ -353,23 +353,23 @@
                         <label for="tanggal-event" class="block font-bold">Tanggal</label>
                         <div id="date-range-picker" class="flex items-center space-x-2">
                             <div class="relative flex items-center">
-                                <input id="tglMulai" name="tglMulai" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 p-2.5 w-full" placeholder="Tanggal Mulai" required>
+                                <input id="tglMulai" name="tglMulai" value="{{ old('tglMulai') }}" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 p-2.5 w-full" placeholder="Tanggal Mulai" required>
                             </div>
                             <div class="relative flex items-center">
-                                <input id="tglSelesai" name="tglSelesai" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 p-2.5 w-full" placeholder="Tanggal Selesai" required>
+                                <input id="tglSelesai" name="tglSelesai" value="{{ old('tglSelesai') }}" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 p-2.5 w-full" placeholder="Tanggal Selesai" required>
                             </div>
                         </div>
 
                         <!-- Input Keperluan Acara -->
                         <label for="keperluan">Keperluan Acara</label>
-                        <textarea id="keperluan" name="keperluan" rows="3" class="rounded-lg border border-gray-300" required></textarea>
+                        <textarea id="keperluan" name="keperluan" rows="3" class="rounded-lg border border-gray-300" required>{{ old('keperluan', null) }}</textarea>
                         <p class="mb-4 text-xs text-gray-500">
                             * Masukkan nama/judul acara yang akan dilaksanakan.
                         </p>
 
                         <!-- Input Deskripsi Tambahan -->
                         <label for="keterangan">Deskripsi Tambahan</label>
-                        <textarea id="keterangan" name="keterangan" rows="3" class="rounded-lg border border-gray-300" required></textarea>
+                        <textarea id="keterangan" name="keterangan" rows="3" class="rounded-lg border border-gray-300" required>{{ old('keterangan', null) }}</textarea>
                         <p class="mb-4 text-xs text-gray-500">
                             * Masukkan deskripsi tambahan bila perlu misal keterangan setting layout tempat saat pelaksanaan acara.
                         </p>
@@ -705,7 +705,6 @@
     <!-- Script Alert -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            // Notifikasi jika berhasil
             @if(session('success'))
                 Swal.fire({
                     icon: 'success',
@@ -716,15 +715,14 @@
                     timer: 3000 // Durasi 3 detik
                 });
             @endif
-
-            // Notifikasi jika ada error
-            @if($errors->any())
+    
+            @if(session('custom_errors'))
                 Swal.fire({
-                    icon: 'info',
+                    icon: 'info', // Paksa hanya menggunakan icon 'info'
                     title: 'Perhatian',
                     html: `
                         <ul style="text-align: center;">
-                            @foreach($errors->all() as $error)
+                            @foreach(session('custom_errors') as $error)
                                 <li>{{ $error }}</li>
                             @endforeach
                         </ul>
@@ -735,10 +733,7 @@
                     }
                 }).then((result) => {
                     if (result.isConfirmed || result.isDismissed) {
-                        // Cari tombol yang memiliki atribut data-modal-toggle="modal-booking"
                         const bookingToggle = document.querySelector('[data-modal-toggle="modal-booking"]');
-                        
-                        // Jika tombol ada, klik secara otomatis untuk membuka modal booking
                         if (bookingToggle) {
                             bookingToggle.click();
                         }
@@ -747,6 +742,7 @@
             @endif
         });
     </script>
+    
     
 </body>
 

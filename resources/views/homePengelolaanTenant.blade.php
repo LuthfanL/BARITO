@@ -149,6 +149,7 @@
                         data-makanan="{{ $evt->nMakanan }}"
                         data-foto-url="{{ $evt->foto_urls[0] }}"
                         data-thumbnails="{{ json_encode($evt->foto_urls) }}" 
+                        data-namaEvent="{{ $evt->namaEvent }}"
                         class="inline-flex items-center mt-2 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-xl hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
                         Lihat detail
                         <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
@@ -201,6 +202,13 @@
                     </div>
                 </div>
                 <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b">
+                    <!-- Button Booking -->
+                    <a href="{{ route('custBookingTenant', [
+                        'namaEvent' => $evt->namaEvent,
+                    ]) }}" 
+                    class="inline-flex items-center px-4 py-2 mr-2 text-sm font-medium rounded-lg bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                        Booking
+                    </a>
                     <button data-modal-hide="modal-detailEvent" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center">Tutup</button>
                 </div>
             </div>
@@ -292,6 +300,24 @@
             mainImage.src = element.src;
         }
     </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const detailButtons = document.querySelectorAll("[data-modal-toggle='modal-detailEvent']");
+        const bookingButton = document.querySelector("#modal-detailEvent a[href*='custBookingTenant']");
+
+        detailButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                const namaEvent = this.getAttribute("data-namaEvent");
+                
+                // Update URL Booking di modal
+                if (bookingButton) {
+                    bookingButton.href = `/custBookingTenant?namaEvent=${encodeURIComponent(namaEvent)}`;
+                }
+            });
+        });
+    });
+</script>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>

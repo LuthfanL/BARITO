@@ -155,7 +155,10 @@
                             data-kursi="{{ $ruang->kursi }}" 
                             data-proyektor="{{ $ruang->proyektor }}"
                             data-foto-url="{{ $ruang->foto_urls[0] }}"
-                            data-thumbnails="{{ json_encode($ruang->foto_urls) }}"  
+                            data-thumbnails="{{ json_encode($ruang->foto_urls) }}"
+                            data-nama="{{ $ruang->nama }}"
+                            data-deskripsi="{{ $ruang->deskripsi }}"
+                            data-lokasi="{{ $ruang->lokasi }}"  
                             class="inline-flex items-center mt-2 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-xl hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
                             Lihat detail
                             <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
@@ -225,7 +228,16 @@
                         </div>
                     </div>
                 </div>
+                <!-- Button Booking -->
                 <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b">
+                    <a href="{{ route('custBookingRuangan', [
+                        'nama' => $ruang->nama,
+                        'deskripsi' => $ruang->deskripsi,
+                        'lokasi' => $ruang->lokasi,
+                    ]) }}"
+                    class="inline-flex items-center px-4 py-2 mr-2 text-sm font-medium rounded-lg bg-gradient-to-l from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
+                        Booking
+                    </a>
                     <button data-modal-hide="modal-detailRuangan" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center">Tutup</button>
                 </div>
             </div>
@@ -317,6 +329,26 @@
             const mainImage = document.getElementById('main-image-ruang');
             mainImage.src = element.src;
         }
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const detailButtons = document.querySelectorAll("[data-modal-toggle='modal-detailRuangan']");
+            const bookingButton = document.querySelector("#modal-detailRuangan a[href*='custBookingRuangan']");
+
+            detailButtons.forEach(button => {
+                button.addEventListener("click", function () {
+                    const nama = this.getAttribute("data-nama");
+                    const deskripsi = this.getAttribute("data-deskripsi");
+                    const lokasi = this.getAttribute("data-lokasi");
+
+                    // Update URL Booking di modal
+                    if (bookingButton) {
+                        bookingButton.href = `/custBookingRuangan?nama=${encodeURIComponent(nama)}&deskripsi=${encodeURIComponent(deskripsi)}&lokasi=${encodeURIComponent(lokasi)}`;
+                    }
+                });
+            });
+        });
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>

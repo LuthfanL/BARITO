@@ -111,15 +111,15 @@
                                 
                                 <!-- Input Nama Event -->
                                 <label for="namaEvent">Nama Event</label>
-                                <input type="text" id="namaEvent" name="namaEvent" required>
+                                <input type="text" id="namaEvent" name="namaEvent" value="{{ old('namaEvent') }}" required>
                 
                                 <!-- Input Deskripsi Event -->
                                 <label for="deskripsi">Deskripsi Event</label>
-                                <textarea id="deskripsi" name="deskripsi" rows="3" required class="pl-2"></textarea>
+                                <textarea id="deskripsi" name="deskripsi" rows="3" required class="pl-2">{{ old('deskripsi', null) }}</textarea>
                 
                                 <!-- Input Biaya Sewa -->
                                 <label for="hargaTenant">Biaya Sewa (Per Hari)</label>
-                                <input type="text" id="hargaTenant" name="hargaTenant" required oninput="validateAngka(this)">
+                                <input type="text" id="hargaTenant" name="hargaTenant" value="{{ old('hargaTenant') }}" required oninput="validateAngka(this)">
                                 <p class="mb-4 text-xs text-gray-500">
                                     * Masukkan jumlah biaya sewa dalam angka, misalnya 500000. Nilai tersebut akan otomatis dikonversi ke format rupiah.
                                 </p>
@@ -129,15 +129,15 @@
                                 <div class="tenant-container">
                                     <div>
                                         <label for="nBarang">Tenant Barang</label>
-                                        <input type="text" id="nBarang" name="nBarang" oninput="validateAngka(this)">
+                                        <input type="text" id="nBarang" name="nBarang" value="{{ old('nBarang') }}" oninput="validateAngka(this)">
                                     </div>
                                     <div>
                                         <label for="nJasa">Tenant Jasa</label>
-                                        <input type="text" id="nJasa" name="nJasa" oninput="validateAngka(this)">
+                                        <input type="text" id="nJasa" name="nJasa" value="{{ old('nJasa') }}" oninput="validateAngka(this)">
                                     </div>
                                     <div>
                                         <label for="nMakanan">Tenant Makanan</label>
-                                        <input type="text" id="nMakanan" name="nMakanan" oninput="validateAngka(this)">
+                                        <input type="text" id="nMakanan" name="nMakanan" value="{{ old('nMakanan') }}" oninput="validateAngka(this)">
                                     </div>
                                 </div>
 
@@ -161,7 +161,7 @@
                                         <svg class="w-5 h-5 absolute right-3 top-2 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                             <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 1 1 0-2Z"/>
                                         </svg>
-                                        <input id="tglMulai" name="tglMulai" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 p-2.5 w-full" placeholder="Tanggal Mulai">
+                                        <input id="tglMulai" name="tglMulai" value="{{ old('tglMulai') }}" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 p-2.5 w-full" placeholder="Tanggal Mulai">
                                     </div>
 
 
@@ -170,7 +170,7 @@
                                         <svg class="w-5 h-5 absolute right-3 top-2 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                             <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 1 1 0-2Z"/>
                                         </svg>
-                                        <input id="tglSelesai" name="tglSelesai" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 p-2.5 w-full" placeholder="Tanggal Selesai">
+                                        <input id="tglSelesai" name="tglSelesai" value="{{ old('tglSelesai') }}" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 p-2.5 w-full" placeholder="Tanggal Selesai">
                                     </div>
                                 </div>
                                 
