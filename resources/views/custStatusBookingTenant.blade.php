@@ -210,50 +210,50 @@
                             $expiredTime = \Carbon\Carbon::parse($booking->created_at)->addHours(24)->timestamp;
                         @endphp
                     @endif
-                @endforeach
 
-                <div id="alert-box-tenant-{{ $booking->id }}" 
-                    class="flex items-center p-4 mt-2 text-yellow-800 border-l-4 border-yellow-500 bg-yellow-100 rounded-lg shadow-md" 
-                    role="alert"
-                    data-expired="{{ $expiredTime }}"
-                    
-                    <svg class="w-6 h-6 text-yellow-700 flex-shrink-0 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M9 2a1 1 0 0 1 2 0v7a1 1 0 0 1-2 0V2Zm1 10a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z"/>
-                    </svg>
-
-                    <div class="flex-1">
-                        <strong>Perhatian!</strong> Anda memiliki pemesanan tenant dengan ID Booking 
-                        <span class="font-semibold">{{ $booking->id }}</span>  
-                        yang belum dibayar.  
-                        Mohon segera selesaikan pembayaran dan unggah bukti pembayaran dalam 
-                        <span id="countdown-tenant-{{ $booking->id }}" class="font-semibold text-red-600"></span>.
-                    </div>
-
-                    <button onclick="closeAlertTenant({{ $booking->id }})" class="text-yellow-800 hover:text-yellow-600 ml-4 p-2 rounded-full transition">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 9l-3-3a1 1 0 0 1 1.414-1.414L10 6.586l3-3a1 1 0 1 1 1.414 1.414L11.414 8l3 3a1 1 0 0 1-1.414 1.414l-3-3-3 3a1 1 0 0 1-1.414-1.414l3-3Z" clip-rule="evenodd"/>
+                    <div id="alert-box-tenant-{{ $booking->id }}" 
+                        class="flex items-center p-4 mt-2 text-yellow-800 border-l-4 border-yellow-500 bg-yellow-100 rounded-lg shadow-md" 
+                        role="alert"
+                        data-expired="{{ $expiredTime }}">
+                        
+                        <svg class="w-6 h-6 text-yellow-700 flex-shrink-0 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 2a1 1 0 0 1 2 0v7a1 1 0 0 1-2 0V2Zm1 10a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z"/>
                         </svg>
-                    </button>
-                </div>
+
+                        <div class="flex-1">
+                            <strong>Perhatian!</strong> Anda memiliki pemesanan tenant dengan ID Booking 
+                            <span class="font-semibold">{{ $booking->id }}</span>  
+                            yang belum dibayar.  
+                            Mohon segera selesaikan pembayaran dan unggah bukti pembayaran dalam 
+                            <span id="countdown-tenant-{{ $booking->id }}" class="font-semibold text-red-600"></span>.
+                        </div>
+
+                        <button onclick="closeAlertTenant({{ $booking->id }})" class="text-yellow-800 hover:text-yellow-600 ml-4 p-2 rounded-full transition">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 9l-3-3a1 1 0 0 1 1.414-1.414L10 6.586l3-3a1 1 0 1 1 1.414 1.414L11.414 8l3 3a1 1 0 0 1-1.414 1.414l-3-3-3 3a1 1 0 0 1-1.414-1.414l3-3Z" clip-rule="evenodd"/>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                @endforeach 
             @endforeach
 
-
             <script>
-              function startCountdownTenant(id, expiredTime, serverNow) {
-    let countdownElement = document.getElementById("countdown-tenant-" + id);
+                function startCountdownTenant(id, expiredTime, serverNow) {
+                    let countdownElement = document.getElementById("countdown-tenant-" + id);
 
-    // Sinkronisasi waktu browser dengan waktu server
-    let localNow = Math.floor(Date.now() / 1000);
-    let offset = localNow - serverNow; // Selisih waktu lokal dan server
-    let adjustedExpiredTime = expiredTime + offset; // Sesuaikan expired time
+                    // Sinkronisasi waktu browser dengan waktu server
+                    let localNow = Math.floor(Date.now() / 1000);
+                    let offset = localNow - serverNow; // Selisih waktu lokal dan server
+                    let adjustedExpiredTime = expiredTime + offset; // Sesuaikan expired time
 
-    function updateCountdownTenant() {
-        let now = Math.floor(Date.now() / 1000);
-        let remainingTime = adjustedExpiredTime - now;
+                    function updateCountdownTenant() {
+                        let now = Math.floor(Date.now() / 1000);
+                        let remainingTime = adjustedExpiredTime - now;
 
-        if (remainingTime <= 0) {
-            countdownElement.innerText = "Waktu pembayaran telah habis!";
-            countdownElement.classList.add("text-red-700", "font-bold");
+                        if (remainingTime <= 0) {
+                            countdownElement.innerText = "Waktu pembayaran telah habis!";
+                            countdownElement.classList.add("text-red-700", "font-bold");
 
                             // Auto refresh setelah waktu habis dengan delay 3 detik
                             setTimeout(function() {
@@ -264,34 +264,32 @@
                             return;
                         }
 
-           let hours = Math.floor(remainingTime / 3600);
+                        let hours = Math.floor(remainingTime / 3600);
                         let minutes = Math.floor((remainingTime % 3600) / 60);
                         let seconds = remainingTime % 60;
 
                         countdownElement.innerText = `${hours} jam ${minutes} menit ${seconds} detik`;
 
-        // Buat interval baru untuk setiap elemen (tidak tumpang tindih)
-        setTimeout(updateCountdownTenant, 1000);
-    }
+                        // Buat interval baru untuk setiap elemen (tidak tumpang tindih)
+                        setTimeout(updateCountdownTenant, 1000);
+                    }
 
-    updateCountdownTenant();
-}
+                    updateCountdownTenant();
+                }
 
-document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll("[id^='alert-box-tenant-']").forEach(alertBox => {
-        let id = alertBox.id.replace("alert-box-tenant-", "").trim();
-        let expiredTime = parseInt(alertBox.getAttribute("data-expired"), 10);
-        let serverNow = parseInt(alertBox.getAttribute("data-now"), 10);
+                document.addEventListener("DOMContentLoaded", function () {
+                    document.querySelectorAll("[id^='alert-box-tenant-']").forEach(alertBox => {
+                        let id = alertBox.id.replace("alert-box-tenant-", "").trim();
+                        let expiredTime = parseInt(alertBox.getAttribute("data-expired"), 10);
+                        let serverNow = parseInt(alertBox.getAttribute("data-now"), 10);
 
-        if (!isNaN(expiredTime) && !isNaN(serverNow)) {
-            startCountdownTenant(id, expiredTime, serverNow);
-        }
-    });
-});
-
+                        if (!isNaN(expiredTime) && !isNaN(serverNow)) {
+                            startCountdownTenant(id, expiredTime, serverNow);
+                        }
+                    });
+                });
             </script>
 
-            
             <!-- Table Data -->
             <table id="default-table">
                 <thead>
@@ -384,40 +382,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     </tr>
                 </thead>
                 <tbody>
-                    {{-- <tr>
-                        <!-- No -->
-                        <td>1</td>
-                        <!-- ID. Booking -->
-                        <td>E12</td>
-                        <!-- Event -->
-                        <td>Event A</td>
-                        <!-- Nama Tenant -->
-                        <td>Teh Sosor Mantap</td>
-                        <!-- Jenis Tenant -->
-                        <td>Makanan</td>
-                        <!-- Tanggal Pinjam -->
-                        <td class="text-center"> 
-                            14/03/2025
-                        </td>
-                        <!-- Tanggal Selesai -->
-                        <td class="text-center">
-                            15/03/2025
-                        </td>
-                        <!-- Status -->
-                        <td class="text-center">
-                            <div class="flex flex-col gap-2">
-                                <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-yellow-500 via-yellow-600 to-yellow-700 text-white">Menunggu
-                                </div>
-                            </div>
-                        </td>
-                        <!-- Tindakan -->
-                        <td class="text-center">
-                            <div class="flex justify-center gap-2">
-                                <button data-modal-target="modal-edit" data-modal-toggle="modal-edit" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Edit</button>
-                                <button data-modal-target="modal-batalkan" data-modal-toggle="modal-batalkan" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">Batalkan</button>
-                            </div>
-                        </td>
-                    </tr> --}}
+                   
                     @if (!empty($bookings))
                         @foreach ($bookings as $booking)
                             <tr class="booking-list" data-bookingid="{{ $booking->id }}">
@@ -582,7 +547,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 </div>
 
                 <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b space-x-2">
-                   <button 
+                    <p class="mb-4 text-sm text-red-500 mr-auto">
+                        * Mohon lengkapi semua informasi sebelum menyimpan perubahan informasi booking.
+                    </p>
+                    <button 
                         data-modal-target="modal-konfirmasiEdit" 
                         data-modal-toggle="modal-konfirmasiEdit" 
                         data-modal-hide="modal-edit" 

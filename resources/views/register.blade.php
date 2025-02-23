@@ -67,7 +67,7 @@
                     </div>
                     <div class="my-6">
                         <div class="flex items-center relative">
-                            <input placeholder="Masukkan Password" id="password" name="password" type="password" autocomplete="new-password" class="block w-full rounded-md bg-white-700 border border-gray-600 py-2 px-3 text-gray-900 focus:ring-2 focus:ring-indigo-500 focus:outline-none pr-10">
+                            <input placeholder="Masukkan Password" id="password" name="password" type="password" autocomplete="new-password"  maxlength="10" class="block w-full rounded-md bg-white-700 border border-gray-600 py-2 px-3 text-gray-900 focus:ring-2 focus:ring-indigo-500 focus:outline-none pr-10">
                             <span id="togglePassword" class="absolute top-3 right-2 cursor-pointer" onclick="togglePasswordVisibility()" style="width: 25px; height: 20px">
                                 <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" width="25" height="20" fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16">
                                     <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7 7 0 0 0-2.79.588l.77.771A6 6 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755q-.247.248-.517.486z" fill="gray" />
@@ -80,7 +80,7 @@
                     
                     <div class="my-6">
                         <div class="flex items-center relative">
-                            <input placeholder="Konfirmasi Password" id="konfiramsiPassword" name="konfirmasiPassword" type="password" autocomplete="new-password" class="block w-full rounded-md bg-white-700 border border-gray-600 py-2 px-3 text-gray-900 focus:ring-2 focus:ring-indigo-500 focus:outline-none pr-10">
+                            <input placeholder="Konfirmasi Password" id="konfiramsiPassword" name="konfirmasiPassword" type="password" autocomplete="new-password"  maxlength="10" class="block w-full rounded-md bg-white-700 border border-gray-600 py-2 px-3 text-gray-900 focus:ring-2 focus:ring-indigo-500 focus:outline-none pr-10">
                             <span id="togglePassword" class="absolute top-3 right-2 cursor-pointer" onclick="togglePasswordVisibility2()" style="width: 25px; height: 20px">
                                 <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" width="25" height="20" fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16">
                                     <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7 7 0 0 0-2.79.588l.77.771A6 6 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755q-.247.248-.517.486z" fill="gray" />

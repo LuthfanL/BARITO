@@ -537,6 +537,9 @@
                 </div>
 
                 <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b space-x-2">
+                    <p class="mb-4 text-sm text-red-500 mr-auto">
+                        * Mohon lengkapi semua informasi sebelum menyimpan perubahan informasi booking.
+                    </p>
                     <button 
                         data-modal-target="modal-konfirmasiEdit" 
                         data-modal-toggle="modal-konfirmasiEdit" 

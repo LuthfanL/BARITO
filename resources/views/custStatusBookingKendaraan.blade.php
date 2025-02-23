@@ -414,7 +414,7 @@
                                                 data-lokasi="{{ $booking['lokasi'] }}" 
                                                 data-titikJemput="{{ $booking['titikJemput'] }}" 
                                                 data-tglMulai="{{ $booking['tglMulai'] }}" 
-                                                data-tglSelesai="{{ $booking['tglSelesai'] }}"    
+                                                data-tglSelesai="{{ $booking['tglSelesai'] }}"
                                                 class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white btn-edit">
                                                 Edit
                                             </button>
@@ -545,7 +545,10 @@
                 </div>
 
                 <div class="flex justify-end items-center p-4 md:p-5 border-t border-gray-200 rounded-b space-x-2">
-                    <button 
+                    <p class="mb-4 text-sm text-red-500 mr-auto">
+                        * Mohon lengkapi semua informasi sebelum menyimpan perubahan informasi booking.
+                    </p>
+                                    <button 
                         data-modal-target="modal-konfirmasiEdit" 
                         data-modal-toggle="modal-konfirmasiEdit" 
                         data-modal-hide="modal-edit" 
