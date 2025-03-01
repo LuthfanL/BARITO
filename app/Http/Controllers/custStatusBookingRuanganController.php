@@ -124,8 +124,8 @@ class custStatusBookingRuanganController extends Controller
 
         $now = Carbon::now()->startOfDay();
 
-        if ($now->diffInDays($request->input('tglMulai')) < 3){
-            return redirect()->back()->withErrors('Anda harus memesan minimal 3 hari sebelum hari yang dipesan!');
+        if ($now->diffInDays($request->input('tglMulai')) < 3) {
+            return redirect()->back()->with('custom_errors', ['Mohon maaf, Anda harus memesan minimal 3 hari sebelum hari yang dipesan.'])->withInput();
         }
 
         $idRuangan = $booking->idRuangan;
@@ -140,13 +140,32 @@ class custStatusBookingRuanganController extends Controller
                 ->where('id', '!=', $request->id) // Mengecualikan booking yang sedang diupdate
                 ->get();
 
-            foreach ($used as $use) {
-                if (
-                    ($request->tglMulai >= $use->tglMulai && $request->tglMulai <= $use->tglSelesai) ||
-                    ($request->tglSelesai >= $use->tglMulai && $request->tglSelesai <= $use->tglSelesai) ||
-                    ($request->tglMulai <= $use->tglMulai && $request->tglSelesai >= $use->tglSelesai)
-                ) {
-                    return redirect()->back()->withErrors('Tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain!');
+            if ($used->isNotEmpty()) {
+                $errorMessages = [];
+        
+                foreach ($used as $use) {
+                    $message = 'Mohon maaf, tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain.';
+        
+                    if (
+                        $request->tglMulai == $use->tglMulai || $request->tglMulai == $use->tglSelesai ||
+                        $request->tglSelesai == $use->tglMulai || $request->tglSelesai == $use->tglSelesai ||
+                        ($request->tglMulai < $use->tglMulai && $request->tglSelesai > $use->tglSelesai) ||
+                        ($request->tglMulai > $use->tglMulai && $request->tglSelesai < $use->tglSelesai) ||
+                        ($request->tglMulai > $use->tglMulai && $request->tglMulai < $use->tglSelesai) ||
+                        ($request->tglSelesai > $use->tglMulai && $request->tglSelesai < $use->tglSelesai)
+                    ) {
+                        if (!in_array($message, $errorMessages)) {
+                            $errorMessages[] = $message;
+                        }
+                    }
+                }
+        
+                if ($request->tglSelesai < $request->tglMulai) {
+                    $errorMessages[] = 'Mohon maaf, tanggal selesai harus lebih dari atau sama dengan tanggal mulai.';
+                }
+        
+                if (!empty($errorMessages)) {
+                    return redirect()->back()->with('custom_errors', $errorMessages)->withInput();
                 }
             }
         }

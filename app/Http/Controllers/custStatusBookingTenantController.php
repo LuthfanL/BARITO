@@ -157,13 +157,13 @@ class custStatusBookingTenantController extends Controller
         $nBarang = pemTenant::where('namaEvent', $namaEvent)->where('tipeTenant', 'Tenant Barang')->where('status', '!=', 'Ditolak')->count();
 
         if ($request->input('tipeTenant') == 'Tenant Makanan' && $makanan == $nMakanan) {
-            return redirect()->back()->withErrors('Maaf, kuota untuk tenant makanan sudah habis, silahkan berkunjung dilain waktu!');
+            return redirect()->back()->withErrors('Mohon maaf, kuota untuk tenant makanan sudah habis, silahkan berkunjung di lain waktu.');
         }
         if ($request->input('tipeTenant') == 'Tenant Jasa' && $jasa == $nJasa) {
-            return redirect()->back()->withErrors('Maaf, kuota untuk tenant jasa sudah habis, silahkan berkunjung dilain waktu!');
+            return redirect()->back()->withErrors('Mohon maaf, kuota untuk tenant jasa sudah habis, silahkan berkunjung di lain waktu.');
         }
         if ($request->input('tipeTenant') == 'Tenant Barang' && $barang == $nBarang) {
-            return redirect()->back()->withErrors('Maaf, kuota untuk tenant barang sudah habis, silahkan berkunjung dilain waktu!');
+            return redirect()->back()->withErrors('Mohon maaf, kuota untuk tenant barang sudah habis, silahkan berkunjung di lain waktu.');
         }
 
         // Perbarui data booking
