@@ -943,7 +943,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             }).then((result) => {
                 if (result.isConfirmed || result.isDismissed) {
-                    const bookingToggle = document.querySelector('[data-modal-toggle="modal-booking"]');
+                    const bookingToggle = document.querySelector('[data-modal-toggle="modal-edit"]');
                     if (bookingToggle) {
                         bookingToggle.click();
                     }
