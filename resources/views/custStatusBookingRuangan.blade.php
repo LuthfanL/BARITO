@@ -163,7 +163,7 @@
                                     <svg class="rtl:rotate-180 w-3 h-3 text-white mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
                                     </svg>
-                                    Booking Ruangan
+                                    Ruangan Kami
                                 </a>
                             </li>
                             <li aria-current="page">
@@ -549,11 +549,11 @@
                             * Masukkan nama/judul acara yang akan dilaksanakan.
                         </p>
 
-                        <!-- Input Keterangan -->
-                        <label for="keterangan">Keterangan (Setting Layout tempat)</label>
+                        <!-- Input Deskripsi Tambahan -->
+                        <label for="keterangan">Deskripsi Tambahan</label>
                         <textarea id="keterangan" name="keterangan" rows="3" class="rounded-lg border border-gray-300" required></textarea>
                         <p class="mb-4 text-xs text-gray-500">
-                            * Masukkan keterangan setting layout tempat saat pelaksanaan acara.
+                            * Masukkan deskripsi tambahan bila perlu misal keterangan setting layout tempat saat pelaksanaan acara.
                         </p>
                     </form>
                 </div>

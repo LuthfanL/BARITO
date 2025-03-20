@@ -126,7 +126,7 @@
                 <!-- Teks di tengah gambar -->
                 <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
                     <h2 class="text-white text-4xl md:text-4xl font-bold drop-shadow-lg">
-                        Ruangan Kami
+                        Booking Ruangan
                     </h2>
                     <!-- Breadcrumb -->
                     <nav class="mt-4 flex justify-center" aria-label="Breadcrumb">
@@ -145,7 +145,7 @@
                                     <svg class="rtl:rotate-180 w-3 h-3 text-white mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
                                     </svg>
-                                    Booking Ruangan
+                                    Ruangan Kami
                                 </a>
                             </li>
                             <li>
