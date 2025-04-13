@@ -66,7 +66,7 @@ class buatKendaraanController extends Controller
             'biayaSewa' => $request->input('biayaSewa')
         ]);
 
-        return redirect()->back()->with('success', 'Kendaraan berhasil dibuat!');
+        return redirect()->back()->with('success', 'Kendaraan berhasil ditambahkan!');
     }
 }
 

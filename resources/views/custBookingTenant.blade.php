@@ -299,7 +299,7 @@
 
                         <!-- Input Nama Pemohon -->
                         <label for="namaPemohon">Nama Pemohon</label>
-                        <input type="text" id="namaPemohon" name="namaPemohon" value="{{ old('namaPemohon') }}" require oninput="validateNamaPemohon(this)">
+                        <input type="text" id="namaPemohon" name="namaPemohon" value="{{ old('namaPemohon') }}" require oninput="validateNamaPemohon(this)"  maxlength="30">
                         <script>
                         function validateNamaPemohon(input) {
                             // Hanya izinkan huruf dan spasi
@@ -314,7 +314,7 @@
 
                         <!-- Input No. Whatapps -->
                         <label for="noWa">No. Whatapps</label>
-                        <input type="text" id="noWa" name="noWa" value="{{ old('noWa') }}" require oninput="validateWhatsApp(this)">
+                        <input type="text" id="noWa" name="noWa" value="{{ old('noWa') }}" require oninput="validateWhatsApp(this)"  maxlength="15">
                         <script>
                             function validateWhatsApp(input) {
                                 // Hanya izinkan angka (0-9)
@@ -329,7 +329,7 @@
 
                         <!-- Input Nama Tenant -->
                         <label for="namaTenant">Nama Tenant</label>
-                        <input type="text" id="namaTenant" name="namaTenant" value="{{ old('namaTenant') }}" required>
+                        <input type="text" id="namaTenant" name="namaTenant" value="{{ old('namaTenant') }}" required  maxlength="30">
 
                         <!-- Input Jenis Tenant -->
                         <label for="tipeTenant">Jenis Tenant</label>
