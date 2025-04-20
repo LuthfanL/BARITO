@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\event;
+use App\Models\pemTenant;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class daftarEventController extends Controller
 {
@@ -57,6 +59,12 @@ class daftarEventController extends Controller
             return redirect()->back()->with('error', 'Event tidak ditemukan.');
         }
 
+        $now = carbon::now();
+
+        if($now >= $event->tglMulai){
+            return redirect()->route('daftarEvent')->with('error', 'Tidak bisa menghapus event dikarenakan sudah terlaksana');
+        }
+
         // Hapus event
         $event->delete();
 
@@ -77,6 +85,12 @@ class daftarEventController extends Controller
 
         // Cari event berdasarkan namaEvent
         $event = Event::where('namaEvent', $request->namaEvent)->firstOrFail();
+
+        $now = carbon::now();
+
+        if($now >= $event->tglMulai){
+            return redirect()->route('daftarEvent')->with('error', 'Tidak bisa menghapus event dikarenakan sudah terlaksana');
+        }
 
         // Hapus foto lama jika ada foto baru
         if ($request->hasFile('foto')) {
