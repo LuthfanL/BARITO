@@ -518,7 +518,7 @@
 
                         <!-- Input No. Whatapps -->
                         <label for="noWa">No. Whatapps</label>
-                        <input type="text" id="noWa" name="noWa" required oninput="validateWhatsApp(this)">
+                        <input type="text" id="noWa" name="noWa" required maxlength="13" minlength="12" oninput="validateWhatsApp(this)">
                         <script>
                             function validateWhatsApp(input) {
                                 // Hanya izinkan angka (0-9)
@@ -553,7 +553,8 @@
                         <label for="keterangan">Deskripsi Tambahan</label>
                         <textarea id="keterangan" name="keterangan" rows="3" class="rounded-lg border border-gray-300" required></textarea>
                         <p class="mb-4 text-xs text-gray-500">
-                            * Masukkan deskripsi tambahan bila perlu misal keterangan setting layout tempat saat pelaksanaan acara.
+                            * Masukkan deskripsi tambahan bila perlu, misalnya keterangan setting layout tempat saat pelaksanaan acara. 
+                            <span class="font-semibold text-red-500">(Jika tidak ada keterangan, harap isi dengan tanda "-".)</span>
                         </p>
                     </form>
                 </div>

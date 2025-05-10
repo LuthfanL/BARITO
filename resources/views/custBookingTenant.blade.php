@@ -312,20 +312,11 @@
                         }
                         </script>
 
-                        <!-- Input No. Whatapps -->
-                        <label for="noWa">No. Whatapps</label>
-                        <input type="text" id="noWa" name="noWa" value="{{ old('noWa') }}" require oninput="validateWhatsApp(this)"  maxlength="15">
-                        <script>
-                            function validateWhatsApp(input) {
-                                // Hanya izinkan angka (0-9)
-                                input.value = input.value.replace(/\D/g, '');
-                            
-                                // Jika ada karakter selain angka, tampilkan alert
-                                if (input.value.match(/\D/)) {
-                                    alert("Nomor WhatsApp hanya boleh berisi angka!");
-                                }
-                            }
-                        </script>
+                        <!-- Input No. WhatsApp -->
+                        <label for="noWa">No. WhatsApp</label>
+                        <input type="text" id="noWa" name="noWa" value="{{ old('noWa') }}" required maxlength="13" minlength="12"
+                            onfocus="setDefaultPrefix(this)" oninput="validateWhatsApp(this)">
+                        <p id="noWa-error" class="mb-4 text-xs text-red-600 hidden">*Nomor WhatsApp tidak valid.</p>
 
                         <!-- Input Nama Tenant -->
                         <label for="namaTenant">Nama Tenant</label>
@@ -520,6 +511,66 @@
                 dateFormat: "Y-m-d",
                 minDate: "today" // Default minDate adalah hari ini
             });
+        });
+    </script>
+
+    <!-- Alert No whatsapp -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const noWaInput = document.getElementById('noWa');
+            const noWaError = document.getElementById('noWa-error');
+            const btnKonfirmasi = document.querySelector('[data-modal-target="modal-konfirmasi"]');
+            const modalKonfirmasi = document.getElementById('modal-konfirmasi');
+        
+            function validateNoWaField() {
+                const value = noWaInput.value.trim();
+                const isValid = value.startsWith('08') && /^[0-9]{12,13}$/.test(value);
+                if (!isValid) {
+                    noWaError.classList.remove('hidden');
+                    noWaInput.classList.add('border-red-500');
+                } else {
+                    noWaError.classList.add('hidden');
+                    noWaInput.classList.remove('border-red-500');
+                }
+                return isValid;
+            }
+        
+            // Input validation live
+            noWaInput.addEventListener('input', validateNoWaField);
+            // Prevent modal if invalid
+            btnKonfirmasi.addEventListener('click', function (e) {
+                if (!validateNoWaField()) {
+                    e.preventDefault();
+                    return;
+                }
+                // Jika valid, tampilkan modal konfirmasi
+                modalKonfirmasi.classList.remove('hidden');
+                modalKonfirmasi.classList.add('flex');
+                // Set hidden field (jika perlu)
+                document.getElementById('confirm-noWa').value = noWaInput.value;
+            });
+            // Opsional: validasi ulang saat submit
+            document.querySelector('#modal-konfirmasi form').addEventListener('submit', function (e) {
+                if (!validateNoWaField()) {
+                    e.preventDefault();
+                    alert("Nomor WhatsApp tidak valid saat konfirmasi.");
+                }
+            });
+            // Default prefix 08 saat fokus
+            window.setDefaultPrefix = function (input) {
+                if (input.value === '') {
+                    input.value = '08';
+                }
+            };
+            window.validateWhatsApp = function (input) {
+                if (!input.value.startsWith('08')) {
+                    input.value = '08';
+                }
+                input.value = '08' + input.value.slice(2).replace(/\D/g, '');
+                if (input.value.length > 13) {
+                    input.value = input.value.slice(0, 13);
+                }
+            };
         });
     </script>
 

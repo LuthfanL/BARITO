@@ -91,7 +91,7 @@
                                     @else
                                     <li class="font-medium">
                                         <a href="/login"
-                                            class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-blue-600">
+                                            class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-blue-500">
                                             <div class="mr-3 text-blue-500">
                                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                                     xmlns="http://www.w3.org/2000/svg">
@@ -106,8 +106,8 @@
                                     <div class="border-t border-gray-200"></div>
                                     <li class="font-medium">
                                         <a href="/register"
-                                            class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-blue-600">
-                                            <div class="mr-3 text-green-500">
+                                            class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-blue-700">
+                                            <div class="mr-3 text-blue-700">
                                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                                     xmlns="http://www.w3.org/2000/svg">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -115,7 +115,7 @@
                                                     </path>
                                                 </svg>
                                             </div>
-                                            Daftar
+                                            Registrasi
                                         </a>
                                     </li>
                                     @endauth
