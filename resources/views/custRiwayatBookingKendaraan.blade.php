@@ -156,7 +156,7 @@
                                 </svg>
                             </span>
                         </th>
-                        <th data-type="date" data-format="DD/MM/YYYY">
+                        <th data-type="date">
                             <span class="flex items-center">
                                 Tgl Pinjam
                                 <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -164,7 +164,7 @@
                                 </svg>
                             </span>
                         </th>
-                        <th data-type="date" data-format="DD/MM/YYYY">
+                        <th data-type="date">
                             <span class="flex items-center">
                                 Tgl Selesai
                                 <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -201,8 +201,12 @@
                                 <td>{{ $booking->namaPemohon }}</td>
                                 <td>{{ $booking->noWa }}</td>
                                 <td>{{ $booking->namaKendaraan }}</td>
-                                <td>{{ \Carbon\Carbon::parse($booking->tglMulai)->format('d-M-Y') }}</td>
-                                <td>{{ \Carbon\Carbon::parse($booking->tglSelesai)->format('d-M-Y') }}</td>
+                                <td data-order="{{ \Carbon\Carbon::parse($booking->tglMulai)->format('Ymd') }}">
+                                    {{ \Carbon\Carbon::parse($booking->tglMulai)->format('d-M-Y') }}
+                                </td>
+                                <td data-order="{{ \Carbon\Carbon::parse($booking->tglSelesai)->format('Ymd') }}">
+                                    {{ \Carbon\Carbon::parse($booking->tglSelesai)->format('d-M-Y') }}
+                                </td>
                                 <!-- Bukti Bayar -->
                                 <td class="flex justify-center items-center text-center">
                                     @if($booking->buktiBayar)
@@ -407,6 +411,7 @@
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" defer></script>
 </body>
 
 </html>
