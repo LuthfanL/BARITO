@@ -329,54 +329,54 @@
 
                         <!-- Input Nama Ruangan -->
                         <label for="nama">Nama Ruangan</label>
-                        <input type="text" id="nama" name="nama" required>
+                        <input type="text" id="nama" name="nama" required maxlength="30">
         
                         <!-- Input Deskripsi Ruangan -->
                         <label for="deskripsi">Deskripsi Ruangan</label>
-                        <textarea id="deskripsi" name="deskripsi" rows="3" required class="pl-2"></textarea>
+                        <textarea id="deskripsi" name="deskripsi" rows="3" required  maxlength="50" class="pl-2"></textarea>
         
                         <!-- Input Biaya Sewa, Lokasi, Lantai dan Luas Ruangan -->
                         <label for="biayaSewa">Biaya Sewa (Per Hari)</label>
-                        <input type="text" id="biayaSewa" name="biayaSewa" required oninput="validateAngka(this)">
+                        <input type="text" id="biayaSewa" name="biayaSewa" required  maxlength="8" oninput="validateAngka(this)">
                         <p class="mb-4 text-xs text-gray-500">
                             * Masukkan jumlah biaya sewa dalam angka, misalnya 500000. Nilai tersebut akan otomatis dikonversi ke format rupiah.
                         </p>
 
                         <label for="lokasi">Lokasi (Nama Gedung)</label>
-                        <input type="text" id="lokasi" name="lokasi" required>
+                        <input type="text" id="lokasi" name="lokasi" required  maxlength="50">
         
                         <label for="lantai">Lantai</label>
-                        <input type="text" id="lantai" name="lantai" required oninput="validateAngka(this)">
+                        <input type="text" id="lantai" name="lantai" required maxlength="2" oninput="validateAngka(this)">
 
                         <label for="luas">Luas Ruangan</label>
-                        <input type="text" id="luas" name="luas" required>
+                        <input type="text" id="luas" name="luas" required maxlength="7>
         
                         <!-- Input Fasilitas Ruangan -->
                         <label>Fasilitas Ruangan</label>
                         <div class="fasilitas-container">
                             <div>
                                 <label for="podium">Jumlah Podium</label>
-                                <input type="text" id="podium" name="podium" oninput="validateAngka(this)">
+                                <input type="text" id="podium" name="podium" required maxlength="2" oninput="validateAngka(this)">
                             </div>
                             <div>
                                 <label for="sound">Jumlah Sound</label>
-                                <input type="text" id="sound" name="sound" oninput="validateAngka(this)">
+                                <input type="text" id="sound" name="sound"  required  maxlength="2" oninput="validateAngka(this)">
                             </div>
                             <div>
                                 <label for="meja">Jumlah Meja</label>
-                                <input type="text" id="meja" name="meja" oninput="validateAngka(this)">
+                                <input type="text" id="meja" name="meja" required  maxlength="3" oninput="validateAngka(this)">
                             </div>
                             <div>
                                 <label for="ac">Jumlah AC</label>
-                                <input type="text" id="ac" name="ac" oninput="validateAngka(this)">
+                                <input type="text" id="ac" name="ac" required  maxlength="2" oninput="validateAngka(this)">
                             </div>
                             <div>
                                 <label for="kursi">Jumlah Kursi</label>
-                                <input type="text" id="kursi" name="kursi" oninput="validateAngka(this)">
+                                <input type="text" id="kursi" name="kursi" required maxlength="3" oninput="validateAngka(this)">
                             </div>
                             <div>
                                 <label for="proyektor">Jumlah Proyektor</label>
-                                <input type="text" id="proyektor" name="proyektor" oninput="validateAngka(this)">
+                                <input type="text" id="proyektor" name="proyektor" required  maxlength="2" oninput="validateAngka(this)">
                             </div>
                         </div>
 

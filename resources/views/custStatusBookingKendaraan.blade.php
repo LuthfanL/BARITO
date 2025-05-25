@@ -508,7 +508,7 @@
     
                         <!-- Input Nama Pemohon -->
                         <label for="namaPemohon">Nama Pemohon</label>
-                        <input type="text" id="namaPemohon" name="namaPemohon" required oninput="validateNamaPemohon(this)">
+                        <input type="text" id="namaPemohon" name="namaPemohon" required oninput="validateNamaPemohon(this)" maxlength="30">
                         <script>
                             function validateNamaPemohon(input) {
                                 // Hanya izinkan huruf dan spasi
@@ -523,7 +523,7 @@
 
                         <!-- Input No. Whatapps -->
                         <label for="noWa">No. Whatapps</label>
-                        <input type="text" id="noWa" name="noWa" required oninput="validateWhatsApp(this)">
+                        <input type="text" id="noWa" name="noWa" required maxlength="13" minlength="12" oninput="validateWhatsApp(this)">
                         <script>
                             function validateWhatsApp(input) {
                                 // Hanya izinkan angka (0-9)
@@ -549,21 +549,21 @@
 
                         <!-- Input Keperluan Acara -->
                         <label for="keperluan">Keperluan Acara</label>
-                        <textarea id="keperluan" name="keperluan" rows="3" class="rounded-lg border border-gray-300" required></textarea>
+                        <textarea id="keperluan" name="keperluan" rows="3" class="rounded-lg border border-gray-300" required maxlength="50"></textarea>
                         <p class="mb-4 text-xs text-gray-500">
                             * Masukkan nama/judul acara yang akan dilaksanakan.
                         </p>
 
                         <!-- Input Lokasi Acara -->
                         <label for="lokasi">Lokasi Acara</label>
-                        <textarea id="lokasi" name="lokasi" rows="3" class="rounded-lg border border-gray-300" required></textarea>
+                        <textarea id="lokasi" name="lokasi" rows="3" class="rounded-lg border border-gray-300" required maxlength="50"></textarea>
                         <p class="mb-4 text-xs text-gray-500">
                             * Masukkan keterangan lokasi acara akan dilakukan.
                         </p>
 
                         <!-- Input Titik Jemput -->
                         <label for="titikJemput">Titik Jemput</label>
-                        <textarea id="titikJemput" name="titikJemput" rows="3" class="rounded-lg border border-gray-300" required></textarea>
+                        <textarea id="titikJemput" name="titikJemput" rows="3" class="rounded-lg border border-gray-300" required maxlength="50"></textarea>
                         <p class="mb-4 text-xs text-gray-500">
                             * Masukkan keterangan lokasi titik penjemputan.
                         </p>
