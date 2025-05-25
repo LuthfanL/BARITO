@@ -349,7 +349,7 @@
                         <input type="text" id="lantai" name="lantai" required maxlength="2" oninput="validateAngka(this)">
 
                         <label for="luas">Luas Ruangan</label>
-                        <input type="text" id="luas" name="luas" required maxlength="7>
+                        <input type="text" id="luas" name="luas" required maxlength="7">
         
                         <!-- Input Fasilitas Ruangan -->
                         <label>Fasilitas Ruangan</label>
