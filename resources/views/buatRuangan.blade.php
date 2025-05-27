@@ -147,7 +147,7 @@
                                     </div>
                                     <div>
                                         <label for="sound">Jumlah Sound</label>
-                                        <input type="text" id="sound" name="sound" required maxlength="2"" oninput="validateAngka(this)">
+                                        <input type="text" id="sound" name="sound" required maxlength="2" oninput="validateAngka(this)">
                                     </div>
                                     <div>
                                         <label for="meja">Jumlah Meja</label>
