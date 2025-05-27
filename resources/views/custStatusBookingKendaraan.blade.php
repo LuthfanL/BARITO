@@ -811,7 +811,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.addEventListener("DOMContentLoaded", function () {
         // Inisialisasi Flatpickr untuk tglMulai
         const tglMulaiPicker = flatpickr("#tglMulai", {
-            dateFormat: "Y-m-d",
+            dateFormat: "d-M-Y",
             minDate: "today", // Tidak bisa memilih tanggal sebelum hari ini
             onChange: function (selectedDates) {
                 // Jika tglMulai dipilih, update minDate untuk tglSelesai agar tidak bisa pilih sebelumnya

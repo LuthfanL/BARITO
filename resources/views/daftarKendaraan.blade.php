@@ -337,7 +337,7 @@
                         <textarea id="deskripsi" name="deskripsi" rows="3" required  maxlength="50" class="pl-2"></textarea>
         
                         <!-- Input Biaya Sewa, Kapasitas, Plat Nomor, CC dan Tahun Kendaraan -->
-                        <label for="biayaSewa">Biaya Sewa (Per Hari)</label>
+                        <label for="biayaSewa">Biaya Sewa Per Hari (Rp)</label>
                         <input type="text" id="biayaSewa" name="biayaSewa" required maxlength="8" oninput="validateAngka(this)">
                         <p class="mb-4 text-xs text-gray-500">
                             * Masukkan jumlah biaya sewa dalam angka, misalnya 500000. Nilai tersebut akan otomatis dikonversi ke format rupiah.

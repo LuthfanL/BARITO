@@ -315,7 +315,7 @@
                         <textarea id="deskripsi" name="deskripsi" rows="3" required maxlength="100" class="pl-2"></textarea>
         
                         <!-- Input Biaya Sewa -->
-                        <label for="hargaTenant">Biaya Sewa (Per Hari)</label>
+                        <label for="hargaTenant">Biaya Sewa Per Hari (Rp)</label>
                         <input type="text" id="hargaTenant" name="hargaTenant" required maxlength="8" oninput="validateAngka(this)">
                         <p class="mb-4 text-xs text-gray-500">
                             * Masukkan jumlah biaya sewa dalam angka, misalnya 500000. Nilai tersebut akan otomatis dikonversi ke format rupiah.
@@ -358,7 +358,7 @@
                                 <svg class="w-5 h-5 absolute right-3 top-2 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                     <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 1 1 0-2Z"/>
                                 </svg>
-                                <input id="tglMulai" name="tglMulai" value="{{ $data->tglMulai }}" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 p-2.5 w-full" placeholder="">
+                                <input id="tglMulai" name="tglMulai" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg pl-10 p-2.5 w-full" placeholder="">
                             </div>
 
                             <!-- Tanggal Selesai -->
@@ -545,10 +545,45 @@
     </script>
     @endif
 
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Inisialisasi Flatpickr untuk tglMulai
+        const tglMulaiPicker = flatpickr("#tglMulai", {
+            dateFormat: "d-M-Y",
+            minDate: "today", // Tidak bisa memilih tanggal sebelum hari ini
+            onChange: function (selectedDates) {
+                // Jika tglMulai dipilih, update minDate untuk tglSelesai agar tidak bisa pilih sebelumnya
+                if (selectedDates.length > 0) {
+                    tglSelesaiPicker.set("minDate", selectedDates[0]);
+                }
+            }
+        });
+
+        // Inisialisasi Flatpickr untuk tglSelesai
+        const tglSelesaiPicker = flatpickr("#tglSelesai", {
+            dateFormat: "d-M-Y",
+            minDate: "today" // Default minDate adalah hari ini
+        });
+    });
+    </script>
+
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             // Ambil semua tombol edit
             const editButtons = document.querySelectorAll(".btn-edit");
+
+            function formatTanggal(tanggalStr) {
+                const bulanIndo = [
+                    "Jan", "Feb", "Mar", "Apr", "Mei", "Jun",
+                    "Jul", "Agu", "Sep", "Okt", "Nov", "Des"
+                ];
+                const tanggal = new Date(tanggalStr);
+                const hari = tanggal.getDate();
+                const bulan = bulanIndo[tanggal.getMonth()];
+                const tahun = tanggal.getFullYear();
+                return `${hari}-${bulan}-${tahun}`;
+            }
 
             // Loop setiap tombol edit
             editButtons.forEach(button => {
@@ -572,20 +607,12 @@
                     document.getElementById("namaEvent").value = namaEvent;
                     document.getElementById("deskripsi").value = deskripsi;
                     document.getElementById("hargaTenant").value = hargaTenant;
-                    document.getElementById("tglMulai").value = tglMulai;
-                    document.getElementById("tglSelesai").value = tglSelesai;
+                    document.getElementById("tglMulai").value = formatTanggal(tglMulai);
+                    document.getElementById("tglSelesai").value = formatTanggal(tglSelesai);
                     document.getElementById("nMakanan").value = nMakanan;
                     document.getElementById("nBarang").value = nBarang;
                     document.getElementById("nJasa").value = nJasa;
-
-                    // Ubah format tanggal dari yyyy-mm-dd ke d/m/Y
-                    const formattedTglMulai = new Date(tglMulai).toLocaleDateString('en-GB'); // Format dd/mm/yyyy
-                    const formattedTglSelesai = new Date(tglSelesai).toLocaleDateString('en-GB'); // Format dd/mm/yyyy
-
-                    // Set placeholder pada input tanggal
-                    document.getElementById("tglMulai").setAttribute("placeholder", formattedTglMulai);
-                    document.getElementById("tglSelesai").setAttribute("placeholder", formattedTglSelesai);
-                        });
+                });
             });
             
 
@@ -662,24 +689,6 @@
                         card.style.display = 'none'; 
                     }
                 });
-            });
-        });
-    </script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            flatpickr("#tglMulai", {
-                dateFormat: "Y-m-d",  // Format sesuai MySQL (YYYY-MM-DD)
-                altInput: true,
-                altFormat: "d/m/Y",   // Tampilkan ke pengguna dalam format DD/MM/YYYY
-                allowInput: true
-            });
-
-            flatpickr("#tglSelesai", {
-                dateFormat: "Y-m-d",
-                altInput: true,
-                altFormat: "d/m/Y",
-                allowInput: true
             });
         });
     </script>

@@ -118,10 +118,13 @@ class daftarEventController extends Controller
             $event->foto = json_encode($newPhotoPaths);
         }
 
+        $tglMulai = Carbon::createFromFormat('d-M-Y', $request->tglMulai)->format('Y-m-d');
+        $tglSelesai = Carbon::createFromFormat('d-M-Y', $request->tglSelesai)->format('Y-m-d');
+
         // Update data event
         $event->update([
-            'tglMulai' => $request->tglMulai,
-            'tglSelesai' => $request->tglSelesai,
+            'tglMulai' => $tglMulai,
+            'tglSelesai' => $tglSelesai,
             'nMakanan' => $request->nMakanan,
             'nBarang' => $request->nBarang,
             'nJasa' => $request->nJasa,
