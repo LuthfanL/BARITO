@@ -92,6 +92,19 @@ class daftarEventController extends Controller
             return redirect()->route('daftarEvent')->with('error', 'Tidak bisa menghapus event dikarenakan sudah terlaksana');
         }
 
+        $tglMulai = Carbon::parse($request->input('tglMulai'))->startOfDay();
+        $sekarang = Carbon::now()->startOfDay();
+
+        $selisih = $sekarang->diffInDays($tglMulai);
+
+        if ($selisih < 3) {
+            return redirect()->back()->withErrors('Event harus dibuat maksimal 3 hari sebelum hari h event!')->withInput();
+        }
+        
+        if ($request->input('tglSelesai') < $request->input('tglMulai')){
+            return redirect()->back()->withErrors('Tanggal Selesai harus lebih dari atau sama dengan tanggal mulai!')->withInput();
+        }
+
         // Hapus foto lama jika ada foto baru
         if ($request->hasFile('foto')) {
             if (!empty($event->foto)) {

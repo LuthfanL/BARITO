@@ -56,7 +56,7 @@ class loginController extends Controller
                 return redirect()->intended('/')->with('success', "Berhasil login! selamat datang, {$userLogin->name}.");
             case 'Admin Ruangan' :
                 $userLogin = adminRuangan::where('email', $user->email)->first();
-                return redirect()->intended('/dashboardAdminRuangan')->with('success', "Berhasil login! selamat datang, {{ $userLogin->name}.");
+                return redirect()->intended('/dashboardAdminRuangan')->with('success', "Berhasil login! selamat datang, {$userLogin->name}.");
             case 'Admin Kendaraan' :
                 $userLogin = adminKendaraan::where('email', $user->email)->first();
                 return redirect()->intended('/dashboardAdminKendaraan')->with('success', "Berhasil login! selamat datang, {$userLogin->name}.");

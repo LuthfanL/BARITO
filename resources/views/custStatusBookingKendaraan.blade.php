@@ -823,7 +823,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Inisialisasi Flatpickr untuk tglSelesai
         const tglSelesaiPicker = flatpickr("#tglSelesai", {
-            dateFormat: "Y-m-d",
+            dateFormat: "d-M-Y",
             minDate: "today" // Default minDate adalah hari ini
         });
     });
@@ -833,6 +833,18 @@ document.addEventListener("DOMContentLoaded", function () {
     document.addEventListener("DOMContentLoaded", function () {
         // Ambil semua tombol edit
         const editButtons = document.querySelectorAll(".btn-edit");
+
+        function formatTanggal(tanggalStr) {
+                const bulanIndo = [
+                    "Jan", "Feb", "Mar", "Apr", "Mei", "Jun",
+                    "Jul", "Agu", "Sep", "Okt", "Nov", "Des"
+                ];
+                const tanggal = new Date(tanggalStr);
+                const hari = tanggal.getDate();
+                const bulan = bulanIndo[tanggal.getMonth()];
+                const tahun = tanggal.getFullYear();
+                return `${hari}-${bulan}-${tahun}`;
+            }
 
         // Loop setiap tombol edit
         editButtons.forEach(button => {
@@ -858,8 +870,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 document.getElementById("keperluan").value = keperluan;
                 document.getElementById("lokasi").value = lokasi;
                 document.getElementById("titikJemput").value = titikJemput;
-                document.getElementById("tglMulai").value = tglMulai;
-                document.getElementById("tglSelesai").value = tglSelesai;
+                document.getElementById("tglMulai").value = formatTanggal(tglMulai);
+                document.getElementById("tglSelesai").value = formatTanggal(tglSelesai);
             });
         });
 
