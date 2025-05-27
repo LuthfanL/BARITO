@@ -506,7 +506,7 @@
     
                         <!-- Input Nama Pemohon -->
                         <label for="namaPemohon">Nama Pemohon</label>
-                        <input type="text" id="namaPemohon" name="namaPemohon" required oninput="validateNamaPemohon(this)">
+                        <input type="text" id="namaPemohon" name="namaPemohon" required oninput="validateNamaPemohon(this)" maxlength="30">
                         <script>
                             function validateNamaPemohon(input) {
                                 // Hanya izinkan huruf dan spasi
@@ -547,14 +547,14 @@
 
                         <!-- Input Keperluan Acara -->
                         <label for="keperluan">Keperluan Acara</label>
-                        <textarea id="keperluan" name="keperluan" rows="3" class="rounded-lg border border-gray-300" required></textarea>
+                        <textarea id="keperluan" name="keperluan" rows="3" class="rounded-lg border border-gray-300" required maxlength="50"></textarea>
                         <p class="mb-4 text-xs text-gray-500">
                             * Masukkan nama/judul acara yang akan dilaksanakan.
                         </p>
 
                         <!-- Input Deskripsi Tambahan -->
                         <label for="keterangan">Deskripsi Tambahan</label>
-                        <textarea id="keterangan" name="keterangan" rows="3" class="rounded-lg border border-gray-300" required></textarea>
+                        <textarea id="keterangan" name="keterangan" rows="3" class="rounded-lg border border-gray-300" required maxlength="50"></textarea>
                         <p class="mb-4 text-xs text-gray-500">
                             * Masukkan deskripsi tambahan bila perlu, misalnya keterangan setting layout tempat saat pelaksanaan acara. 
                             <span class="font-semibold text-red-500">(Jika tidak ada keterangan, harap isi dengan tanda "-".)</span>

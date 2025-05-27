@@ -111,15 +111,15 @@
                                 
                                 <!-- Input Nama Event -->
                                 <label for="namaEvent">Nama Event</label>
-                                <input type="text" id="namaEvent" name="namaEvent" value="{{ old('namaEvent') }}" required>
+                                <input type="text" id="namaEvent" name="namaEvent" value="{{ old('namaEvent') }}" required maxlength="50">
                 
                                 <!-- Input Deskripsi Event -->
                                 <label for="deskripsi">Deskripsi Event</label>
-                                <textarea id="deskripsi" name="deskripsi" rows="3" required class="pl-2">{{ old('deskripsi', null) }}</textarea>
+                                <textarea id="deskripsi" name="deskripsi" rows="3" required maxlength="100" class="pl-2">{{ old('deskripsi', null) }}</textarea>
                 
                                 <!-- Input Biaya Sewa -->
                                 <label for="hargaTenant">Biaya Sewa (Per Hari)</label>
-                                <input type="text" id="hargaTenant" name="hargaTenant" value="{{ old('hargaTenant') }}" required oninput="validateAngka(this)">
+                                <input type="text" id="hargaTenant" name="hargaTenant" value="{{ old('hargaTenant') }}" required maxlength="8" oninput="validateAngka(this)">
                                 <p class="mb-4 text-xs text-gray-500">
                                     * Masukkan jumlah biaya sewa dalam angka, misalnya 500000. Nilai tersebut akan otomatis dikonversi ke format rupiah.
                                 </p>
@@ -129,15 +129,15 @@
                                 <div class="tenant-container">
                                     <div>
                                         <label for="nBarang">Tenant Barang</label>
-                                        <input type="text" id="nBarang" name="nBarang" value="{{ old('nBarang') }}" oninput="validateAngka(this)">
+                                        <input type="text" id="nBarang" name="nBarang" value="{{ old('nBarang') }}" oninput="validateAngka(this)" required maxlength="2">
                                     </div>
                                     <div>
                                         <label for="nJasa">Tenant Jasa</label>
-                                        <input type="text" id="nJasa" name="nJasa" value="{{ old('nJasa') }}" oninput="validateAngka(this)">
+                                        <input type="text" id="nJasa" name="nJasa" value="{{ old('nJasa') }}" oninput="validateAngka(this)" required maxlength="2">
                                     </div>
                                     <div>
                                         <label for="nMakanan">Tenant Makanan</label>
-                                        <input type="text" id="nMakanan" name="nMakanan" value="{{ old('nMakanan') }}" oninput="validateAngka(this)">
+                                        <input type="text" id="nMakanan" name="nMakanan" value="{{ old('nMakanan') }}" oninput="validateAngka(this)" required maxlength="2">
                                     </div>
                                 </div>
 

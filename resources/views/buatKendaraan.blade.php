@@ -116,32 +116,32 @@
 
                                 <!-- Input Nama Kendaraan -->
                                 <label for="nama">Nama Kendaraan</label>
-                                <input type="text" id="nama" name="nama" required>
+                                <input type="text" id="nama" name="nama" required maxlength="30">
                 
                                 <!-- Input Deskripsi Kendaraan -->
                                 <label for="deskripsi">Deskripsi Kendaraan</label>
-                                <textarea id="deskripsi" name="deskripsi" rows="3" required class="pl-2"></textarea>
+                                <textarea id="deskripsi" name="deskripsi" rows="3" required maxlength="50" class="pl-2"></textarea>
                 
                                 <!-- Input Biaya Sewa, jumlah Kursi, Plat Nomor, CC dan Tahun Keluar Kendaraan -->
                                 <label for="biayaSewa">Biaya Sewa (Per Hari)</label>
-                                <input type="text" id="biayaSewa" name="biayaSewa" required oninput="validateAngka(this)">
+                                <input type="text" id="biayaSewa" name="biayaSewa" required maxlength="8" oninput="validateAngka(this)">
                                 <p class="mb-4 text-xs text-gray-500">
                                     * Masukkan jumlah biaya sewa dalam angka, misalnya 500000. Nilai tersebut akan otomatis dikonversi ke format rupiah.
                                 </p>
 
                                 <label for="jumlahKursi">Jumlah Kursi</label>
-                                <input type="text" id="jumlahKursi" name="jumlahKursi" required oninput="validateAngka(this)">
+                                <input type="text" id="jumlahKursi" name="jumlahKursi" required maxlength="2" oninput="validateAngka(this)">
                 
                                 <label for="platNomor">Plat Nomor</label>
-                                <input type="text" id="platNomor" name="platNomor" required>
+                                <input type="text" id="platNomor" name="platNomor" required maxlength="11">
 
                                 <label for="cc">CC</label>
-                                <input type="text" id="cc" name="cc" required oninput="validateAngka(this)">
+                                <input type="text" id="cc" name="cc" required maxlength="4" oninput="validateAngka(this)">
 
                                 <label for="tahunKeluar">Tahun</label>
-                                <input type="text" id="tahunKeluar" name="tahunKeluar" required oninput="validateAngka(this)">
+                                <input type="text" id="tahunKeluar" name="tahunKeluar" required maxlength="4" oninput="validateAngka(this)">
                 
-                                <!-- Input Fasilitas Kendaraan -->
+                                {{-- <!-- Input Fasilitas Kendaraan -->
                                 <label>Fasilitas Kendaraan</label>
                                 <div class="fasilitas-container">
                                     <div>
@@ -156,7 +156,47 @@
                                         <label for="ac">AC</label>
                                         <input type="text" id="ac" name="ac">
                                     </div>
+                                </div> --}}
+                                
+                                <!-- Input Fasilitas Kendaraan -->
+                                <label>Fasilitas Kendaraan</label>
+                                <div class="fasilitas-container">
+                                    <div>
+                                        <label for="tv">TV</label>
+                                        <select 
+                                            id="tv-select"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                            onchange="document.getElementById('tv').value = this.value">
+                                            <option value="">Pilih</option>
+                                            <option value="Ada">Ada</option>
+                                            <option value="Tidak">Tidak</option>
+                                        </select>
+                                        <input type="hidden" id="tv" name="tv">
+                                    </div>
+                                    <div>
+                                        <label for="sound">Sound</label>
+                                        <select id="sound-select"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                            onchange="document.getElementById('sound').value = this.value">
+                                            <option value="">Pilih</option>
+                                            <option value="Ada">Ada</option>
+                                            <option value="Tidak">Tidak</option>
+                                        </select>
+                                        <input type="hidden" id="sound" name="sound">
+                                    </div>
+                                    <div>
+                                        <label for="ac">AC</label>
+                                         <select id="sound-select"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                            onchange="document.getElementById('ac').value = this.value">
+                                            <option value="">Pilih</option>
+                                            <option value="Ada">Ada</option>
+                                            <option value="Tidak">Tidak</option>
+                                        </select>
+                                        <input type="hidden" id="ac" name="ac">
+                                    </div>
                                 </div>
+                                <br>
 
                                 <script>
                                     function validateAngka(input) {
