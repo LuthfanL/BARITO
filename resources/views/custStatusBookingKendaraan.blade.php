@@ -825,6 +825,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const tglSelesaiPicker = flatpickr("#tglSelesai", {
             dateFormat: "d-M-Y",
             minDate: "today" // Default minDate adalah hari ini
+
         });
     });
 </script>
