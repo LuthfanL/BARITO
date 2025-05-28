@@ -172,15 +172,12 @@ class custStatusBookingKendaraanController extends Controller
             }
         }
 
-        $tglMulai = Carbon::createFromFormat('d-M-Y', $request->tglMulai)->format('Y-m-d');
-        $tglSelesai = Carbon::createFromFormat('d-M-Y', $request->tglSelesai)->format('Y-m-d');
-
         // Perbarui data
         $booking->update([
             'namaPemohon' => $request->namaPemohon,
             'noWa'        => $request->noWa,
-            'tglMulai'    => $tglMulai,
-            'tglSelesai'  => $tglSelesai,
+            'tglMulai'    => Carbon::parse($request->tglMulai)->format('Y-m-d'),
+            'tglSelesai'  => Carbon::parse($request->tglSelesai)->format('Y-m-d'),
             'keperluan'   => $request->keperluan,
             'lokasi'      => $request->lokasi,
             'titikJemput' => $request->titikJemput,
