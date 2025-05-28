@@ -836,8 +836,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         function formatTanggal(tanggalStr) {
                 const bulanIndo = [
-                    "Jan", "Feb", "Mar", "Apr", "Mei", "Jun",
-                    "Jul", "Agu", "Sep", "Okt", "Nov", "Des"
+                    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                    "Jul", "Aug", "Sep", "Oct", "Nov", "Des"
                 ];
                 const tanggal = new Date(tanggalStr);
                 const hari = tanggal.getDate();
