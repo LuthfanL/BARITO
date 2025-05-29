@@ -850,6 +850,8 @@ document.addEventListener("DOMContentLoaded", function () {
         // Loop setiap tombol edit
         editButtons.forEach(button => {
             button.addEventListener("click", function () {
+                localStorage.setItem('lastClickedEditId', this.getAttribute("data-id"));
+
                 // Ambil data dari atribut tombol
                 const id = button.getAttribute("data-id");
                 const namaPemohon = button.getAttribute("data-namaPemohon");
@@ -946,7 +948,7 @@ document.addEventListener("DOMContentLoaded", function () {
     
         @if(session('custom_errors'))
             Swal.fire({
-                icon: 'info', // Paksa hanya menggunakan icon 'info'
+                icon: 'info',
                 title: 'Perhatian',
                 html: `
                     <ul style="text-align: center;">
@@ -956,14 +958,17 @@ document.addEventListener("DOMContentLoaded", function () {
                     </ul>
                 `,
                 confirmButtonText: 'Tutup',
-                customClass: {
-                    confirmButton: 'custom-confirm-button'
-                }
+                customClass: { confirmButton: 'custom-confirm-button' }
             }).then((result) => {
                 if (result.isConfirmed || result.isDismissed) {
-                    const bookingToggle = document.querySelector('[data-modal-toggle="modal-edit"]');
-                    if (bookingToggle) {
-                        bookingToggle.click();
+                    // Ambil ID terakhir yang diklik
+                    const lastId = localStorage.getItem('lastClickedEditId');
+                    if (lastId) {
+                        // Cari tombol edit yang punya data-id itu
+                        const correctEditBtn = document.querySelector(`.btn-edit[data-id="${lastId}"]`);
+                        if (correctEditBtn) {
+                            correctEditBtn.click();
+                        }
                     }
                 }
             });
