@@ -19,10 +19,11 @@
         #default-table th, #default-table td {
             padding: 8px 9px; /* Mengurangi padding antar sel */
             text-align: center;
-            white-space: nowrap; /* Membatasi teks agar tidak wrap */
+            white-space: wrap; /* Membatasi teks agar tidak wrap */
         }
         #default-table th {
             max-width: 150px; /* Membatasi lebar maksimal header kolom */
+            font-size: 10px;
         }
         #default-table td {
             max-width: 200px; /* Membatasi lebar maksimal sel data */
@@ -100,7 +101,7 @@
                                 </th>
                                 <th>
                                     <span class="flex items-center">
-                                        No. Whatapps
+                                        No. Whatsapp
                                         <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4"/>
                                         </svg>
@@ -132,14 +133,25 @@
                                 </th>
                                 <th>
                                     <span class="flex items-center">
-                                        Bukti Pembayaran
+                                        Keperluan Acara
                                     </span>
                                 </th>
                                 <th>
+                                    <span class="flex items-center">
+                                        Deskripsi Tambahan
+                                    </span>
+                                </th>
+                                <th>
+                                    <span class="flex items-center">
+                                        Bukti Pembayaran
+                                    </span>
+                                </th>
+
+                                {{-- <th>
                                     <span class="flex items-center justify-center">
                                         Info Lain
                                     </span>
-                                </th>
+                                </th> --}}
                                 {{-- <th>
                                     <span class="flex items-center justify-center">
                                         Pembatalan
@@ -159,19 +171,21 @@
                             <tbody>
                                 @foreach ($bookings as $index => $booking)
                                     <tr class="booking-list" data-bookingid="{{ $booking->id }}" data-bookingidCustomer="{{ $booking->idCustomer }}" data-bookingnamaPemohon="{{ $booking->namaPemohon }}" data-bookingnamaRuangan="{{ $booking->namaRuangan }}">
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $booking->id }}</td>
-                                        <td>{{ $booking->namaPemohon }}</td>
-                                        <td>{{ $booking->noWa }}</td>
-                                        <td>{{ $booking->namaRuangan }}</td>
-                                        <td data-order="{{ \Carbon\Carbon::parse($booking->tglMulai)->format('Ymd') }}">
+                                        <td class="text-xs">{{ $loop->iteration }}</td>
+                                        <td class="text-xs">{{ $booking->id }}</td>
+                                        <td class="text-xs">{{ $booking->namaPemohon }}</td>
+                                        <td class="text-xs">{{ $booking->noWa }}</td>
+                                        <td class="text-xs">{{ $booking->namaRuangan }}</td>
+                                        <td class="text-xs" data-order="{{ \Carbon\Carbon::parse($booking->tglMulai)->format('Ymd') }}">
                                             {{ \Carbon\Carbon::parse($booking->tglMulai)->format('d-M-Y') }}
                                         </td>
-                                        <td data-order="{{ \Carbon\Carbon::parse($booking->tglSelesai)->format('Ymd') }}">
+                                        <td class="text-xs" data-order="{{ \Carbon\Carbon::parse($booking->tglSelesai)->format('Ymd') }}">
                                             {{ \Carbon\Carbon::parse($booking->tglSelesai)->format('d-M-Y') }}
                                         </td>
+                                        <td class="text-xs">{{ $booking->keperluan }}</td>
+                                        <td class="text-xs">{{ $booking->keterangan }}</td>
                                         <!-- Bukti Bayar -->
-                                        <td class="flex justify-center items-center text-center">
+                                        <td class="flex justify-center items-center text-center text-xs">
                                             @if($booking->buktiBayar)
                                                 <button onclick="showBukti('{{ asset($booking->buktiBayar) }}')" 
                                                     class="px-3 py-1 bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white rounded-lg">
@@ -181,8 +195,8 @@
                                                 <span class="text-red-500">Belum diupload</span>
                                             @endif
                                         </td>              
-                            
-                                        <!-- Info Lain -->
+
+                                        {{-- <!-- Info Lain -->
                                         <td class="mb-4 items-center text-center mt-5"> 
                                             <div class="flex justify-center ">
                                                 <button 
@@ -195,23 +209,22 @@
                                                     Lihat
                                                 </button>
                                             </div>
-                                        </td>
-
+                                        </td> --}}
                                         <td>
                                             @if ($booking->status == 'Disetujui')
-                                                <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 text-white">
+                                                <div class=" text-[12px] px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-green-500 via-green-600 to-green-700 text-white">
                                                     Disetujui
                                                 </div>
                                             @elseif ($booking->status == 'Ditolak')
-                                                <div data-popover-target="pop-alasan-{{ $booking->id }}" data-popover-placement="left" class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 text-white">
-                                                    Ditolak dan Alasannya
+                                                <div data-popover-target="pop-alasan-{{ $booking->id }}" data-popover-placement="left" class="text-[12px] px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-red-500 via-red-600 to-red-700 text-white whitespace-nowrap">
+                                                    Ditolak & Alasannya
                                                 </div>
                                             @elseif ($booking->status == 'Expired')
-                                                <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-slate-500 via-slate-600 to-slate-700 text-white">
+                                                <div class="text-[12px] px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-slate-500 via-slate-600 to-slate-700 text-white">
                                                     Expired
                                                 </div>
                                             @elseif ($booking->status == 'Dibatalkan')
-                                                <div class="px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-amber-700 via-amber-800 to-amber-900 text-white">
+                                                <div class="text-[12px] px-3 py-1 rounded-lg font-medium bg-gradient-to-l from-amber-700 via-amber-800 to-amber-900 text-white">
                                                     Dibatalkan
                                                 </div>
                                             @endif

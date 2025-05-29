@@ -21,10 +21,11 @@
         #default-table th, #default-table td {
             padding: 8px 9px; /* Mengurangi padding antar sel */
             text-align: center;
-            white-space: nowrap; /* Membatasi teks agar tidak wrap */
+            white-space: wrap; /* Membatasi teks agar tidak wrap */
         }
         #default-table th {
             max-width: 150px; /* Membatasi lebar maksimal header kolom */
+            font-size: 10px;
         }
         #default-table td {
             max-width: 200px; /* Membatasi lebar maksimal sel data */
@@ -118,7 +119,7 @@
                                 </th>
                                 <th>
                                     <span class="flex items-center">
-                                        No. Whatapps
+                                        No. Whatsapp
                                         <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4"/>
                                         </svg>
@@ -149,15 +150,25 @@
                                     </span>
                                 </th>
                                 <th>
-                                    <span class="flex items-center">
-                                        Bukti Pembayaran
+                                    <span class="flex items-center justify-center">
+                                        Keperluan Acara
                                     </span>
                                 </th>
                                 <th>
                                     <span class="flex items-center justify-center">
-                                        Info Lain
+                                        Deskripsi Tambahan
                                     </span>
                                 </th>
+                                <th>
+                                    <span class="flex items-center">
+                                        Bukti Pembayaran
+                                    </span>
+                                </th>
+                                {{-- <th>
+                                    <span class="flex items-center justify-center">
+                                        Info Lain
+                                    </span>
+                                </th> --}}
                                 {{-- <th>
                                     <span class="flex items-center justify-center">
                                         Pembatalan
@@ -174,19 +185,21 @@
                             @if (!empty($bookings))
                                 @foreach ($bookings as $booking)
                                     <tr class="booking-list @if($booking->status == 'Disetujui') bg-green-100 @elseif($booking->status == 'Ditolak') bg-red-100 @endif" data-bookingid="{{ $booking->id }}" data-bookingidCustomer="{{ $booking->idCustomer }}" data-bookingnamaPemohon="{{ $booking->namaPemohon }}" data-bookingnamaRuangan="{{ $booking->namaRuangan }}">
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $booking->id }}</td>
-                                        <td>{{ $booking->namaPemohon }}</td>
-                                        <td>{{ $booking->noWa }}</td>
-                                        <td>{{ $booking->namaRuangan }}</td>
-                                        <td data-order="{{ \Carbon\Carbon::parse($booking->tglMulai)->format('Ymd') }}">
+                                        <td class="text-xs">{{ $loop->iteration }}</td>
+                                        <td class="text-xs">{{ $booking->id }}</td>
+                                        <td class="text-xs">{{ $booking->namaPemohon }}</td>
+                                        <td class="text-xs">{{ $booking->noWa }}</td>
+                                        <td class="text-xs">{{ $booking->namaRuangan }}</td>
+                                        <td class="text-xs" data-order="{{ \Carbon\Carbon::parse($booking->tglMulai)->format('Ymd') }}">
                                             {{ \Carbon\Carbon::parse($booking->tglMulai)->format('d-M-Y') }}
                                         </td>
-                                        <td data-order="{{ \Carbon\Carbon::parse($booking->tglSelesai)->format('Ymd') }}">
+                                        <td class="text-xs" data-order="{{ \Carbon\Carbon::parse($booking->tglSelesai)->format('Ymd') }}">
                                             {{ \Carbon\Carbon::parse($booking->tglSelesai)->format('d-M-Y') }}
                                         </td>
+                                        <td class="text-xs">{{ $booking->keperluan }}</td>
+                                        <td class="text-xs">{{ $booking->keterangan }}</td> 
                                         <!-- Bukti Bayar -->
-                                        <td class="flex justify-center items-center text-center mt-5">
+                                        <td class="flex justify-center items-center text-center mt-5 text-xs">
                                             @if($booking->buktiBayar)
                                                 <button onclick="showBukti('{{ asset($booking->buktiBayar) }}')" 
                                                     class="px-3 py-1 bg-gradient-to-l from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white rounded-lg">
@@ -195,8 +208,8 @@
                                             @else
                                                 <span class="text-red-500">Belum diupload</span>
                                             @endif
-                                        </td>              
-                                        <!-- Info Lain -->
+                                        </td>             
+                                        {{-- <!-- Info Lain -->
                                         <td class="items-center text-center mt-5"> 
                                             <div class="flex justify-center">
                                                 <button 
@@ -209,7 +222,7 @@
                                                     Lihat
                                                 </button>
                                             </div>
-                                        </td>
+                                        </td> --}}
                                         {{-- <!-- Alasan Pembatalan -->
                                         <td class=" items-center text-center mt-5"> 
                                             <div class="flex justify-center ">
@@ -223,7 +236,7 @@
                                             </div>
                                         </td> --}}
                                         <!-- Tindakan -->
-                                        <td class="text-center">
+                                        <td class="text-center text-[12px]">
                                             <div class="flex flex-col gap-2">
                                                 <?php if ($booking->status == "Disetujui" || $booking->status == "Belum bayar") : ?>
                                                     <button disabled class="px-3 py-1 rounded-lg font-medium bg-gray-400 text-white cursor-not-allowed">Setujui</button>

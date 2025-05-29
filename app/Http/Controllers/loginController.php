@@ -45,20 +45,24 @@ class loginController extends Controller
             $user = Auth::user();
             $role = $user->role;
 
-            return $this->redirectTo($role);
+            return $this->redirectTo($user, $role);
         }
     }
 
-    public function redirectTo($role){
+    public function redirectTo($user, $role){
         switch ($role) {
             case 'Customer' :
-                return redirect()->intended('/')->with('success', 'Berhasil login!');
+                $userLogin = customer::where('email', $user->email)->first();
+                return redirect()->intended('/')->with('success', "Berhasil login! selamat datang, {$userLogin->name}.");
             case 'Admin Ruangan' :
-                return redirect()->intended('/dashboardAdminRuangan')->with('success', 'Berhasil login!');
+                $userLogin = adminRuangan::where('email', $user->email)->first();
+                return redirect()->intended('/dashboardAdminRuangan')->with('success', "Berhasil login! selamat datang, {$userLogin->name}.");
             case 'Admin Kendaraan' :
-                return redirect()->intended('/dashboardAdminKendaraan')->with('success', 'Berhasil login!');
+                $userLogin = adminKendaraan::where('email', $user->email)->first();
+                return redirect()->intended('/dashboardAdminKendaraan')->with('success', "Berhasil login! selamat datang, {$userLogin->name}.");
             case 'Admin Tenant' :
-                return redirect()->intended('/dashboardAdminTenant')->with('success', 'Berhasil login!');
+                $userLogin = adminTenant::where('email', $user->email)->first();
+                return redirect()->intended('/dashboardAdminTenant')->with('success', "Berhasil login! selamat datang, {$userLogin->name}.");
             default :
                 return redirect()->back()->withErrors('Role tidak ditemukan!');
         }

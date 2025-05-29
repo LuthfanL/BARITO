@@ -17,7 +17,7 @@
 
     <div class="bg-gradient-to-b from-blue-400 to-cyan-400 h-full p-12 text-center flex flex-col items-center justify-center">
         @if(session('success'))
-            <div class="bg-cyan-400 text-black p-4 mb-4 rounded">
+            <div class="bg-cyan-400 text-white font-semibold p-4 mb-4 rounded">
                 {{ session('success') }}
             </div>
         @endif

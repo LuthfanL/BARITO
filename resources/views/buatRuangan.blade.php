@@ -123,7 +123,7 @@
                                 <textarea id="deskripsi" name="deskripsi" rows="3" required maxlength="50" class="pl-2"></textarea>
                 
                                 <!-- Input Biaya Sewa, Lokasi, Lantai dan Luas Ruangan -->
-                                <label for="biayaSewa">Biaya Sewa (Per Hari)</label>
+                                <label for="biayaSewa">Biaya Sewa Per Hari (Rp)</label>
                                 <input type="text" id="biayaSewa" name="biayaSewa" required maxlength="8" oninput="validateAngka(this)">
                                 <p class="mb-4 text-xs text-gray-500">
                                     * Masukkan jumlah biaya sewa dalam angka, misalnya 500000. Nilai tersebut akan otomatis dikonversi ke format rupiah.
@@ -147,7 +147,7 @@
                                     </div>
                                     <div>
                                         <label for="sound">Jumlah Sound</label>
-                                        <input type="text" id="sound" name="sound" required maxlength="2"" oninput="validateAngka(this)">
+                                        <input type="text" id="sound" name="sound" required maxlength="2" oninput="validateAngka(this)">
                                     </div>
                                     <div>
                                         <label for="meja">Jumlah Meja</label>
@@ -200,6 +200,24 @@
             </div>            
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.querySelector('form');
+            const luasInput = document.getElementById('luas');
+
+            form.addEventListener('submit', function () {
+                // Hapus spasi di awal/akhir dan cek apakah sudah ada "m²"
+                let value = luasInput.value.trim();
+
+                if (!value.toLowerCase().endsWith('m2') && !value.endsWith('m²')) {
+                    // Tambahkan spasi dan m²
+                    luasInput.value = value + ' m²';
+                }
+            });
+        });
+    </script>
+
 
     <!-- Script Alert -->
     <script>

@@ -15,13 +15,13 @@
     <!-- Navbar -->
     @include('components.navbargeneral')
 
-    <div class="bg-gradient-to-b from-blue-400 to-cyan-400 min-h-screen h-full p-6 md:p-12 text-center flex flex-col items-center justify-center">
-        <div class="bg-white mt-24 mb-4 border border-white/10 rounded-2xl shadow-[0_0_20px_10px_rgba(0,0,0,0.1)] p-5 w-full max-w-sm backdrop-blur-lg">
-            <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-                <h2 class="mb-2 mt-2 text-center text-2xl font-bold leading-9 tracking-tight text-black">Register</h2>
+    <div class="bg-gradient-to-b from-blue-400 to-cyan-400 max-h-screen h-full p-6 md:p-12 text-center flex flex-col items-center justify-center">
+        <div class="bg-white pt-2 mt-20 mb-4 border border-white/10 rounded-2xl shadow-[0_0_20px_10px_rgba(0,0,0,0.1)] p-5 w-full max-w-sm backdrop-blur-lg">
+            <div class="mt-1 sm:mx-auto sm:w-full sm:max-w-sm">
+                <h2 class="text-center text-2xl font-bold leading-9 tracking-tight text-black">Registrasi</h2>
             </div>
 
-            <div class="mt-8">
+            <div class="mt-1">
                 @if ($errors->any())
                 <div class="bg-red-500 text-white p-2 rounded mb-6">
                     <ul>
@@ -90,12 +90,12 @@
                             </span>
                         </div>
                     </div>
-                    <div class="my-6">
+                    <div class="my-4">
                         <button type="submit" class="bg-gradient-to-b from-blue-400 to-cyan-400  hover:from-blue-500 hover:to-cyan-500 focus:outline-none justify-center rounded-md py-3 px-10 text-sm font-semibold text-white focus:ring-2" >Register</button>
                     </div>
                 </form>
 
-                <p class="mt-6 text-center text-sm text-gray-400">
+                <p class="text-center text-sm text-gray-400">
                     Sudah punya akun?
                     <a href="login" class="font-semibold leading-6 text-indigo-400 hover:text-indigo-300">Login sekarang</a>
                 </p>

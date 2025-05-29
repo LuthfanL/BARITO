@@ -225,7 +225,7 @@
                                 <span id="tglSelesai" class="mt-1 block w-full rounded-md bg-transparent text-gray-700 sm:text-sm">{{ \Carbon\Carbon::parse($event['tglSelesai'])->format('d/m/Y') }}</span>
                             </div>
                             <div>
-                                <label for="biaya" class="block text-m font-semibold">Biaya Sewa (Per Hari)</label>
+                                <label for="biaya" class="block text-m font-semibold">Biaya Sewa Per Hari (Rp)</label>
                                 <span id="biaya" class="mt-1 block w-full rounded-md bg-transparent text-gray-700 sm:text-sm">Rp. {{ number_format($event['hargaTenant'], 0, ',', '.') }}</span>
                             </div>
                         </div>

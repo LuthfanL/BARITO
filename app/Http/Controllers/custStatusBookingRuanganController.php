@@ -115,6 +115,8 @@ class custStatusBookingRuanganController extends Controller
             'keperluan'   => 'required|string',
             'keterangan'      => 'required|string',
         ]);
+        $tglMulai = Carbon::parse($request->tglMulai)->format('Y-m-d');
+        $tglSelesai = Carbon::parse($request->tglSelesai)->format('Y-m-d');
 
         // Cari booking berdasarkan ID
         $booking = pemRuangan::where('id', $request->id)->firstOrFail();
@@ -131,7 +133,7 @@ class custStatusBookingRuanganController extends Controller
         $idRuangan = $booking->idRuangan;
 
         // Hanya lakukan validasi bentrok jika tglMulai atau tglSelesai berubah
-        if ($request->tglMulai != $booking->tglMulai || $request->tglSelesai != $booking->tglSelesai) {
+        if ($tglMulai != $booking->tglMulai || $tglSelesai != $booking->tglSelesai) {
             $idRuangan = $booking->idRuangan;
 
             // Ambil semua booking kendaraan yang aktif kecuali yang sedang diperbarui
@@ -147,12 +149,12 @@ class custStatusBookingRuanganController extends Controller
                     $message = 'Mohon maaf, tanggal tersebut sudah di booking oleh orang lain, silahkan pilih tanggal lain.';
         
                     if (
-                        $request->tglMulai == $use->tglMulai || $request->tglMulai == $use->tglSelesai ||
-                        $request->tglSelesai == $use->tglMulai || $request->tglSelesai == $use->tglSelesai ||
-                        ($request->tglMulai < $use->tglMulai && $request->tglSelesai > $use->tglSelesai) ||
-                        ($request->tglMulai > $use->tglMulai && $request->tglSelesai < $use->tglSelesai) ||
-                        ($request->tglMulai > $use->tglMulai && $request->tglMulai < $use->tglSelesai) ||
-                        ($request->tglSelesai > $use->tglMulai && $request->tglSelesai < $use->tglSelesai)
+                        $tglMulai == $use->tglMulai || $tglMulai == $use->tglSelesai ||
+                        $tglSelesai == $use->tglMulai || $tglSelesai == $use->tglSelesai ||
+                        ($tglMulai < $use->tglMulai && $tglSelesai > $use->tglSelesai) ||
+                        ($tglMulai > $use->tglMulai && $tglSelesai < $use->tglSelesai) ||
+                        ($tglMulai > $use->tglMulai && $tglMulai < $use->tglSelesai) ||
+                        ($tglSelesai > $use->tglMulai && $tglSelesai < $use->tglSelesai)
                     ) {
                         if (!in_array($message, $errorMessages)) {
                             $errorMessages[] = $message;
@@ -160,7 +162,7 @@ class custStatusBookingRuanganController extends Controller
                     }
                 }
         
-                if ($request->tglSelesai < $request->tglMulai) {
+                if ($tglSelesai < $tglMulai) {
                     $errorMessages[] = 'Mohon maaf, tanggal selesai harus lebih dari atau sama dengan tanggal mulai.';
                 }
         
@@ -174,8 +176,8 @@ class custStatusBookingRuanganController extends Controller
         $booking->update([
             'namaPemohon' => $request->namaPemohon,
             'noWa'        => $request->noWa,
-            'tglMulai'    => $request->tglMulai,
-            'tglSelesai'  => $request->tglSelesai,
+            'tglMulai'    => $tglMulai,
+            'tglSelesai'  => $tglSelesai,
             'keperluan'   => $request->keperluan,
             'keterangan'  => $request->keterangan,
         ]);        
