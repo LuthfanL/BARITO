@@ -78,8 +78,8 @@ class daftarEventController extends Controller
         $request->validate([
             'namaEvent' => 'required|string',
             'deskripsi' => 'required|string',
-            // 'tglMulai' => 'required|date',
-            // 'tgSelesai' => 'required|date',
+            'tglMulai' => 'required|date',
+            'tglSelesai' => 'required|date',
             // 'foto.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -91,18 +91,21 @@ class daftarEventController extends Controller
         if($now >= $event->tglMulai){
             return redirect()->route('daftarEvent')->with('error', 'Tidak bisa menghapus event dikarenakan sudah terlaksana');
         }
-
-        $tglMulai = Carbon::parse($request->input('tglMulai'))->startOfDay();
+    
+        $tglMulai = Carbon::parse($request->tglMulai)->startOfDay();
         $sekarang = Carbon::now()->startOfDay();
-
+        
         $selisih = $sekarang->diffInDays($tglMulai);
-
+        
         if ($selisih < 3) {
-            return redirect()->back()->withErrors('Event harus dibuat maksimal 3 hari sebelum hari h event!')->withInput();
+            return redirect()->back()->with('error', 'Event harus dibuat maksimal 3 hari sebelum hari h event!')->withInput();
         }
         
-        if ($request->input('tglSelesai') < $request->input('tglMulai')){
-            return redirect()->back()->withErrors('Tanggal Selesai harus lebih dari atau sama dengan tanggal mulai!')->withInput();
+        $tglSelesai = Carbon::parse($request->tglSelesai)->startOfDay();
+        //dd($tglMulai, $tglSelesai, $tglMulai > $tglSelesai);
+        
+        if ($tglMulai > $tglSelesai){
+            return redirect()->back()->with('error', 'Tanggal Selesai harus lebih dari atau sama dengan tanggal mulai!')->withInput();
         }
 
         // Hapus foto lama jika ada foto baru
