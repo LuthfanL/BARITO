@@ -440,7 +440,7 @@
                             Hapus
                         </button>
                         <button data-modal-hide="modal-hapus" type="button" class="px-3 py-1 rounded-lg cursor-pointer font-medium bg-gradient-to-l from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br transition duration-200 ease-in-out text-white">
-                            Tutup
+                            Batal
                         </button>
                 </form>
                 </div>
