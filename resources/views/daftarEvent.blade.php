@@ -347,7 +347,6 @@
                                 if (input.value !== '' && isNaN(input.value)) {
                                     alert("Hanya boleh memasukkan angka!");
                                 }
-                                input.value = input.value.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
                             }
                         </script>
         
