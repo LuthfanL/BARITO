@@ -214,7 +214,7 @@
                         <!-- Informasi Detail -->
                         <div class="grid grid-cols-2 gap-4">
                             <div>
-                                <label for="biaya" class="block text-m font-semibold">Biaya Sewa (Per Hari)</label>
+                                <label for="biaya" class="block text-m font-semibold">Biaya Sewa Per Hari (Rp)</label>
                                 <span id="biaya" class="mt-1 block w-full rounded-md bg-transparent text-gray-700 sm:text-sm">Rp. {{ number_format($ruangan['biayaSewa'], 0, ',', '.') }}</span>
                             </div>
                             <div>

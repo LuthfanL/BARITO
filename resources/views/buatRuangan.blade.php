@@ -201,6 +201,24 @@
         </div>
     </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.querySelector('form');
+            const luasInput = document.getElementById('luas');
+
+            form.addEventListener('submit', function () {
+                // Hapus spasi di awal/akhir dan cek apakah sudah ada "m²"
+                let value = luasInput.value.trim();
+
+                if (!value.toLowerCase().endsWith('m2') && !value.endsWith('m²')) {
+                    // Tambahkan spasi dan m²
+                    luasInput.value = value + ' m²';
+                }
+            });
+        });
+    </script>
+
+
     <!-- Script Alert -->
     <script>
         // Notifikasi jika berhasil

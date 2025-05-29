@@ -33,13 +33,18 @@
             <!-- Navigation menu (Right aligned) -->
             <div class="flex absolute right-0 mr-5 md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse z-50">
                 <!-- Foto Profil -->
-                <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
                 <div>
-                    <div x-data="{ open: false }" class="flex justify-start items-center">
+                    <div x-data="{ open: false }" x-init="open = false" class="flex justify-start items-center">
                         <div class="relative border-b-4 border-transparent">
-                            <!-- Burger Menu -->
-                            <div class="flex justify-center items-center space-x-3 z-30">
-                                <div @click="open = true" class="cursor-pointer relative border-b-4 border-transparent" :class="{ 'border-blue-400 transform transition duration-300 ': open }">
+                            <div class="flex justify-center items-center space-x-7 z-30">
+                                <!-- Nama Customer -->
+                                @if(Auth::check() && $customerName)
+                                    <span class="text-gray-500 text-m font-medium hidden md:inline">
+                                        Hallo, {{ $customerName }}
+                                    </span>
+                                @endif
+                                <!-- Burger Menu -->
+                                <div @click="open = true" class="cursor-pointer relative border-b-4 border-transparent -mt-2" :class="{ 'border-blue-400 transform transition duration-300 ': open }">
                                     <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="48" height="48" viewBox="0,0,300,150"
                                     style="fill:#1A1A1A;">
                                     <g fill="#1a1a1a" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(3.55556,3.55556)"><path d="M56,48c2.209,0 4,1.791 4,4c0,2.209 -1.791,4 -4,4c-1.202,0 -38.798,0 -40,0c-2.209,0 -4,-1.791 -4,-4c0,-2.209 1.791,-4 4,-4c1.202,0 38.798,0 40,0zM56,32c2.209,0 4,1.791 4,4c0,2.209 -1.791,4 -4,4c-1.202,0 -38.798,0 -40,0c-2.209,0 -4,-1.791 -4,-4c0,-2.209 1.791,-4 4,-4c1.202,0 38.798,0 40,0zM56,16c2.209,0 4,1.791 4,4c0,2.209 -1.791,4 -4,4c-1.202,0 -38.798,0 -40,0c-2.209,0 -4,-1.791 -4,-4c0,-2.209 1.791,-4 4,-4c1.202,0 38.798,0 40,0z"></path></g></g>
@@ -209,6 +214,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 
 </body>
 </html>
