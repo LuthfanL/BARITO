@@ -122,9 +122,15 @@
                                 <label for="deskripsi">Deskripsi Ruangan</label>
                                 <textarea id="deskripsi" name="deskripsi" rows="3" required maxlength="50" class="pl-2"></textarea>
                 
-                                <!-- Input Biaya Sewa, Lokasi, Lantai dan Luas Ruangan -->
+                                {{-- <!-- Input Biaya Sewa, Lokasi, Lantai dan Luas Ruangan -->
                                 <label for="biayaSewa">Biaya Sewa Per Hari (Rp)</label>
                                 <input type="text" id="biayaSewa" name="biayaSewa" required maxlength="8" oninput="validateAngka(this)">
+                                <p class="mb-4 text-xs text-gray-500">
+                                    * Masukkan jumlah biaya sewa dalam angka, misalnya 500000. Nilai tersebut akan otomatis dikonversi ke format rupiah.
+                                </p> --}}
+
+                                <label for="biayaSewa">Biaya Sewa Per Hari (Rp)</label>
+                                <input type="text" id="biayaSewa" name="biayaSewa" required maxlength="10" oninput="formatRupiah(this)">
                                 <p class="mb-4 text-xs text-gray-500">
                                     * Masukkan jumlah biaya sewa dalam angka, misalnya 500000. Nilai tersebut akan otomatis dikonversi ke format rupiah.
                                 </p>
@@ -247,6 +253,17 @@
                 `,
             });
         @endif
+    </script>
+
+    <script>
+        function formatRupiah(el) {
+            let value = el.value.replace(/\D/g, ''); // Hanya ambil digit angka
+            if (value.length > 8) value = value.slice(0, 8); // Maksimal 8 digit
+
+            // Format angka pakai titik
+            const formatted = new Intl.NumberFormat('id-ID').format(value);
+            el.value = formatted;
+        }
     </script>
     
 </body>

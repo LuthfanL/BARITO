@@ -15,6 +15,10 @@ class buatKendaraanController extends Controller
 
     public function store(Request $request)
     {
+        // Bersihkan format ribuan sebelum validasi
+        $request->merge([
+            'biayaSewa' => str_replace('.', '', $request->input('biayaSewa'))
+        ]);
 
         // Bersihkan dan normalisasi plat nomor (hapus spasi dan ubah jadi huruf besar)
         $normalizedPlatNomor = strtoupper(str_replace(' ', '', $request->input('platNomor')));

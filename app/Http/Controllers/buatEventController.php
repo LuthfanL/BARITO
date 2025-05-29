@@ -16,6 +16,11 @@ class buatEventController extends Controller
 
     public function store(Request $request)
     {
+        // Bersihkan format ribuan sebelum validasi
+        $request->merge([
+            'hargaTenant' => str_replace('.', '', $request->input('hargaTenant'))
+        ]);
+
         // Validasi input
         $request->validate([
             'namaEvent' => 'required|string|max:50|unique:event,namaEvent',

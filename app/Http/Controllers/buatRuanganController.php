@@ -15,6 +15,11 @@ class buatRuanganController extends Controller
 
     public function store(Request $request)
     {
+        // Bersihkan format ribuan sebelum validasi
+        $request->merge([
+            'biayaSewa' => str_replace('.', '', $request->input('biayaSewa'))
+        ]);
+
         // Validasi input
         $request->validate([
             'nama' => 'required|string|max:30',
