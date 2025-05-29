@@ -15,6 +15,19 @@ class buatKendaraanController extends Controller
 
     public function store(Request $request)
     {
+
+        // Bersihkan dan normalisasi plat nomor (hapus spasi dan ubah jadi huruf besar)
+        $normalizedPlatNomor = strtoupper(str_replace(' ', '', $request->input('platNomor')));
+
+        // Cek apakah plat nomor sudah ada (tanpa spasi dan case insensitive)
+        $existingKendaraan = kendaraan::all()->filter(function ($item) use ($normalizedPlatNomor) {
+            return strtoupper(str_replace(' ', '', $item->platNomor)) === $normalizedPlatNomor;
+        })->first();
+
+        if ($existingKendaraan) {
+            return back()->withErrors(['platNomor' => 'Plat nomor sudah digunakan.']);
+        }
+
         // Validasi input
         $request->validate([
             'platNomor' => 'required|string|max:11|unique:kendaraan,platNomor',
