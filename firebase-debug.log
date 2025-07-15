@@ -1,0 +1,52 @@
+[debug] [2025-07-15T17:23:24.263Z] ----------------------------------------------------------------------
+[debug] [2025-07-15T17:23:24.272Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\lenovo\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2025-07-15T17:23:24.273Z] CLI Version:   14.10.1
+[debug] [2025-07-15T17:23:24.274Z] Platform:      win32
+[debug] [2025-07-15T17:23:24.274Z] Node Version:  v20.17.0
+[debug] [2025-07-15T17:23:24.274Z] Time:          Wed Jul 16 2025 00:23:24 GMT+0700 (Indochina Time)
+[debug] [2025-07-15T17:23:24.274Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-07-15T17:23:24.531Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-07-15T17:23:24.532Z] > authorizing via signed-in user (nugrohodavid57@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\laragon\www\BARITO
+
+Before we get started, keep in mind:
+
+  * You are currently outside your home directory
+  * You are initializing within an existing Firebase project directory
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[debug] [2025-07-15T17:23:35.300Z] Using project from CLI flag: barito-4b98a
+[debug] [2025-07-15T17:23:35.302Z] Checked if tokens are valid: true, expires at: 1752602472680
+[debug] [2025-07-15T17:23:35.302Z] Checked if tokens are valid: true, expires at: 1752602472680
+[debug] [2025-07-15T17:23:35.304Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/barito-4b98a [none]
+[debug] [2025-07-15T17:23:47.695Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/barito-4b98a 200
+[debug] [2025-07-15T17:23:47.695Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/barito-4b98a {"projectId":"barito-4b98a","projectNumber":"752476866621","displayName":"BARITO","name":"projects/barito-4b98a","resources":{"hostingSite":"barito-4b98a"},"state":"ACTIVE","etag":"1_048e5f79-e775-4d02-af2b-5613a3c945b7"}
+[info] i  Using project barito-4b98a (BARITO) 
+[info] 
+=== Hosting Setup
+[debug] [2025-07-15T17:23:47.701Z] Checked if tokens are valid: true, expires at: 1752602472680
+[debug] [2025-07-15T17:23:47.701Z] Checked if tokens are valid: true, expires at: 1752602472680
+[debug] [2025-07-15T17:23:47.702Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/barito-4b98a [none]
+[debug] [2025-07-15T17:23:48.058Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/barito-4b98a 200
+[debug] [2025-07-15T17:23:48.058Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/barito-4b98a {"projectId":"barito-4b98a","projectNumber":"752476866621","displayName":"BARITO","name":"projects/barito-4b98a","resources":{"hostingSite":"barito-4b98a"},"state":"ACTIVE","etag":"1_048e5f79-e775-4d02-af2b-5613a3c945b7"}
+[info] 
+[info] Your public directory is the folder (relative to your project directory) that
+[info] will contain Hosting assets to be uploaded with firebase deploy. If you
+[info] have a build process for your assets, use your build's output directory.
+[info] 
